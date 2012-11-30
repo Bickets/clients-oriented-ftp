@@ -129,6 +129,7 @@ class ClientActions
 				
 				$this->file_handle = @fopen($this->index_file,"a");
 				@fwrite($this->file_handle, $this->index_content);
+				@chmod($this->index_file, 0755);
 				@fclose($this->file_handle);
 	
 				/** Who is creating the client? */
