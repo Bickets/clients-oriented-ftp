@@ -133,7 +133,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 							$msg = __('Congratulations! Everything is up and running.','cftp_admin');
 							echo system_message('ok',$msg);
 							?>
-								<p><?php _e('You may proceed to','cftp_admin'); ?> <a href="<?php echo BASE_URI; ?>" target="_self"><?php _e('log in','cftp_admin'); ?></a> <?php _e('with your newely created username and password.','cftp_admin'); ?></p>
+								<p><?php _e('You may proceed to','cftp_admin'); ?> <a href="<?php echo $base_uri; ?>" target="_self"><?php _e('log in','cftp_admin'); ?></a> <?php _e('with your newely created username and password.','cftp_admin'); ?></p>
 							<?php
 							break;
 						case 'err':
