@@ -11,6 +11,7 @@
  * Validation class strings
  */
 $validation_no_name = __('Name was not completed','cftp_admin');
+$validation_no_client = __('No client was selected','cftp_admin');
 $validation_no_user = __('Username was not completed','cftp_admin');
 $validation_no_pass = __('Password was not completed','cftp_admin');
 $validation_no_pass2 = __('Password verification was not completed','cftp_admin');

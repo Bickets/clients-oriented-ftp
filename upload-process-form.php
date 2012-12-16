@@ -322,7 +322,7 @@ $sql = $database->query($cq);
 			 * via the form, but the name field was left empty.
 			 */
 			if(!empty($empty_fields)) {
-				$msg = 'Name is a required field for all uploaded files.';
+				$msg = 'Name and client are required fields for all uploaded files.';
 				echo system_message('error',$msg);
 			}
 	?>
@@ -334,6 +334,9 @@ $sql = $database->query($cq);
 
 						$(this).find('input[name$="[name]"]').each(function() {	
 							is_complete($(this)[0],'<?php echo $validation_no_name; ?>');
+						});
+						$(this).find('select').each(function() {	
+							is_selected($(this)[0],'<?php echo $validation_no_client; ?>');
 						});
 
 						// show the errors or continue if everything is ok
@@ -413,7 +416,8 @@ $sql = $database->query($cq);
 													*/
 													if ($current_level != 0) {
 												?>
-														<td><select name="file[<?php echo $i; ?>][client]" class="txtfield" >
+														<td class="error_no_margin"><select name="file[<?php echo $i; ?>][client]" class="txtfield required" >
+															<option value="ps_empty_value"><?php _e('Select client', 'cftp_admin');?></option>
 																<?php
 																	/**
 																	 * The clients list is generated early on the file so the

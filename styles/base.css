@@ -376,9 +376,13 @@ input[readonly] {
 .field_error_msg {
 	color:red;
 	margin:0 0 3px 41%;
-	font-size:11px;
+	font-size:.95em;
 	background:url(../img/error-field.png) no-repeat left 4px;
-	padding-left:12px;
+}
+
+.field_error_msg p {
+	padding:0 0 0 12px !important;
+	margin:0 !important;
 }
 
 .options_box .field_error_msg {

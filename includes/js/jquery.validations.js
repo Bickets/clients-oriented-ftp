@@ -38,11 +38,17 @@ function is_complete_all_options(this_form,error) {
 function add_error_to_field(field, error) {
 	error_count++;
 	$(field).addClass('field_error');
-	$(field).after('<div class="field_error_msg">'+error+'</div>');
+	$(field).after('<div class="field_error_msg"><p>'+error+'</p></div>');
 }
 
 function is_complete(field,error) {
 	if ($(field).val().length == 0) {
+		add_error_to_field(field, error);
+	}
+}
+
+function is_selected(field,error) {
+	if ($(field).val() == 'ps_empty_value') {
 		add_error_to_field(field, error);
 	}
 }
