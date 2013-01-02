@@ -1,13 +1,14 @@
 msgid ""
 msgstr ""
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 
 #. Text in echo
@@ -16,6 +17,8 @@ msgid ""
 "<strong>Important</strong>: Separate allowed file types with a comma. You "
 "can navigate the box with the left/right arrows, backspace and delete keys."
 msgstr ""
+"<strong>Important</strong>: Separate allowed file types with a comma. You "
+"can navigate the box with the left/right arrows, backspace and delete keys."
 
 #. Text in function
 #: psend/clients-add.php:72
@@ -23,6 +26,8 @@ msgid ""
 "A folder for this client could not be created. Probably because of a server "
 "configuration."
 msgstr ""
+"Un dossier pour ce client n'a pas pu être créé en raison d'une configuration "
+"du serveur."
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
@@ -30,6 +35,8 @@ msgid ""
 "A new account was created for you. From now on, you can access the files "
 "that have been uploaded under your account using the following credentials:"
 msgstr ""
+"Un nouveau compte a été créé. Vous pouvez accéder aux fichiers téléchargés "
+"dans votre compte en utilisant les informations d'identification suivantes :"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
@@ -37,91 +44,93 @@ msgid ""
 "A new account was created for you. From now on, you can access the system "
 "administrator using the following credentials:"
 msgstr ""
+"Un nouveau compte a été créé. Vous pouvez accéder à l'administration du "
+"système en utilisant les informations suivantes :"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "A new file has been uploaded by the client"
-msgstr ""
+msgstr "Un nouveau fichier a été transféré par le client"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "A new file has been uploaded for you to download."
-msgstr ""
+msgstr "Un nouveau fichier a été transféré à votre attention"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "A system user or client with this e-mail address already exists."
-msgstr ""
+msgstr "Cette adresse email existe déjà"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "A system user or client with this login name already exists."
-msgstr ""
+msgstr "Ce nom de login existe déjà."
 
 #. Text in echo
 #: psend/includes/userlevel_check.php:132
 msgid "Access denied"
-msgstr ""
+msgstr "Accès refusé"
 
 #. Text in echo
 #: psend/home.php:38
 msgid "Access my files list"
-msgstr ""
+msgstr "Accéder à ma liste de fichiers"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "Access the system panel here"
-msgstr ""
+msgstr "Accédez au panneau de configuration ici"
 
 #. Text in function
 #: psend/sys.vars.php:1
 msgid "Account Manager"
-msgstr ""
+msgstr "Configuration des comptes"
 
 #. Text in echo
 #: psend/users.php:100 psend/clients.php:119
 msgid "Actions"
-msgstr ""
+msgstr "Actions"
 
 #. Text in function
 #: psend/clients-add.php:122 psend/clients-form.php:58
 msgid "Add client"
-msgstr ""
+msgstr "Ajouter un client"
 
 #. Text in echo
 #: psend/header.php:151 psend/header.php:168
 msgid "Add new"
-msgstr ""
+msgstr "Ajouter"
 
 #. Text in echo
 #: psend/home.php:94
 msgid "Add new client"
-msgstr ""
+msgstr "Ajouter un nouveau client"
 
 #. Text in echo
 #: psend/home.php:120
 msgid "Add new user"
-msgstr ""
+msgstr "Ajouter un nouvel administrateur"
 
 #. Text in function
 #: psend/users-add.php:107
 msgid "Add system user"
-msgstr ""
+msgstr "Ajouter un administrateur"
 
 #. Text in function
 #: psend/users-form.php:59
 msgid "Add user"
-msgstr ""
+msgstr "Ajouter un administrateur"
 
 #. Text in echo
 #: psend/users.php:99 psend/clients.php:117
 msgid "Added on"
-msgstr ""
+msgstr "Ajouté le"
 
 #. Text in echo
 #: psend/clients-form.php:94 psend/clients.php:112
 msgid "Address"
-msgstr ""
+msgstr "Adresse"
 
 #. Text in echo
 #: psend/install/index.php:240
@@ -130,11 +139,14 @@ msgid ""
 "timezone, prefered date display format and thubmnails parameters, besides "
 "being able to change the site options provided here."
 msgstr ""
+"After installing the system, you can go to the options page to set your "
+"timezone, prefered date display format and thubmnails parameters, besides "
+"being able to change the site options provided here."
 
 #. Text in echo
 #: psend/options.php:197
 msgid "Allowed file extensions"
-msgstr ""
+msgstr "Extensions de fichiers autorisées"
 
 #. Text in echo
 #: psend/install/index.php:80
@@ -147,16 +159,22 @@ msgid ""
 "Also, please note that the listed files were renamed if they contained "
 "invalid characters."
 msgstr ""
+"Notez que les fichiers répertoriés ont été renommés s'ils contenaient des "
+"caractères non valides."
 
 #. Text in function
 #: psend/users-add.php:65
 msgid "An e-mail notification with login information was sent to the new user."
 msgstr ""
+"Une notification par e-mail avec les informations de connexion a été envoyé "
+"au nouvel utilisateur."
 
 #. Text in function
 #: psend/clients-add.php:72
 msgid "An e-mail notification with login information was sent to your client."
 msgstr ""
+"Une notification par email avec les informations de connexion a été envoyé à "
+"votre client."
 
 #. Text in function
 #: psend/upload-process-form.php:569
@@ -164,16 +182,18 @@ msgid ""
 "An e-mail was sent to the site administrator as a notification about the new "
 "files."
 msgstr ""
+"Un e-mail a été envoyé à l'administrateur du site comme une notification sur "
+"les nouveaux fichiers."
 
 #. Text in echo
 #: psend/upload-process-form.php:380
 msgid "Assign to client"
-msgstr ""
+msgstr "Attribuer au client"
 
 #. Text in echo
 #: psend/upload-process-form.php:225
 msgid "Assigned to"
-msgstr ""
+msgstr "Attribué à"
 
 #. Text in echo
 #: psend/options.php:146
@@ -181,11 +201,14 @@ msgid ""
 "Basic information to be shown around the site. The time format and zones "
 "values affect how the clients see the dates on their files lists."
 msgstr ""
+"Les informations de base définies sur le site. Le format de l'heure et les "
+"valeurs des zones affectent la façon dont les clients voient les dates sur "
+"leurs listes de fichiers."
 
 #. Text in echo
 #: psend/install/index.php:196
 msgid "Basic system options"
-msgstr ""
+msgstr "Les options de base du système"
 
 #. Text in echo
 #: psend/options.php:198
@@ -193,16 +216,18 @@ msgid ""
 "Be careful when changing this options. They could affect not only the system "
 "but the whole server it is installed on."
 msgstr ""
+"Soyez prudent lorsque vous modifiez cette option. Elle pourrait avoir une "
+"incidence non seulement le système, mais l'ensemble du serveur."
 
 #. Text in echo
 #: psend/home.php:137 psend/branding.php:25 psend/header.php:186
 msgid "Branding"
-msgstr ""
+msgstr "Image de marque"
 
 #. Text in echo
 #: psend/home.php:139
 msgid "Change Logo"
-msgstr ""
+msgstr "Changer le logo"
 
 #. Text in echo
 #: psend/upload-from-computer.php:35
@@ -212,219 +237,223 @@ msgid ""
 "description for each uploaded file. Remember that the maximum allowed file "
 "size (in mb.) is "
 msgstr ""
+"Cliquez sur Ajouter des fichiers à sélectionner tous les fichiers que vous "
+"souhaitez télécharger, puis cliquez sur Continuer. Sur la prochaine étape, "
+"vous serez en mesure de mettre un nom et une description pour chaque fichier "
+"téléchargé."
 
 #. Text in function
 #: psend/clients-add.php:72
 msgid "Client added correctly."
-msgstr ""
+msgstr "Client ajouté correctement."
 
 #. Text in function
 #: psend/clients-edit.php:112
 msgid "Client edited correctly."
-msgstr ""
+msgstr "Client édité correctement."
 
 #. Text in echo
 #: psend/upload-process-form.php:226
 msgid "Client was notified"
-msgstr ""
+msgstr "Le client a été informé"
 
 #. Text in echo
 #: psend/upload-process-form.php:230
 msgid "Client's files"
-msgstr ""
+msgstr "Fichiers clients"
 
 #. Text in echo
 #: psend/options.php:157
 msgid "Client's template"
-msgstr ""
+msgstr "Modèle client"
 
 #. Text in echo
 #: psend/home.php:92 psend/clients.php:96 psend/header.php:149
 msgid "Clients"
-msgstr ""
+msgstr "Clients"
 
 #. Text in function
 #: psend/clients.php:54
 msgid "Clients Administration"
-msgstr ""
+msgstr "Administration des clients"
 
 #. Text in function
 #: psend/install/index.php:133
 msgid "Congratulations! Everything is up and running."
-msgstr ""
+msgstr "Félicitations! Tout est en place et fonctionne."
 
 #. Text in echo
 #: psend/upload-by-ftp.php:104 psend/upload-from-computer.php:128
 #: psend/upload-process-form.php:486
 msgid "Continue"
-msgstr ""
+msgstr "Continuer"
 
 #. Text in echo
 #: psend/index.php:201
 msgid "Continue to log in"
-msgstr ""
+msgstr "Continuer à se connecter"
 
 #. Text in echo
 #: psend/includes/functions.php:215
 msgid "Create a new one"
-msgstr ""
+msgstr "Créer un nouveau"
 
 #. Text in echo
 #: psend/branding.php:86
 msgid "Current logo"
-msgstr ""
+msgstr "Logo actuel"
 
 #. Text in echo
 #: psend/install/index.php:211
 msgid "Default system administrator options"
-msgstr ""
+msgstr "Les options par défaut de l'administrateur système"
 
 #. Text in echo
 #: psend/users.php:86 psend/manage-files.php:175 psend/clients.php:100
 msgid "Delete"
-msgstr ""
+msgstr "Supprimer"
 
 #. Text in echo
 #: psend/upload-process-form.php:218 psend/upload-process-form.php:372
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #. Text in function
 #: psend/upload-process-form.php:248
 msgid "Disabled for this client"
-msgstr ""
+msgstr "Désactivé pour ce client"
 
 #. Text in echo
 #: psend/users.php:97 psend/clients-form.php:102 psend/users-form.php:94
 #: psend/clients.php:114
 msgid "E-mail"
-msgstr ""
+msgstr "Email"
 
 #. Text in echo
 #: psend/install/index.php:219
 msgid "E-mail address"
-msgstr ""
+msgstr "Adresse email"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "E-mail address is not valid"
-msgstr ""
+msgstr "L'adresse email n'est pas valide"
 
 #. Text in echo
 #: psend/options.php:153
 msgid "E-mail for notifications"
-msgstr ""
+msgstr "Email pour les notifications"
 
 #. Text in function
 #: psend/users-add.php:65 psend/clients-add.php:72
 msgid "E-mail notification couldn't be sent."
-msgstr ""
+msgstr "La notification par email ne peut pas être envoyée"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "E-mail was not completed"
-msgstr ""
+msgstr "L'adresse email n'a pas été complétée"
 
 #. Text in echo
 #: psend/users.php:127 psend/clients.php:149
 msgid "Edit"
-msgstr ""
+msgstr "Modifier"
 
 #. Text in function
 #: psend/clients-edit.php:156
 msgid "Edit client"
-msgstr ""
+msgstr "Modifier le client"
 
 #. Text in function
 #: psend/users-edit.php:145
 msgid "Edit system user"
-msgstr ""
+msgstr "Modifier l'utilisateur du système"
 
 #. Text in function
 #: psend/upload-process-form.php:248
 msgid "Error sending notification"
-msgstr ""
+msgstr "Notification d'erreur d'envoi"
 
 #. Text in echo
 #: psend/upload-process-form.php:216 psend/upload-process-form.php:370
 #: psend/upload-process-form.php:502
 msgid "File Name"
-msgstr ""
+msgstr "Nom du ficher"
 
 #. Text in echo
 #: psend/upload-by-ftp.php:82
 msgid "File name"
-msgstr ""
+msgstr "Nom du ficher"
 
 #. Text in echo
 #: psend/upload-by-ftp.php:83
 msgid "File size"
-msgstr ""
+msgstr "Taille du fichier"
 
 #. Text in echo
 #: psend/home.php:35 psend/manage-files.php:168 psend/clients.php:118
 msgid "Files"
-msgstr ""
+msgstr "Fichers"
 
 #. Text in echo
 #: psend/upload-process-form.php:498
 msgid "Files not uploaded"
-msgstr ""
+msgstr "Fichiers non ajoutés"
 
 #. Text in echo
 #: psend/upload-process-form.php:328
 msgid "Files ready to upload"
-msgstr ""
+msgstr "Fichiers prêts à être ajoutés"
 
 #. Text in echo
 #: psend/upload-process-form.php:212
 msgid "Files uploaded correctly"
-msgstr ""
+msgstr "Fichiers ajoutés correctement"
 
 #. Text in echo
 #: psend/users.php:144 psend/manage-files.php:236 psend/clients.php:167
 msgid "First"
-msgstr ""
+msgstr "Premier"
 
 #. Text in echo
 #: psend/options.php:184
 msgid "For example, d/m/Y h:i:s will result in something like"
-msgstr ""
+msgstr "For example, d/m/Y h:i:s will result in something like"
 
 #. Text in echo
 #: psend/options.php:185
 msgid "For the full list of available values, visit"
-msgstr ""
+msgstr "Pour la liste complète des valeurs disponibles, visitez le site"
 
 #. Text in echo
 #: psend/users.php:95 psend/clients.php:110 psend/install/index.php:215
 msgid "Full name"
-msgstr ""
+msgstr "Nom et prénom"
 
 #. Text in echo
 #: psend/options.php:145
 msgid "General"
-msgstr ""
+msgstr "Options générales"
 
 #. Text in echo
 #: psend/header.php:185
 msgid "General options"
-msgstr ""
+msgstr "Options générales"
 
 #. Text in function
 #: psend/manage-files.php:212
 msgid "Hidden"
-msgstr ""
+msgstr "Caché"
 
 #. Text in echo
 #: psend/manage-files.php:173
 msgid "Hide"
-msgstr ""
+msgstr "Cacher"
 
 #. Text in echo
 #: psend/header.php:122
 msgid "Home"
-msgstr ""
+msgstr "Accueil"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
@@ -432,6 +461,8 @@ msgid ""
 "If you don't want to be notified about new files, please contact the "
 "uploader."
 msgstr ""
+"Si vous ne voulez pas être informé de l'envoi de nouveaux fichiers, "
+"contactez l'administrateur"
 
 #. Text in echo
 #: psend/install/index.php:82
@@ -443,27 +474,27 @@ msgstr ""
 #. Text in function
 #: psend/upload-by-ftp.php:155
 msgid "Import files from FTP"
-msgstr ""
+msgstr "Importation de fichiers de FTP"
 
 #. Text in echo
 #: psend/home.php:70 psend/header.php:135
 msgid "Import from FTP"
-msgstr ""
+msgstr "Importation depuis le FTP"
 
 #. Text in echo
 #: psend/upload-by-ftp.php:72
 msgid "Important"
-msgstr ""
+msgstr "Important"
 
 #. Text in function
 #: psend/install/index.php:258 psend/install/index.php:235
 msgid "Install"
-msgstr ""
+msgstr "Installer"
 
 #. Text in echo
 #: psend/clients-form.php:110 psend/clients.php:116
 msgid "Internal contact"
-msgstr ""
+msgstr "Contact interne"
 
 #. Text in echo
 #: psend/install/index.php:81
@@ -473,17 +504,17 @@ msgstr ""
 #. Text in echo
 #: psend/options.php:223
 msgid "JPG Quality"
-msgstr ""
+msgstr "Qualité JPG"
 
 #. Text in echo
 #: psend/users.php:149 psend/manage-files.php:241 psend/clients.php:172
 msgid "Last"
-msgstr ""
+msgstr "Dernier"
 
 #. Text in echo
 #: psend/upload-by-ftp.php:84
 msgid "Last modified"
-msgstr ""
+msgstr "Dernière mise à jour"
 
 #. Text in echo
 #: psend/options.php:237
@@ -493,155 +524,159 @@ msgid ""
 "template uses a fixed width for the logo, however the Gallery one uses this "
 "settings to show the image on top."
 msgstr ""
+"Comme les options de vignettes, celles ci doivent être changées en prenant "
+"en compte la conception de modèle du client. Le modèle par défaut utilise "
+"une largeur fixe pour le logo, à la différence de la Galerie qui utilise ces "
+"paramètres pour afficher l'image sur le dessus."
 
 #. Text in echo
 #: psend/index.php:50
 msgid "Log in"
-msgstr ""
+msgstr "Connection"
 
 #. Text in echo
 #: psend/users-form.php:86
 msgid "Log in password"
-msgstr ""
+msgstr "Mots de passe"
 
 #. Text in echo
 #: psend/users.php:96 psend/clients-form.php:82 psend/users-form.php:82
 #: psend/clients.php:111 psend/install/index.php:223
 msgid "Log in username"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 #. Text in echo
 #: psend/templates/gallery/template.php:36 psend/header.php:98
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
 #. Text in echo
 #: psend/home.php:95 psend/header.php:152
 msgid "Manage clients"
-msgstr ""
+msgstr "Gestion des clients"
 
 #. Text in echo
 #: psend/upload-process-form.php:282 psend/manage-files.php:1
 #: psend/clients.php:147
 msgid "Manage files"
-msgstr ""
+msgstr "Gestion des fichiers"
 
 #. Text in echo
 #: psend/home.php:121 psend/header.php:169
 msgid "Manage users"
-msgstr ""
+msgstr "Gestion des utilisateurs"
 
 #. Text in echo
 #: psend/options.php:220 psend/options.php:244
 msgid "Max height"
-msgstr ""
+msgstr "Hauteur maxi"
 
 #. Text in echo
 #: psend/options.php:219 psend/options.php:241
 msgid "Max width"
-msgstr ""
+msgstr "Largeur maxi"
 
 #. Text in echo
 #: psend/clients-form.php:78 psend/users-form.php:78
 #: psend/upload-process-form.php:217 psend/upload-process-form.php:371
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "Name was not completed"
-msgstr ""
+msgstr "Nom incomplet"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "New file uploaded by a client."
-msgstr ""
+msgstr "Nouveau fichier ajouté par un client"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "New file uploaded for you"
-msgstr ""
+msgstr "Nouveau fichier ajouté pour vous"
 
 #. Text in echo
 #: psend/users.php:148 psend/manage-files.php:240 psend/clients.php:171
 msgid "Next"
-msgstr ""
+msgstr "Suivant"
 
 #. Text in echo
 #: psend/clients.php:136
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "No client was selected"
-msgstr ""
+msgstr "Aucun client sélectionné"
 
 #. Text in function
 #: psend/clients-edit.php:112
 msgid "No client was selected."
-msgstr ""
+msgstr "Aucun client sélectionné"
 
 #. Text in function
 #: psend/users-edit.php:101
 msgid "No user was selected."
-msgstr ""
+msgstr "Aucun utilisateur sélectionné"
 
 #. Text in echo
 #: psend/clients.php:115
 msgid "Notify"
-msgstr ""
+msgstr "Avertissez"
 
 #. Text in echo
 #: psend/clients-form.php:106
 msgid "Notify new uploads by e-mail"
-msgstr ""
+msgstr "Avertissez des fichiers ajoutés par e-mail"
 
 #. Text in echo
 #: psend/header.php:183
 msgid "Options"
-msgstr ""
+msgstr "Options"
 
 #. Text in function
 #: psend/options.php:74
 msgid "Options updated succesfuly."
-msgstr ""
+msgstr "Options mises à jour avec succès"
 
 #. Text in echo
 #: psend/users.php:146 psend/manage-files.php:238 psend/clients.php:169
 msgid "Page"
-msgstr ""
+msgstr "Page"
 
 #. Text in echo
 #: psend/index.php:193 psend/includes/vars.php:1 psend/clients-form.php:86
 #: psend/install/index.php:227
 msgid "Password"
-msgstr ""
+msgstr "Mots de passe"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "Password must be alphanumeric (a-z,A-Z,0-9 allowed)"
-msgstr ""
+msgstr "Password must be alphanumeric (a-z,A-Z,0-9 allowed)"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "Password verification was not completed"
-msgstr ""
+msgstr "Le mot de passe de vérification est incorrect"
 
 #. Text in echo
 #: psend/index.php:177 psend/includes/vars.php:1
 msgid "Password was not completed"
-msgstr ""
+msgstr "Le mot de passe est incorrect"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "Passwords did not match"
-msgstr ""
+msgstr "Les mots de passe ne correspondent pas"
 
 #. Text in echo
 #: psend/options.php:110
 msgid "Please complete all the fields."
-msgstr ""
+msgstr "Remplissez tous les champs"
 
 #. Text in echo
 #: psend/upload-process-form.php:329
@@ -649,11 +684,13 @@ msgid ""
 "Please complete the following information to finish the uploading proccess. "
 "Remember that \"Name\" is a required field."
 msgstr ""
+"Complétez les informations suivantes pour continuer le téléchargement. Le "
+"nom est un champ obligatoire."
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "Please contact the administrator if you need further assistance."
-msgstr ""
+msgstr "Pour toute aide supplémentaire, veuillez contacter l'administrateur."
 
 #. Text in echo
 #: psend/manage-files.php:83
@@ -661,6 +698,8 @@ msgid ""
 "Please go to the clients administration page and select \"Manage files\" "
 "from any client."
 msgstr ""
+"Please go to the clients administration page and select \"Manage files\" "
+"from any client."
 
 #. Text in echo
 #: psend/manage-files.php:259
@@ -668,66 +707,68 @@ msgid ""
 "Please note that downloading a file from here will not add to the download "
 "count."
 msgstr ""
+"Notez que le téléchargement d'un fichier à partir d'ici ne sera pas ajouté à "
+"la liste de téléchargement."
 
 #. Text in echo
 #: psend/branding.php:74
 msgid "Please select an image file to upload"
-msgstr ""
+msgstr "Sélectionnez un fichier image à télécharger"
 
 #. Text in function
 #: psend/clients.php:54
 msgid "Please select at least one client to delete."
-msgstr ""
+msgstr "Sélectionnez au moins un client à supprimer"
 
 #. Text in echo
 #: psend/clients.php:35
 msgid "Please select at least one client to proceed."
-msgstr ""
+msgstr "Sélectionnez au moins un client pour continuer"
 
 #. Text in echo
 #: psend/upload-by-ftp.php:125 psend/manage-files.php:48
 msgid "Please select at least one file to proceed."
-msgstr ""
+msgstr "Sélectionnez au moins un fichier pour continuer"
 
 #. Text in function
 #: psend/manage-files.php:90
 msgid "Please select at least one file."
-msgstr ""
+msgstr "Sélectionnez au moins un fichier"
 
 #. Text in function
 #: psend/users.php:54
 msgid "Please select at least one user to delete."
-msgstr ""
+msgstr "Sélectionnez au moins un utilisateur à supprimer"
 
 #. Text in echo
 #: psend/users.php:34
 msgid "Please select at least one user to proceed."
-msgstr ""
+msgstr "Sélectionnez au moins un utilisateur pour continuer"
 
 #. Text in echo
 #: psend/users.php:145 psend/manage-files.php:237 psend/clients.php:168
 msgid "Prev."
-msgstr ""
+msgstr "Précédent"
 
 #. Text in echo
 #: psend/manage-files.php:177
 msgid "Proceed"
-msgstr ""
+msgstr "Continuer"
 
 #. Text in echo
 #: psend/includes/functions.php:198
 msgid "ProjectSend Free software (GPL2) | 2007 - "
-msgstr ""
+msgstr "Extranet Aquaprovence"
 
 #. Text in echo
 #: psend/install/index.php:204
 msgid "ProjectSend URI (address)"
-msgstr ""
+msgstr "Aquaprovence (address)"
 
 #. Text in function
 #: psend/install/index.php:258
 msgid "ProjectSend URI was not completed."
-msgstr ""
+msgstr "ProjectSend URI was not completed."
 
 #. Text in echo
 #: psend/index.php:64 psend/header.php:96
@@ -737,73 +778,73 @@ msgstr ""
 #. Text in echo
 #: psend/index.php:197
 msgid "Remember me"
-msgstr ""
+msgstr "Se souvenir de moi"
 
 #. Text in echo
 #: psend/install/index.php:231
 msgid "Repeat"
-msgstr ""
+msgstr "Répéter"
 
 #. Text in echo
 #: psend/clients-form.php:90 psend/users-form.php:90
 msgid "Repeat password"
-msgstr ""
+msgstr "Répéter le mot de passe"
 
 #. Text in echo
 #: psend/users.php:98 psend/users-form.php:98
 msgid "Role"
-msgstr ""
+msgstr "Rôle"
 
 #. Text in function
 #: psend/clients-form.php:58
 msgid "Save client"
-msgstr ""
+msgstr "Sauvegarder client"
 
 #. Text in function
 #: psend/users-form.php:59
 msgid "Save user"
-msgstr ""
+msgstr "Sauvegarder l'utilisateur"
 
 #. Text in echo
 #: psend/upload-process-form.php:431
 msgid "Select client"
-msgstr ""
+msgstr "Sauvegarder client"
 
 #. Text in echo
 #: psend/branding.php:101
 msgid "Select image to upload"
-msgstr ""
+msgstr "Cliquez sur l'image à ajouter"
 
 #. Text in echo
 #: psend/clients.php:99
 msgid "Selected clients actions"
-msgstr ""
+msgstr "Actions pour les clients sélectionnés"
 
 #. Text in echo
 #: psend/manage-files.php:171
 msgid "Selected files actions"
-msgstr ""
+msgstr "Actions pour les fichiers sélectionnés"
 
 #. Text in echo
 #: psend/users.php:85
 msgid "Selected users actions"
-msgstr ""
+msgstr "Actions pour les utilisateurs sélectionnés"
 
 #. Text in echo
 #: psend/users.php:150 psend/manage-files.php:174 psend/manage-files.php:242
 #: psend/clients.php:173
 msgid "Show"
-msgstr ""
+msgstr "Montrer"
 
 #. Text in echo
 #: psend/options.php:149 psend/install/index.php:200
 msgid "Site name"
-msgstr ""
+msgstr "Nom du site"
 
 #. Text in function
 #: psend/install/index.php:258
 msgid "Sitename was not completed."
-msgstr ""
+msgstr "Le nom du site est incomplet"
 
 #. Text in echo
 #: psend/options.php:236
@@ -814,67 +855,71 @@ msgstr ""
 #: psend/options.php:74
 msgid "Some fields were not completed. Options could not be saved."
 msgstr ""
+"Certains champs n'ont pas été achevés. Les options ne pourront pas être "
+"sauvées."
 
 #. Text in function
 #: psend/header.php:210
 msgid "System Administration"
-msgstr ""
+msgstr "Administration système"
 
 #. Text in function
 #: psend/sys.vars.php:1
 msgid "System Administrator"
-msgstr ""
+msgstr "Administrateur système"
 
 #. Text in echo
 #: psend/header.php:108
 msgid "System Notice:"
-msgstr ""
+msgstr "Notice système"
 
 #. Text in echo
 #: psend/options.php:138
 msgid "System URI"
-msgstr ""
+msgstr "System URI"
 
 #. Text in echo
 #: psend/options.php:134
 msgid "System location"
-msgstr ""
+msgstr "Options système"
 
 #. Text in function
 #: psend/options.php:268
 msgid "System options"
-msgstr ""
+msgstr "Options système"
 
 #. Text in echo
 #: psend/home.php:118
 msgid "System users"
-msgstr ""
+msgstr "Utilisateurs système"
 
 #. Text in echo
 #: psend/clients-form.php:98 psend/clients.php:113
 msgid "Telephone"
-msgstr ""
+msgstr "Téléphone"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "Thank you for using ProjectSend."
-msgstr ""
+msgstr "Merci de votre confiance"
 
 #. Text in function
 #: psend/clients-add.php:72
 msgid ""
 "The client could not be created. A folder with this name already exists."
-msgstr ""
+msgstr "Le client n'a pas pu être créé. Un dossier portant ce nom existe déjà."
 
 #. Text in echo
 #: psend/header.php:108
 msgid "The database was updated to support this version of the software."
 msgstr ""
+"La base de données a été mise à jour pour supporter cette version du "
+"logiciel."
 
 #. Text in function
 #: psend/branding.php:25
 msgid "The file could not be moved to the corresponding folder."
-msgstr ""
+msgstr "Le fichier n'a pas pu être déplacé vers le dossier correspondant."
 
 #. Text in function
 #: psend/branding.php:25
@@ -882,16 +927,18 @@ msgid ""
 "The file you selected is not a valid image one. Please upload a jpg, gif or "
 "png formated logo picture."
 msgstr ""
+"Le fichier que vous avez sélectionné n'est pas une image valide. Téléchargez "
+"un fichier jpg, gif ou png"
 
 #. Text in function
 #: psend/includes/classes/form-validation.php:1
 msgid "The following errors were found"
-msgstr ""
+msgstr "Les erreurs suivantes ont été trouvées"
 
 #. Text in function
 #: psend/branding.php:25
 msgid "The image was uploaded correctly."
-msgstr ""
+msgstr "L'image a été téléchargée correctement."
 
 #. Text in echo
 #: psend/branding.php:87
@@ -900,87 +947,94 @@ msgid ""
 "see. The size on this preview is fixed, but remember that you can change the "
 "display size and picture quality for your client's pages on the"
 msgstr ""
+"L'image sur la droite n'est pas une représentation réelle de ce qu'ils vont "
+"voir. La taille sur cet aperçu est fixé, mais n'oubliez pas que vous pouvez "
+"changer la taille d'affichage et la qualité d'image pour les pages de votre "
+"client"
 
 #. Text in function
 #: psend/clients.php:54
 msgid "The selected clients were deleted."
-msgstr ""
+msgstr "Les clients sélectionnés ont été supprimés."
 
 #. Text in function
 #: psend/manage-files.php:90
 msgid "The selected files were deleted."
-msgstr ""
+msgstr "Les fichiers sélectionnés ont été supprimés."
 
 #. Text in function
 #: psend/manage-files.php:90
 msgid "The selected files were marked as hidden."
-msgstr ""
+msgstr "Les fichiers sélectionnés ont été marqués comme étant masqués."
 
 #. Text in function
 #: psend/manage-files.php:90
 msgid "The selected files were marked as visible."
-msgstr ""
+msgstr "Les fichiers sélectionnés ont été marqués comme visibles."
 
 #. Text in function
 #: psend/users.php:54
 msgid "The selected users were deleted."
-msgstr ""
+msgstr "Les utilisateurs sélectionnés ont été supprimés."
 
 #. Text in function
 #: psend/upload-process-form.php:569
 msgid "The site administrator could not be e-mailed about the new files."
 msgstr ""
+"L'administrateur du site n'a pas pu être contacté par email sur les nouveaux "
+"fichiers."
 
 #. Text in function
 #: psend/index.php:153
 msgid "The supplied password is incorrect."
-msgstr ""
+msgstr "Le mot de passe fourni est incorrect."
 
 #. Text in function
 #: psend/index.php:153
 msgid "The supplied username doesn't exist."
-msgstr ""
+msgstr "Le nom d'utilisateur fourni n'existe pas."
 
 #. Text in echo
 #: psend/includes/functions.php:214
 msgid "There are no clients at the moment"
-msgstr ""
+msgstr "Il n'ya pas de client pour le moment"
 
 #. Text in echo
 #: psend/upload-by-ftp.php:139
 msgid "There are no files available to add right now."
-msgstr ""
+msgstr "Il n'y a pas de fichier disponible à ajouter maintenant"
 
 #. Text in echo
 #: psend/manage-files.php:156
 msgid "There are no files for this client."
-msgstr ""
+msgstr "Il n'ya pas de fichier pour ce client."
 
 #. Text in function
 #: psend/clients-edit.php:112
 msgid "There is no client with that ID number."
-msgstr ""
+msgstr "Il n'ya pas de client avec ce numéro d'identification."
 
 #. Text in function
 #: psend/users-edit.php:101
 msgid "There is no user with that ID number."
-msgstr ""
+msgstr "Il n'ya pas d'utilisateur avec ce numéro d'identification."
 
 #. Text in function
 #: psend/install/index.php:150
 msgid "There seems to be an error. Please try again."
-msgstr ""
+msgstr "Il semble y avoir une erreur. Essayez de nouveau"
 
 #. Text in function
 #: psend/branding.php:25
 msgid "There was an error uploading the file. Please try again."
 msgstr ""
+"Il y a eu un problème lors du chargement du fichier. Essayez de nouveau."
 
 #. Text in function
 #: psend/users-add.php:65 psend/clients-add.php:72 psend/options.php:74
 #: psend/clients-edit.php:112 psend/users-edit.php:101
 msgid "There was an error. Please try again."
-msgstr ""
+msgstr "Il y a eu une erreur. S'il vous plaît essayez de nouveau."
 
 #. Text in echo
 #: psend/options.php:135
@@ -988,11 +1042,15 @@ msgid ""
 "These options are to be changed only if you are moving the system to another "
 "place. Be careful when chaging them or everything will stop working."
 msgstr ""
+"Ces options doivent être modifiés que si vous déplacez le système à un autre "
+"endroit. Soyez prudent lors de leur chaging ou tout va cesser de travailler."
 
 #. Text in function
 #: psend/clients-form.php:118 psend/users-form.php:110
 msgid "This account information will be e-mailed to the address supplied above"
 msgstr ""
+"Ces informations de compte seront envoyés par courriel à l'adresse fournie "
+"ci-dessus"
 
 #. Text in echo
 #: psend/install/index.php:212
@@ -1001,6 +1059,9 @@ msgid ""
 "deleted afterwards. Password should be between <strong>6 and 12 characters "
 "long</strong>."
 msgstr ""
+"This info will be used to create a default system user, which can't be "
+"deleted afterwards. Password should be between <strong>6 and 12 characters "
+"long</strong>."
 
 #. Text in echo
 #: psend/upload-by-ftp.php:146
@@ -1010,6 +1071,10 @@ msgid ""
 "your files but then fail to complete the form, the files will still be there "
 "for you to use later."
 msgstr ""
+"C'est le même dossier où les fichiers téléchargés par l'interface web seront "
+"situés avant de les affecter à un client. Donc, si vous avez terminé le "
+"téléchargement de vos fichiers mais ne parvenez pas à remplir le formulaire, "
+"les fichiers seront toujours là pour les utiliser plus tard."
 
 #. Text in echo
 #: psend/upload-by-ftp.php:72
@@ -1018,16 +1083,19 @@ msgid ""
 "settings. If the file you need to add is not listed here, make sure to add "
 "the extension to the \"Allowed file extensions\" box on the options page."
 msgstr ""
+"This list only shows the files that are allowed according to your security "
+"settings. If the file you need to add is not listed here, make sure to add "
+"the extension to the \"Allowed file extensions\" box on the options page."
 
 #. Text in function
 #: psend/clients-edit.php:112 psend/users-edit.php:101
 msgid "This page is not intended to be accessed directly."
-msgstr ""
+msgstr "Cette page n'est pas destinée à être directement accessible."
 
 #. Text in echo
 #: psend/options.php:214
 msgid "Thumbnails"
-msgstr ""
+msgstr "Miniatures"
 
 #. Text in echo
 #: psend/options.php:215
@@ -1036,73 +1104,81 @@ msgid ""
 "unless you are using the system to upload only images and change the default "
 "client's template accordingly."
 msgstr ""
+"Les vignettes sont utilisées sur les listes de fichiers. Il est recommandé "
+"de les conserver petites, sauf si vous utilisez le système pour télécharger "
+"des images seules et de changer de modèle du client par défaut en "
+"conséquence."
 
 #. Text in echo
 #: psend/options.php:182
 msgid "Time format"
-msgstr ""
+msgstr "Format de l'heure"
 
 #. Text in echo
 #: psend/options.php:172
 msgid "Timezone"
-msgstr ""
+msgstr "Fuseau horaire"
 
 #. Text in echo
 #: psend/upload-by-ftp.php:141
 msgid "To use this feature you need to upload your files via FTP to the folder"
 msgstr ""
+"Pour utiliser cette fonctionnalité, vous devez télécharger vos fichiers via "
+"FTP dans le dossier"
 
 #. Text in echo
 #: psend/home.php:97
 msgid "Total clients:"
-msgstr ""
+msgstr "Total de clients :"
 
 #. Text in echo
 #: psend/home.php:40
 msgid "Total files on account:"
-msgstr ""
+msgstr "Total de fichiers sur le compte :"
 
 #. Text in echo
 #: psend/home.php:72
 msgid "Total files:"
-msgstr ""
+msgstr "Total de fichiers"
 
 #. Text in echo
 #: psend/home.php:123
 msgid "Total users:"
-msgstr ""
+msgstr "Total d'utilisateurs"
 
 #. Text in echo
 #: psend/options.php:255
 msgid "Update all options"
-msgstr ""
+msgstr "Options générales"
 
 #. Text in echo
 #: psend/branding.php:105
 msgid "Upload"
-msgstr ""
+msgstr "Ajouter"
 
 #. Text in echo
 #: psend/home.php:67 psend/upload-from-computer.php:139
 #: psend/templates/gallery/template.php:37 psend/upload-process-form.php:569
 #: psend/header.php:124
 msgid "Upload files"
-msgstr ""
+msgstr "Ajouter des fichiers"
 
 #. Text in echo
 #: psend/home.php:69 psend/header.php:134
 msgid "Upload from computer"
-msgstr ""
+msgstr "Ajouter depuis l'ordinateur"
 
 #. Text in echo
 #: psend/home.php:140
 msgid "Upload your company logo. It will appear in every client's page."
 msgstr ""
+"Téléchargez votre logo d'entreprise. Il apparaîtra dans la page de chaque "
+"client."
 
 #. Text in function
 #: psend/sys.vars.php:1
 msgid "Uploader"
-msgstr ""
+msgstr "Télécharger"
 
 #. Text in echo
 #: psend/branding.php:82
@@ -1111,101 +1187,105 @@ msgid ""
 "one. This image will be shown to your clients when they access their file "
 "list."
 msgstr ""
+"Utilisez cette page pour télécharger le logo de votre entreprise, ou mettre "
+"à jour le logo actuel. Cette image sera affichée à vos clients lorsqu'ils "
+"accèdent à leur liste de fichiers."
 
 #. Text in function
 #: psend/users-add.php:65
 msgid "User added correctly."
-msgstr ""
+msgstr "Utilisateur ajouté correctement"
 
 #. Text in function
 #: psend/users-edit.php:101
 msgid "User edited correctly."
-msgstr ""
+msgstr "Utilisateur correctement modifié"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "User level was not specified"
-msgstr ""
+msgstr "Le niveau de l'utilisateur n'a pas été précisé"
 
 #. Text in echo
 #: psend/index.php:189 psend/includes/vars.php:1
 msgid "Username"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "Username must be alphanumeric (a-z,A-Z,0-9 allowed)"
-msgstr ""
+msgstr "Username must be alphanumeric (a-z,A-Z,0-9 allowed)"
 
 #. Text in echo
 #: psend/index.php:176 psend/includes/vars.php:1
 msgid "Username was not completed"
-msgstr ""
+msgstr "Le nom d'utilisateur n'est pas terminé"
 
 #. Text in echo
 #: psend/users.php:82 psend/header.php:166
 msgid "Users"
-msgstr ""
+msgstr "Utilisateurs"
 
 #. Text in function
 #: psend/users.php:54
 msgid "Users administration"
-msgstr ""
+msgstr "Administration des utilisateurs"
 
 #. Text in echo
 #: psend/upload-process-form.php:283 psend/clients.php:148
 msgid "View as client"
-msgstr ""
+msgstr "Voir en tant que client"
 
 #. Text in echo
 #: psend/upload-process-form.php:288 psend/header.php:201
 msgid "View my files"
-msgstr ""
+msgstr "Voir mes fichiers"
 
 #. Text in function
 #: psend/manage-files.php:212
 msgid "Visible"
-msgstr ""
+msgstr "Visible"
 
 #. Text in function
 #: psend/home.php:151 psend/includes/classes/send-email.php:1
 msgid "Welcome to ProjectSend"
-msgstr ""
+msgstr "Welcome to ProjectSend"
 
 #. Text in echo
 #: psend/upload-process-form.php:248 psend/clients.php:136
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 #. Text in echo
 #: psend/users.php:38 psend/manage-files.php:54 psend/clients.php:39
 msgid "You are about to delete"
-msgstr ""
+msgstr "Vous êtes sur le point de supprimer"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "You can access a list of all your files"
-msgstr ""
+msgstr "Vous pouvez accéder à la liste de tous vos fichiers"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "You can log in following this link"
-msgstr ""
+msgstr "Vous pouvez vous connecter en suivant ce lien"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "You can manage this client's account and the corresponding files"
 msgstr ""
+"Vous pouvez gérer le compte de ce client et les fichiers correspondants"
 
 #. Text in echo
 #: psend/install/index.php:149
 msgid "You may proceed to"
-msgstr ""
+msgstr "Vous pouvez poursuivre"
 
 #. Text in echo
 #: psend/upload-from-computer.php:114
 msgid "You must select at least one file to upload."
-msgstr ""
+msgstr "Vous devez sélectionner au moins un fichier à télécharger."
 
 #. Text in echo
 #: psend/install/index.php:197
@@ -1216,6 +1296,11 @@ msgid ""
 "settings before installing. If the file doesn't exist, you can create it by "
 "renanming the dummy file sys.config.sample.php."
 msgstr ""
+"Vous devez fournir ces données pour une installation correcte du système. Le "
+"nom du site sera visible dans le panneau du système et les listes du client. "
+"<br /> Ne pas oublier de modifier <em> / includes / sys.config.php </ em> "
+"avec vos paramètres de base de données avant d'installer. Si le fichier "
+"n'existe pas, vous pouvez le créer en renommant sys.config.sample.php"
 
 #. Text in function
 #: psend/includes/userlevel_check.php:134
@@ -1223,6 +1308,9 @@ msgid ""
 "Your account type doesn't allow you to view this page. Please contact a "
 "system administrator if you need to access this functions."
 msgstr ""
+"Votre type de compte ne vous permet pas de voir cette page. S'il vous plaît "
+"contactez un administrateur système si vous avez besoin d'accéder à ces "
+"fonctions."
 
 #. Text in echo
 #: psend/upload-from-computer.php:125
@@ -1230,88 +1318,95 @@ msgid ""
 "Your browser doesn't have Flash, Silverlight, Google Gears, BrowserPlus or "
 "HTML5 support. Please update your browser or install Adobe Flash to continue."
 msgstr ""
+"Votre navigateur ne dispose pas de Flash, Silverlight, Google Gears, "
+"BrowserPlus ou de soutien HTML5. S'il vous plaît mettre à jour votre "
+"navigateur ou installer Adobe Flash pour continuer."
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "Your password"
-msgstr ""
+msgstr "Votre mot de passe"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid ""
 "Your password can only contain letters, numbers and the following characters:"
 msgstr ""
+"Votre mot de passe ne peut contenir que des lettres, des chiffres et des "
+"caractères suivants :"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "Your username"
-msgstr ""
+msgstr "Votre nom d'utilisateur"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "and"
-msgstr ""
+msgstr "et"
 
 #. Text in function
 #: psend/includes/classes/send-email.php:1
 msgid "by logging in here"
-msgstr ""
+msgstr "en vous connectant ici"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "characters long"
-msgstr ""
+msgstr "caractères"
 
 #. Text in echo
 #: psend/clients.php:40
 msgid ""
 "clients and all of the assigned files. Are you sure you want to continue?"
 msgstr ""
+"les clients et tous les fichiers sont affectés. Etes-vous sûr de vouloir "
+"continuer?"
 
 #. Text in echo
 #: psend/manage-files.php:55
 msgid "files. Are you sure you want to continue?"
-msgstr ""
+msgstr "fichiers. Etes-vous sûr de vouloir continuer ?"
 
 #. Text in function
 #: psend/includes/vars.php:1
 msgid "length should be between"
-msgstr ""
+msgstr "La longueur doit être comprise entre"
 
 #. Text in echo
 #: psend/install/index.php:149
 msgid "log in"
-msgstr ""
+msgstr "connexion"
 
 #. Text in echo
 #: psend/branding.php:87
 msgid "options"
-msgstr ""
+msgstr "Options"
 
 #. Text in echo
 #: psend/branding.php:87
 msgid "section."
-msgstr ""
+msgstr "Section"
 
 #. Text in echo
 #: psend/install/index.php:67
 msgid "setup"
-msgstr ""
+msgstr "installation"
 
 #. Text in echo
 #: psend/options.php:185
 msgid "this page"
-msgstr ""
+msgstr "cette page"
 
 #. Text in echo
 #: psend/includes/functions.php:215
 msgid "to be able to upload files for that account."
-msgstr ""
+msgstr "pour être en mesure de télécharger des fichiers pour ce compte."
 
 #. Text in echo
 #: psend/users.php:39
 msgid "users. Are you sure you want to continue?"
-msgstr ""
+msgstr "utilisateurs. Etes-vous sûr de vouloir continuer ?"
 
 #. Text in echo
 #: psend/header.php:96
@@ -1321,4 +1416,16 @@ msgstr ""
 #. Text in echo
 #: psend/install/index.php:149
 msgid "with your newely created username and password."
-msgstr ""
+msgstr "avec votre nom d'utilisateur et mot de passe nouvellement créés"
+
+#~ msgid "Company logo"
+#~ msgstr "Logo de l'entreprise"
+
+#~ msgid "Security"
+#~ msgstr "Sécurité"
+
+#~ msgid "System location options"
+#~ msgstr "Options de localisation du système"
+
+#~ msgid "Update"
+#~ msgstr "Mise à jour"

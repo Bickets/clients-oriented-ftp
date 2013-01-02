@@ -1,0 +1,113 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Language: es\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. Text in echo
+#: manage-files.php:194
+msgid "Actions"
+msgstr "Aciones"
+
+#. Text in echo
+#: templates/default/template.php:54 manage-files.php:189
+msgid "Description"
+msgstr "Descripción"
+
+#. Text in echo
+#: templates/default/template.php:57 templates/default/template.php:88
+#: manage-files.php:222
+msgid "Download"
+msgstr "Descarga"
+
+#. Text in echo
+#: manage-files.php:193
+msgid "Download count"
+msgstr "Contador de descargas"
+
+#. Text in function
+#: templates/default/template.php:1
+msgid "File downloads"
+msgstr "Descarga de archivos"
+
+#. Text in echo
+#: templates/default/template.php:104
+msgid "First"
+msgstr "Primero"
+
+#. Text in echo
+#: templates/default/template.php:56
+msgid "Image preview"
+msgstr "Vista previa de la imagen"
+
+#. Text in echo
+#: templates/default/template.php:109
+msgid "Last"
+msgstr "Último"
+
+#. Text in echo
+#: templates/default/template.php:53 manage-files.php:188
+msgid "Name"
+msgstr "Nombre"
+
+#. Text in echo
+#: templates/default/template.php:108
+msgid "Next"
+msgstr "Siguiente"
+
+#. Text in echo
+#: templates/default/template.php:106
+msgid "Page"
+msgstr "Página"
+
+#. Text in echo
+#: templates/default/template.php:105
+msgid "Prev."
+msgstr "Anterior"
+
+#. Text in echo
+#: templates/default/template.php:110
+msgid "Show"
+msgstr "Mostrar"
+
+#. Text in echo
+#: templates/default/template.php:55 manage-files.php:190
+msgid "Size"
+msgstr "Tamaño"
+
+#. Text in echo
+#: manage-files.php:191
+msgid "Status"
+msgstr "Estado"
+
+#. Text in echo
+#: templates/default/template.php:41
+msgid "There are no files."
+msgstr "No hay archivos."
+
+#. Text in echo
+#: manage-files.php:68
+msgid "This will delete the file permanently. Continue?"
+msgstr "Esto eliminará el archivo de forma permanente. ¿Desea continuar?"
+
+#. Text in echo
+#: manage-files.php:187
+msgid "Uploaded"
+msgstr "Cargado"
+
+#. Text in echo
+#: templates/default/template.php:52
+msgid "Uploaded date"
+msgstr "fecha de publicación"
+
+#. Text in echo
+#: manage-files.php:192
+msgid "Uploader"
+msgstr "Subido por"

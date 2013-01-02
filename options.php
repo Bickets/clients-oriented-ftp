@@ -120,10 +120,10 @@ $allowed_file_types = implode(',',$allowed_file_types);
 
 				<div id="tab-container" class='tab-container'>
 					<ul class="etabs">
-						<li class="tab"><a href="#tab_general">General Options</a></li>
-						<li class="tab"><a href="#tab_security">Security</a></li>
-						<li class="tab"><a href="#tab_thumbs">Thumbnails</a></li>
-						<li class="tab"><a href="#tab_logo">Company logo</a></li>
+						<li class="tab"><a href="#tab_general"><?php _e('General Options','cftp_admin'); ?></a></li>
+						<li class="tab"><a href="#tab_security"><?php _e('Security','cftp_admin'); ?></a></li>
+						<li class="tab"><a href="#tab_thumbs"><?php _e('Thumbnails','cftp_admin'); ?></a></li>
+						<li class="tab"><a href="#tab_logo"><?php _e('Company logo','cftp_admin'); ?></a></li>
 					</ul>
 					<div class="panel-container">
 	
