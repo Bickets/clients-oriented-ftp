@@ -129,6 +129,34 @@ function check_if_notify_client($client)
 
 
 /**
+ * Get all the user information knowing only the log in username
+ *
+ * @return array
+ */
+function get_user_by_username($user)
+{
+	global $database;
+	$get_client_info = $database->query("SELECT * FROM tbl_users WHERE user='$user'");
+	while ($row = mysql_fetch_assoc($get_client_info)) {
+		$information = array(
+							'id' => $row['id'],
+							'username' => $row['user'],
+							'name' => $row['name'],
+							'email' => $row['email'],
+							'level' => $row['level'],
+							'created_date' => $row['timestamp']
+						);
+		if(!empty($information)) {
+			return $information;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
+
+/**
  * Standard footer mark up and information generated on this function to
  * prevent code repetition.
  * Used on the default template, log in page, install page and the back-end

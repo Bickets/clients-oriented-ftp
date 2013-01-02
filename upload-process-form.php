@@ -149,7 +149,18 @@ $sql = $database->query($cq);
 													'client' => $file['client'],
 													'client_name' => $clients[$file['client']]
 												);
-							$clients_to_email[] = $file['client'];
+							/**
+							 * If the uploader is a client, notify the user who
+							 * created this clients' account.
+							 */
+							if ($current_level == 0) {
+								$who_made_me = get_client_by_username(get_current_user_username());
+								$creator_info = get_user_by_username($who_made_me['created_by']);
+								$clients_to_email[] = $creator_info['email'];
+							}
+							else {
+								$clients_to_email[] = $file['client'];
+							}
 						}
 					}
 				}
