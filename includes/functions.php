@@ -6,6 +6,35 @@
  * @subpackage	Functions
  */
 
+
+/**
+ * Check if ProjectSend is installed by looping over the main tables.
+ * All tables must exist to verify the installation.
+ * If any table is missing, the installation is considered corrupt.
+ */
+function is_projectsend_installed() {
+	global $database;
+	global $current_tables;
+
+	$database->MySQLDB();
+	$tables_missing = 0;
+	/**
+	 * This table list is defined on sys.vars.php
+	 */
+	foreach ($current_tables as $table) {
+		$this_table = $database->query("SHOW TABLES LIKE '$table'");
+		if (mysql_num_rows($this_table) == 0) {
+			$tables_missing++;
+		}
+	}
+	if ($tables_missing > 0) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
 /**
  * Check if a client id exists on the database.
  * Used on the Edit client page.

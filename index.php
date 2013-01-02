@@ -28,7 +28,10 @@ require_once('sys.includes.php');
  * page since all other are inaccessible if no valid session or cookie
  * is set.
  */
-require_once('sys.check.installed.php');
+if (!is_projectsend_installed()) {
+	header("Location:install/index.php");
+	exit;
+}
 
 /** If logged as a system user, go directly to the back-end homepage */
 if (in_session_or_cookies($allowed_enter)) {
