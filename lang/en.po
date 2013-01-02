@@ -79,7 +79,7 @@ msgid "Account Manager"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:100 psend/clients.php:119
+#: psend/clients.php:119 psend/users.php:100
 msgid "Actions"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgid "Add user"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:99 psend/clients.php:117
+#: psend/clients.php:117 psend/users.php:99
 msgid "Added on"
 msgstr ""
 
@@ -195,7 +195,7 @@ msgid ""
 msgstr ""
 
 #. Text in echo
-#: psend/home.php:137 psend/branding.php:25 psend/header.php:186
+#: psend/header.php:186 psend/home.php:137 psend/branding.php:25
 msgid "Branding"
 msgstr ""
 
@@ -239,7 +239,7 @@ msgid "Client's template"
 msgstr ""
 
 #. Text in echo
-#: psend/home.php:92 psend/clients.php:96 psend/header.php:149
+#: psend/header.php:149 psend/home.php:92 psend/clients.php:96
 msgid "Clients"
 msgstr ""
 
@@ -248,13 +248,18 @@ msgstr ""
 msgid "Clients Administration"
 msgstr ""
 
+#. Text in echo
+#: psend/options.php:126
+msgid "Company logo"
+msgstr ""
+
 #. Text in function
 #: psend/install/index.php:133
 msgid "Congratulations! Everything is up and running."
 msgstr ""
 
 #. Text in echo
-#: psend/upload-by-ftp.php:104 psend/upload-from-computer.php:128
+#: psend/upload-from-computer.php:128 psend/upload-by-ftp.php:104
 #: psend/upload-process-form.php:486
 msgid "Continue"
 msgstr ""
@@ -280,7 +285,7 @@ msgid "Default system administrator options"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:86 psend/manage-files.php:175 psend/clients.php:100
+#: psend/manage-files.php:175 psend/clients.php:100 psend/users.php:86
 msgid "Delete"
 msgstr ""
 
@@ -295,8 +300,8 @@ msgid "Disabled for this client"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:97 psend/clients-form.php:102 psend/users-form.php:94
-#: psend/clients.php:114
+#: psend/users-form.php:94 psend/clients-form.php:102 psend/clients.php:114
+#: psend/users.php:97
 msgid "E-mail"
 msgstr ""
 
@@ -316,7 +321,7 @@ msgid "E-mail for notifications"
 msgstr ""
 
 #. Text in function
-#: psend/users-add.php:65 psend/clients-add.php:72
+#: psend/clients-add.php:72 psend/users-add.php:65
 msgid "E-mail notification couldn't be sent."
 msgstr ""
 
@@ -326,7 +331,7 @@ msgid "E-mail was not completed"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:127 psend/clients.php:149
+#: psend/clients.php:149 psend/users.php:127
 msgid "Edit"
 msgstr ""
 
@@ -362,7 +367,7 @@ msgid "File size"
 msgstr ""
 
 #. Text in echo
-#: psend/home.php:35 psend/manage-files.php:168 psend/clients.php:118
+#: psend/manage-files.php:168 psend/home.php:35 psend/clients.php:118
 msgid "Files"
 msgstr ""
 
@@ -382,7 +387,7 @@ msgid "Files uploaded correctly"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:144 psend/manage-files.php:236 psend/clients.php:167
+#: psend/manage-files.php:236 psend/clients.php:167 psend/users.php:144
 msgid "First"
 msgstr ""
 
@@ -397,13 +402,18 @@ msgid "For the full list of available values, visit"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:95 psend/clients.php:110 psend/install/index.php:215
+#: psend/install/index.php:215 psend/clients.php:110 psend/users.php:95
 msgid "Full name"
 msgstr ""
 
 #. Text in echo
 #: psend/options.php:145
 msgid "General"
+msgstr ""
+
+#. Text in echo
+#: psend/options.php:123
+msgid "General Options"
 msgstr ""
 
 #. Text in echo
@@ -446,7 +456,7 @@ msgid "Import files from FTP"
 msgstr ""
 
 #. Text in echo
-#: psend/home.php:70 psend/header.php:135
+#: psend/header.php:135 psend/home.php:70
 msgid "Import from FTP"
 msgstr ""
 
@@ -476,7 +486,7 @@ msgid "JPG Quality"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:149 psend/manage-files.php:241 psend/clients.php:172
+#: psend/manage-files.php:241 psend/clients.php:172 psend/users.php:149
 msgid "Last"
 msgstr ""
 
@@ -505,29 +515,29 @@ msgid "Log in password"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:96 psend/clients-form.php:82 psend/users-form.php:82
-#: psend/clients.php:111 psend/install/index.php:223
+#: psend/users-form.php:82 psend/install/index.php:223
+#: psend/clients-form.php:82 psend/clients.php:111 psend/users.php:96
 msgid "Log in username"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/gallery/template.php:36 psend/header.php:98
+#: psend/header.php:98 psend/templates/gallery/template.php:36
 msgid "Logout"
 msgstr ""
 
 #. Text in echo
-#: psend/home.php:95 psend/header.php:152
+#: psend/header.php:152 psend/home.php:95
 msgid "Manage clients"
 msgstr ""
 
-#. Text in echo
-#: psend/upload-process-form.php:282 psend/manage-files.php:1
-#: psend/clients.php:147
+#. Text in function
+#: psend/manage-files.php:1 psend/clients.php:147
+#: psend/upload-process-form.php:282
 msgid "Manage files"
 msgstr ""
 
 #. Text in echo
-#: psend/home.php:121 psend/header.php:169
+#: psend/header.php:169 psend/home.php:121
 msgid "Manage users"
 msgstr ""
 
@@ -542,7 +552,7 @@ msgid "Max width"
 msgstr ""
 
 #. Text in echo
-#: psend/clients-form.php:78 psend/users-form.php:78
+#: psend/users-form.php:78 psend/clients-form.php:78
 #: psend/upload-process-form.php:217 psend/upload-process-form.php:371
 msgid "Name"
 msgstr ""
@@ -563,7 +573,7 @@ msgid "New file uploaded for you"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:148 psend/manage-files.php:240 psend/clients.php:171
+#: psend/manage-files.php:240 psend/clients.php:171 psend/users.php:148
 msgid "Next"
 msgstr ""
 
@@ -608,13 +618,13 @@ msgid "Options updated succesfuly."
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:146 psend/manage-files.php:238 psend/clients.php:169
+#: psend/manage-files.php:238 psend/clients.php:169 psend/users.php:146
 msgid "Page"
 msgstr ""
 
-#. Text in echo
-#: psend/index.php:193 psend/includes/vars.php:1 psend/clients-form.php:86
-#: psend/install/index.php:227
+#. Text in function
+#: psend/includes/vars.php:1 psend/index.php:193 psend/install/index.php:227
+#: psend/clients-form.php:86
 msgid "Password"
 msgstr ""
 
@@ -628,8 +638,8 @@ msgstr ""
 msgid "Password verification was not completed"
 msgstr ""
 
-#. Text in echo
-#: psend/index.php:177 psend/includes/vars.php:1
+#. Text in function
+#: psend/includes/vars.php:1 psend/index.php:177
 msgid "Password was not completed"
 msgstr ""
 
@@ -685,7 +695,7 @@ msgid "Please select at least one client to proceed."
 msgstr ""
 
 #. Text in echo
-#: psend/upload-by-ftp.php:125 psend/manage-files.php:48
+#: psend/manage-files.php:48 psend/upload-by-ftp.php:125
 msgid "Please select at least one file to proceed."
 msgstr ""
 
@@ -705,7 +715,7 @@ msgid "Please select at least one user to proceed."
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:145 psend/manage-files.php:237 psend/clients.php:168
+#: psend/manage-files.php:237 psend/clients.php:168 psend/users.php:145
 msgid "Prev."
 msgstr ""
 
@@ -730,7 +740,7 @@ msgid "ProjectSend URI was not completed."
 msgstr ""
 
 #. Text in echo
-#: psend/index.php:64 psend/header.php:96
+#: psend/header.php:96 psend/index.php:64
 msgid "Provided by"
 msgstr ""
 
@@ -745,12 +755,12 @@ msgid "Repeat"
 msgstr ""
 
 #. Text in echo
-#: psend/clients-form.php:90 psend/users-form.php:90
+#: psend/users-form.php:90 psend/clients-form.php:90
 msgid "Repeat password"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:98 psend/users-form.php:98
+#: psend/users-form.php:98 psend/users.php:98
 msgid "Role"
 msgstr ""
 
@@ -762,6 +772,11 @@ msgstr ""
 #. Text in function
 #: psend/users-form.php:59
 msgid "Save user"
+msgstr ""
+
+#. Text in echo
+#: psend/options.php:124
+msgid "Security"
 msgstr ""
 
 #. Text in echo
@@ -790,8 +805,8 @@ msgid "Selected users actions"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:150 psend/manage-files.php:174 psend/manage-files.php:242
-#: psend/clients.php:173
+#: psend/manage-files.php:174 psend/manage-files.php:242 psend/clients.php:173
+#: psend/users.php:150
 msgid "Show"
 msgstr ""
 
@@ -977,7 +992,7 @@ msgid "There was an error uploading the file. Please try again."
 msgstr ""
 
 #. Text in function
-#: psend/users-add.php:65 psend/clients-add.php:72 psend/options.php:74
+#: psend/clients-add.php:72 psend/users-add.php:65 psend/options.php:74
 #: psend/clients-edit.php:112 psend/users-edit.php:101
 msgid "There was an error. Please try again."
 msgstr ""
@@ -990,7 +1005,7 @@ msgid ""
 msgstr ""
 
 #. Text in function
-#: psend/clients-form.php:118 psend/users-form.php:110
+#: psend/users-form.php:110 psend/clients-form.php:118
 msgid "This account information will be e-mailed to the address supplied above"
 msgstr ""
 
@@ -1025,7 +1040,7 @@ msgid "This page is not intended to be accessed directly."
 msgstr ""
 
 #. Text in echo
-#: psend/options.php:214
+#: psend/options.php:125 psend/options.php:214
 msgid "Thumbnails"
 msgstr ""
 
@@ -1083,14 +1098,13 @@ msgid "Upload"
 msgstr ""
 
 #. Text in echo
-#: psend/home.php:67 psend/upload-from-computer.php:139
+#: psend/header.php:124 psend/home.php:67 psend/upload-from-computer.php:139
 #: psend/templates/gallery/template.php:37 psend/upload-process-form.php:569
-#: psend/header.php:124
 msgid "Upload files"
 msgstr ""
 
 #. Text in echo
-#: psend/home.php:69 psend/header.php:134
+#: psend/header.php:134 psend/home.php:69
 msgid "Upload from computer"
 msgstr ""
 
@@ -1127,8 +1141,8 @@ msgstr ""
 msgid "User level was not specified"
 msgstr ""
 
-#. Text in echo
-#: psend/index.php:189 psend/includes/vars.php:1
+#. Text in function
+#: psend/includes/vars.php:1 psend/index.php:189
 msgid "Username"
 msgstr ""
 
@@ -1137,13 +1151,13 @@ msgstr ""
 msgid "Username must be alphanumeric (a-z,A-Z,0-9 allowed)"
 msgstr ""
 
-#. Text in echo
-#: psend/index.php:176 psend/includes/vars.php:1
+#. Text in function
+#: psend/includes/vars.php:1 psend/index.php:176
 msgid "Username was not completed"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:82 psend/header.php:166
+#: psend/header.php:166 psend/users.php:82
 msgid "Users"
 msgstr ""
 
@@ -1153,12 +1167,12 @@ msgid "Users administration"
 msgstr ""
 
 #. Text in echo
-#: psend/upload-process-form.php:283 psend/clients.php:148
+#: psend/clients.php:148 psend/upload-process-form.php:283
 msgid "View as client"
 msgstr ""
 
 #. Text in echo
-#: psend/upload-process-form.php:288 psend/header.php:201
+#: psend/header.php:201 psend/upload-process-form.php:288
 msgid "View my files"
 msgstr ""
 
@@ -1173,12 +1187,12 @@ msgid "Welcome to ProjectSend"
 msgstr ""
 
 #. Text in echo
-#: psend/upload-process-form.php:248 psend/clients.php:136
+#: psend/clients.php:136 psend/upload-process-form.php:248
 msgid "Yes"
 msgstr ""
 
 #. Text in echo
-#: psend/users.php:38 psend/manage-files.php:54 psend/clients.php:39
+#: psend/manage-files.php:54 psend/clients.php:39 psend/users.php:38
 msgid "You are about to delete"
 msgstr ""
 
