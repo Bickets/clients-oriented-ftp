@@ -90,8 +90,8 @@ if (in_session_or_cookies($core_update_allowed)) {
 
 	<div id="header">
 		<div id="header_info">
-			<h1><?php echo SYSTEM_NAME; ?></h1>
-			<p><?php echo CURRENT_VERSION; ?></p>
+			<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
+			<p><?php _e('Provided by', 'cftp_admin'); ?> <?php echo SYSTEM_NAME; ?> <?php _e('version', 'cftp_admin'); ?> <?php echo CURRENT_VERSION; ?></p>
 		</div>
 		<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
 	</div>

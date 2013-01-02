@@ -48,9 +48,13 @@ h4 {
 }
 
 #lonely_logo {
-	margin-top:30px;
+	margin-top:17px;
 	text-align:center;
 	font-family:'SansationRegular', sans-serif;
+}
+
+#lonely_logo p {
+	text-shadow:1px 1px 1px #000000;
 }
 
 #login_logo {
