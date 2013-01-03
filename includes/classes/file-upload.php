@@ -99,8 +99,8 @@ class PSend_Upload_File
 	{
 		global $database;
 		$this->post_file = $arguments['file'];
-		$this->name = $arguments['name'];
-		$this->description = $arguments['description'];
+		$this->name = encode_html($arguments['name']);
+		$this->description = encode_html($arguments['description']);
 		$this->client = $arguments['client'];
 		$this->uploader = $arguments['uploader'];
 		$this->timestamp = time();

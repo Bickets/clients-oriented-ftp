@@ -305,6 +305,18 @@ function mysql_real_escape_array($array)
 
 
 /**
+ * Solution by Philippe Flipflip. Fixes an error that would not convert special
+ * characters when saving to the database.
+ */
+function encode_html($str) {
+	$str = htmlentities($str, ENT_QUOTES);
+	$str = mysql_real_escape_string($str);
+	$str = nl2br($str);
+	return $str;
+}
+
+
+/**
  * Based on a script found on webcheatsheet. Fixed an issue from the original code.
  * Used on the installation form to fill the URI field automatically.
  *

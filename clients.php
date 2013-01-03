@@ -128,13 +128,13 @@ $(document).ready(function() {
 				
 					<tr>
 						<td><input type="checkbox" name="delete[]" value="<?php echo $row["id"]; ?>" /></td>
-						<td><?php echo $row["name"]; ?></td>
-						<td><?php echo $row["client_user"]; ?></td>
-						<td><?php echo $row["address"]; ?></td>
-						<td><?php echo $row["phone"]; ?></td>
-						<td><?php echo $row["email"]; ?></td>
+						<td><?php echo html_entity_decode($row["name"]); ?></td>
+						<td><?php echo html_entity_decode($row["client_user"]); ?></td>
+						<td><?php echo html_entity_decode($row["address"]); ?></td>
+						<td><?php echo html_entity_decode($row["phone"]); ?></td>
+						<td><?php echo html_entity_decode($row["email"]); ?></td>
 						<td><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
-						<td><?php echo $row["contact"]; ?></td>
+						<td><?php echo html_entity_decode($row["contact"]); ?></td>
 						<td><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
 						<td>
 							<?php

@@ -22,13 +22,13 @@ if ($_POST) {
 	 * Clean the posted form values to be used on the clients actions,
 	 * and again on the form if validation failed.
 	 */
-	$add_client_data_name = mysql_real_escape_string($_POST['add_client_form_name']);
-	$add_client_data_user = mysql_real_escape_string($_POST['add_client_form_user']);
-	$add_client_data_email = mysql_real_escape_string($_POST['add_client_form_email']);
+	$add_client_data_name = encode_html($_POST['add_client_form_name']);
+	$add_client_data_user = encode_html($_POST['add_client_form_user']);
+	$add_client_data_email = encode_html($_POST['add_client_form_email']);
 	/** Optional fields: Address, Phone, Internal Contact, Notify */
-	$add_client_data_addr = (isset($_POST["add_client_form_address"])) ? mysql_real_escape_string($_POST["add_client_form_address"]) : '';
-	$add_client_data_phone = (isset($_POST["add_client_form_phone"])) ? mysql_real_escape_string($_POST["add_client_form_phone"]) : '';
-	$add_client_data_intcont = (isset($_POST["add_client_form_intcont"])) ? mysql_real_escape_string($_POST["add_client_form_intcont"]) : '';
+	$add_client_data_addr = (isset($_POST["add_client_form_address"])) ? encode_html($_POST["add_client_form_address"]) : '';
+	$add_client_data_phone = (isset($_POST["add_client_form_phone"])) ? encode_html($_POST["add_client_form_phone"]) : '';
+	$add_client_data_intcont = (isset($_POST["add_client_form_intcont"])) ? encode_html($_POST["add_client_form_intcont"]) : '';
 	$add_client_data_notity = (isset($_POST["add_client_form_notify"])) ? 1 : 0;
 
 	/** Arguments used on validation and client creation. */

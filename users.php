@@ -126,11 +126,11 @@ include('header.php');
 							<input type="checkbox" name="delete[]" value="<?php echo $row["id"]; ?>" />
 						<?php } ?>
 					</td>
-					<td><?php echo $row["name"]?></td>
-					<td><?php echo $row["user"]?></td>
-					<td><?php echo $row["email"]?></td>
+					<td><?php echo html_entity_decode($row["name"]); ?></td>
+					<td><?php echo html_entity_decode($row["user"]); ?></td>
+					<td><?php echo html_entity_decode($row["email"]); ?></td>
 					<td><?php
-						switch($row["level"]) {
+						switch(html_entity_decode($row["level"])) {
 							case '9': echo USER_ROLE_LVL_9; break;
 							case '8': echo USER_ROLE_LVL_8; break;
 							case '7': echo USER_ROLE_LVL_7; break;

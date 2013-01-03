@@ -22,10 +22,10 @@ if ($_POST) {
 	 * Clean the posted form values to be used on the user actions,
 	 * and again on the form if validation failed.
 	 */
-	$add_user_data_name = mysql_real_escape_string($_POST['add_user_form_name']);
-	$add_user_data_email = mysql_real_escape_string($_POST['add_user_form_email']);
-	$add_user_data_level = mysql_real_escape_string($_POST['add_user_form_level']);
-	$add_user_data_user = mysql_real_escape_string($_POST['add_user_form_user']);
+	$add_user_data_name = encode_html($_POST['add_user_form_name']);
+	$add_user_data_email = encode_html($_POST['add_user_form_email']);
+	$add_user_data_level = encode_html($_POST['add_user_form_level']);
+	$add_user_data_user = encode_html($_POST['add_user_form_user']);
 
 	/** Arguments used on validation and user creation. */
 	$new_arguments = array(
