@@ -6,7 +6,7 @@
  @ @subpackage	Clients
  *
  */
-$allowed_levels = array(9);
+$allowed_levels = array(9,8);
 require_once('sys.includes.php');
 
 $page_title = __('Edit client','cftp_admin');
