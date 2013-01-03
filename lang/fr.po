@@ -88,7 +88,7 @@ msgid "Account Manager"
 msgstr "Configuration des comptes"
 
 #. Text in echo
-#: psend/clients.php:119 psend/users.php:100
+#: psend/clients.php:119 psend/users.php:115
 msgid "Actions"
 msgstr "Actions"
 
@@ -123,7 +123,7 @@ msgid "Add user"
 msgstr "Ajouter un administrateur"
 
 #. Text in echo
-#: psend/clients.php:117 psend/users.php:99
+#: psend/clients.php:117 psend/users.php:114
 msgid "Added on"
 msgstr "Ajouté le"
 
@@ -314,7 +314,7 @@ msgid "Default system administrator options"
 msgstr "Les options par défaut de l'administrateur système"
 
 #. Text in echo
-#: psend/manage-files.php:175 psend/clients.php:100 psend/users.php:86
+#: psend/manage-files.php:175 psend/clients.php:100 psend/users.php:101
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -330,7 +330,7 @@ msgstr "Désactivé pour ce client"
 
 #. Text in echo
 #: psend/users-form.php:94 psend/clients-form.php:102 psend/clients.php:114
-#: psend/users.php:97
+#: psend/users.php:112
 msgid "E-mail"
 msgstr "Email"
 
@@ -360,7 +360,7 @@ msgid "E-mail was not completed"
 msgstr "L'adresse email n'a pas été complétée"
 
 #. Text in echo
-#: psend/clients.php:149 psend/users.php:127
+#: psend/clients.php:149 psend/users.php:142
 msgid "Edit"
 msgstr "Modifier"
 
@@ -416,7 +416,7 @@ msgid "Files uploaded correctly"
 msgstr "Fichiers ajoutés correctement"
 
 #. Text in echo
-#: psend/manage-files.php:236 psend/clients.php:167 psend/users.php:144
+#: psend/manage-files.php:236 psend/clients.php:167 psend/users.php:159
 msgid "First"
 msgstr "Premier"
 
@@ -431,7 +431,7 @@ msgid "For the full list of available values, visit"
 msgstr "Pour la liste complète des valeurs disponibles, visitez le site"
 
 #. Text in echo
-#: psend/install/index.php:215 psend/clients.php:110 psend/users.php:95
+#: psend/install/index.php:215 psend/clients.php:110 psend/users.php:110
 msgid "Full name"
 msgstr "Nom et prénom"
 
@@ -517,7 +517,7 @@ msgid "JPG Quality"
 msgstr "Qualité JPG"
 
 #. Text in echo
-#: psend/manage-files.php:241 psend/clients.php:172 psend/users.php:149
+#: psend/manage-files.php:241 psend/clients.php:172 psend/users.php:164
 msgid "Last"
 msgstr "Dernier"
 
@@ -551,7 +551,7 @@ msgstr "Mots de passe"
 
 #. Text in echo
 #: psend/users-form.php:82 psend/install/index.php:223
-#: psend/clients-form.php:82 psend/clients.php:111 psend/users.php:96
+#: psend/clients-form.php:82 psend/clients.php:111 psend/users.php:111
 msgid "Log in username"
 msgstr "Nom d'utilisateur"
 
@@ -608,7 +608,7 @@ msgid "New file uploaded for you"
 msgstr "Nouveau fichier ajouté pour vous"
 
 #. Text in echo
-#: psend/manage-files.php:240 psend/clients.php:171 psend/users.php:148
+#: psend/manage-files.php:240 psend/clients.php:171 psend/users.php:163
 msgid "Next"
 msgstr "Suivant"
 
@@ -653,7 +653,7 @@ msgid "Options updated succesfuly."
 msgstr "Options mises à jour avec succès"
 
 #. Text in echo
-#: psend/manage-files.php:238 psend/clients.php:169 psend/users.php:146
+#: psend/manage-files.php:238 psend/clients.php:169 psend/users.php:161
 msgid "Page"
 msgstr "Page"
 
@@ -756,7 +756,7 @@ msgid "Please select at least one user to proceed."
 msgstr "Sélectionnez au moins un utilisateur pour continuer"
 
 #. Text in echo
-#: psend/manage-files.php:237 psend/clients.php:168 psend/users.php:145
+#: psend/manage-files.php:237 psend/clients.php:168 psend/users.php:160
 msgid "Prev."
 msgstr "Précédent"
 
@@ -801,7 +801,7 @@ msgid "Repeat password"
 msgstr "Répéter le mot de passe"
 
 #. Text in echo
-#: psend/users-form.php:98 psend/users.php:98
+#: psend/users-form.php:98 psend/users.php:113
 msgid "Role"
 msgstr "Rôle"
 
@@ -841,13 +841,13 @@ msgid "Selected files actions"
 msgstr "Actions pour les fichiers sélectionnés"
 
 #. Text in echo
-#: psend/users.php:85
+#: psend/users.php:100
 msgid "Selected users actions"
 msgstr "Actions pour les utilisateurs sélectionnés"
 
 #. Text in echo
 #: psend/manage-files.php:174 psend/manage-files.php:242 psend/clients.php:173
-#: psend/users.php:150
+#: psend/users.php:165
 msgid "Show"
 msgstr "Montrer"
 
@@ -1236,7 +1236,7 @@ msgid "Username was not completed"
 msgstr "Le nom d'utilisateur n'est pas terminé"
 
 #. Text in echo
-#: psend/header.php:166 psend/users.php:82
+#: psend/header.php:166 psend/users.php:97
 msgid "Users"
 msgstr "Utilisateurs"
 
@@ -1290,6 +1290,11 @@ msgstr "Vous pouvez vous connecter en suivant ce lien"
 msgid "You can manage this client's account and the corresponding files"
 msgstr ""
 "Vous pouvez gérer le compte de ce client et les fichiers correspondants"
+
+#. Text in function
+#: psend/users.php:54
+msgid "You cannot delete your own account."
+msgstr ""
 
 #. Text in echo
 #: psend/install/index.php:149
