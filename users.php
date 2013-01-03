@@ -57,13 +57,28 @@ include('header.php');
 	if(isset($_POST['btn_delete_users'])) {
 		if(!empty($_POST['delete'])) {
 			$selected_users = $_POST['delete'];
+			$my_info = get_user_by_username(get_current_user_username());
+			$deleted_users = 0;
+
 			foreach ($selected_users as $user) {
-				$this_user = new UserActions();
-				$delete_user = $this_user->delete_user($user);
+				/**
+				 * A user should not be able to delete himself
+				 */
+				if ($user != $my_info['id']) {
+					$this_user = new UserActions();
+					$delete_user = $this_user->delete_user($user);
+					$deleted_users++;
+				}
+				else {
+					$msg = __('You cannot delete your own account.','cftp_admin');
+					echo system_message('error',$msg);
+				}
 			}
 			
-			$msg = __('The selected users were deleted.','cftp_admin');
-			echo system_message('ok',$msg);
+			if ($deleted_users > 0) {
+				$msg = __('The selected users were deleted.','cftp_admin');
+				echo system_message('ok',$msg);
+			}
 		}
 		else {
 			$msg = __('Please select at least one user to delete.','cftp_admin');
