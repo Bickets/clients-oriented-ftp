@@ -18,6 +18,9 @@ class process {
 			case 'logout':
 				$this->logout();
 			break;
+			default:
+				header('Location: '.BASE_URI);
+			break;
 		}
 		$this->database->Close();
 	}
