@@ -200,7 +200,7 @@ include('header.php');
 									/**
 									 * Construct the complete file URI to use on the download button.
 									 */
-									$this_file_uri = BASE_URI.'upload/'.$this_client['username'].'/'.$row['url'];
+									$this_file_uri = 'upload/'.$this_client['username'].'/'.$row['url'];
 							?>
 									<tr>
 										<td><input type="checkbox" name="formfiles[]" value="<?php echo $row["id"]; ?>" /></td>
