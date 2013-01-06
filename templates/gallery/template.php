@@ -62,7 +62,7 @@ $window_title = __('Gallery','cftp_template_gallery');
 						<h5><?php echo htmlentities($row['filename']); ?></h5>
 						<div class="img_prev">
 							<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
-								<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=280&amp;gr=1&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
+								<img src="<?php echo BASE_URI; ?>includes/timthumb/timthumb.php?src=<?php echo BASE_URI; ?>upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=280&amp;h=280" class="thumbnail" alt="" />
 							</a>
 						</div>
 						<div class="img_data">
