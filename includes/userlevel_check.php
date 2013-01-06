@@ -81,6 +81,7 @@ function check_for_admin() {
 /**
  * Used on the log in form page (index.php) to take the clients directly to their
  * files list.
+ * Also used on the self-registration form (register.php).
  *
  * The client username (which corresponds to it's unique folder and URI)
  * is gotten either from the active session, or the saved cookie information.

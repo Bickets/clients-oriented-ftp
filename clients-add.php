@@ -15,6 +15,12 @@ include('header.php');
 
 $database->MySQLDB();
 
+/**
+ * Set default as 1 to check it for new clients when first entering
+ * the form
+ */
+$add_client_data_active = 1;
+
 if ($_POST) {
 	$new_client = new ClientActions();
 
@@ -30,6 +36,7 @@ if ($_POST) {
 	$add_client_data_phone = (isset($_POST["add_client_form_phone"])) ? encode_html($_POST["add_client_form_phone"]) : '';
 	$add_client_data_intcont = (isset($_POST["add_client_form_intcont"])) ? encode_html($_POST["add_client_form_intcont"]) : '';
 	$add_client_data_notity = (isset($_POST["add_client_form_notify"])) ? 1 : 0;
+	$add_client_data_active = (isset($_POST["add_client_form_active"])) ? 1 : 0;
 
 	/** Arguments used on validation and client creation. */
 	$new_arguments = array(
@@ -43,6 +50,7 @@ if ($_POST) {
 							'phone' => $add_client_data_phone,
 							'contact' => $add_client_data_intcont,
 							'notify' => $add_client_data_notity,
+							'active' => $add_client_data_active,
 							'type' => 'new_client'
 						);
 

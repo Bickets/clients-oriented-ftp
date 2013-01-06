@@ -25,8 +25,8 @@ $(document).ready(function() {
 	.tablesorterPager({container: $("#pager")})
 
 	$("#select_all").click(function(){
-		var status = $(this).attr("checked");
-		$("td>input:checkbox").attr("checked",status);
+		var status = $(this).prop("checked");
+		$("td>input:checkbox").prop("checked",status);
 	});
 	
 	$("form").submit(function() {
@@ -36,12 +36,15 @@ $(document).ready(function() {
 			return false; 
 		} 
 		else {
-			var msg_1 = '<?php _e("You are about to delete",'cftp_admin'); ?>';
-			var msg_2 = '<?php _e("clients and all of the assigned files. Are you sure you want to continue?",'cftp_admin'); ?>';
-			if (confirm(msg_1+' '+checks.length+' '+msg_2)) {
-				return true;
-			} else {
-				return false;
+			var action = $('#clients_actions').val();
+			if (action == 'delete') {
+				var msg_1 = '<?php _e("You are about to delete",'cftp_admin'); ?>';
+				var msg_2 = '<?php _e("clients and all of the assigned files. Are you sure you want to continue?",'cftp_admin'); ?>';
+				if (confirm(msg_1+' '+checks.length+' '+msg_2)) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 	});
@@ -52,24 +55,58 @@ $(document).ready(function() {
 	<h2><?php echo $page_title; ?></h2>
 	
 <?php
+	/**
+	 * Apply the corresponding action to the selected clients.
+	 */
+	if(isset($_POST['btn_proceed_clients'])) {
+		/** Continue only if 1 or more clients were selected. */
+		if(!empty($_POST['formclients'])) {
+			$selected_clients = $_POST['formclients'];
+			switch($_POST['clients_actions']) {
+				case 'activate':
+					/**
+					 * Changes the value on the "active" column value on the database.
+					 * Inactive clients are not allowed to log in.
+					 */
+					foreach ($selected_clients as $work_client) {
+						$this_client = new ClientActions();
+						$hide_client = $this_client->change_client_active_status($work_client,'1');
+					}
+					$msg = __('The selected clients were marked as active.','cftp_admin');
+					echo system_message('ok',$msg);
+					break;
 
-	// Mass delete
-	if(isset($_POST['btn_delete_clients'])) {
-		if(!empty($_POST['delete'])) {
-			$selected_clients = $_POST['delete'];
-			foreach ($selected_clients as $client) {
-				$this_client = new ClientActions();
-				$delete_client = $this_client->delete_client($client);
+				case 'deactivate':
+					/**
+					 * Reverse of the previous action. Setting the value to 0 means
+					 * that the client is inactive.
+					 */
+					foreach ($selected_clients as $work_client) {
+						$this_client = new ClientActions();
+						$hide_client = $this_client->change_client_active_status($work_client,'0');
+					}
+					$msg = __('The selected clients were marked as inactive.','cftp_admin');
+					echo system_message('ok',$msg);
+					break;
+
+				case 'delete':
+					foreach ($selected_clients as $client) {
+						$this_client = new ClientActions();
+						$delete_client = $this_client->delete_client($client);
+					}
+					
+					$msg = __('The selected clients were deleted.','cftp_admin');
+					echo system_message('ok',$msg);
+					break;
 			}
-			
-			$msg = __('The selected clients were deleted.','cftp_admin');
-			echo system_message('ok',$msg);
 		}
 		else {
-			$msg = __('Please select at least one client to delete.','cftp_admin');
+			$msg = __('Please select at least one client.','cftp_admin');
 			echo system_message('error',$msg);
 		}
 	}
+
+
 
 	$database->MySQLDB();
 	$cq = "SELECT * FROM tbl_clients";
@@ -97,7 +134,12 @@ $(document).ready(function() {
 				</div>
 				<div class="form_actions_submit">
 					<label><?php _e('Selected clients actions','cftp_admin'); ?>:</label>
-					<input type="submit" name="btn_delete_clients" id="btn_delete_clients" value="<?php _e('Delete','cftp_admin'); ?>" class="button_form" />
+					<select name="clients_actions" id="clients_actions" class="txtfield">
+						<option value="activate"><?php _e('Activate','cftp_admin'); ?></option>
+						<option value="deactivate"><?php _e('Deactivate','cftp_admin'); ?></option>
+						<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
+					</select>
+					<input type="submit" name="btn_proceed_clients" id="btn_proceed_clients" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
 				</div>
 			</div>
 
@@ -116,6 +158,7 @@ $(document).ready(function() {
 						<th><?php _e('Internal contact','cftp_admin'); ?></th>
 						<th><?php _e('Added on','cftp_admin'); ?></th>
 						<th><?php _e('Files','cftp_admin'); ?></th>
+						<th><?php _e('Status','cftp_admin'); ?></th>
 						<th><?php _e('Actions','cftp_admin'); ?></th>
 					</tr>
 				</thead>
@@ -127,7 +170,7 @@ $(document).ready(function() {
 				?>
 				
 					<tr>
-						<td><input type="checkbox" name="delete[]" value="<?php echo $row["id"]; ?>" /></td>
+						<td><input type="checkbox" name="formclients[]" value="<?php echo $row["id"]; ?>" /></td>
 						<td><?php echo html_entity_decode($row["name"]); ?></td>
 						<td><?php echo html_entity_decode($row["client_user"]); ?></td>
 						<td><?php echo html_entity_decode($row["address"]); ?></td>
@@ -141,6 +184,13 @@ $(document).ready(function() {
 								$sql_files = $database->query("SELECT * FROM tbl_files WHERE client_user='$client_user'");
 								$count_files=mysql_num_rows($sql_files);
 								echo $count_files;
+							?>
+						</td>
+						<td class="<?php echo ($row['active'] === '0') ? 'account_status_inactive' : 'account_status_active'; ?>">
+							<?php
+								$status_hidden = __('Inactive','cftp_admin');
+								$status_visible = __('Active','cftp_admin');
+								echo ($row['active'] === '0') ? $status_hidden : $status_visible;
 							?>
 						</td>
 						<td>

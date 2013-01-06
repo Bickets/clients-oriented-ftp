@@ -217,6 +217,16 @@ h4 {
 	border-radius:5px;
 }
 
+.login_form_links {
+	margin-top:14px;
+	padding-top:8px;
+	border-top:1px dotted #ccc;
+}
+
+.login_form_links p {
+	margin:0;
+}
+
 .message {
 	padding:10px;
 	-moz-border-radius:5px;
@@ -262,6 +272,12 @@ h4 {
 	margin-top:20px;
 }
 
+.message_note {
+	color:#6c6620;
+	background:#fdfbe1;
+	border:1px solid #e7db55;
+}
+
 .whitebox {
 	background-color:white;
 	border:1px solid #ccc;
@@ -275,9 +291,9 @@ h4 {
 
 .whiteform {
 	margin:0 auto 0 auto;
-	width:525px;
+	width:550px;
 	text-align:left;
-	padding:10px;
+	padding:20px;
 }
 
 .whiteform td { height:25px; }
@@ -357,12 +373,12 @@ input[readonly] {
 
 /* file managment */
 
-.file_status_visible {
+.file_status_visible, .account_status_active {
 	color:#639822!important;
 	font-weight:bold;
 }
 
-.file_status_hidden {
+.file_status_hidden, .account_status_inactive {
 	color:#D24244!important;
 	font-weight:bold;
 }
@@ -398,7 +414,7 @@ input[readonly] {
 }
 
 .txtfield {
-	width:300px;
+	width:310px;
 	font-size:12px;
 	padding:4px;
 	margin-bottom:5px;
@@ -575,7 +591,7 @@ optgroup {
 }
 
 .options_box {
-	width:450px;
+	width:550px;
 	padding:20px;
 	margin:20px auto;
 }
@@ -589,7 +605,7 @@ optgroup {
 }
 
 .options_box input, .options_box select {
-	width:240px;
+	width:290px;
 	font-size:12px;
 	padding:4px;
 	margin-bottom:7px;
@@ -597,6 +613,10 @@ optgroup {
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
 	border-radius:5px;
+}
+
+.checkbox_options {
+	width:auto !important;
 }
 
 .options_divide {
@@ -664,12 +684,12 @@ a.plupload_start {
 	Purchase to remove copyright
 */
 
-.textboxlist { width: 410px;; cursor: text; }
+.textboxlist { width: 550px;; cursor: text; font-size:1.3em; }
 .textboxlist-bits {
 	zoom: 1;
 	overflow: hidden;
 	margin: 0;
-	padding: 7px 7px 0;
+	padding: 3px 7px 7px;
 	border: 1px solid #999;
 	*padding-bottom: 3px;
 	border:1px solid #CCCCCC;
@@ -677,13 +697,13 @@ a.plupload_start {
 	-webkit-border-radius:5px;
 	border-radius:5px;
 }
-.textboxlist-bit { list-style-type: none; float: left; display: block; padding: 0; margin: 0 5px 3px 0; cursor: default; }
+.textboxlist-bit { list-style-type: none; float: left; display: block; padding: 0; margin: 8px 8px 0 0; cursor: default; }
 .textboxlist-bit-editable { border: 1px solid #fff; }
 .textboxlist-bit-editable-input { border: 0!important; padding: 2px 0; *padding-bottom: 0; height: 14px; }
 .textboxlist-bit-editable-input:focus { outline: 0; }
-.textboxlist-bit-box { position: relative; line-height: 18px; padding: 0 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; border: 1px solid #BCD8F3; background: #E5F1FC; cursor: default; }
+.textboxlist-bit-box { position: relative; line-height: 28px; padding: 0 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; border: 1px solid #BCD8F3; background: #E5F1FC; cursor: default; }
 .textboxlist-bit-box-deletable { padding-right: 15px; }
-.textboxlist-bit-box-deletebutton { position: absolute; right: 4px; top: 6px; display: block; width: 7px; height: 7px; font-size: 1px; background: url('../img/close.gif'); }
+.textboxlist-bit-box-deletebutton { position: absolute; right: 4px; top: 11px; display: block; width: 7px; height: 7px; font-size: 1px; background: url('../img/close.gif'); }
 .textboxlist-bit-box-deletebutton:hover { border: none; background-position: 7px; text-decoration: none; }
 .textboxlist-bit-box-hover { background: #D7EAFB; cursor:pointer; }
 .textboxlist-bit-box-focus { border-color: #366EA3; background: #3E7CB7; color: #fff; }

@@ -87,5 +87,41 @@ if (in_session_or_cookies($allowed_update)) {
 		}
 		unset($q);
 	}
+
+	/**
+	 * r183 updates
+	 * A new column was added on the clients table, to store the value of the
+	 * account active status.
+	 * If the column doesn't exist, create it. Also, mark every existing
+	 * client as active (1).
+	 */
+	$q = $database->query("SELECT active FROM tbl_clients");
+	if (!$q) {
+		mysql_query("ALTER TABLE tbl_clients ADD active tinyint(1) NOT NULL");
+		$sql = $database->query('SELECT * FROM tbl_clients');
+		while($row = mysql_fetch_array($sql)) {
+			$database->query('UPDATE tbl_clients SET active = 1');
+		}
+		$updates_made++;
+
+		/**
+		 * Add the "users can register" value to the options table.
+		 * Defaults to 0, since this is a new feature.
+		 * */
+		$new_database_values = array(
+										'clients_can_register' => '0'
+									);
+		foreach($new_database_values as $row => $value) {
+			$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+			$sql = $database->query($q);
+	
+			if(!mysql_num_rows($sql)) {
+				$updates_made++;
+				$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+				$sqli = $database->query($qi);
+			}
+			unset($q);
+		}
+	}
 }
 ?>

@@ -62,12 +62,24 @@ switch ($clients_form_type) {
 		$disable_user = false;
 		$require_pass = true;
 		$form_action = 'clients-add.php';
+		$info_box = true;
+		$extra_fields = true;
 		break;
 	case 'edit_client':
 		$submit_value = __('Save client','cftp_admin');
 		$disable_user = true;
 		$require_pass = false;
 		$form_action = 'clients-edit.php?id='.$client_id;
+		$info_box = false;
+		$extra_fields = true;
+		break;
+	case 'new_client_self':
+		$submit_value = __('Register account','cftp_admin');
+		$disable_user = false;
+		$require_pass = true;
+		$form_action = 'register.php';
+		$info_box = true;
+		$extra_fields = false;
 		break;
 }
 ?>
@@ -91,6 +103,10 @@ switch ($clients_form_type) {
 			<input name="add_client_form_pass2" id="add_client_form_pass2" class="txtfield <?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 		</li>
 		<li>
+			<label for="add_client_form_email"><?php _e('E-mail','cftp_admin'); ?></label>
+			<input name="add_client_form_email" id="add_client_form_email" class="txtfield required" value="<?php echo (isset($add_client_data_email)) ? stripslashes($add_client_data_email) : ''; ?>" />
+		</li>
+		<li>
 			<label for="add_client_form_address"><?php _e('Address','cftp_admin'); ?></label>
 			<input name="add_client_form_address" id="add_client_form_address" class="txtfield" value="<?php echo (isset($add_client_data_addr)) ? stripslashes($add_client_data_addr) : ''; ?>" />
 		</li>
@@ -98,17 +114,23 @@ switch ($clients_form_type) {
 			<label for="add_client_form_phone"><?php _e('Telephone','cftp_admin'); ?></label>
 			<input name="add_client_form_phone" id="add_client_form_phone" class="txtfield" value="<?php echo (isset($add_client_data_phone)) ? stripslashes($add_client_data_phone) : ''; ?>" />
 		</li>
-		<li>
-			<label for="add_client_form_email"><?php _e('E-mail','cftp_admin'); ?></label>
-			<input name="add_client_form_email" id="add_client_form_email" class="txtfield required" value="<?php echo (isset($add_client_data_email)) ? stripslashes($add_client_data_email) : ''; ?>" />
-		</li>
+		<?php
+			if ($extra_fields == true) {
+		?>
+				<li>
+					<label for="add_client_form_intcont"><?php _e('Internal contact name','cftp_admin'); ?></label>
+					<input name="add_client_form_intcont" id="add_client_form_intcont" class="txtfield" value="<?php echo (isset($add_client_data_intcont)) ? stripslashes($add_client_data_intcont) : ''; ?>" />
+				</li>
+				<li>
+					<label for="add_client_form_active"><?php _e('Active (client can log in)','cftp_admin'); ?></label>
+					<input type="checkbox" name="add_client_form_active" id="add_client_form_active" <?php echo (isset($add_client_data_active) && $add_client_data_active == 1) ? 'checked="checked"' : ''; ?> />
+				</li>
+		<?php
+			}
+		?>
 		<li>
 			<label for="add_client_form_notify"><?php _e('Notify new uploads by e-mail','cftp_admin'); ?></label>
 			<input type="checkbox" name="add_client_form_notify" id="add_client_form_notify" <?php echo (isset($add_client_data_notity) && $add_client_data_notity == 1) ? 'checked="checked"' : ''; ?> />
-		</li>
-		<li>
-			<label for="add_client_form_intcont"><?php _e('Internal contact','cftp_admin'); ?></label>
-			<input name="add_client_form_intcont" id="add_client_form_intcont" class="txtfield" value="<?php echo (isset($add_client_data_intcont)) ? stripslashes($add_client_data_intcont) : ''; ?>" />
 		</li>
 		<li class="form_submit_li">
 			<input type="submit" name="Submit" value="<?php echo $submit_value; ?>" class="button button_blue button_submit" />
@@ -116,7 +138,7 @@ switch ($clients_form_type) {
 	</ul>
 
 	<?php
-		if ($clients_form_type == 'new_client') {
+		if ($info_box == true) {
 			$msg = __('This account information will be e-mailed to the address supplied above','cftp_admin');
 			echo system_message('info',$msg);
 		}

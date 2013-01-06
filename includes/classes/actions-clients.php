@@ -110,6 +110,7 @@ class ClientActions
 		$this->phone = $arguments['phone'];
 		$this->contact = $arguments['contact'];
 		$this->notify = $arguments['notify'];
+		$this->active = $arguments['active'];
 		$this->enc_password = md5(mysql_real_escape_string($this->password));
 
 		$this->folder = ROOT_DIR.'/upload/'.$this->username;
@@ -137,8 +138,8 @@ class ClientActions
 	
 				/** Insert the client information into the database */
 				$this->timestamp = time();
-				$this->sql_query = $database->query("INSERT INTO tbl_clients (name,client_user,password,address,phone,email,notify,contact,timestamp,created_by)"
-													."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact', '$this->timestamp','$this->this_admin')");
+				$this->sql_query = $database->query("INSERT INTO tbl_clients (name,client_user,password,address,phone,email,notify,contact,timestamp,created_by,active)"
+													."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact', '$this->timestamp','$this->this_admin', '$this->active')");
 
 				if ($this->sql_query) {
 					$this->state['actions'] = 1;
@@ -189,6 +190,7 @@ class ClientActions
 		$this->phone = $arguments['phone'];
 		$this->contact = $arguments['contact'];
 		$this->notify = $arguments['notify'];
+		$this->active = $arguments['active'];
 		$this->enc_password = md5(mysql_real_escape_string($this->password));
 
 		/** SQL query */
@@ -203,6 +205,10 @@ class ClientActions
 
 		/** Add the notify value to the query '' */
 		$this->edit_client_query .= ($this->notify == '1') ? "1'" : "0'";
+
+		/** Add the active status value to the query '' */
+		$this->edit_client_query .= ", active = '";
+		$this->edit_client_query .= ($this->active == '1') ? "1'" : "0'";
 
 		/** Add the password to the query if it's not the dummy value '' */
 		if (!empty($arguments['password'])) {
@@ -239,6 +245,21 @@ class ClientActions
 				$this->sql = $database->query('DELETE FROM tbl_files WHERE id="' . $client .'"');
 				$this->folder = "./upload/" . $this->client_user . "/";
 				delete_recursive($this->folder);
+			}
+		}
+	}
+
+	/**
+	 * Mark the client as active or inactive.
+	 */
+	function change_client_active_status($client_id,$change_to)
+	{
+		global $database;
+		$this->check_level = array(9,8,7);
+		if (isset($client_id)) {
+			/** Do a permissions check */
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
+				$this->sql = $database->query('UPDATE tbl_clients SET active='.$change_to.' WHERE id="' . $client_id . '"');
 			}
 		}
 	}

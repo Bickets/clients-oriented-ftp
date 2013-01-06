@@ -184,6 +184,11 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										<p class="field_note"><?php _e('For example, d/m/Y h:i:s will result in something like','cftp_admin'); ?> <strong><?php echo date('d/m/Y h:i:s'); ?></strong>.
 										<?php _e('For the full list of available values, visit','cftp_admin'); ?> <a href="http://php.net/manual/en/function.date.php" target="_blank"><?php _e('this page','cftp_admin'); ?></a>.</p>
 									</li>
+									<li>
+										<label for="clients_can_register"><?php _e('Clients can register themselves','cftp_admin'); ?></label>
+										<input type="hidden" value="0" name="clients_can_register" class="checkbox_options" <?php echo (CLIENTS_CAN_REGISTER == 0) ? '' : 'checked="checked"'; ?> />
+										<input type="checkbox" value="1" name="clients_can_register" class="checkbox_options" <?php echo (CLIENTS_CAN_REGISTER == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
 					
 									<li class="options_divide"></li>
 								</ul>

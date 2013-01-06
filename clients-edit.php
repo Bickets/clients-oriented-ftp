@@ -47,6 +47,7 @@ if ($page_status === 1) {
 		$add_client_data_phone = $data['phone'];
 		$add_client_data_intcont = $data['contact'];
 		if ($data['notify'] == 1) { $add_client_data_notity = 1; } else { $add_client_data_notity = 0; }
+		if ($data['active'] == 1) { $add_client_data_active = 1; } else { $add_client_data_active = 0; }
 	}
 }
 
@@ -66,6 +67,7 @@ if ($_POST) {
 	$add_client_data_phone = (isset($_POST["add_client_form_phone"])) ? mysql_real_escape_string($_POST["add_client_form_phone"]) : '';
 	$add_client_data_intcont = (isset($_POST["add_client_form_intcont"])) ? mysql_real_escape_string($_POST["add_client_form_intcont"]) : '';
 	$add_client_data_notity = (isset($_POST["add_client_form_notify"])) ? 1 : 0;
+	$add_client_data_active = (isset($_POST["add_client_form_active"])) ? 1 : 0;
 
 	/** Arguments used on validation and client creation. */
 	$edit_arguments = array(
@@ -77,6 +79,7 @@ if ($_POST) {
 							'phone' => $add_client_data_phone,
 							'contact' => $add_client_data_intcont,
 							'notify' => $add_client_data_notity,
+							'active' => $add_client_data_active,
 							'type' => 'edit_client'
 						);
 

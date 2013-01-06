@@ -38,8 +38,8 @@ include('header.php');
 		.tablesorterPager({container: $("#pager")})
 
 		$("#select_all").click(function(){
-			var status = $(this).attr("checked");
-			$("td>input:checkbox").attr("checked",status);
+			var status = $(this).prop("checked");
+			$("td>input:checkbox").prop("checked",status);
 		});
 
 		$("form").submit(function() {

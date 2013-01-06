@@ -14,62 +14,13 @@
  * @package		ProjectSend
  *
  */
-session_start();
-ob_start();
-/**
- * Define the level required to access the following function, where
- * all system users are included, and clients (level 0) are not.
- */
-$allowed_enter = array(9,8,7);
+$allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 
-/**
- * Check if the ProjectSend is installed. Done only on the log in form
- * page since all other are inaccessible if no valid session or cookie
- * is set.
- */
-if (!is_projectsend_installed()) {
-	header("Location:install/index.php");
-	exit;
-}
+$page_title = __('Log in','cftp_admin');
 
-/** If logged as a system user, go directly to the back-end homepage */
-if (in_session_or_cookies($allowed_enter)) {
-	header("Location:".BASE_URI."home.php");
-}
-
-/** If client is logged in, redirect to the files list. */
-check_for_client();
-
-$database->MySQLDB();
-?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title><?php _e('Log in','cftp_admin'); ?> | <?php echo SYSTEM_NAME; ?></title>
-	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>favicon.ico" />
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/shared.css" />
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/base.css" />
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/font-sansation.css" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript" ></script>
-	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
-</head>
-
-<body>
-
-	<div id="header">
-		<div id="lonely_logo">
-			<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
-			<p><?php _e('Provided by', 'cftp_admin'); ?> <?php echo SYSTEM_NAME; ?></p>
-		</div>
-	</div>
-	<div id="login_header_low">
-	</div>
-
-	<div id="main">
+include('header-unlogged.php');
 	
-	<?php
 	/** The form was submitted */
 	if ($_POST) {
 		$sysuser_username = mysql_real_escape_string($_POST['login_form_user']);
@@ -119,22 +70,29 @@ $database->MySQLDB();
 				/** If the username was found on the clients table */
 				case 'client';
 					while($row = mysql_fetch_array($sql_client)) {
+						$active_status = $row['active'];
 						$db_pass = $row['password'];
 					}
 					if ($db_pass == $sysuser_password) {
-						$_SESSION['loggedin'] = $sysuser_username;
-						$_SESSION['access'] = $sysuser_username;
-						$_SESSION['userlevel'] = '0';
-						/** If "remember me" checkbox is on, set the cookie */
-						if ($_POST['login_form_remember']=='on') {
-							setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
-							setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
-							setcookie("access",$sysuser_username,time()+COOKIE_EXP_TIME);
-							setcookie("userlevel","0",time()+COOKIE_EXP_TIME);
+						/** Check if the client is marked as active */
+						if ($active_status == '1') {
+							$_SESSION['loggedin'] = $sysuser_username;
+							$_SESSION['access'] = $sysuser_username;
+							$_SESSION['userlevel'] = '0';
+							/** If "remember me" checkbox is on, set the cookie */
+							if ($_POST['login_form_remember']=='on') {
+								setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
+								setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
+								setcookie("access",$sysuser_username,time()+COOKIE_EXP_TIME);
+								setcookie("userlevel","0",time()+COOKIE_EXP_TIME);
+							}
+							/** Send the client directly to the files list */
+							header("location:".BASE_URI."upload/$sysuser_username/");
+							exit;
 						}
-						/** Send the client directly to the files list */
-						header("location:".BASE_URI."upload/$sysuser_username/");
-						exit;
+						else {
+							$errorstate = 'inactive_client';
+						}
 					}
 					else {
 						$errorstate = 'wrong_password';
@@ -161,6 +119,9 @@ $database->MySQLDB();
 							break;
 						case 'wrong_password':
 							$login_err_message = __("The supplied password is incorrect.",'cftp_admin');
+							break;
+						case 'inactive_client':
+							$login_err_message = __("This account is not active. If you just registered, please wait until a system administrator approves your account.",'cftp_admin');
 							break;
 					}
 	
@@ -202,6 +163,21 @@ $database->MySQLDB();
 					</li>
 				</ul>
 			</form>
+
+			<div class="login_form_links">
+				<?php
+					if (CLIENTS_CAN_REGISTER == '1') {
+				?>
+						<p><?php _e("Don't have an account yet?",'cftp_admin'); ?> <a href="<?php echo BASE_URI; ?>register.php"><?php _e('Register as a new client.','cftp_admin'); ?></a></p>
+				<?php
+					} else {
+				?>
+						<p><?php _e("This server does not allow self registrations.",'cftp_admin'); ?></p>
+						<p><?php _e("If you need an account, please contact a server administrator.",'cftp_admin'); ?></p>
+				<?php
+					}
+				?>
+			</div>
 	
 		</div>
 	
