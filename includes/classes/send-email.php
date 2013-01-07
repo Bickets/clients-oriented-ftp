@@ -53,7 +53,7 @@ $email_strings_new_client = array(
  */
 $email_strings_new_client_self = array(
 									'subject' => __('A new client has registered.','cftp_admin'),
-									'body' => __('A new account was created using the self registration for on your site. Registration information:','cftp_admin'),
+									'body' => __('A new account was created using the self registration form on your site. Registration information:','cftp_admin'),
 									'body2' => __('Please log in to activate it.','cftp_admin'),
 									'body3' => __('Remember, your new client will not be able to log in until an administrator has approved the account.','cftp_admin'),
 									'label_name' => __('Full name','cftp_admin'),
@@ -192,12 +192,12 @@ class PSend_Email
 	 * Prepare the body for the "New Client" self registration e-mail.
 	 * The name of the client and username are also sent.
 	 */
-	function email_new_client_self($name,$username)
+	function email_new_client_self($username,$fullname)
 	{
 		global $email_strings_new_client_self;
 		$this->email_body = $this->email_prepare_body('new-client-self.html');
 		$this->email_body = str_replace(
-									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLNAME%','%LBLUSER%','%NAME%','%USERNAME%','%URI%'),
+									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLNAME%','%LBLUSER%','%FULLNAME%','%USERNAME%','%URI%'),
 									array(
 										$email_strings_new_client_self['subject'],
 										$email_strings_new_client_self['body'],
@@ -205,7 +205,7 @@ class PSend_Email
 										$email_strings_new_client_self['body3'],
 										$email_strings_new_client_self['label_name'],
 										$email_strings_new_client_self['label_user'],
-										$name,$username,BASE_URI
+										$fullname,$username,BASE_URI
 										),
 									$this->email_body
 								);
@@ -266,7 +266,7 @@ class PSend_Email
 				$this->mail_info = $this->email_new_client($username,$password);
 			break;
 			case 'new_client_self':
-				$this->mail_info = $this->email_new_client($username,$name);
+				$this->mail_info = $this->email_new_client_self($username,$name);
 			break;
 			case 'new_user':
 				$this->mail_info = $this->email_new_user($username,$password);
