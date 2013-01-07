@@ -47,6 +47,19 @@ $email_strings_new_client = array(
 									'label_pass' => __('Your password','cftp_admin')
 								);
 
+/**
+ * Strings for the "New client" e-mail to the admin
+ * on self registration.
+ */
+$email_strings_new_client_self = array(
+									'subject' => __('A new client has registered.','cftp_admin'),
+									'body' => __('A new account was created using the self registration for on your site. Registration information:','cftp_admin'),
+									'body2' => __('Please log in to activate it.','cftp_admin'),
+									'body3' => __('Remember, your new client will not be able to log in until an administrator has approved the account.','cftp_admin'),
+									'label_name' => __('Full name','cftp_admin'),
+									'label_user' => __('Username','cftp_admin')
+								);
+
 /** Strings for the "New system user created" e-mail */
 $email_strings_new_user = array(
 									'subject' => __('Welcome to ProjectSend','cftp_admin'),
@@ -176,6 +189,33 @@ class PSend_Email
 	}
 
 	/**
+	 * Prepare the body for the "New Client" self registration e-mail.
+	 * The name of the client and username are also sent.
+	 */
+	function email_new_client_self($name,$username)
+	{
+		global $email_strings_new_client_self;
+		$this->email_body = $this->email_prepare_body('new-client-self.html');
+		$this->email_body = str_replace(
+									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLNAME%','%LBLUSER%','%NAME%','%USERNAME%','%URI%'),
+									array(
+										$email_strings_new_client_self['subject'],
+										$email_strings_new_client_self['body'],
+										$email_strings_new_client_self['body2'],
+										$email_strings_new_client_self['body3'],
+										$email_strings_new_client_self['label_name'],
+										$email_strings_new_client_self['label_user'],
+										$name,$username,BASE_URI
+										),
+									$this->email_body
+								);
+		return array(
+					'subject' => $email_strings_new_client_self['subject'],
+					'body' => $this->email_body
+				);
+	}
+
+	/**
 	 * Prepare the body for the "New User" e-mail.
 	 * The new username and password are also sent.
 	 */
@@ -212,7 +252,7 @@ class PSend_Email
 	 * Returns custom values instead of a boolean value to allow more
 	 * codes in the future, on new validations and functions.
 	 */
-	function psend_send_email($type,$address,$username = '',$password = '',$client_id = '')
+	function psend_send_email($type,$address,$username = '',$password = '',$client_id = '',$name = '')
 	{
 		$this->headers = $this->email_set_headers();
 		switch($type) {
@@ -224,6 +264,9 @@ class PSend_Email
 			break;
 			case 'new_client':
 				$this->mail_info = $this->email_new_client($username,$password);
+			break;
+			case 'new_client_self':
+				$this->mail_info = $this->email_new_client($username,$name);
 			break;
 			case 'new_user':
 				$this->mail_info = $this->email_new_user($username,$password);
