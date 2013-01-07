@@ -1,0 +1,31 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. Text in function
+#: templates/pinboxes/template.php:12
+msgid "Available files"
+msgstr ""
+
+#. Text in echo
+#: templates/pinboxes/template.php:50
+msgid "Welcome"
+msgstr ""
+
+#. Text in echo
+#: templates/pinboxes/template.php:68
+msgid "There are no files."
+msgstr ""
+
+#. Text in echo
+#: templates/pinboxes/template.php:114
+msgid "Download"
+msgstr ""
