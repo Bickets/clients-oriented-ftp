@@ -32,7 +32,7 @@ include_once(ROOT_DIR.'/header.php'); // include the required functions for ever
 
 	<div id="left_column">
 		<div id="current_logo">
-			<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=../img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=250&amp;type=tlogo" alt="" />
+			<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=250" alt="" />
 		</div>
 	</div>
 
@@ -67,7 +67,7 @@ include_once(ROOT_DIR.'/header.php'); // include the required functions for ever
 					<td><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
 					<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
 					<td><?php echo htmlentities($row['description']); ?></td>
-					<td><?php $this_file = filesize($row['url']); echo format_file_size($this_file); ?></td>
+					<td><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$row['url']); echo format_file_size($this_file); ?></td>
 					<td>
 						<?php
 							$pathinfo = pathinfo($row['url']);
@@ -80,7 +80,7 @@ include_once(ROOT_DIR.'/header.php'); // include the required functions for ever
 								$extension == "png"
 							) {
 						?>
-							<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=../upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;type=prev&amp;who=<?php echo $this_user; ?>&amp;name=<?php echo $row['url']; ?>" class="thumbnail" alt="" />
+							<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $row['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>" class="thumbnail" alt="" />
 						<?php } ?>
 					</td>
 					<td>
