@@ -89,6 +89,17 @@ $database->MySQLDB();
 			?>
 					<li class="home_widget_small">
 						<div class="home_container">
+							<?php
+								$sql_inactive = $database->query("SELECT distinct client_user FROM tbl_clients WHERE active='0'");
+								$count_inactive = mysql_num_rows($sql_inactive);
+								if ($count_inactive > 0) {
+							?>
+									<div class="home_inactive_msg">
+										<?php echo $count_inactive; ?>
+									</div>
+							<?php
+								}
+							?>
 							<h4><?php _e('Clients','cftp_admin'); ?></h4>
 							<img src="img/home-widget-clients.png" alt="" />
 							<a href="clients-add.php" class="button button_blue button_big"><?php _e('Add new client','cftp_admin'); ?></a>

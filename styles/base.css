@@ -129,7 +129,6 @@ h4 {
 	height:283px;
 }
 
-
 .home_spaces li h4 {
 	text-align:left;
 	padding:10px;
@@ -170,6 +169,24 @@ h4 {
 	box-shadow:3px 3px 5px #dedede;
 	text-align:center;
 	min-height:283px;
+	position:relative;
+}
+
+.home_inactive_msg {
+	position:absolute;
+	top:7px;
+	right:7px;
+	background:#990000;
+	color:white;
+	font-weight:bold;
+	width:25px;
+	text-align:center;
+	padding:5px 0;
+	font-size:1.2em;
+
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 30px;
 }
 
 .home_container img {
@@ -349,6 +366,10 @@ input[readonly] {
 
 .form_actions .form_actions_submit select {
 	width:100px;
+}
+
+.form_actions .form_actions_submit select.large_select {
+	width:320px !important;
 }
 
 
