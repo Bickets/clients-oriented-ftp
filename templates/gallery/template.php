@@ -29,7 +29,7 @@ $window_title = __('Gallery','cftp_template_gallery');
 <div id="header">
 	<?php if (file_exists(ROOT_DIR.'/img/custom/logo/'.LOGO_FILENAME)) { ?>
 		<div id="current_logo">
-			<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=../img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=<?php echo LOGO_MAX_WIDTH; ?>&amp;type=tlogo" alt="" />
+			<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=<?php echo LOGO_MAX_WIDTH; ?>" alt="" />
 		</div>
 	<?php } ?>
 
@@ -62,7 +62,7 @@ $window_title = __('Gallery','cftp_template_gallery');
 						<h5><?php echo htmlentities($row['filename']); ?></h5>
 						<div class="img_prev">
 							<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
-								<img src="<?php echo BASE_URI; ?>includes/timthumb/timthumb.php?src=<?php echo BASE_URI; ?>upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=280&amp;h=215&amp;f=2" class="thumbnail" alt="" />
+								<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $row['url']; ?>&amp;w=280&amp;h=215&amp;f=2" class="thumbnail" alt="" />
 							</a>
 						</div>
 						<div class="img_data">
