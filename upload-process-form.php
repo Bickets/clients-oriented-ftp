@@ -127,7 +127,8 @@ $sql = $database->query($cq);
 				if(file_exists($location)) {
 					$move_arguments = array(
 											'uploaded_name' => $location,
-											'move_to_folder' => ROOT_DIR.'/upload/'.$file['client'].'/',
+											//'move_to_folder' => ROOT_DIR.'/upload/'.$file['client'].'/',
+											'move_to_folder' => UPLOADED_FILES_FOLDER,
 											'filename' => $file['file']
 										);
 					$new_filename = $this_upload->upload_move($move_arguments);

@@ -89,7 +89,7 @@ $window_title = __('Available files','pinboxes_template');
 								?>
 										<div class="img_prev">
 											<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
-												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI; ?>upload/<?php echo $this_user; ?>/<?php echo $row['url']; ?>&amp;w=250" alt="<?php echo htmlentities($row['filename']); ?>" />
+												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $row['url']; ?>&amp;w=250" alt="<?php echo htmlentities($row['filename']); ?>" />
 											</a>
 										</div>
 								<?php
@@ -107,7 +107,7 @@ $window_title = __('Available files','pinboxes_template');
 							<div class="img_data">
 								<h2><?php echo htmlentities($row['filename']); ?></h2>
 								<div class="photo_info">
-									<?php echo htmlentities($row['description']); ?>
+									<?php echo $row['description']; ?>
 								</div>
 								<div class="download_link">
 									<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="button button_gray">

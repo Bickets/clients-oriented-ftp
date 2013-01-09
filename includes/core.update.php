@@ -123,5 +123,31 @@ if (in_session_or_cookies($allowed_update)) {
 			unset($q);
 		}
 	}
+	
+	/**
+	 * r189 updates
+	 * Move every uploaded file to a neutral location
+	 */
+	$work_folder = ROOT_DIR.'/upload/';
+	$folders = glob($work_folder."*", GLOB_NOSORT);
+
+	foreach ($folders as $folder) {
+		if(is_dir($folder) && !stristr($folder,'temp') && !stristr($folder,'assigned_files')) {
+			$files = glob($folder.'/*', GLOB_NOSORT);
+			foreach ($files as $file) {
+				if(is_file($file) && !stristr($file,'index.php')) {
+					$filename = basename($file);
+					$mark_for_moving[$filename] = $file;
+				}
+			}
+		}
+	}
+	
+	$work_folder = UPLOADED_FILES_FOLDER;
+	foreach ($mark_for_moving as $filename => $path) {
+		$new = UPLOADED_FILES_FOLDER.'/'.$filename;
+		$try_moving = rename($path, $new);
+		chmod($new, 0644);
+	}
 }
 ?>

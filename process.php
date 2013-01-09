@@ -36,7 +36,7 @@ class process {
 				$this->value = $this->row['download_count']+1;
 				$this->sql2 = $this->database->query('UPDATE tbl_files SET download_count=' . $this->value .' WHERE url="' . $_GET['file'] .'"');
 
-				$file = 'upload/'.$_GET['client'].'/'.$_GET['file'];
+				$file = UPLOADED_FILES_FOLDER.$_GET['file'];
 				if (file_exists($file)) {
 					header('Content-Description: File Transfer');
 					header('Content-Type: application/octet-stream');

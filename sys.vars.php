@@ -71,7 +71,13 @@ define('MAX_PASS_CHARS', 16);
  */
 define('COOKIE_EXP_TIME', 60*60*24*30);
 
-/*
+/**
+ * Define the folder where uploaded files will reside
+ */
+define('UPLOADED_FILES_FOLDER', ROOT_DIR.'/upload/assigned_files/');
+define('UPLOADED_FILES_URL', '/upload/assigned_files/');
+
+/**
  * Define the folder where the uploaded files are stored before
  * being assigned to any client.
  *
