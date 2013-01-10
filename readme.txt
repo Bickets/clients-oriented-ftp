@@ -46,3 +46,31 @@ under the menu one time only.
 Questions, ideas? Want to join the project?
 Send your message to contact@projectsend.org or join us on Facebook, on
 https://www.facebook.com/pages/ProjectSend/333455190044627
+
+--------------------------------------------------------------------------------------------
+
+Many thanks to the authors of the following scripts, which are used on ProjectSend:
+
+- jQuery
+  http://www.jquery.com/
+
+- Superfish
+  http://users.tpg.com.au/j_birch/plugins/superfish/
+
+- EasyTabs.js
+  http://os.alfajango.com/easytabs/
+
+- hashchange
+  http://benalman.com/projects/jquery-hashchange-plugin/
+
+- Plupload
+  http://www.plupload.com/
+
+- Timthumb
+  http://code.google.com/p/timthumb/
+
+- TextboxList.js
+  http://www.devthought.com/projects/mootools/textboxlist/
+
+- tablesorter
+  http://tablesorter.com/docs/
