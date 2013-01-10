@@ -251,6 +251,46 @@ body {
 
 /* tables */
 
+.extra_columns_table .extra {
+	display:none;
+}
+
+#table_view_modes {
+	width:144px;
+	float:left;
+}
+
+#table_view_modes li {
+	display:inline-block;
+	zoom:1;
+}
+
+#table_view_modes li a {
+	display:block;
+	width:20px;
+	height:20px;
+	text-indent:-999em;
+	border:1px solid #fff;
+	transition: all 0.4s ease-out;
+}
+
+.active_view_button {
+	-webkit-box-shadow: 2px 2px 4px rgba(50, 50, 50, 0.15);
+	-moz-box-shadow:    2px 2px 4px rgba(50, 50, 50, 0.15);
+	box-shadow:         2px 2px 4px rgba(50, 50, 50, 0.15);
+	border:1px solid #ccc !important;
+}
+
+#view_reduced {
+	background:url(../img/table_reduced.jpg) no-repeat;
+	margin-right:7px;
+}
+
+#view_full {
+	background:url(../img/table_full.jpg) no-repeat;
+}
+
+
 .vertical_middle td, .vertical_middle th {
 	vertical-align:middle!important
 }

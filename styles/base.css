@@ -358,10 +358,10 @@ input[readonly] {
 	overflow:hidden;
 }
 
-.form_actions .form_actions_count {
-	float:left;
-	width:30%;
+.form_actions_count {
+	text-align:left;
 	padding-top:5px;
+	font-size:1.2em;
 }
 
 .form_actions .form_actions_submit select {
@@ -373,9 +373,28 @@ input[readonly] {
 }
 
 
+.form_actions_limit_results {
+	float:left;
+	width:55%;
+	text-align:left;
+}
+
+.form_actions_limit_results .txtfield {
+	width:140px;
+}
+
+.form_actions_limit_results .form_actions_search_box {
+	width:80px !important;
+}
+
+#btn_proceed_search {
+	margin-right:10px !important;
+}
+
+
 .form_actions .form_actions_submit {
 	float:right;
-	width:60%;
+	width:40%;
 	text-align:right;
 }
 
