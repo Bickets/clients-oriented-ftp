@@ -108,6 +108,9 @@ $window_title = __('Available files','pinboxes_template');
 								<h2><?php echo htmlentities($row['filename']); ?></h2>
 								<div class="photo_info">
 									<?php echo $row['description']; ?>
+									<p class="file_size">
+										<?php _e('File size:','pinboxes_template'); ?> <strong><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$row['url']); echo format_file_size($this_file); ?></strong>
+									</p>
 								</div>
 								<div class="download_link">
 									<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="button button_gray">

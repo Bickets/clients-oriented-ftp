@@ -193,6 +193,11 @@ p.welcome {
 	font-size:.9em;
 }
 
+.file_size {
+	margin:1em 0 0;
+	font-size:1.2em;
+}
+
 .download_link {
 	margin-top:10px;
 	padding-top:10px;
