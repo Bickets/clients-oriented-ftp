@@ -244,57 +244,6 @@ h4 {
 	margin:0;
 }
 
-.message {
-	padding:10px;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-	margin-bottom:20px;
-}
-
-.message p {
-	margin:0;
-}
-
-.message ol {
-	margin:20px 0 0 0;
-	padding-left:2em;
-/*	list-style-type:hiragana; NIHONGO GA SUKI DESU :D */
-}
-
-.message li {
-}
-
-#login_error {
-	width:310px;
-	margin:0 auto 20px auto;
-}
-
-.message_ok {
-	color:#849F4F;
-	background:#ECF5DA;
-	border:1px solid #B1C786;
-}
-
-.message_error {
-	color:#8B281E;
-	background:#F6D5D2;
-	border:1px solid #AC6760;
-}
-
-.message_info {
-	color:#2E8EB4;
-	background:#E5F1FC;
-	border:1px solid #BCD8F3;
-	margin-top:20px;
-}
-
-.message_note {
-	color:#6c6620;
-	background:#fdfbe1;
-	border:1px solid #e7db55;
-}
-
 .whitebox {
 	background-color:white;
 	border:1px solid #ccc;

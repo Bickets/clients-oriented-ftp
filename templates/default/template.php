@@ -12,6 +12,18 @@ $window_title = __('File downloads','cftp_template');
 $tablesorter = 1;
 include_once(ROOT_DIR.'/header.php'); // include the required functions for every template
 
+/** Overwrite the default query to add the search parameter */
+$files_query = 'SELECT * FROM tbl_files WHERE client_user="' . $this_user .'" AND hidden=0';
+
+/** Add the search terms */	
+if(isset($_POST['search']) && !empty($_POST['search'])) {
+	$search_terms = $_POST['search'];
+	$files_query .= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
+	$no_results_error = 'search';
+}
+
+$template_files_sql = $database->query($files_query);
+$count = mysql_num_rows($template_files_sql);
 ?>
 
 <div id="wrapper">
@@ -32,6 +44,17 @@ include_once(ROOT_DIR.'/header.php'); // include the required functions for ever
 				$("td>input:checkbox").prop("checked",status);
 			});
 
+			$("#view_reduced").click(function(){
+				$(this).addClass('active_view_button');
+				$("#view_full").removeClass('active_view_button');
+				$(".extra").hide();
+			});
+			$("#view_full").click(function(){
+				$(this).addClass('active_view_button');
+				$("#view_reduced").removeClass('active_view_button');
+				$(".extra").show();
+			});
+
 			$("#do_action").click(function() {
 				var checks = $("td>input:checkbox").serializeArray(); 
 				if (checks.length == 0) { 
@@ -41,14 +64,7 @@ include_once(ROOT_DIR.'/header.php'); // include the required functions for ever
 				else {
 					var action = $('#files_actions').val();
 					if (action == 'zip') {
-/*
-						var checkboxes = new Array();
-						$("input:checkbox:checked").each(function() {
-							if ($(this).val() != '0') {
-							 	checkboxes.push($(this).val());
-							}
-						});
-*/
+
 						var checkboxes = $.map($('input:checkbox:checked'), function(e,i) {
 							if (e.value != '0') {
 								return +e.value;
@@ -84,42 +100,55 @@ include_once(ROOT_DIR.'/header.php'); // include the required functions for ever
 			<a href="#" id="loading_close"><?php _e('Close this window','cftp_admin'); ?></a>
 		</div>
 	</div>
-	<div class="result">
+
+	<div id="left_column">
+		<div id="current_logo">
+			<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=250" alt="" />
+		</div>
 	</div>
 
-	<form action="" name="files_list" method="post">
+	<div id="right_column">
 
-		<div class="form_actions_right">
-			<div class="form_actions">
-				<div class="form_actions_submit">
-					<label><?php _e('Selected files actions','cftp_admin'); ?>:</label>
-					<select name="files_actions" id="files_actions" class="txtfield">
-						<option value="zip"><?php _e('Download zipped','cftp_admin'); ?></option>
-					</select>
-					<input type="submit" id="do_action" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
-				</div>
-			</div>
-		</div>
-
-		<div class="clear"></div>
-
-		<div id="left_column">
-			<div id="current_logo">
-				<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=250" alt="" />
+		<div class="form_actions_left">
+			<div class="form_actions_limit_results">
+				<form action="" name="files_search" method="post" class="inline_form">
+					<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
+					<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
+				</form>
 			</div>
 		</div>
 	
-		<div id="right_column">
+		<form action="" name="files_list" method="post">
+			<div class="form_actions_right">
+				<div class="form_actions">
+					<div class="form_actions_submit">
+						<label><?php _e('Selected files actions','cftp_admin'); ?>:</label>
+						<select name="files_actions" id="files_actions" class="txtfield">
+							<option value="zip"><?php _e('Download zipped','cftp_admin'); ?></option>
+						</select>
+						<input type="submit" id="do_action" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+					</div>
+				</div>
+			</div>
+	
+			<div class="right_clear"></div>
+
+			<div class="form_actions_count">
+				<p class="form_count_total"><?php _e('Showing','cftp_admin'); ?>: <span><?php echo $count; ?> <?php _e('files','cftp_admin'); ?></span></p>
+				<ul id="table_view_modes">
+					<li><a href="#" id="view_reduced"><?php _e('View reduced table','cftp_admin'); ?></a></li><li>
+						<a href="#" id="view_full" class="active_view_button"><?php _e('View full table','cftp_admin'); ?></a></li>
+				</ul>
+			</div>
+
+			<div class="right_clear"></div>
+
 			<?php
-				$count = mysql_num_rows($template_files_sql);
 				if (!$count) {
 					if (isset($no_results_error)) {
 						switch ($no_results_error) {
 							case 'search':
 								$no_results_message = __('Your search keywords returned no results.','cftp_admin');;
-								break;
-							case 'filter':
-								$no_results_message = __('The filters you selected returned no results.','cftp_admin');;
 								break;
 						}
 					}
@@ -136,11 +165,11 @@ include_once(ROOT_DIR.'/header.php'); // include the required functions for ever
 						<th class="td_checkbox">
 							<input type="checkbox" name="select_all" id="select_all" value="0" />
 						</th>
-						<th><?php _e('Uploaded date','cftp_template'); ?></th>
 						<th><?php _e('Name','cftp_template'); ?></th>
 						<th><?php _e('Description','cftp_template'); ?></th>
 						<th><?php _e('Size','cftp_template'); ?></th>
-						<th><?php _e('Image preview','cftp_template'); ?></th>
+						<th class="extra"><?php _e('Uploaded date','cftp_template'); ?></th>
+						<th class="extra"><?php _e('Image preview','cftp_template'); ?></th>
 						<th><?php _e('Download','cftp_template'); ?></th>
 					</tr>
 				</thead>
@@ -151,11 +180,11 @@ include_once(ROOT_DIR.'/header.php'); // include the required functions for ever
 					?>
 								<tr>
 									<td><input type="checkbox" name="files[]" value="<?php echo $row["id"]; ?>" /></td>
-									<td><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
 									<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
 									<td><?php echo htmlentities($row['description']); ?></td>
 									<td><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$row['url']); echo format_file_size($this_file); ?></td>
-									<td>
+									<td class="extra"><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
+									<td class="extra">
 										<?php
 											$pathinfo = pathinfo($row['url']);
 											$extension = strtolower($pathinfo['extension']);
