@@ -15,6 +15,9 @@ class process {
 			case 'download':
 				$this->download_file();
 			break;
+			case 'zip_download':
+				$this->download_zip();
+			break;
 			case 'logout':
 				$this->logout();
 			break;
@@ -31,10 +34,7 @@ class process {
 			// do a permissions check for logged in user
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 
-				$this->sql = $this->database->query('SELECT * FROM tbl_files WHERE url="' . $_GET['file'] .'"');
-				$this->row = mysql_fetch_array($this->sql);
-				$this->value = $this->row['download_count']+1;
-				$this->sql2 = $this->database->query('UPDATE tbl_files SET download_count=' . $this->value .' WHERE url="' . $_GET['file'] .'"');
+				$this->sql = $this->database->query('UPDATE tbl_files SET download_count=download_count+1 WHERE url="' . $_GET['file'] .'"');
 
 				$file = UPLOADED_FILES_FOLDER.$_GET['file'];
 				if (file_exists($file)) {
@@ -51,6 +51,27 @@ class process {
 					readfile($file);
 					exit;
 				}
+			}
+		}
+	}
+
+	function download_zip() {
+		$this->check_level = array(9,8,7,0);
+		if (isset($_GET['files']) && isset($_GET['client'])) {
+			// do a permissions check for logged in user
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
+				foreach($_GET['files'] as $file_id) {
+					$this->sql = $this->database->query('SELECT * FROM tbl_files WHERE id="' . $file_id .'"');
+					$this->row = mysql_fetch_array($this->sql);
+					$this->url = $this->row['url'];
+					$file = UPLOADED_FILES_FOLDER.$this->url;
+					if (file_exists($file)) {
+						$file_list .= $this->url.',';
+					}
+				}
+				ob_clean();
+				flush();
+				echo $file_list;
 			}
 		}
 	}

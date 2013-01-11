@@ -412,4 +412,16 @@ function delete_recursive($dir)
 	}
 }
 
+/**
+ * Generates a random string to be used on the automatically
+ * created zip files.
+ */
+function generateRandomString($length = 10) {
+    $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    $rnd_result = '';
+    for ($i = 0; $i < $length; $i++) {
+        $rnd_result .= $characters[rand(0, strlen($characters) - 1)];
+    }
+    return $rnd_result;
+}
 ?>
