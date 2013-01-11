@@ -68,8 +68,8 @@ class FilesActions
 				 *
 				 * @see delete_file
 				 */
-				$this->original = 'upload/' . $this->client_user .'/' . $this->file_url;
-				$this->thumb = 'upload/' . $this->client_user .'/thumbs/' . $this->file_url;
+				$this->original = UPLOADED_FILES_FOLDER . $this->file_url;
+				$this->thumb = UPLOADED_FILES_FOLDER . $this->file_url;
 				delete_file($this->original);
 				if (file_exists($this->thumb)) {
 					delete_file($this->thumb);
