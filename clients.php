@@ -68,11 +68,11 @@ $(document).ready(function() {
 	/**
 	 * Apply the corresponding action to the selected clients.
 	 */
-	if(isset($_GET['do_action'])) {
+	if(isset($_POST['clients_actions'])) {
 		/** Continue only if 1 or more clients were selected. */
-		if(!empty($_GET['formclients'])) {
-			$selected_clients = $_GET['formclients'];
-			switch($_GET['clients_actions']) {
+		if(!empty($_POST['selected_clients'])) {
+			$selected_clients = $_POST['selected_clients'];
+			switch($_POST['clients_actions']) {
 				case 'activate':
 					/**
 					 * Changes the value on the "active" column value on the database.
@@ -116,72 +116,89 @@ $(document).ready(function() {
 		}
 	}
 
-
-
+	/** Query the clients */
 	$database->MySQLDB();
 	$cq = "SELECT * FROM tbl_clients";
 
 	/** Add the search terms */	
-	if(isset($_GET['search']) && !empty($_GET['search'])) {
-		$search_terms = $_GET['search'];
+	if(isset($_POST['search']) && !empty($_POST['search'])) {
+		$search_terms = $_POST['search'];
 		$cq .= " WHERE (name LIKE '%$search_terms%' OR client_user LIKE '%$search_terms%' OR address LIKE '%$search_terms%' OR phone LIKE '%$search_terms%' OR email LIKE '%$search_terms%' OR contact LIKE '%$search_terms%')";
+		$no_results_error = 'search';
 	}
 
 	/** Add the status filter */	
-	if(isset($_GET['status']) && $_GET['status'] != 'all') {
-		$status_filter = $_GET['status'];
+	if(isset($_POST['status']) && $_POST['status'] != 'all') {
+		$status_filter = $_POST['status'];
 		$cq .= " WHERE active='$status_filter'";
+		$no_results_error = 'filter';
 	}
 
-/**
-	// if the current user role is "account manager", only show the clients created by this user
-	if (get_current_user_level() == '8') {
-		$u = get_current_user_username();
-		$cq .= " WHERE created_by = '$u'";
-	}
-*/
 	$sql = $database->query($cq);
 	$count = mysql_num_rows($sql);
-	if (!$count) {
-		/** Echo the no clients default message */
-		message_no_clients();
-	}
-	else {
 ?>
-
-		<form action="clients.php" name="clients_list" method="get">
-			<div class="form_actions">
-				<div class="form_actions_limit_results">
-					<input type="text" name="search" id="search" class="txtfield form_actions_search_box" />
+		<div class="form_actions_left">
+			<div class="form_actions_limit_results">
+				<form action="clients.php" name="clients_search" method="post" class="inline_form">
+					<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
 					<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
-	
+				</form>
+
+				<form action="clients.php" name="clients_filters" method="post" class="inline_form">
 					<select name="status" id="status" class="txtfield">
 						<option value="all"><?php _e('All statuses','cftp_admin'); ?></option>
 						<option value="1"><?php _e('Active','cftp_admin'); ?></option>
 						<option value="0"><?php _e('Inactive','cftp_admin'); ?></option>
 					</select>
 					<input type="submit" id="btn_proceed_filter_clients" value="<?php _e('Filter','cftp_admin'); ?>" class="button_form" />
-					<ul id="table_view_modes">
-						<li><p><?php _e('View mode','cftp_admin'); ?></p></li>
-						<li><a href="#" id="view_reduced" class="active_view_button"><?php _e('View reduced table','cftp_admin'); ?></a></li><li>
-							<a href="#" id="view_full"><?php _e('View full table','cftp_admin'); ?></a></li>
-					</ul>
-				</div>
+				</form>
+			</div>
+		</div>
 
-				<div class="form_actions_submit">
-					<label><?php _e('Selected clients actions','cftp_admin'); ?>:</label>
-					<select name="clients_actions" id="clients_actions" class="txtfield">
-						<option value="activate"><?php _e('Activate','cftp_admin'); ?></option>
-						<option value="deactivate"><?php _e('Deactivate','cftp_admin'); ?></option>
-						<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
-					</select>
-					<input type="submit" id="do_action" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+		<form action="clients.php" name="clients_list" method="post">
+			<div class="form_actions_right">
+				<div class="form_actions">
+					<div class="form_actions_submit">
+						<label><?php _e('Selected clients actions','cftp_admin'); ?>:</label>
+						<select name="clients_actions" id="clients_actions" class="txtfield">
+							<option value="activate"><?php _e('Activate','cftp_admin'); ?></option>
+							<option value="deactivate"><?php _e('Deactivate','cftp_admin'); ?></option>
+							<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
+						</select>
+						<input type="submit" id="do_action" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+					</div>
 				</div>
 			</div>
-	
+			<div class="clear"></div>
+
 			<div class="form_actions_count">
-				<p><?php _e('Showing','cftp_admin'); ?>: <span><?php echo $count; ?> <?php _e('clients','cftp_admin'); ?></span></p>
+				<p class="form_count_total"><?php _e('Showing','cftp_admin'); ?>: <span><?php echo $count; ?> <?php _e('clients','cftp_admin'); ?></span></p>
+				<ul id="table_view_modes">
+					<li><a href="#" id="view_reduced" class="active_view_button"><?php _e('View reduced table','cftp_admin'); ?></a></li><li>
+						<a href="#" id="view_full"><?php _e('View full table','cftp_admin'); ?></a></li>
+				</ul>
 			</div>
+
+			<div class="clear"></div>
+
+			<?php
+				if (!$count) {
+					if (isset($no_results_error)) {
+						switch ($no_results_error) {
+							case 'search':
+								$no_results_message = __('Your search keywords returned no results.','cftp_admin');;
+								break;
+							case 'filter':
+								$no_results_message = __('The filters you selected returned no results.','cftp_admin');;
+								break;
+						}
+					}
+					else {
+						$no_results_message = __('There are no clients at the moment','cftp_admin');;
+					}
+					echo system_message('error',$no_results_message);
+				}
+			?>
 
 			<table id="clients_tbl" class="tablesorter vertical_middle extra_columns_table">
 				<thead>
@@ -192,9 +209,9 @@ $(document).ready(function() {
 						<th><?php _e('Full name','cftp_admin'); ?></th>
 						<th><?php _e('Log in username','cftp_admin'); ?></th>
 						<th><?php _e('E-mail','cftp_admin'); ?></th>
-						<th><?php _e('Notify','cftp_admin'); ?></th>
 						<th><?php _e('Files','cftp_admin'); ?></th>
 						<th><?php _e('Status','cftp_admin'); ?></th>
+						<th class="extra"><?php _e('Notify','cftp_admin'); ?></th>
 						<th class="extra"><?php _e('Added on','cftp_admin'); ?></th>
 						<th class="extra"><?php _e('Address','cftp_admin'); ?></th>
 						<th class="extra"><?php _e('Telephone','cftp_admin'); ?></th>
@@ -203,79 +220,75 @@ $(document).ready(function() {
 					</tr>
 				</thead>
 				<tbody>
-				
-				<?php
-						while($row = mysql_fetch_array($sql)) {
-						$client_user = $row["client_user"];
-				?>
-				
-					<tr>
-						<td><input type="checkbox" name="formclients[]" value="<?php echo $row["id"]; ?>" /></td>
-						<td><?php echo html_entity_decode($row["name"]); ?></td>
-						<td><?php echo html_entity_decode($row["client_user"]); ?></td>
-						<td><?php echo html_entity_decode($row["email"]); ?></td>
-						<td><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
-						<td>
-							<?php
-								$sql_files = $database->query("SELECT * FROM tbl_files WHERE client_user='$client_user'");
-								$count_files=mysql_num_rows($sql_files);
-								echo $count_files;
-							?>
-						</td>
-						<td class="<?php echo ($row['active'] === '0') ? 'account_status_inactive' : 'account_status_active'; ?>">
-							<?php
-								$status_hidden = __('Inactive','cftp_admin');
-								$status_visible = __('Active','cftp_admin');
-								echo ($row['active'] === '0') ? $status_hidden : $status_visible;
-							?>
-						</td>
-						<td class="extra"><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
-						<td class="extra"><?php echo html_entity_decode($row["address"]); ?></td>
-						<td class="extra"><?php echo html_entity_decode($row["phone"]); ?></td>
-						<td class="extra"><?php echo html_entity_decode($row["contact"]); ?></td>
-						<td>
-							<a href="manage-files.php?id=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
-							<a href="upload/<?php echo $row["client_user"]; ?>/" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
-							<a href="clients-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
-						</td>
-					</tr>
-				
 					<?php
+						if ($count > 0) {
+							while($row = mysql_fetch_array($sql)) {
+								$client_user = $row["client_user"];
+					?>
+								<tr>
+									<td><input type="checkbox" name="selected_clients[]" value="<?php echo $row["id"]; ?>" /></td>
+									<td><?php echo html_entity_decode($row["name"]); ?></td>
+									<td><?php echo html_entity_decode($row["client_user"]); ?></td>
+									<td><?php echo html_entity_decode($row["email"]); ?></td>
+									<td>
+										<?php
+											$sql_files = $database->query("SELECT * FROM tbl_files WHERE client_user='$client_user'");
+											$count_files=mysql_num_rows($sql_files);
+											echo $count_files;
+										?>
+									</td>
+									<td class="<?php echo ($row['active'] === '0') ? 'account_status_inactive' : 'account_status_active'; ?>">
+										<?php
+											$status_hidden = __('Inactive','cftp_admin');
+											$status_visible = __('Active','cftp_admin');
+											echo ($row['active'] === '0') ? $status_hidden : $status_visible;
+										?>
+									</td>
+									<td class="extra"><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
+									<td class="extra"><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
+									<td class="extra"><?php echo html_entity_decode($row["address"]); ?></td>
+									<td class="extra"><?php echo html_entity_decode($row["phone"]); ?></td>
+									<td class="extra"><?php echo html_entity_decode($row["contact"]); ?></td>
+									<td>
+										<a href="manage-files.php?id=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
+										<a href="upload/<?php echo $row["client_user"]; ?>/" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
+										<a href="clients-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
+									</td>
+								</tr>
+					<?php
+							}
+							$database->Close();
 						}
-					}
-				
-					$database->Close();
-				?>
-				
+					?>
 				</tbody>
 			</table>
 		</form>
 
 		<?php if ($count > 10) { ?>
-		<div id="pager" class="pager">
-			<form>
-				<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
-				<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
-				<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
-				<input type="text" class="pagedisplay" disabled="disabled" />
-				<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
-				<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
-				<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
-				<select class="pagesize">
-					<option selected="selected" value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-				</select>
-			</form>
-		</div>
+			<div id="pager" class="pager">
+				<form>
+					<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
+					<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
+					<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
+					<input type="text" class="pagedisplay" disabled="disabled" />
+					<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
+					<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
+					<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
+					<select class="pagesize">
+						<option selected="selected" value="10">10</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="40">40</option>
+					</select>
+				</form>
+			</div>
 		<?php } else { ?>
 			<div id="pager">
 				<form>
 					<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
 				</form>
 			</div>
-	<?php } ?>
+		<?php } ?>
 
 	</div>
 

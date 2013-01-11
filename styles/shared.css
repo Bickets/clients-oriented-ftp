@@ -257,7 +257,9 @@ body {
 
 #table_view_modes {
 	width:144px;
-	float:left;
+	float:right;
+	text-align:right;
+	font-size:.8em;
 }
 
 #table_view_modes li {
@@ -269,6 +271,7 @@ body {
 	display:block;
 	width:20px;
 	height:20px;
+	text-align:left;
 	text-indent:-999em;
 	border:1px solid #fff;
 	transition: all 0.4s ease-out;

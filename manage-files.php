@@ -42,7 +42,7 @@ include('header.php');
 			$("td>input:checkbox").prop("checked",status);
 		});
 
-		$("form").submit(function() {
+		$("#do_action").click(function() {
 			var checks = $("td>input:checkbox").serializeArray(); 
 			if (checks.length == 0) { 
 				alert('<?php _e('Please select at least one file to proceed.','cftp_admin'); ?>');
@@ -92,10 +92,10 @@ include('header.php');
 			/**
 			 * Apply the corresponding action to the selected files.
 			 */
-			if(isset($_POST['btn_proceed_files'])) {
+			if(isset($_POST['do_action'])) {
 				/** Continue only if 1 or more files were selected. */
-				if(!empty($_POST['formfiles'])) {
-					$selected_files = $_POST['formfiles'];
+				if(!empty($_POST['files'])) {
+					$selected_files = $_POST['files'];
 					switch($_POST['files_actions']) {
 						case 'hide':
 							/**
@@ -142,31 +142,70 @@ include('header.php');
 			}
 
 			$database->MySQLDB();
-			$files_query = 'SELECT * FROM tbl_files WHERE client_user="' . $this_client['username'] .'"';
+			$cq = 'SELECT * FROM tbl_files WHERE client_user="' . $this_client['username'] .'"';
+
+			/** Add the search terms */	
+			if(isset($_POST['search']) && !empty($_POST['search'])) {
+				$search_terms = $_POST['search'];
+				$cq .= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
+				$no_results_error = 'search';
+			}
+		
+			/** Add the status filter */	
+			if(isset($_POST['status']) && $_POST['status'] != 'all') {
+				$status_filter = $_POST['status'];
+				$cq .= " AND hidden='$status_filter'";
+				$no_results_error = 'filter';
+			}
+
+			/** Add the download count filter */	
+			if(isset($_POST['download_count']) && $_POST['download_count'] != 'all') {
+				$count_filter = $_POST['download_count'];
+				switch ($count_filter) {
+					case '0':
+						$cq .= " AND download_count='$count_filter'";
+						break;
+					case '1':
+						$cq .= " AND download_count >='$count_filter'";
+						break;
+				}
+				$no_results_error = 'filter';
+			}
 
 			/**
 			 * Count the files assigned to this client. If there is none, show
 			 * an error message.
 			 */
-			$sql = $database->query($files_query);
+			$sql = $database->query($cq);
 			$count = mysql_num_rows($sql);
-			if (!$count) {
-			?>
-				<div class="whiteform whitebox whitebox_text">
-					<p><?php _e('There are no files for this client.','cftp_admin'); ?></p>
-				</div>
-			<?php
-			}
-			/**
-			 * Continue if client exists and has files under his account.
-			 */
-			else {
 		?>
-				<form action="manage-files.php?id=<?php echo $this_id; ?>" name="files_list" method="post">
+			<div class="form_actions_left">
+				<div class="form_actions_limit_results">
+					<form action="manage-files.php?id=<?php echo $this_id; ?>" name="files_search" method="post" class="inline_form">
+						<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
+						<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
+					</form>
+	
+					<form action="manage-files.php?id=<?php echo $this_id; ?>" name="files_filters" method="post" class="inline_form">
+						<select name="status" id="status" class="txtfield">
+							<option value="all"><?php _e('All statuses','cftp_admin'); ?></option>
+							<option value="1"><?php _e('Hidden','cftp_admin'); ?></option>
+							<option value="0"><?php _e('Visible','cftp_admin'); ?></option>
+						</select>
+						<select name="download_count" id="download_count" class="txtfield">
+							<option value="all"><?php _e('Download count','cftp_admin'); ?></option>
+							<option value="all"><?php _e('Indistinct','cftp_admin'); ?></option>
+							<option value="0"><?php _e('0 times','cftp_admin'); ?></option>
+							<option value="1"><?php _e('1 or more times','cftp_admin'); ?></option>
+						</select>
+						<input type="submit" id="btn_proceed_filter_clients" value="<?php _e('Filter','cftp_admin'); ?>" class="button_form" />
+					</form>
+				</div>
+			</div>
+	
+			<form action="manage-files.php?id=<?php echo $this_id; ?>" name="files_list" method="post">
+				<div class="form_actions_right">
 					<div class="form_actions">
-						<div class="form_actions_count">
-							<p><?php _e('Files','cftp_admin'); ?>: <span><?php echo $count; ?></span></p>
-						</div>
 						<div class="form_actions_submit">
 							<label><?php _e('Selected files actions','cftp_admin'); ?>:</label>
 							<select name="files_actions" id="files_actions" class="txtfield">
@@ -174,36 +213,65 @@ include('header.php');
 								<option value="show"><?php _e('Show','cftp_admin'); ?></option>
 								<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
 							</select>
-							<input type="submit" name="btn_proceed_files" id="btn_proceed_files" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+							<input type="submit" name="do_action" id="do_action" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
 						</div>
 					</div>
-	
-					<table id="files_list" class="tablesorter">
-						<thead>
-							<tr>
-								<th class="td_checkbox">
-									<input type="checkbox" name="select_all" id="select_all" value="0" />
-								</th>
-								<th><?php _e('Uploaded','cftp_template'); ?></th>
-								<th><?php _e('Name','cftp_template'); ?></th>
-								<th><?php _e('Description','cftp_template'); ?></th>
-								<th><?php _e('Size','cftp_template'); ?></th>
-								<th><?php _e('Status','cftp_template'); ?></th>
-								<th><?php _e('Uploader','cftp_template'); ?></th>
-								<th><?php _e('Download count','cftp_template'); ?></th>
-								<th><?php _e('Actions','cftp_template'); ?></th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php
+				</div>
+
+				<div class="clear"></div>
+		
+				<div class="form_actions_count">
+					<p class="form_count_total"><?php _e('Showing','cftp_admin'); ?>: <span><?php echo $count; ?> <?php _e('files','cftp_admin'); ?></span></p>
+				</div>
+		
+				<div class="clear"></div>
+
+				<?php
+					if (!$count) {
+						if (isset($no_results_error)) {
+							switch ($no_results_error) {
+								case 'search':
+									$no_results_message = __('Your search keywords returned no results.','cftp_admin');;
+									break;
+								case 'filter':
+									$no_results_message = __('The filters you selected returned no results.','cftp_admin');;
+									break;
+							}
+						}
+						else {
+							$no_results_message = __('There are no files for this client.','cftp_admin');;
+						}
+						echo system_message('error',$no_results_message);
+					}
+				?>
+
+				<table id="files_list" class="tablesorter">
+					<thead>
+						<tr>
+							<th class="td_checkbox">
+								<input type="checkbox" name="select_all" id="select_all" value="0" />
+							</th>
+							<th><?php _e('Uploaded','cftp_template'); ?></th>
+							<th><?php _e('Name','cftp_template'); ?></th>
+							<th><?php _e('Description','cftp_template'); ?></th>
+							<th><?php _e('Size','cftp_template'); ?></th>
+							<th><?php _e('Status','cftp_template'); ?></th>
+							<th><?php _e('Uploader','cftp_template'); ?></th>
+							<th><?php _e('Download count','cftp_template'); ?></th>
+							<th><?php _e('Actions','cftp_template'); ?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php
+							if ($count > 0) {
 								while($row = mysql_fetch_array($sql)) {
 									/**
 									 * Construct the complete file URI to use on the download button.
 									 */
 									$this_file_uri = UPLOADED_FILES_FOLDER.$row['url'];
-							?>
+						?>
 									<tr>
-										<td><input type="checkbox" name="formfiles[]" value="<?php echo $row["id"]; ?>" /></td>
+										<td><input type="checkbox" name="files[]" value="<?php echo $row["id"]; ?>" /></td>
 										<td><?php echo date(TIMEFORMAT_USE, $row['timestamp']); ?></td>
 										<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
 										<td><?php echo htmlentities($row['description']); ?></td>
@@ -223,41 +291,42 @@ include('header.php');
 											</a>
 										</td>
 									</tr>
-							<?php
+						<?php
 								}
-							?>
-						</tbody>
-					</table>
-				</form>
+							}
+						?>
+					</tbody>
+				</table>
+			</form>
 
-				<?php if ($count > 10) { ?>
-					<div id="pager" class="pager">
-						<form>
-							<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
-							<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
-							<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
-							<input type="text" class="pagedisplay" disabled="disabled" />
-							<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
-							<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
-							<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
-							<select class="pagesize">
-								<option selected="selected" value="10">10</option>
-								<option value="20">20</option>
-								<option value="30">30</option>
-								<option value="40">40</option>
-							</select>
-						</form>
-					</div>
-				<?php } else { ?>
-					<div id="pager">
-						<form>
-							<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
-						</form>
-					</div>
-				<?php } ?>
+			<?php if ($count > 10) { ?>
+				<div id="pager" class="pager">
+					<form>
+						<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
+						<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
+						<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
+						<input type="text" class="pagedisplay" disabled="disabled" />
+						<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
+						<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
+						<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
+						<select class="pagesize">
+							<option selected="selected" value="10">10</option>
+							<option value="20">20</option>
+							<option value="30">30</option>
+							<option value="40">40</option>
+						</select>
+					</form>
+				</div>
+			<?php } else { ?>
+				<div id="pager">
+					<form>
+						<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
+					</form>
+				</div>
+			<?php } ?>
 
-				<div class="message message_info"><?php _e('Please note that downloading a file from here will not add to the download count.','cftp_admin'); ?></div>
-	
+			<div class="message message_info"><?php _e('Please note that downloading a file from here will not add to the download count.','cftp_admin'); ?></div>
+
 	<?php
 		/**
 		 * End the IF statement for counting files.
@@ -265,7 +334,6 @@ include('header.php');
 		}
 	
 		$database->Close();
-	}
 	?>
 
 	</div>

@@ -351,32 +351,48 @@ input[readonly] {
 	color:#999999;
 }
 
+.form_actions_left {
+	display:inline;
+	float:left;
+}
+
+.form_actions_right {
+	display:inline;
+	float:right;
+}
+
+.inline_form {
+	display:inline;
+}
+
 .form_actions {
 	padding:0;
-	margin-bottom:30px;
-	border-bottom:1px dotted #ccc;
+	margin-bottom:5px;
 	overflow:hidden;
+}
+
+.form_count_total {
+	float:left;
 }
 
 .form_actions_count {
 	text-align:left;
-	padding-top:5px;
+	padding-top:15px;
 	font-size:1.2em;
+	overflow:hidden;
+	border-top:1px dotted #ccc;
 }
 
 .form_actions .form_actions_submit select {
-	width:100px;
+	width:120px;
 }
 
 .form_actions .form_actions_submit select.large_select {
 	width:320px !important;
 }
 
-
 .form_actions_limit_results {
-	float:left;
-	width:55%;
-	text-align:left;
+
 }
 
 .form_actions_limit_results .txtfield {
@@ -393,9 +409,6 @@ input[readonly] {
 
 
 .form_actions .form_actions_submit {
-	float:right;
-	width:40%;
-	text-align:right;
 }
 
 .form_actions_submit label {
