@@ -94,7 +94,7 @@ $empty_fields = 0;
 
 /** Fill the clients array that will be used on the form */
 $clients = array();
-$cq = "SELECT * FROM tbl_clients";
+$cq = "SELECT * FROM tbl_clients ORDER BY name ASC";
 $sql = $database->query($cq);
 	while($row = mysql_fetch_array($sql)) {
 	$clients[$row["client_user"]] = $row["name"];

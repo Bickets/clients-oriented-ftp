@@ -133,6 +133,8 @@ $(document).ready(function() {
 		$cq .= " WHERE active='$status_filter'";
 		$no_results_error = 'filter';
 	}
+	
+	$cq .= " ORDER BY name ASC";
 
 	$sql = $database->query($cq);
 	$count = mysql_num_rows($sql);
