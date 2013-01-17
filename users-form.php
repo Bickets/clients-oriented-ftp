@@ -76,11 +76,11 @@ switch ($user_form_type) {
 	<ul class="form_fields">
 		<li>
 			<label for="add_user_form_name"><?php _e('Name','cftp_admin'); ?></label>
-			<input name="add_user_form_name" id="add_user_form_name" class="txtfield required" value="<?php echo (isset($add_user_data_name)) ? stripslashes($add_user_data_name) : ''; ?>" />
+			<input type="text" name="add_user_form_name" id="add_user_form_name" class="txtfield required" value="<?php echo (isset($add_user_data_name)) ? stripslashes($add_user_data_name) : ''; ?>" />
 		</li>
 		<li>
 			<label for="add_user_form_user"><?php _e('Log in username','cftp_admin'); ?></label>
-			<input name="add_user_form_user" id="add_user_form_user" class="txtfield <?php if (!$disable_user) { echo 'required'; } ?>" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($add_user_data_user)) ? stripslashes($add_user_data_user) : ''; ?>" <?php if ($disable_user) { echo 'readonly'; } ?> />
+			<input type="text" name="add_user_form_user" id="add_user_form_user" class="txtfield <?php if (!$disable_user) { echo 'required'; } ?>" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($add_user_data_user)) ? stripslashes($add_user_data_user) : ''; ?>" <?php if ($disable_user) { echo 'readonly'; } ?> />
 		</li>
 		<li>
 			<label for="add_user_form_pass"><?php _e('Log in password','cftp_admin'); ?></label>
@@ -92,7 +92,7 @@ switch ($user_form_type) {
 		</li>
 		<li>
 			<label for="add_user_form_email"><?php _e('E-mail','cftp_admin'); ?></label>
-			<input name="add_user_form_email" id="add_user_form_email" class="txtfield required" value="<?php echo (isset($add_user_data_email)) ? stripslashes($add_user_data_email) : ''; ?>" />
+			<input type="text" name="add_user_form_email" id="add_user_form_email" class="txtfield required" value="<?php echo (isset($add_user_data_email)) ? stripslashes($add_user_data_email) : ''; ?>" />
 		</li>
 		<li>
 			<label for="add_user_form_level"><?php _e('Role','cftp_admin'); ?></label>

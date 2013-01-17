@@ -37,12 +37,24 @@ if (in_session_or_cookies($core_update_allowed)) {
 }
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title><?php echo THIS_INSTALL_SET_TITLE; ?> &raquo; <?php echo $page_title; ?> | <?php echo SYSTEM_NAME; ?></title>
 	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/shared.css" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/bootstrap.min.css" />
+	<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/bootstrap/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+	
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+
 	<?php
 		/**
 		 * Load a different css file when called from the admin, or
@@ -63,7 +75,6 @@ if (in_session_or_cookies($core_update_allowed)) {
 	?>
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/font-sansation.css" />
 	
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 	<script src="<?php echo BASE_URI; ?>includes/js/superfish.js" type="text/javascript"></script>
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.easytabs.min.js" type="text/javascript"></script>
@@ -111,16 +122,16 @@ if (in_session_or_cookies($core_update_allowed)) {
 		}
 	?>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 		$(document).ready(function() {
 			$("ul.sf-menu").superfish();
 		});
 	</script>
 
-	<div id="top_menu">
+	<nav id="top_menu">
 		<ul class="sf-menu">
-			<li><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
-			<li>
+				<li><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
+		<li>
 				<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload files', 'cftp_admin'); ?></a>
 					<?php
 						/**
@@ -163,10 +174,10 @@ if (in_session_or_cookies($core_update_allowed)) {
 				if (in_session_or_cookies($users_allowed)) {
 			?>
 					<li>
-						<a href="<?php echo BASE_URI; ?>users.php"><?php _e('Users', 'cftp_admin'); ?></a>
+						<a href="<?php echo BASE_URI; ?>users.php"><?php _e('System Users', 'cftp_admin'); ?></a>
 						<ul>
 							<li><a href="<?php echo BASE_URI; ?>users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-							<li><a href="<?php echo BASE_URI; ?>users.php"><?php _e('Manage users', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>users.php"><?php _e('Manage system users', 'cftp_admin'); ?></a></li>
 						</ul>
 					</li>
 			<?php } ?>
@@ -205,7 +216,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 	
 		</ul>
 		<div class="clear"></div>
-	</div>
+	</nav>
 
 <?php
 	/**

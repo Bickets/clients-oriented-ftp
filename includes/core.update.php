@@ -149,5 +149,42 @@ if (in_session_or_cookies($allowed_update)) {
 		$try_moving = rename($path, $new);
 		chmod($new, 0644);
 	}
+
+
+	/**
+	 * r202 updates
+	 * Combine clients and users on the same table.
+	 */
+	$q = $database->query("SELECT created_by FROM tbl_users");
+	if (!$q) {
+		/* Mark existing users as active */
+		$database->query("ALTER TABLE tbl_users ADD address TEXT NOT NULL, ADD phone TEXT NOT NULL, ADD notify TINYINT(1) NOT NULL, ADD contact TEXT NOT NULL, ADD created_by TEXT NOT NULL, ADD active TINYINT(1) NOT NULL ");
+		$database->query("INSERT INTO tbl_users"
+								." (user, password, name, email, timestamp, address, phone, notify, contact, created_by, active, level)"
+								." SELECT client_user, password, name, email, timestamp, address, phone, notify, contact, created_by, active, '0' FROM tbl_clients");
+		$updates_made++;
+	}
+	$database->query("UPDATE tbl_users SET active = 1");
+
+
+	/**
+	 * r2xx updates
+	 * A new database table was added, that stores users and clients actions.
+	 */
+	 /*
+	$q = $database->query("SELECT id FROM tbl_log");
+	if (!$q) {
+		$q1 = '
+		CREATE TABLE IF NOT EXISTS `tbl_log` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `timestamp` int(15) NOT NULL,
+		  `action` int(2) NOT NULL,
+		  `owner` int(2) NOT NULL,
+		  `affected` int(2) NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+		';
+	}
+	*/
 }
 ?>

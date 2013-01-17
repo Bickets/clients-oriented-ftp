@@ -33,10 +33,10 @@ a img {	border:none; }
 
 body {
 	color:#666666;
-	font-family:Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;
 	font-size:0.8em;
 	line-height:1.2em;
-	background-color:#F4F4F4;
+	background:#F4F4F4 url(../img/bg-1-noise.jpg);
 	height:100%;
 }
 
@@ -57,9 +57,9 @@ body {
 #header h1 {
 	color:white;
 	font-size:32px;
+	line-height:20px;
 	margin:15px 0;
 	text-shadow:1px 1px 1px #000;
-	font-family:'SansationRegular', sans-serif;
 }
 
 #logout {
@@ -183,7 +183,7 @@ body {
 .tab a {
 	color:#ccc;
 	display:block;
-	font-family:SansationRegular,sans-serif;
+	font-family:'Open Sans',sans-serif;
 	font-size:1.5em;
 	line-height:2em;
 	outline:none;
@@ -221,9 +221,9 @@ body {
 
 /* forms */
 
-.form_fields li {
-	margin-bottom:2px;
-	padding-bottom:2px;
+.form_fields li:not(.form_submit_li) {
+	margin-bottom:4px;
+	padding-bottom:4px;
 }
 
 .form_fields li label {
@@ -242,8 +242,8 @@ body {
 	background-image:url(../img/req-field-off.png);
 	background-position:right -6px;
 	background-repeat:no-repeat;
-	width:274px;
-	padding-right:30px;
+/*	width:274px;
+	padding-right:30px;*/
 }
 
 input[readonly] {
@@ -251,15 +251,23 @@ input[readonly] {
 	color:#999999;
 }
 
-.txtfield {
-	width:310px;
+input[type="text"], input[type="password"], textarea, select {
+	width:308px;
 	font-size:12px;
 	padding:4px;
-	margin-bottom:5px;
-	border:1px solid #CCCCCC;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
+	border:1px solid #BEBEC4;
+	color:#999;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+
+	transition: all 0.8s ease-out;
+	-moz-transition: all 0.8s ease-out;
+	-webkit-transition: all 0.8s ease-out;
+}
+
+.txtfield:focus {
+	color:#333;
 }
 
 /* Files actions */
@@ -320,9 +328,6 @@ input[readonly] {
 	margin-right:10px !important;
 }
 
-
-.form_actions .form_actions_submit {
-}
 
 .form_actions_submit label {
 	display:inline-block;
@@ -634,7 +639,7 @@ div.pager input, div.pager select {
 .sf-menu ul {
 	position:		absolute;
 	top:			-999em;
-	width:			14em; /* left offset of submenus need to match (see below) */
+	width:			16em; /* left offset of submenus need to match (see below) */
 }
 .sf-menu ul li {
 	width:			100%;
@@ -653,8 +658,9 @@ div.pager input, div.pager select {
 .sf-menu li:hover ul,
 .sf-menu li.sfHover ul {
 	left:			0;
-	top:			3em; /* match top ul list item height */
+	top:			3.5em; /* match top ul list item height */
 	z-index:		99;
+	background:		#222;
 }
 ul.sf-menu li:hover li ul,
 ul.sf-menu li.sfHover li ul {
@@ -662,7 +668,7 @@ ul.sf-menu li.sfHover li ul {
 }
 ul.sf-menu li li:hover ul,
 ul.sf-menu li li.sfHover ul {
-	left:			14em; /* match ul width */
+	left:			16em; /* match ul width */
 	top:			0;
 }
 ul.sf-menu li li:hover li ul,
@@ -682,7 +688,7 @@ ul.sf-menu li li li.sfHover ul {
 .sf-menu a {
 	border-right:	1px solid #333;
 	border-left:	1px solid #000;
-	padding: 		1em 1.9em;
+	padding: 		1.3em 2.4em;
 	text-decoration:none;
 }
 .sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
@@ -691,7 +697,6 @@ ul.sf-menu li li li.sfHover ul {
 }
 .sf-menu li {
 	background:		#222;
-	font-weight:	bold;
 }
 .sf-menu li li {
 	background:		#222;
@@ -717,7 +722,7 @@ ul.sf-menu li li li.sfHover ul {
 	position:		absolute;
 	display:		block;
 	right:			.75em;
-	top:			1.35em; /* IE6 only */
+	top:			1.4em; /* IE6 only */
 	width:			10px;
 	height:			10px;
 	text-indent: 	-999em;
@@ -725,7 +730,7 @@ ul.sf-menu li li li.sfHover ul {
 	background:		url('../img/arrows-ffffff.png') no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only */
 }
 a > .sf-sub-indicator {  /* give all except IE6 the correct values */
-	top:			1.1em;
+	top:			1.4em;
 	background-position: 0 -100px; /* use translucent arrow for modern browsers*/
 }
 /* apply hovers to modern browsers */
@@ -749,7 +754,7 @@ li.sfHover > a > .sf-sub-indicator {
 	background-position: -10px 0; /* arrow hovers for modern browsers*/
 }
 
-/*** shadows for all but IE6 ***/
+/*** shadows for all but IE6
 .sf-shadow ul {
 	background:	url('../img/shadow.png') no-repeat bottom right;
 	padding: 0 8px 9px 0;
@@ -761,3 +766,4 @@ li.sfHover > a > .sf-sub-indicator {
 .sf-shadow ul.sf-shadow-off {
 	background: transparent;
 }
+ ***/
