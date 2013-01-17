@@ -16,9 +16,10 @@ include('header.php');
 $database->MySQLDB();
 
 /**
- * Set default as 1 to check it for new clients when first entering
+ * Set checkboxes as 1 to defaul them to checked when first entering
  * the form
  */
+$add_client_data_notity = 1;
 $add_client_data_active = 1;
 
 if ($_POST) {
