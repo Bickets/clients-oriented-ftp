@@ -44,12 +44,13 @@ $database->MySQLDB();
 										<h4><?php _e('Files','cftp_admin'); ?></h4>
 										<img src="img/home-widget-files.png" alt="" />
 										<a href="upload-from-computer.php" class="button button_blue button_big"><?php _e('Upload from computer','cftp_admin'); ?></a>
-										<a href="<?php echo $my_files_link; ?>" class="button button_blue button_big"><?php _e('Access my files list','cftp_admin'); ?></a>
+										<a href="<?php echo BASE_URI.'my_files/'; ?>" class="button button_blue button_big"><?php _e('Access my files list','cftp_admin'); ?></a>
 										<div class="message message_info">
 											<p><?php _e('Total files on account:','cftp_admin'); ?>
 												<strong>
 												<?php
 													/** Count the VISIBLE files on this client's account */
+													$my_username = get_current_user_username();
 													$sql = $database->query("SELECT distinct id FROM tbl_files WHERE client_user = '$my_username' AND hidden = '0'");
 													$count = mysql_num_rows($sql);
 													echo $count;
