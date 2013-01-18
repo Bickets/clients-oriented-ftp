@@ -124,6 +124,32 @@ $database->MySQLDB();
 						<?php
 							}
 				
+							/** Show GROUPS widget to allowed users */
+							$groups_allowed = array(9,8);
+							if (in_session_or_cookies($groups_allowed)) {
+						?>
+								<li class="home_widget_small">
+									<div class="home_container">
+										<h4><?php _e('Clients groups','cftp_admin'); ?></h4>
+										<img src="img/home-widget-groups.png" alt="" />
+										<a href="groups-add.php" class="button button_blue button_big"><?php _e('Add new group','cftp_admin'); ?></a>
+										<a href="groups.php" class="button button_blue button_big"><?php _e('Manage groups','cftp_admin'); ?></a>
+										<div class="message message_info">
+											<p><?php _e('Total groups:','cftp_admin'); ?>
+												<strong>
+												<?php
+													$sql = $database->query("SELECT distinct id FROM tbl_groups");
+													$count = mysql_num_rows($sql);
+													echo $count;
+												?>
+												</strong>
+											</p>
+										</div>
+									</div>
+								</li>
+						<?php
+							}
+				
 							/** Show USERS and BRANDING widgets to system administrators (Level 9) only */
 							$users_allowed = array(9);
 							if (in_session_or_cookies($users_allowed)) {
