@@ -144,12 +144,13 @@ if (in_session_or_cookies($allowed_update)) {
 	}
 	
 	$work_folder = UPLOADED_FILES_FOLDER;
-	foreach ($mark_for_moving as $filename => $path) {
-		$new = UPLOADED_FILES_FOLDER.'/'.$filename;
-		$try_moving = rename($path, $new);
-		chmod($new, 0644);
+	if (!empty($mark_for_moving)) {
+		foreach ($mark_for_moving as $filename => $path) {
+			$new = UPLOADED_FILES_FOLDER.'/'.$filename;
+			$try_moving = rename($path, $new);
+			chmod($new, 0644);
+		}
 	}
-
 
 	/**
 	 * r202 updates

@@ -33,7 +33,7 @@ $work_folder = USER_UPLOADS_TEMP_FOLDER;
 	
 	<?php
 		/** Count clients to show an error message, or the form */
-		$sql = $database->query("SELECT * FROM tbl_clients");
+		$sql = $database->query("SELECT * FROM tbl_users WHERE level = '0'");
 		$count = mysql_num_rows($sql);
 		if (!$count) {
 			/** Echo the "no clients" default message */
