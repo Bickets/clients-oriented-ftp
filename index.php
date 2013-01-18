@@ -56,7 +56,7 @@ include('header-unlogged.php');
 						setcookie("userlevel",$user_level,time()+COOKIE_EXP_TIME);
 					}
 					if ($user_level == '0') {
-						header("location:".BASE_URI."upload/$sysuser_username/");
+						header("location:".BASE_URI."my_files/");
 					}
 					else {
 						header("location:home.php");

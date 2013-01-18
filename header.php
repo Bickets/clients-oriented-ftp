@@ -205,11 +205,8 @@ if (in_session_or_cookies($core_update_allowed)) {
 				 */
 				$clients_allowed = array(0);
 				if (in_session_or_cookies($clients_allowed)) {
-					$my_username = get_current_user_username();
-					/** Define "MY FILES LIST" link to use here and on the home widget */
-					$my_files_link = BASE_URI.'upload/'.$my_username.'/';
 			?>
-					<li><a href="<?php echo $my_files_link; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+					<li><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
 			<?php
 				}
 			?>

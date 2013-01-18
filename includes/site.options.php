@@ -46,6 +46,8 @@ if(!empty($options_values)) {
 	define('TIMEZONE_USE',$options_values['timezone']);
 	define('TIMEFORMAT_USE',$options_values['timeformat']);
 	define('CLIENTS_CAN_REGISTER',$options_values['clients_can_register']);
+	/** Define the template path */
+	define('TEMPLATE_PATH',ROOT_DIR.'/templates/'.TEMPLATE_USE.'/template.php');
 	/**
 	 * Wrap the e-mail definition in an IF statement in case the user 
 	 * just updated to r135 and this value doesn't exist yet to prevent

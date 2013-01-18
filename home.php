@@ -26,13 +26,19 @@ $database->MySQLDB();
 	<div class="home">
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div class="span8">
+				<div class="span12">
 					<ul class="home_spaces">
 						<?php
 							/** Show SIMPLE UPLOAD widget and current logo to clients */
 							$upload_allowed = array(0);
 							if (in_session_or_cookies($upload_allowed)) {
 						?>
+								<li class="logo_home_li">
+									<div class="home_container">
+										<img src="<?php echo BASE_URI; ?>includes/timthumb/timthumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=300" alt="<?php echo SYSTEM_NAME; ?> Logo" />
+									</div>
+								</li>
+
 								<li class="home_widget_small">
 									<div class="home_container">
 										<h4><?php _e('Files','cftp_admin'); ?></h4>
@@ -51,12 +57,6 @@ $database->MySQLDB();
 												</strong>
 											</p>
 										</div>
-									</div>
-								</li>
-			
-								<li class="logo_home_li">
-									<div class="home_container">
-										<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=300&amp;ql=<?php echo THUMBS_QUALITY; ?>&amp;type=tlogo" alt="Logo Placeholder" />
 									</div>
 								</li>
 						<?php
@@ -157,20 +157,6 @@ $database->MySQLDB();
 						<?php
 							}
 						?>
-					</ul>
-				</div>
-				<div class="span4">
-					<ul>
-						<li>
-							<h3>Lorem ipsum dolor sit amet</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et lorem velit. Vivamus at quam ut est ullamcorper malesuada eget ac lorem. Pellentesque dapibus fermentum hendrerit. Sed massa tortor, ornare non imperdiet mollis, molestie a quam. Nulla vulputate, est eget volutpat varius, leo velit tempor nunc, at euismod nulla est vitae erat. Donec dictum convallis odio, in condimentum ipsum tristique in. Vivamus dapibus vehicula lacus in volutpat. Praesent magna magna, accumsan nec auctor ut, accumsan non risus.</p>
-						</li><li>
-							<h3>Lorem ipsum dolor sit amet</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et lorem velit. Vivamus at quam ut est ullamcorper malesuada eget ac lorem. Pellentesque dapibus fermentum hendrerit. Sed massa tortor, ornare non imperdiet mollis, molestie a quam. Nulla vulputate, est eget volutpat varius, leo velit tempor nunc, at euismod nulla est vitae erat. Donec dictum convallis odio, in condimentum ipsum tristique in. Vivamus dapibus vehicula lacus in volutpat. Praesent magna magna, accumsan nec auctor ut, accumsan non risus.</p>
-						</li><li>
-							<h3>Lorem ipsum dolor sit amet</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus et lorem velit. Vivamus at quam ut est ullamcorper malesuada eget ac lorem. Pellentesque dapibus fermentum hendrerit. Sed massa tortor, ornare non imperdiet mollis, molestie a quam. Nulla vulputate, est eget volutpat varius, leo velit tempor nunc, at euismod nulla est vitae erat. Donec dictum convallis odio, in condimentum ipsum tristique in. Vivamus dapibus vehicula lacus in volutpat. Praesent magna magna, accumsan nec auctor ut, accumsan non risus.</p>
-						</li>
 					</ul>
 				</div>
 			</div>
