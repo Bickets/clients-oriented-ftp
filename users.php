@@ -94,19 +94,19 @@ include('header.php');
 	}
 
 	$database->MySQLDB();
-	$cq = "SELECT * FROM tbl_users";
+	$cq = "SELECT * FROM tbl_users WHERE level != '0'";
 
 	/** Add the search terms */	
 	if(isset($_POST['search']) && !empty($_POST['search'])) {
 		$search_terms = $_POST['search'];
-		$cq .= " WHERE (name LIKE '%$search_terms%' OR user LIKE '%$search_terms%' OR email LIKE '%$search_terms%')";
+		$cq .= " AND (name LIKE '%$search_terms%' OR user LIKE '%$search_terms%' OR email LIKE '%$search_terms%')";
 		$no_results_error = 'search';
 	}
 
 	/** Add the status filter */	
 	if(isset($_POST['role']) && $_POST['role'] != 'all') {
 		$role_filter = $_POST['role'];
-		$cq .= " WHERE level='$role_filter'";
+		$cq .= " AND level='$role_filter'";
 		$no_results_error = 'filter';
 	}
 
