@@ -92,14 +92,6 @@ if ($_POST) {
 						$msg = __('There was an error. Please try again.','cftp_admin');
 						echo system_message('error',$msg);
 					break;
-					case 2:
-						$msg = __('A folder for this client could not be created. Probably because of a server configuration.','cftp_admin');
-						echo system_message('error',$msg);
-					break;
-					case 3:
-						$msg = __('The client could not be created. A folder with this name already exists.','cftp_admin');
-						echo system_message('error',$msg);
-					break;
 				}
 				/**
 				 * Show the ok or error message for the email notification.

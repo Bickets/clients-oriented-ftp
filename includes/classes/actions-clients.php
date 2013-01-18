@@ -113,61 +113,31 @@ class ClientActions
 		$this->active = $arguments['active'];
 		$this->enc_password = md5(mysql_real_escape_string($this->password));
 
-		$this->folder = ROOT_DIR.'/upload/'.$this->username;
+		/** Who is creating the client? */
+		$this->this_admin = get_current_user_username();
 
-		if (!file_exists($this->folder)) {
-			$this->success = @mkdir($this->folder);
-	
-			if ($this->success){
-				chmod($this->folder, 0755);
-				$this->thumbs_folder = $this->folder.'/thumbs';
-				mkdir($this->thumbs_folder);
-				chmod($this->thumbs_folder, 0755);
-	
-				/** Create index.php on clients folder */
-				$this->index_content = '<?php require_once(\'../../includes/sys.vars.php\'); $this_user = "'.$this->username.'"; $template = \'../../templates/\'.TEMPLATE_USE.\'/template.php\'; include_once($template); ?>';
-				$this->index_file = $this->folder .'/'. "index.php";   
-				
-				$this->file_handle = @fopen($this->index_file,"a");
-				@fwrite($this->file_handle, $this->index_content);
-				@chmod($this->index_file, 0755);
-				@fclose($this->file_handle);
-	
-				/** Who is creating the client? */
-				$this->this_admin = get_current_user_username();
-	
-				/** Insert the client information into the database */
-				$this->timestamp = time();
-				$this->sql_query = $database->query("INSERT INTO tbl_users (name,user,password,address,phone,email,notify,contact,timestamp,created_by,active)"
-													."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact', '$this->timestamp','$this->this_admin', '$this->active')");
+		/** Insert the client information into the database */
+		$this->timestamp = time();
+		$this->sql_query = $database->query("INSERT INTO tbl_users (name,user,password,address,phone,email,notify,contact,timestamp,created_by,active)"
+											."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact', '$this->timestamp','$this->this_admin', '$this->active')");
 
-				if ($this->sql_query) {
-					$this->state['actions'] = 1;
-		
-					/** Send account data by email */
-					$this->notify_client = new PSend_Email();
-					$this->notify_send = $this->notify_client->psend_send_email('new_client',$this->email,$this->username,$this->password);
-		
-					if ($this->notify_send == 1){
-						$this->state['email'] = 1;
-					}
-					else {
-						$this->state['email'] = 0;
-					}
-				}
-				else {
-					/** Query couldn't be executed */
-					$this->state['actions'] = 0;
-				}
+		if ($this->sql_query) {
+			$this->state['actions'] = 1;
+
+			/** Send account data by email */
+			$this->notify_client = new PSend_Email();
+			$this->notify_send = $this->notify_client->psend_send_email('new_client',$this->email,$this->username,$this->password);
+
+			if ($this->notify_send == 1){
+				$this->state['email'] = 1;
 			}
 			else {
-				/** The folder could not be created */
-				$this->state['actions'] = 2;
+				$this->state['email'] = 0;
 			}
 		}
 		else {
-			/** The folder already exists */
-			$this->state['actions'] = 3;
+			/** Query couldn't be executed */
+			$this->state['actions'] = 0;
 		}
 
 		return $this->state;
@@ -236,15 +206,9 @@ class ClientActions
 		global $database;
 		$this->check_level = array(9,8);
 		if (isset($client)) {
-			$this->return_id = $database->query('SELECT user FROM tbl_users WHERE id="' . $client .'"');
-			$this->get_client = mysql_fetch_row($this->return_id);
-			$this->client_user = $this->get_client[0];
 			/** Do a permissions check */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				$this->sql = $database->query('DELETE FROM tbl_users WHERE id="' . $client .'"');
-				$this->sql = $database->query('DELETE FROM tbl_files WHERE id="' . $client .'"');
-				$this->folder = "./upload/" . $this->client_user . "/";
-				delete_recursive($this->folder);
 			}
 		}
 	}
