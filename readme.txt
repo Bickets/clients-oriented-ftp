@@ -54,6 +54,9 @@ Many thanks to the authors of the following scripts, which are used on ProjectSe
 - jQuery
   http://www.jquery.com/
 
+- Bootstrap (custom download)
+  http://twitter.github.com/bootstrap/
+
 - Superfish
   http://users.tpg.com.au/j_birch/plugins/superfish/
 

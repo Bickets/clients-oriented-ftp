@@ -38,10 +38,10 @@ else {
  * Get the clients information from the database to use on the form.
  */
 if ($page_status === 1) {
-	$editing = $database->query("SELECT * FROM tbl_clients WHERE id=$client_id");
+	$editing = $database->query("SELECT * FROM tbl_users WHERE id=$client_id");
 	while($data = mysql_fetch_array($editing)) {
 		$add_client_data_name = $data['name'];
-		$add_client_data_user = $data['client_user'];
+		$add_client_data_user = $data['user'];
 		$add_client_data_email = $data['email'];
 		$add_client_data_addr = $data['address'];
 		$add_client_data_phone = $data['phone'];

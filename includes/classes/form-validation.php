@@ -96,7 +96,7 @@ class Validate_Form
 	 */
 	private function is_user_exists($field, $err)
 	{
-		if (mysql_num_rows(mysql_query("SELECT * FROM tbl_clients WHERE client_user = '$field'")) || mysql_num_rows(mysql_query("SELECT * FROM tbl_users WHERE user = '$field'"))){
+		if (mysql_num_rows(mysql_query("SELECT * FROM tbl_users WHERE user = '$field'"))){
 			$this->error_msg .= '<li>'.$err.'</li>';
 			$this->return_val = false;
 		}
@@ -108,7 +108,6 @@ class Validate_Form
 	 */
 	private function is_email_exists($field, $err, $current_id)
 	{
-		$this->sql_clients = "SELECT * FROM tbl_clients WHERE email = '$field'";
 		$this->sql_users = "SELECT * FROM tbl_users WHERE email = '$field'";
 		/**
 		 * If the ID parameter is set, the validation is used when editing
@@ -121,7 +120,7 @@ class Validate_Form
 			$this->sql_users .= $this->sql_not_this;
 		}
 
-		if (mysql_num_rows(mysql_query($this->sql_clients)) || mysql_num_rows(mysql_query($this->sql_users))){
+		if (mysql_num_rows(mysql_query($this->sql_users))){
 			$this->error_msg .= '<li>'.$err.'</li>';
 			$this->return_val = false;
 		}

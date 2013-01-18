@@ -31,47 +31,45 @@ include('header-unlogged.php');
 		$count_user = mysql_num_rows($sql_user);
 		if ($count_user > 0){
 			/** If the username was found on the users table */
-				while($row = mysql_fetch_array($sql_user)) {
-					$db_pass = $row['password'];
-					$user_level = $row["level"];
-				}
-				if ($db_pass == $sysuser_password) {
-					if ($active_status != '0') {
+			while($row = mysql_fetch_array($sql_user)) {
+				$db_pass = $row['password'];
+				$user_level = $row["level"];
+			}
+			if ($db_pass == $sysuser_password) {
+				if ($active_status != '0') {
+					$_SESSION['loggedin'] = $sysuser_username;
+					if ($user_level == '0') {
+						$access_string = 'admin';
+						$_SESSION['access'] = $access_string;
 						$_SESSION['loggedin'] = $sysuser_username;
-						if ($user_level == '0') {
-							$access_string = 'admin';
-							$_SESSION['access'] = $access_string;
-							$_SESSION['loggedin'] = $sysuser_username;
-						}
-						else {
-							$_SESSION['access'] = $sysuser_username;
-							$access_string = $sysuser_username;
-						}
-						$_SESSION['userlevel'] = $user_level;
-						/** If "remember me" checkbox is on, set the cookie */
-						if ($_POST['login_form_remember']=='on') {
-							setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
-							setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
-							setcookie("access",$access_string,time()+COOKIE_EXP_TIME);
-							setcookie("userlevel",$user_level,time()+COOKIE_EXP_TIME);
-						}
-						if ($user_level == '0') {
-							header("location:".BASE_URI."upload/$sysuser_username/");
-						}
-						else {
-							header("location:home.php");
-						}
-						exit;
 					}
 					else {
-						$errorstate = 'inactive_client';
+						$_SESSION['access'] = $sysuser_username;
+						$access_string = $sysuser_username;
 					}
+					$_SESSION['userlevel'] = $user_level;
+					/** If "remember me" checkbox is on, set the cookie */
+					if ($_POST['login_form_remember']=='on') {
+						setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
+						setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
+						setcookie("access",$access_string,time()+COOKIE_EXP_TIME);
+						setcookie("userlevel",$user_level,time()+COOKIE_EXP_TIME);
+					}
+					if ($user_level == '0') {
+						header("location:".BASE_URI."upload/$sysuser_username/");
+					}
+					else {
+						header("location:home.php");
+					}
+					exit;
 				}
 				else {
-					$errorstate = 'wrong_password';
+					$errorstate = 'inactive_client';
 				}
-			break;
-
+			}
+			else {
+				$errorstate = 'wrong_password';
+			}
 		}
 		else {
 			$errorstate = 'wrong_username';

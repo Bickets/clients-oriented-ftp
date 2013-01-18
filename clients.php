@@ -118,19 +118,19 @@ $(document).ready(function() {
 
 	/** Query the clients */
 	$database->MySQLDB();
-	$cq = "SELECT * FROM tbl_clients";
+	$cq = "SELECT * FROM tbl_users WHERE level='0'";
 
 	/** Add the search terms */	
 	if(isset($_POST['search']) && !empty($_POST['search'])) {
 		$search_terms = $_POST['search'];
-		$cq .= " WHERE (name LIKE '%$search_terms%' OR client_user LIKE '%$search_terms%' OR address LIKE '%$search_terms%' OR phone LIKE '%$search_terms%' OR email LIKE '%$search_terms%' OR contact LIKE '%$search_terms%')";
+		$cq .= " AND (name LIKE '%$search_terms%' OR user LIKE '%$search_terms%' OR address LIKE '%$search_terms%' OR phone LIKE '%$search_terms%' OR email LIKE '%$search_terms%' OR contact LIKE '%$search_terms%')";
 		$no_results_error = 'search';
 	}
 
 	/** Add the status filter */	
 	if(isset($_POST['status']) && $_POST['status'] != 'all') {
 		$status_filter = $_POST['status'];
-		$cq .= " WHERE active='$status_filter'";
+		$cq .= " AND active='$status_filter'";
 		$no_results_error = 'filter';
 	}
 	
@@ -225,12 +225,12 @@ $(document).ready(function() {
 					<?php
 						if ($count > 0) {
 							while($row = mysql_fetch_array($sql)) {
-								$client_user = $row["client_user"];
+								$client_user = $row["user"];
 					?>
 								<tr>
 									<td><input type="checkbox" name="selected_clients[]" value="<?php echo $row["id"]; ?>" /></td>
 									<td><?php echo html_entity_decode($row["name"]); ?></td>
-									<td><?php echo html_entity_decode($row["client_user"]); ?></td>
+									<td><?php echo html_entity_decode($row["user"]); ?></td>
 									<td><?php echo html_entity_decode($row["email"]); ?></td>
 									<td>
 										<?php
@@ -253,7 +253,7 @@ $(document).ready(function() {
 									<td class="extra"><?php echo html_entity_decode($row["contact"]); ?></td>
 									<td>
 										<a href="manage-files.php?id=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
-										<a href="upload/<?php echo $row["client_user"]; ?>/" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
+										<a href="upload/<?php echo $row["user"]; ?>/" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
 										<a href="clients-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
 									</td>
 								</tr>

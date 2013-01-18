@@ -162,9 +162,9 @@ if (in_session_or_cookies($allowed_update)) {
 		$database->query("INSERT INTO tbl_users"
 								." (user, password, name, email, timestamp, address, phone, notify, contact, created_by, active, level)"
 								." SELECT client_user, password, name, email, timestamp, address, phone, notify, contact, created_by, active, '0' FROM tbl_clients");
+		$database->query("UPDATE tbl_users SET active = 1");
 		$updates_made++;
 	}
-	$database->query("UPDATE tbl_users SET active = 1");
 
 
 	/**

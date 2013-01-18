@@ -138,7 +138,7 @@ class ClientActions
 	
 				/** Insert the client information into the database */
 				$this->timestamp = time();
-				$this->sql_query = $database->query("INSERT INTO tbl_clients (name,client_user,password,address,phone,email,notify,contact,timestamp,created_by,active)"
+				$this->sql_query = $database->query("INSERT INTO tbl_users (name,user,password,address,phone,email,notify,contact,timestamp,created_by,active)"
 													."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact', '$this->timestamp','$this->this_admin', '$this->active')");
 
 				if ($this->sql_query) {
@@ -194,7 +194,7 @@ class ClientActions
 		$this->enc_password = md5(mysql_real_escape_string($this->password));
 
 		/** SQL query */
-		$this->edit_client_query = "UPDATE tbl_clients SET 
+		$this->edit_client_query = "UPDATE tbl_users SET 
 									name = '$this->name',
 									address = '$this->address',
 									phone = '$this->phone',
@@ -236,12 +236,12 @@ class ClientActions
 		global $database;
 		$this->check_level = array(9,8);
 		if (isset($client)) {
-			$this->return_id = $database->query('SELECT client_user FROM tbl_clients WHERE id="' . $client .'"');
+			$this->return_id = $database->query('SELECT user FROM tbl_users WHERE id="' . $client .'"');
 			$this->get_client = mysql_fetch_row($this->return_id);
 			$this->client_user = $this->get_client[0];
 			/** Do a permissions check */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$this->sql = $database->query('DELETE FROM tbl_clients WHERE id="' . $client .'"');
+				$this->sql = $database->query('DELETE FROM tbl_users WHERE id="' . $client .'"');
 				$this->sql = $database->query('DELETE FROM tbl_files WHERE id="' . $client .'"');
 				$this->folder = "./upload/" . $this->client_user . "/";
 				delete_recursive($this->folder);
@@ -259,7 +259,7 @@ class ClientActions
 		if (isset($client_id)) {
 			/** Do a permissions check */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$this->sql = $database->query('UPDATE tbl_clients SET active='.$change_to.' WHERE id="' . $client_id . '"');
+				$this->sql = $database->query('UPDATE tbl_users SET active='.$change_to.' WHERE id="' . $client_id . '"');
 			}
 		}
 	}

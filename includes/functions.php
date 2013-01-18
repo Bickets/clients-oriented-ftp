@@ -44,7 +44,7 @@ function is_projectsend_installed() {
 function client_exists_id($id)
 {
 	global $database;
-	$id_exists = $database->query("SELECT * FROM tbl_clients WHERE id='$id'");
+	$id_exists = $database->query("SELECT * FROM tbl_users WHERE id='$id'");
 	$count_clients = mysql_num_rows($id_exists);
 	if($count_clients > 0){
 		return true;
@@ -82,12 +82,12 @@ function user_exists_id($id)
 function get_client_by_id($client)
 {
 	global $database;
-	$get_client_info = $database->query("SELECT * FROM tbl_clients WHERE id='$client'");
+	$get_client_info = $database->query("SELECT * FROM tbl_users WHERE id='$client'");
 	while ($row = mysql_fetch_assoc($get_client_info)) {
 		$information = array(
 							'id' => $row['id'],
 							'name' => $row['name'],
-							'username' => $row['client_user'],
+							'username' => $row['user'],
 							'address' => $row['address'],
 							'phone' => $row['phone'],
 							'email' => $row['email'],
@@ -114,12 +114,12 @@ function get_client_by_id($client)
 function get_client_by_username($client)
 {
 	global $database;
-	$get_client_info = $database->query("SELECT * FROM tbl_clients WHERE client_user='$client'");
+	$get_client_info = $database->query("SELECT * FROM tbl_users WHERE user='$client'");
 	while ($row = mysql_fetch_assoc($get_client_info)) {
 		$information = array(
 							'id' => $row['id'],
 							'name' => $row['name'],
-							'username' => $row['client_user'],
+							'username' => $row['user'],
 							'address' => $row['address'],
 							'phone' => $row['phone'],
 							'email' => $row['email'],
@@ -145,7 +145,7 @@ function get_client_by_username($client)
 function check_if_notify_client($client)
 {
 	global $database;
-	$get_notify = $database->query("SELECT notify, email FROM tbl_clients WHERE client_user='$client'");
+	$get_notify = $database->query("SELECT notify, email FROM tbl_users WHERE user='$client'");
 	while ($row = mysql_fetch_assoc($get_notify)) {
 		if($row['notify'] === '1') {
 			return $row['email'];
