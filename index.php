@@ -43,12 +43,12 @@ include('header-unlogged.php');
 					$_SESSION['userlevel'] = $user_level;
 
 					if ($user_level != '0') {
-						$_SESSION['access'] = $access_string;
 						$access_string = 'admin';
+						$_SESSION['access'] = $access_string;
 					}
 					else {
-						$_SESSION['access'] = $sysuser_username;
 						$access_string = $sysuser_username;
+						$_SESSION['access'] = $sysuser_username;
 					}
 
 					/** If "remember me" checkbox is on, set the cookie */
