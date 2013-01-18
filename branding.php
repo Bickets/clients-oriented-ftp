@@ -88,7 +88,7 @@ else {
 		</div>
 		<div id="current_logo_right">
 			<div id="current_logo_img">
-				<img src="<?php echo BASE_URI; ?>includes/thumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=220&amp;ql=<?php echo THUMBS_QUALITY; ?>&amp;type=tlogo" alt="Logo Placeholder" />
+				<img src="<?php echo BASE_URI; ?>includes/timthumb/timthumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=220" alt="Logo Placeholder" />
 			</div>
 		</div>
 	</div>
