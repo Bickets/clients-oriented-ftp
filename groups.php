@@ -140,13 +140,18 @@ include('header.php');
 
 		<?php
 			if (!$count) {
-				switch ($no_results_error) {
-					case 'search':
-						$no_results_message = __('Your search keywords returned no results.','cftp_admin');;
-						break;
-					case 'filter':
-						$no_results_message = __('The filters you selected returned no results.','cftp_admin');;
-						break;
+				if (isset($no_results_error)) {
+					switch ($no_results_error) {
+						case 'search':
+							$no_results_message = __('Your search keywords returned no results.','cftp_admin');;
+							break;
+						case 'filter':
+							$no_results_message = __('The filters you selected returned no results.','cftp_admin');;
+							break;
+					}
+				}
+				else {
+					$no_results_message = __('There are no groups created yet.','cftp_admin');;
 				}
 				echo system_message('error',$no_results_message);
 			}
@@ -160,6 +165,7 @@ include('header.php');
 					</th>
 					<th><?php _e('Group name','cftp_admin'); ?></th>
 					<th><?php _e('Description','cftp_admin'); ?></th>
+					<th><?php _e('Members','cftp_admin'); ?></th>
 					<th><?php _e('Created by','cftp_admin'); ?></th>
 					<th><?php _e('Added on','cftp_admin'); ?></th>
 					<th><?php _e('Actions','cftp_admin'); ?></th>
@@ -178,6 +184,12 @@ include('header.php');
 					</td>
 					<td><?php echo html_entity_decode($row["name"]); ?></td>
 					<td><?php echo html_entity_decode($row["description"]); ?></td>
+					<td>
+						<?php
+							$members_sql = $database->query("SELECT id FROM tbl_members WHERE group_id = '".$row["id"]."'");
+							echo mysql_num_rows($members_sql);
+						?>
+					</td>
 					<td><?php echo html_entity_decode($row["created_by"]); ?></td>
 					<td><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
 					<td>

@@ -73,7 +73,6 @@ if (in_session_or_cookies($core_update_allowed)) {
 	<?php
 		}
 	?>
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/font-sansation.css" />
 	
 	<script src="<?php echo BASE_URI; ?>includes/js/superfish.js" type="text/javascript"></script>
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
@@ -89,6 +88,12 @@ if (in_session_or_cookies($core_update_allowed)) {
 		<script src="<?php echo BASE_URI; ?>includes/js/GrowingInput.js" type="text/javascript"></script>
 		<script src="<?php echo BASE_URI; ?>includes/js/TextboxList.js" type="text/javascript"></script>
 	<?php } ?>
+	
+	<?php if (isset($multiselect)) { ?>
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/multi-select.css" />
+		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/jquery.multi-select.js"></script>
+	<?php } ?>
+	
 
 	<?php if (isset($plupload)) { ?>
 		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />

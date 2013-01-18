@@ -413,11 +413,12 @@ input[type="text"], input[type="password"], textarea, select {
 }
 
 .button_gray {
-	background:#CACACA;
-	background:-moz-linear-gradient(center top , #D1D1D1, #CACACA)!important;
-	background:-webkit-gradient(linear, left top, left bottom, from(#D1D1D1), to(#CACACA))!important;
+	background:#eee;
+	background:-moz-linear-gradient(center top , #f5f5f5, #eee)!important;
+	background:-webkit-gradient(linear, left top, left bottom, from(#f5f5f5), to(#eee))!important;
 	border:1px solid #C4C2C2!important;
-	text-shadow:0 1px 1px #777!important;
+	text-shadow:0 1px 1px #eee!important;
+	color:#888 !important;
 }
 
 .button_green {

@@ -6,6 +6,7 @@
  @ @subpackage	Groups
  *
  */
+$multiselect = 1;
 $allowed_levels = array(9,8);
 require_once('sys.includes.php');
 
@@ -43,6 +44,17 @@ if ($page_status === 1) {
 		$add_group_data_name = $data['name'];
 		$add_group_data_description = $data['description'];
 	}
+
+	/**
+	 * Make an array of members to use on the select field
+	 */
+	$current_members = array();
+	$members_sql = $database->query("SELECT client_id FROM tbl_members WHERE group_id = '$group_id'");
+	if (mysql_num_rows($members_sql) > 0) {
+		while($member_data = mysql_fetch_array($members_sql)) {
+			$current_members[] = $member_data['client_id'];
+		}
+	}
 }
 
 if ($_POST) {
@@ -55,12 +67,14 @@ if ($_POST) {
 	 */
 	$add_group_data_name = mysql_real_escape_string($_POST['add_group_form_name']);
 	$add_group_data_description = mysql_real_escape_string($_POST['add_group_form_description']);
+	$add_group_data_members = (!empty($_POST['add_group_form_members']) ? $_POST['add_group_form_members'] : '');
 
 	/** Arguments used on validation and group creation. */
 	$edit_arguments = array(
 							'id' => $group_id,
 							'name' => $add_group_data_name,
-							'description' => $add_group_data_description
+							'description' => $add_group_data_description,
+							'members' => $add_group_data_members
 						);
 
 	/** Validate the information from the posted form. */

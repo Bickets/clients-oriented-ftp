@@ -77,3 +77,6 @@ Many thanks to the authors of the following scripts, which are used on ProjectSe
 
 - tablesorter
   http://tablesorter.com/docs/
+
+- multiselect.js
+  http://loudev.com/

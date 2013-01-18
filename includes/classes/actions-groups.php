@@ -48,9 +48,9 @@ class GroupActions
 		$this->state = array();
 
 		/** Define the group information */
-		$this->id = $arguments['id'];
 		$this->name = $arguments['name'];
 		$this->description = $arguments['description'];
+		$this->members = $arguments['members'];
 		$this->timestamp = time();
 
 		/** Who is creating the group? */
@@ -58,6 +58,14 @@ class GroupActions
 
 		$this->sql_query = $database->query("INSERT INTO tbl_groups (name,description,created_by,timestamp)"
 											."VALUES ('$this->name', '$this->description','$this->this_admin', '$this->timestamp')");
+
+		$this->id = mysql_insert_id();
+
+		/** Create the members records */
+		foreach ($this->members as $this->member) {
+			$this->sql_member = $database->query("INSERT INTO tbl_members (timestamp,added_by,client_id,group_id)"
+											."VALUES ('$this->timestamp', '$this->this_admin', '$this->member', '$this->id' )");
+		}
 
 		if ($this->sql_query) {
 			$this->state['query'] = 1;
@@ -81,10 +89,26 @@ class GroupActions
 		$this->id = $arguments['id'];
 		$this->name = $arguments['name'];
 		$this->description = $arguments['description'];
+		$this->members = $arguments['members'];
+		$this->timestamp = time();
+
+		/** Who is adding the members to the group? */
+		$this->this_admin = get_current_user_username();
 
 		/** SQL query */
 		$this->edit_group_query = "UPDATE tbl_groups SET name = '$this->name', description = '$this->description' WHERE id = $this->id";
 		$this->sql_query = $database->query($this->edit_group_query);
+
+		/** Clean the memmbers table */
+		$this->sql_clean = $database->query("DELETE FROM tbl_members WHERE group_id = '$this->id'");
+		
+		/** Create the members records */
+		if (!empty($this->members)) {
+			foreach ($this->members as $this->member) {
+				$this->sql_member = $database->query("INSERT INTO tbl_members (timestamp,added_by,client_id,group_id)"
+												."VALUES ('$this->timestamp', '$this->this_admin', '$this->member', '$this->id' )");
+			}
+		}
 
 		if ($this->sql_query) {
 			$this->state['query'] = 1;

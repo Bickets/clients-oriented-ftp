@@ -6,6 +6,7 @@
  @ @subpackage	Groups
  *
  */
+$multiselect = 1;
 $allowed_levels = array(9,8);
 require_once('sys.includes.php');
 
@@ -24,12 +25,14 @@ if ($_POST) {
 	 */
 	$add_group_data_name = encode_html($_POST['add_group_form_name']);
 	$add_group_data_description = encode_html($_POST['add_group_form_description']);
+	$add_group_data_members = $_POST['add_group_form_members'];
 
 	/** Arguments used on validation and group creation. */
 	$new_arguments = array(
 							'id' => '',
 							'name' => $add_group_data_name,
-							'description' => $add_group_data_description
+							'description' => $add_group_data_description,
+							'members' => $add_group_data_members
 						);
 
 	/** Validate the information from the posted form. */

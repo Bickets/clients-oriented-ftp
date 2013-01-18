@@ -13,7 +13,7 @@
 
 $allowed_update = array(9,8,7);
 if (in_session_or_cookies($allowed_update)) {
-	
+	$current_version = substr(CURRENT_VERSION, 1);
 	$updates_made = 0;
 	
 	/**
@@ -183,24 +183,37 @@ if (in_session_or_cookies($allowed_update)) {
 		  `name` varchar(32) NOT NULL,
 		  `description` text NOT NULL,
 		  PRIMARY KEY (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 		';
 		$database->query($q1);
-		/** Create the MEMBERSHIPS table */
+		/** Create the MEMBERS table */
 		$q2 = '
-		CREATE TABLE IF NOT EXISTS `tbl_memberships` (
+		CREATE TABLE IF NOT EXISTS `tbl_members` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
 		  `timestamp` int(15) NOT NULL,
 		  `added_by` varchar(32) NOT NULL,
-		  `client_id` int(1) NOT NULL,
-		  `group_id` int(1) NOT NULL,
-		  PRIMARY KEY (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+		  `client_id` int(11) NOT NULL,
+		  `group_id` int(11) NOT NULL,
+		  PRIMARY KEY (`id`),
+		  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+		  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 		';
 		$database->query($q2);
 		$updates_made++;
-	}
 
+		/**
+		 * r215 updates
+		 * Change the engine of every table to InnoDB, to use foreign keys on the 
+		 * groups feature.
+		 * Included inside the previous update since that is not an officially
+		 * released version.
+		 */
+		foreach ($current_tables as $working_table) {
+			$q = $database->query("ALTER TABLE $working_table ENGINE = InnoDB");
+			$updates_made++;
+		}
+	}
 
 	/**
 	 * r2xx updates

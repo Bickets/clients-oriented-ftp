@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
   `download_count` int(16) NOT NULL,
   `hidden` int(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=257 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=257 ;
 ';
 
 $q2 = '
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `tbl_options` (
   `name` varchar(50) COLLATE latin1_general_ci NOT NULL,
   `value` text COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=13 ;
 ';
 
 $q3 = '
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `tbl_users` (
   `created_by` varchar('.MAX_USER_CHARS.') NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 ';
 
 $q4 = '
@@ -59,18 +59,20 @@ CREATE TABLE IF NOT EXISTS `tbl_groups` (
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 ';
 
 $q5 = '
-CREATE TABLE IF NOT EXISTS `tbl_memberships` (
+CREATE TABLE IF NOT EXISTS `tbl_members` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `timestamp` int(15) NOT NULL,
   `added_by` varchar(32) NOT NULL,
-  `client_id` int(1) NOT NULL,
-  `group_id` int(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+  `client_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 ';
 
 $q6 = '
