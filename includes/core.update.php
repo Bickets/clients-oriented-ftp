@@ -159,7 +159,7 @@ if (in_session_or_cookies($allowed_update)) {
 	$q = $database->query("SELECT created_by FROM tbl_users");
 	if (!$q) {
 		/* Mark existing users as active */
-		$database->query("ALTER TABLE tbl_users ADD address TEXT NOT NULL, ADD phone TEXT NOT NULL, ADD notify TINYINT(1) NOT NULL, ADD contact TEXT NOT NULL, ADD created_by TEXT NOT NULL, ADD active TINYINT(1) NOT NULL ");
+		$database->query("ALTER TABLE tbl_users ADD address TEXT NOT NULL, ADD phone varchar(32) NOT NULL, ADD notify TINYINT(1) NOT NULL, ADD contact TEXT NOT NULL, ADD created_by varchar(32) NOT NULL, ADD active TINYINT(1) NOT NULL ");
 		$database->query("INSERT INTO tbl_users"
 								." (user, password, name, email, timestamp, address, phone, notify, contact, created_by, active, level)"
 								." SELECT client_user, password, name, email, timestamp, address, phone, notify, contact, created_by, active, '0' FROM tbl_clients");
@@ -169,10 +169,44 @@ if (in_session_or_cookies($allowed_update)) {
 
 
 	/**
+	 * r210 updates
+	 * A new database table was added, that allows the creation of clients groups.
+	 */
+	$q = $database->query("SELECT id FROM tbl_groups");
+	if (!$q) {
+		/** Create the GROUPS table */
+		$q1 = '
+		CREATE TABLE IF NOT EXISTS `tbl_groups` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `timestamp` int(15) NOT NULL,
+		  `created_by` varchar(32) NOT NULL,
+		  `name` varchar(32) NOT NULL,
+		  `description` text NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+		';
+		$database->query($q1);
+		/** Create the MEMBERSHIPS table */
+		$q2 = '
+		CREATE TABLE IF NOT EXISTS `tbl_memberships` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `timestamp` int(15) NOT NULL,
+		  `added_by` varchar(32) NOT NULL,
+		  `client_id` int(1) NOT NULL,
+		  `group_id` int(1) NOT NULL,
+		  PRIMARY KEY (`id`)
+		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+		';
+		$database->query($q2);
+		$updates_made++;
+	}
+
+
+	/**
 	 * r2xx updates
 	 * A new database table was added, that stores users and clients actions.
 	 */
-	 /*
+	/*
 	$q = $database->query("SELECT id FROM tbl_log");
 	if (!$q) {
 		$q1 = '

@@ -164,6 +164,23 @@ if (in_session_or_cookies($core_update_allowed)) {
 						</ul>
 					</li>
 			<?php } ?>
+
+			<?php
+				/**
+				 * Show the GROUPS menu only to
+				 * System administrators and Account managers
+				 */
+				$groups_allowed = array(9,8);
+				if (in_session_or_cookies($groups_allowed)) {
+			?>
+					<li>
+						<a href="<?php echo BASE_URI; ?>groups.php"><?php _e('Clients groups', 'cftp_admin'); ?></a>
+						<ul>
+							<li><a href="<?php echo BASE_URI; ?>groups-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI; ?>groups.php"><?php _e('Manage groups', 'cftp_admin'); ?></a></li>
+						</ul>
+					</li>
+			<?php } ?>
 	
 			<?php
 				/**

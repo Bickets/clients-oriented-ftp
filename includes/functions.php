@@ -74,6 +74,25 @@ function user_exists_id($id)
 }
 
 /**
+ * Check if a group id exists on the database.
+ * Used on the Edit group page.
+ *
+ * @return bool
+ */
+function group_exists_id($id)
+{
+	global $database;
+	$id_exists = $database->query("SELECT * FROM tbl_groups WHERE id='$id'");
+	$count_groups = mysql_num_rows($id_exists);
+	if($count_groups > 0){
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+/**
  * Get all the client information knowing only the id
  * Used on the Manage files page.
  *

@@ -7,25 +7,8 @@
  * @subpackage	Install
  */
 $timestamp = time();
-$q1 = '
-CREATE TABLE IF NOT EXISTS `tbl_clients` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text COLLATE latin1_general_ci NOT NULL,
-  `client_user` varchar('.MAX_USER_CHARS.') COLLATE latin1_general_ci NOT NULL,
-  `password` varchar(32) COLLATE latin1_general_ci NOT NULL,
-  `address` text COLLATE latin1_general_ci NOT NULL,
-  `phone` text COLLATE latin1_general_ci NOT NULL,
-  `email` text COLLATE latin1_general_ci NOT NULL,
-  `notify` tinyint(1) NOT NULL,
-  `contact` text COLLATE latin1_general_ci NOT NULL,
-  `timestamp` int(15) NOT NULL,
-  `created_by` varchar('.MAX_USER_CHARS.') NOT NULL,
-  `active` tinyint(1) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
-';
 
-$q2 = '
+$q1 = '
 CREATE TABLE IF NOT EXISTS `tbl_files` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `url` text NOT NULL,
@@ -40,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=257 ;
 ';
 
-$q3 = '
+$q2 = '
 CREATE TABLE IF NOT EXISTS `tbl_options` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) COLLATE latin1_general_ci NOT NULL,
@@ -49,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `tbl_options` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=13 ;
 ';
 
-$q4 = '
+$q3 = '
 CREATE TABLE IF NOT EXISTS `tbl_users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user` varchar('.MAX_USER_CHARS.') NOT NULL,
@@ -58,11 +41,39 @@ CREATE TABLE IF NOT EXISTS `tbl_users` (
   `email` varchar(60) NOT NULL,
   `level` tinyint(1) NOT NULL,
   `timestamp` int(15) NOT NULL,
+  `address` text COLLATE latin1_general_ci NOT NULL,
+  `phone` varchar(32) COLLATE latin1_general_ci NOT NULL,
+  `notify` tinyint(1) NOT NULL,
+  `contact` text COLLATE latin1_general_ci NOT NULL,
+  `created_by` varchar('.MAX_USER_CHARS.') NOT NULL,
+  `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 ';
 
+$q4 = '
+CREATE TABLE IF NOT EXISTS `tbl_groups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` int(15) NOT NULL,
+  `created_by` varchar(32) NOT NULL,
+  `name` varchar(32) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+';
+
 $q5 = '
+CREATE TABLE IF NOT EXISTS `tbl_memberships` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` int(15) NOT NULL,
+  `added_by` varchar(32) NOT NULL,
+  `client_id` int(1) NOT NULL,
+  `group_id` int(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+';
+
+$q6 = '
 INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (1, \'base_uri\', \''.$base_uri.'\'),
 (2, \'max_thumbnail_width\', \'100\'),
@@ -81,9 +92,9 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (15, \'admin_email_address\', \''.$got_admin_email.'\'),
 (16, \'clients_can_register\', \'0\')';
 
-$q6 = '
-INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`) VALUES
-(1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestamp.');
+$q7 = '
+INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`, `active`) VALUES
+(1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestamp.', 1);
 ';
 
 ?>
