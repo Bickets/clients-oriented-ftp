@@ -21,7 +21,7 @@ function check_valid_cookie()
 		$cookie_user = mysql_real_escape_string($_COOKIE['loggedin']);
 		$cookie_level = mysql_real_escape_string($_COOKIE['userlevel']);
 		if($cookie_level == '0') {
-			$sql_cookie = mysql_query("SELECT * FROM tbl_clients WHERE client_user='$cookie_user' AND password='$cookie_pass'");
+			$sql_cookie = mysql_query("SELECT * FROM tbl_users WHERE user='$cookie_user' AND password='$cookie_pass'");
 		}
 		else {
 			$sql_cookie = mysql_query("SELECT * FROM tbl_users WHERE user='$cookie_user' AND password='$cookie_pass' AND level='$cookie_level'");
@@ -82,18 +82,15 @@ function check_for_admin() {
  * Used on the log in form page (index.php) to take the clients directly to their
  * files list.
  * Also used on the self-registration form (register.php).
- *
- * The client username (which corresponds to it's unique folder and URI)
- * is gotten either from the active session, or the saved cookie information.
  */
 function check_for_client() {
 	if (isset($_SESSION['userlevel']) && $_SESSION['userlevel'] == '0') {
-		$client_username = $_SESSION['access'];
-		header("location:upload/$client_username/");
+		header("location:my_files/");
+		exit;
 	}
 	if (isset($_COOKIE['userlevel']) && $_COOKIE['userlevel'] == '0') {
-		$client_username = $_COOKIE['access'];
-		header("location:upload/$client_username/");
+		header("location:my_files/");
+		exit;
 	}
 }
 

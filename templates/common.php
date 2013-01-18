@@ -49,7 +49,7 @@ $files_query = 'SELECT * FROM tbl_files WHERE client_user="' . $this_user .'" AN
 $template_files_sql = $database->query($files_query);
 
 /** Used to get the full name of the current client */
-$current_fullname_sql = $database->query('SELECT * FROM tbl_clients WHERE client_user="' . $this_user .'"');
+$current_fullname_sql = $database->query('SELECT * FROM tbl_users WHERE user="' . $this_user .'"');
 while ($name_sql_row = mysql_fetch_array($current_fullname_sql)) {
 	$user_full_name = $name_sql_row['name'];
 }

@@ -5,11 +5,8 @@
  * @package		ProjectSend
  * @subpackage	Templates
  */
-ob_start();
-session_start();
-header("Cache-control: private");
 
-/** This value comes from the index.php file located on each client's folder. */
+/** This value comes from the index.php file located on the "my_files" folder. */
 $client_username = $this_user;
 
 /**

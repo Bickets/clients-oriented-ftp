@@ -34,20 +34,23 @@ include('header-unlogged.php');
 			while($row = mysql_fetch_array($sql_user)) {
 				$db_pass = $row['password'];
 				$user_level = $row["level"];
+				$active_status = $row['active'];
 			}
 			if ($db_pass == $sysuser_password) {
 				if ($active_status != '0') {
+					/** Set SESSION values */
 					$_SESSION['loggedin'] = $sysuser_username;
-					if ($user_level == '0') {
-						$access_string = 'admin';
+					$_SESSION['userlevel'] = $user_level;
+
+					if ($user_level != '0') {
 						$_SESSION['access'] = $access_string;
-						$_SESSION['loggedin'] = $sysuser_username;
+						$access_string = 'admin';
 					}
 					else {
 						$_SESSION['access'] = $sysuser_username;
 						$access_string = $sysuser_username;
 					}
-					$_SESSION['userlevel'] = $user_level;
+
 					/** If "remember me" checkbox is on, set the cookie */
 					if ($_POST['login_form_remember']=='on') {
 						setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);

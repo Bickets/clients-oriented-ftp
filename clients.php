@@ -253,7 +253,7 @@ $(document).ready(function() {
 									<td class="extra"><?php echo html_entity_decode($row["contact"]); ?></td>
 									<td>
 										<a href="manage-files.php?id=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
-										<a href="upload/<?php echo $row["user"]; ?>/" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
+										<a href="my_files/?client=<?php echo $row["user"]; ?>" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
 										<a href="clients-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
 									</td>
 								</tr>
