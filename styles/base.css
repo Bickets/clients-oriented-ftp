@@ -324,7 +324,64 @@ h4 {
 
 .edit_files textarea {
 	width:96%!important;
-	height:70px!important;
+	margin:0 0 10px !important;
+	height:130px!important;
+}
+
+.edit_files .ms-container {
+	background: transparent url('../img/switch.png') no-repeat 50% 49% !important;
+	margin:0 !important;
+	border:none !important;
+	padding:10px 0;
+}
+
+.edit_files label {
+	margin:10px 0;
+	display:block;
+	font-weight:bold;
+	font-size:1em;
+}
+
+.edit_files .ms-optgroup-label {
+	font-size:13px !important;
+	color:#999 !important;
+	background:#f9f9f9 !important;
+	padding:7px 0 7px 24px !important;
+	font-weight:bold !important;
+	position:relative;
+}
+
+.edit_files .ms-optgroup-label:before {
+	content: ' ';
+	height: 0;
+	position: absolute;
+	width: 0;
+	top:12px;
+	left:8px;
+	border: 5px solid transparent;
+	border-top-color: #777;
+}
+
+.edit_files .file_number {
+	font-family:'Open Sans', Arial, sans-serif;
+	font-size:30px;
+	color:white;
+	background:#3473aa !important;
+	padding:27px 0;
+	text-align:center;
+}
+
+.edit_files .odd .file_number {
+	background:#88b3d8 !important;
+}
+
+.edit_files tr:hover .file_number {
+	background:#1e4d75 !important;
+}
+
+.edit_files .on_disc_name {
+	font-size:1.4em;
+	margin:10px;
 }
 
 .td_checkbox {

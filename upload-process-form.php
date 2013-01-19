@@ -16,6 +16,7 @@
  * @subpackage Upload
  */
 $tablesorter = 1;
+$multiselect = 1;
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 $page_title = __('Upload files', 'cftp_admin');
@@ -52,9 +53,7 @@ if(isset($_POST['add'])) {
  * on a separate table.
  */
 if(isset($_POST['upload_failed'])) {
-	$upload_failed_hidden_post = $_POST['upload_failed'];
-	$upload_failed_hidden_post = explode(',',$upload_failed_hidden_post);
-	$upload_failed_hidden_post = array_filter($upload_failed_hidden_post);
+	$upload_failed_hidden_post = array_filter(explode(',',$_POST['upload_failed']));
 }
 /**
  * Files that failed are removed from the uploaded files list.
@@ -81,9 +80,7 @@ $clients_to_email = array();
  * no clients are lost.
  */
 if(isset($_POST['upload_email_clients'])) {
-	$clients_to_email = $_POST['upload_email_clients'];
-	$clients_to_email = explode(',',$clients_to_email);
-	$clients_to_email = array_filter($clients_to_email);
+	$clients_to_email = array_filter(explode(',',$_POST['upload_email_clients']));
 }
 
 /**
@@ -97,7 +94,14 @@ $clients = array();
 $cq = "SELECT * FROM tbl_users WHERE level = '0' ORDER BY name ASC";
 $sql = $database->query($cq);
 	while($row = mysql_fetch_array($sql)) {
-	$clients[$row["user"]] = $row["name"];
+	$clients['c'.$row["id"]] = $row["name"];
+}
+/** Fill the groups array that will be used on the form */
+$groups = array();
+$cq = "SELECT * FROM tbl_groups ORDER BY name ASC";
+$sql = $database->query($cq);
+	while($row = mysql_fetch_array($sql)) {
+	$groups['g'.$row["id"]] = $row["name"];
 }
 
 /**
@@ -118,7 +122,7 @@ $sql = $database->query($cq);
 				* uploader username, since the "client" field is not posted.
 				*/
 				if ($current_level == 0) {
-					$file['client'] = $this_admin;
+					$file['assignments'] = 'c'.$this_admin;
 				}
 				
 				$this_upload = new PSend_Upload_File();
@@ -139,7 +143,7 @@ $sql = $database->query($cq);
 												'file' => $new_filename,
 												'name' => $file['name'],
 												'description' => $file['description'],
-												'client' => $file['client'],
+												'assign_to' => $file['assignments'],
 												'uploader' => $this_admin
 											);
 						if($this_upload->upload_add_to_database($add_arguments)) {
@@ -147,8 +151,8 @@ $sql = $database->query($cq);
 													'file' => $file['file'],
 													'name' => $file['name'],
 													'description' => $file['description'],
-													'client' => $file['client'],
-													'client_name' => $clients[$file['client']]
+													'assignments' => $file['assignments'],
+													'client_name' => $clients[$file['assignments']]
 												);
 							/**
 							 * If the uploader is a client, notify the user who
@@ -228,7 +232,7 @@ $sql = $database->query($cq);
 					<?php
 						}
 					?>
-					<th><?php _e("Client's files",'cftp_admin'); ?></th>
+					<th><?php _e("Actions",'cftp_admin'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -280,13 +284,12 @@ $sql = $database->query($cq);
 								 */
 								if ($current_level != 0) {
 							?>
-									<a href="manage-files.php?id=<?php $this_client = get_client_by_username($uploaded['client']); echo $this_client['id']; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
-									<a href="upload/<?php echo $uploaded['client']; ?>/" target="_blank" class="button button_blue"><?php _e('View as client','cftp_admin'); ?></a>
+									<a href="edit-file.php?id=" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
 							<?php
 								}
 								else {
 							?>
-									<a href="upload/<?php echo $this_admin; ?>/" class="button button_blue"><?php _e('View my files','cftp_admin'); ?></a>
+									<a href="my_files/" class="button button_blue"><?php _e('View my files','cftp_admin'); ?></a>
 							<?php
 								}
 							?>
@@ -368,17 +371,17 @@ $sql = $database->query($cq);
 				<table id="edit_files_tbl" class="tablesorter edit_files">
 					<thead>
 						<tr>
+							<th style="width:65px;"><?php _e('File','cftp_admin'); ?></th>
 							<th><?php _e('File Name','cftp_admin'); ?></th>
-							<th><?php _e('Name','cftp_admin'); ?></th>
-							<th><?php _e('Description','cftp_admin'); ?></th>
+							<th><?php _e('Information','cftp_admin'); ?></th>
 							<?php
 								/**
-								* Only show the ASSIGN TO CLIENT column if the current
+								* Only show the ASSIGN TO column if the current
 								* uploader is a system user, and not a client.
 								*/
 								if ($current_level != 0) {
 							?>
-									<th><?php _e('Assign to client','cftp_admin'); ?></th>
+									<th><?php _e('Assign to','cftp_admin'); ?></th>
 							<?php
 								}
 							?>
@@ -410,15 +413,20 @@ $sql = $database->query($cq);
 									if ($this_upload->is_filetype_allowed($file)) {
 							?>
 											<tr>
+												<td class="file_number">
+													<p>
+														<?php echo $i; ?>
+													</p>
+												</td>
 												<td>
-													<?php echo $file; ?>
+													<p class="on_disc_name"><?php echo $file; ?></p>
 													<input type="hidden" name="file[<?php echo $i; ?>][original]" value="<?php echo $file_original; ?>" />
 													<input type="hidden" name="file[<?php echo $i; ?>][file]" value="<?php echo $file; ?>" />
 												</td>
-												<td class="error_no_margin">
-													<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="txtfield required" />
-												</td>
 												<td>
+													<label><?php _e('Name', 'cftp_admin');?></label>
+													<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="txtfield required" />
+													<label><?php _e('Description', 'cftp_admin');?></label>
 													<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"></textarea>
 												</td>
 												<?php
@@ -428,19 +436,32 @@ $sql = $database->query($cq);
 													*/
 													if ($current_level != 0) {
 												?>
-														<td class="error_no_margin"><select name="file[<?php echo $i; ?>][client]" class="txtfield required" >
-															<option value="ps_empty_value"><?php _e('Select client', 'cftp_admin');?></option>
-																<?php
-																	/**
-																	 * The clients list is generated early on the file so the
-																	 * array doesn't need to be made once on every file.
-																	 */
-																	foreach($clients as $client => $client_name) {
-																	?>
-																		<option value="<?php echo $client; ?>"><?php echo $client_name; ?></option>
+														<td>
+															<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="assign_select" >
+																<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
 																	<?php
-																	}
-																?>
+																		/**
+																		 * The clients list is generated early on the file so the
+																		 * array doesn't need to be made once on every file.
+																		 */
+																		foreach($clients as $client => $client_name) {
+																		?>
+																			<option value="<?php echo $client; ?>"><?php echo $client_name; ?></option>
+																		<?php
+																		}
+																	?>
+																<optgroup label="<?php _e('Groups', 'cftp_admin');?>">
+																	<?php
+																		/**
+																		 * The groups list is generated early on the file so the
+																		 * array doesn't need to be made once on every file.
+																		 */
+																		foreach($groups as $group => $group_name) {
+																		?>
+																			<option value="<?php echo $group; ?>"><?php echo $group_name; ?></option>
+																		<?php
+																		}
+																	?>
 															</select>
 														</td>
 												<?php
@@ -528,7 +549,6 @@ $sql = $database->query($cq);
 		?>
 				$("#edit_files_tbl").tablesorter( {
 					sortList: [[0,0]], widgets: ['zebra'], headers: {
-						1: { sorter: false }, 
 						2: { sorter: false }, 
 						3: { sorter: false }
 					}
@@ -536,6 +556,11 @@ $sql = $database->query($cq);
 
 				// Autoclick the continue button
 				//$('#upload_continue').click();
+
+				$('.assign_select').multiSelect({
+					selectableHeader: "<div class='multiselect_header'><?php _e('Available','cftp_admin'); ?></div>",
+					selectionHeader: "<div class='multiselect_header'><?php _e('Assign to','cftp_admin'); ?></div>"
+				})
 
 		<?php
 			}

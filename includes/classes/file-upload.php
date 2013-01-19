@@ -11,7 +11,7 @@ class PSend_Upload_File
 {
 
 	var $folder;
-	var $client;
+	var $assign_to;
 	var $uploader;
 	var $file;
 	var $name;
@@ -101,11 +101,31 @@ class PSend_Upload_File
 		$this->post_file = $arguments['file'];
 		$this->name = encode_html($arguments['name']);
 		$this->description = encode_html($arguments['description']);
-		$this->client = $arguments['client'];
+		$this->assign_to = $arguments['assign_to'];
 		$this->uploader = $arguments['uploader'];
 		$this->timestamp = time();
-		$result = $database->query("INSERT INTO tbl_files (url,filename,description,client_user,timestamp,uploader)"
-		."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->client', '$this->timestamp', '$this->uploader')");
+
+		$result = $database->query("INSERT INTO tbl_files (url, filename, description, timestamp, uploader)"
+									."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->timestamp', '$this->uploader')");
+
+		$this->file_id = mysql_insert_id();
+
+		if (!empty($this->assign_to)) {
+			foreach ($this->assign_to as $this->assignment) {
+				switch ($this->assignment[0]) {
+					case 'c':
+						$add_to = 'client_id';
+						break;
+					case 'g':
+						$add_to = 'group_id';
+						break;
+				}
+				$this->assignment = substr($this->assignment, 1);
+				$assign_file = $database->query("INSERT INTO tbl_files_relations (file_id, $add_to, timestamp)"
+											."VALUES ('$this->file_id', '$this->assignment', '$this->timestamp')");
+			}
+		}
+
 		if(!empty($result)) {
 			return true;
 		}
