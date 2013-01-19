@@ -84,7 +84,7 @@ class PSend_Upload_File
 		$this->path = UPLOADED_FILES_FOLDER.'/'.$this->file_final_name;
 		if (rename($this->uploaded_name, $this->path)) {
 			chmod($this->path, 0644);
-			return $this->path;
+			return $this->file_final_name;
 		}
 		else {
 			return false;
