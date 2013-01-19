@@ -216,6 +216,30 @@ if (in_session_or_cookies($allowed_update)) {
 	}
 
 	/**
+	 * r217 updates
+	 * A new database table was added, to facilitate the relation of files
+	 * with clients and groups.
+	 */
+	$q = $database->query("SELECT id FROM tbl_files_relations");
+	if (!$q) {
+		$q1 = '
+		CREATE TABLE IF NOT EXISTS `tbl_files_relations` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `timestamp` int(15) NOT NULL,
+		  `file_id` int(11) NOT NULL,
+		  `client_id` int(11) NOT NULL,
+		  `group_id` int(11) NOT NULL,
+		  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+		  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+		  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+		  PRIMARY KEY (`id`)
+		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+		';
+		$database->query($q1);
+		$updates_made++;
+	}
+
+	/**
 	 * r2xx updates
 	 * A new database table was added, that stores users and clients actions.
 	 */
@@ -230,7 +254,7 @@ if (in_session_or_cookies($allowed_update)) {
 		  `owner` int(2) NOT NULL,
 		  `affected` int(2) NOT NULL,
 		  PRIMARY KEY (`id`)
-		) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 		';
 	}
 	*/

@@ -121,7 +121,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 						/**
 						 * Try to execute each query individually
 						 */
-						try_query(array($q1,$q2,$q3,$q4,$q5,$q6,$q7));
+						try_query(array($q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8));
 						/**
 						 * Continue based on the value returned from the above function
 						 */
