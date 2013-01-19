@@ -106,136 +106,142 @@ if (in_session_or_cookies($core_update_allowed)) {
 
 <body>
 
-	<div id="header">
-		<div id="header_info">
-			<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
-			<p><?php _e('Provided by', 'cftp_admin'); ?> <?php echo SYSTEM_NAME; ?> <?php _e('version', 'cftp_admin'); ?> <?php echo CURRENT_VERSION; ?></p>
-		</div>
-		<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
-	</div>
-
-	<?php
-		/**
-		 * If any update was made to the database structure, show the message
-		 */
-		if(isset($updates_made) && $updates_made > 0) {
-	?>
-			<div id="system_msg">
-				<p><strong><?php _e('System Notice:', 'cftp_admin');?></strong> <?php _e('The database was updated to support this version of the software.', 'cftp_admin'); ?></p>
+	<header>
+		<div id="header">
+			<div id="header_info">
+				<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
+				<p><?php _e('Provided by', 'cftp_admin'); ?> <?php echo SYSTEM_NAME; ?> <?php _e('version', 'cftp_admin'); ?> <?php echo CURRENT_VERSION; ?></p>
 			</div>
-	<?php
-		}
-	?>
-
-<script type="text/javascript">
-		$(document).ready(function() {
-			$("ul.sf-menu").superfish();
-		});
-	</script>
-
-	<nav id="top_menu">
-		<ul class="sf-menu">
-				<li><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
-		<li>
-				<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload files', 'cftp_admin'); ?></a>
-					<?php
-						/**
-						 * Hide the subitems from clients, since their upload form
-						 * link is the same that was defined on the above item.
-						 */
-						$clients_allowed = array(9,8,7);
-						if (in_session_or_cookies($clients_allowed)) {
-					?>
-						<ul>
-							<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from computer', 'cftp_admin'); ?></a></li>
-							<li><a href="<?php echo BASE_URI; ?>upload-by-ftp.php"><?php _e('Import from FTP', 'cftp_admin'); ?></a></li>
-						</ul>
+			<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
+		</div>
+	
+		<?php
+			/**
+			 * If any update was made to the database structure, show the message
+			 */
+			if(isset($updates_made) && $updates_made > 0) {
+		?>
+				<div id="system_msg">
+					<p><strong><?php _e('System Notice:', 'cftp_admin');?></strong> <?php _e('The database was updated to support this version of the software.', 'cftp_admin'); ?></p>
+				</div>
+		<?php
+			}
+		?>
+	
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("ul.sf-menu").superfish();
+				
+				$('.button').click(function() {
+					$(this).blur();
+				});
+			});
+		</script>
+	
+		<nav id="top_menu">
+			<ul class="sf-menu">
+					<li><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
+			<li>
+					<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload files', 'cftp_admin'); ?></a>
+						<?php
+							/**
+							 * Hide the subitems from clients, since their upload form
+							 * link is the same that was defined on the above item.
+							 */
+							$clients_allowed = array(9,8,7);
+							if (in_session_or_cookies($clients_allowed)) {
+						?>
+							<ul>
+								<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from computer', 'cftp_admin'); ?></a></li>
+								<li><a href="<?php echo BASE_URI; ?>upload-by-ftp.php"><?php _e('Import from FTP', 'cftp_admin'); ?></a></li>
+							</ul>
+					<?php } ?>
+				</li>
+		
+				<?php
+					/**
+					 * Show the CLIENTS menu only to
+					 * System administrators and Account managers
+					 */
+					$clients_allowed = array(9,8);
+					if (in_session_or_cookies($clients_allowed)) {
+				?>
+						<li>
+							<a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Clients', 'cftp_admin'); ?></a>
+							<ul>
+								<li><a href="<?php echo BASE_URI; ?>clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+								<li><a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
+							</ul>
+						</li>
 				<?php } ?>
-			</li>
 	
-			<?php
-				/**
-				 * Show the CLIENTS menu only to
-				 * System administrators and Account managers
-				 */
-				$clients_allowed = array(9,8);
-				if (in_session_or_cookies($clients_allowed)) {
-			?>
-					<li>
-						<a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Clients', 'cftp_admin'); ?></a>
-						<ul>
-							<li><a href="<?php echo BASE_URI; ?>clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-							<li><a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
-						</ul>
-					</li>
-			<?php } ?>
-
-			<?php
-				/**
-				 * Show the GROUPS menu only to
-				 * System administrators and Account managers
-				 */
-				$groups_allowed = array(9,8);
-				if (in_session_or_cookies($groups_allowed)) {
-			?>
-					<li>
-						<a href="<?php echo BASE_URI; ?>groups.php"><?php _e('Clients groups', 'cftp_admin'); ?></a>
-						<ul>
-							<li><a href="<?php echo BASE_URI; ?>groups-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-							<li><a href="<?php echo BASE_URI; ?>groups.php"><?php _e('Manage groups', 'cftp_admin'); ?></a></li>
-						</ul>
-					</li>
-			<?php } ?>
+				<?php
+					/**
+					 * Show the GROUPS menu only to
+					 * System administrators and Account managers
+					 */
+					$groups_allowed = array(9,8);
+					if (in_session_or_cookies($groups_allowed)) {
+				?>
+						<li>
+							<a href="<?php echo BASE_URI; ?>groups.php"><?php _e('Clients groups', 'cftp_admin'); ?></a>
+							<ul>
+								<li><a href="<?php echo BASE_URI; ?>groups-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+								<li><a href="<?php echo BASE_URI; ?>groups.php"><?php _e('Manage groups', 'cftp_admin'); ?></a></li>
+							</ul>
+						</li>
+				<?php } ?>
+		
+				<?php
+					/**
+					 * Show the USERS menu only to
+					 * System administrators
+					 */
+					$users_allowed = array(9);
+					if (in_session_or_cookies($users_allowed)) {
+				?>
+						<li>
+							<a href="<?php echo BASE_URI; ?>users.php"><?php _e('System Users', 'cftp_admin'); ?></a>
+							<ul>
+								<li><a href="<?php echo BASE_URI; ?>users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+								<li><a href="<?php echo BASE_URI; ?>users.php"><?php _e('Manage system users', 'cftp_admin'); ?></a></li>
+							</ul>
+						</li>
+				<?php } ?>
+		
+				<?php
+					/**
+					 * Show the OPTIONS menu only to
+					 * System administrators
+					 */
+					$options_allowed = array(9);
+					if (in_session_or_cookies($options_allowed)) {
+				?>
+						<li>
+							<a href="<?php echo BASE_URI; ?>options.php"><?php _e('Options', 'cftp_admin'); ?></a>
+							<ul>
+								<li><a href="<?php echo BASE_URI; ?>options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
+								<li><a href="<?php echo BASE_URI; ?>branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
+							</ul>
+						</li>
+				<?php } ?>
 	
-			<?php
-				/**
-				 * Show the USERS menu only to
-				 * System administrators
-				 */
-				$users_allowed = array(9);
-				if (in_session_or_cookies($users_allowed)) {
-			?>
-					<li>
-						<a href="<?php echo BASE_URI; ?>users.php"><?php _e('System Users', 'cftp_admin'); ?></a>
-						<ul>
-							<li><a href="<?php echo BASE_URI; ?>users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-							<li><a href="<?php echo BASE_URI; ?>users.php"><?php _e('Manage system users', 'cftp_admin'); ?></a></li>
-						</ul>
-					</li>
-			<?php } ?>
-	
-			<?php
-				/**
-				 * Show the OPTIONS menu only to
-				 * System administrators
-				 */
-				$options_allowed = array(9);
-				if (in_session_or_cookies($options_allowed)) {
-			?>
-					<li>
-						<a href="<?php echo BASE_URI; ?>options.php"><?php _e('Options', 'cftp_admin'); ?></a>
-						<ul>
-							<li><a href="<?php echo BASE_URI; ?>options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
-							<li><a href="<?php echo BASE_URI; ?>branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
-						</ul>
-					</li>
-			<?php } ?>
-
-			<?php
-				/**
-				 * Show the MY FILES menu only to clients.
-				 */
-				$clients_allowed = array(0);
-				if (in_session_or_cookies($clients_allowed)) {
-			?>
-					<li><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
-			<?php
-				}
-			?>
-	
-		</ul>
-		<div class="clear"></div>
-	</nav>
+				<?php
+					/**
+					 * Show the MY FILES menu only to clients.
+					 */
+					$clients_allowed = array(0);
+					if (in_session_or_cookies($clients_allowed)) {
+				?>
+						<li><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+				<?php
+					}
+				?>
+		
+			</ul>
+			<div class="clear"></div>
+		</nav>
+	</header>
 
 <?php
 	/**

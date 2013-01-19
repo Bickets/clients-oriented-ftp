@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r180');
+define('CURRENT_VERSION', 'r219');
 
 /**
  * Turn off reporting of PHP errors, warnings and notices.
@@ -23,7 +23,7 @@ define('CURRENT_VERSION', 'r180');
  *
  * @link http://www.php.net/manual/en/function.error-reporting.php
  */
-error_reporting(0);
+//error_reporting(0);
 
 define('GLOBAL_TIME_LIMIT', 240*60);
 define('UPLOAD_TIME_LIMIT', 120*60);
@@ -52,9 +52,13 @@ else {
  */
 define('TABLE_CLIENTS','tbl_clients');
 define('TABLE_FILES','tbl_files');
+define('TABLE_FILES_RELATIONS','tbl_files_relations');
 define('TABLE_OPTIONS','tbl_options');
 define('TABLE_USERS','tbl_users');
-$current_tables = array(TABLE_CLIENTS,TABLE_FILES,TABLE_OPTIONS,TABLE_USERS);
+define('TABLE_GROUPS','tbl_groups');
+define('TABLE_MEMBERS','tbl_members');
+define('TABLE_FOLDERS','tbl_folders');
+$current_tables = array(TABLE_FILES,TABLE_FILES_RELATIONS,TABLE_OPTIONS,TABLE_USERS,TABLE_GROUPS,TABLE_MEMBERS,TABLE_FOLDERS);
 
 /**
  * This values affect both validation methods (client and server side)
@@ -74,8 +78,8 @@ define('COOKIE_EXP_TIME', 60*60*24*30);
 /**
  * Define the folder where uploaded files will reside
  */
-define('UPLOADED_FILES_FOLDER', ROOT_DIR.'/upload/assigned_files/');
-define('UPLOADED_FILES_URL', '/upload/assigned_files/');
+define('UPLOADED_FILES_FOLDER', ROOT_DIR.'/upload/files/');
+define('UPLOADED_FILES_URL', '/upload/files/');
 
 /**
  * Define the folder where the uploaded files are stored before

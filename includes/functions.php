@@ -213,9 +213,11 @@ function get_user_by_username($user)
 function default_footer_info()
 {
 ?>
-	<div id="footer">
-		<span><?php _e('ProjectSend Free software (GPL2) | 2007 - ', 'cftp_admin'); ?> <?php echo date("Y") ?> | <a href="<?php echo SYSTEM_URI; ?>" target="_blank"><?php echo SYSTEM_URI_LABEL; ?></a></span>
-	</div>
+	<footer>
+		<div id="footer">
+			<span><?php _e('ProjectSend Free software (GPL2) | 2007 - ', 'cftp_admin'); ?> <?php echo date("Y") ?> | <a href="<?php echo SYSTEM_URI; ?>" target="_blank"><?php echo SYSTEM_URI_LABEL; ?></a></span>
+		</div>
+	</footer>
 <?php
 }
 

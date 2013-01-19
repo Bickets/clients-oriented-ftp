@@ -216,7 +216,32 @@ if (in_session_or_cookies($allowed_update)) {
 	}
 
 	/**
-	 * r217 updates
+	 * r219 updates
+	 * A new database table was added.
+	 * Folders are related to clients or groups.
+	 */
+	$q = $database->query("SELECT id FROM tbl_folders");
+	if (!$q) {
+		$q1 = '
+		CREATE TABLE IF NOT EXISTS `tbl_folders` (
+		  `id` int(11) NOT NULL AUTO_INCREMENT,
+		  `parent` int(11) DEFAULT NULL,
+		  `name` varchar(32) NOT NULL,
+		  `timestamp` int(15) NOT NULL,
+		  `client_id` int(11) DEFAULT NULL,
+		  `group_id` int(11) DEFAULT NULL,
+		  FOREIGN KEY (`parent`) REFERENCES tbl_folders(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+		  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+		  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+		  PRIMARY KEY (`id`)
+		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+		';
+		$database->query($q1);
+		$updates_made++;
+	}
+
+	/**
+	 * r217 updates (after previous so the folder column can be created)
 	 * A new database table was added, to facilitate the relation of files
 	 * with clients and groups.
 	 */
@@ -229,15 +254,20 @@ if (in_session_or_cookies($allowed_update)) {
 		  `file_id` int(11) NOT NULL,
 		  `client_id` int(11) DEFAULT NULL,
 		  `group_id` int(11) DEFAULT NULL,
+		  `folder_id` int(11) DEFAULT NULL,
+		  `hidden` int(1) NOT NULL,
+		  `download_count` int(16) NOT NULL,
 		  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 		  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 		  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+		  FOREIGN KEY (`folder_id`) REFERENCES tbl_folders(`id`) ON UPDATE CASCADE,
 		  PRIMARY KEY (`id`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 		';
 		$database->query($q1);
 		$updates_made++;
 	}
+
 
 	/**
 	 * r2xx updates

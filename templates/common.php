@@ -45,7 +45,7 @@ $database->MySQLDB();
  * Gets the files list on a default query that can be used on the template.
  * Only files that are not marked as hidden are retrieved.
  */
-$files_query = 'SELECT * FROM tbl_files WHERE client_user="' . $this_user .'" AND hidden=0';
+$files_query = 'SELECT * FROM tbl_files WHERE hidden=0';
 $template_files_sql = $database->query($files_query);
 
 /** Used to get the full name of the current client */

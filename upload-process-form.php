@@ -15,7 +15,6 @@
  * @package ProjectSend
  * @subpackage Upload
  */
-$tablesorter = 1;
 $multiselect = 1;
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
@@ -35,7 +34,7 @@ $database->MySQLDB();
  */
 $current_level = get_current_user_level();
 
-$work_folder = USER_UPLOADS_TEMP_FOLDER;
+$work_folder = UPLOADED_FILES_FOLDER;
 
 /** Coming from the web uploader */
 if(isset($_POST['finished_files'])) {
@@ -129,42 +128,57 @@ $sql = $database->query($cq);
 				$file['file'] = $this_upload->safe_rename($file['file']);
 				$location = $work_folder.'/'.$file['file'];
 				if(file_exists($location)) {
+					/** Safe rename and chmod the file */
 					$move_arguments = array(
 											'uploaded_name' => $location,
-											//'move_to_folder' => ROOT_DIR.'/upload/'.$file['client'].'/',
-											'move_to_folder' => UPLOADED_FILES_FOLDER,
 											'filename' => $file['file']
 										);
 					$new_filename = $this_upload->upload_move($move_arguments);
 					if (!empty($new_filename)) {
 						$delete_key = array_search($file['original'], $uploaded_files);					
 						unset($uploaded_files[$delete_key]);
-						$add_arguments = array(
-												'file' => $new_filename,
-												'name' => $file['name'],
-												'description' => $file['description'],
-												'assign_to' => $file['assignments'],
-												'uploader' => $this_admin
-											);
-						if($this_upload->upload_add_to_database($add_arguments)) {
-							$upload_finish[] = array(
-													'file' => $file['file'],
+						
+						/**
+						 * Unassigned files are kept as orphans and can be realted
+						 * to clients or groups later.
+						 */
+						if (!empty($file['assignments'])) {
+							/** Add to the database for each client / group selected */
+							$add_arguments = array(
+													'file' => $new_filename,
 													'name' => $file['name'],
 													'description' => $file['description'],
-													'assignments' => $file['assignments'],
-													'client_name' => $clients[$file['assignments']]
+													'assign_to' => $file['assignments'],
+													'uploader' => $this_admin
 												);
-							/**
-							 * If the uploader is a client, notify the user who
-							 * created this clients' account.
-							 */
-							if ($current_level == 0) {
-								$who_made_me = get_client_by_username(get_current_user_username());
-								$creator_info = get_user_by_username($who_made_me['created_by']);
-								$clients_to_email[] = $creator_info['email'];
+							if (!empty($file['hidden'])) {
+								$add_arguments['hidden'] = $file['hidden'];
 							}
-							else {
-								$clients_to_email[] = $file['client'];
+							if($this_upload->upload_add_to_database($add_arguments)) {
+								/** Mark is as correctly uploaded / assigned */
+								$upload_finish[] = array(
+														'file' => $file['file'],
+														'name' => $file['name'],
+														'description' => $file['description'],
+														'assignments' => $file['assignments'],
+														'client_name' => $clients[$file['assignments']]
+													);
+								if (!empty($file['hidden'])) {
+									$upload_finish['hidden'] = $file['hidden'];
+								}
+	
+								/**
+								 * If the uploader is a client, notify the user who
+								 * created this clients' account.
+								 */
+								if ($current_level == 0) {
+									$who_made_me = get_client_by_username(get_current_user_username());
+									$creator_info = get_user_by_username($who_made_me['created_by']);
+									$clients_to_email[] = $creator_info['email'];
+								}
+								else {
+									$clients_to_email[] = $file['client'];
+								}
 							}
 						}
 					}
@@ -331,6 +345,7 @@ $sql = $database->query($cq);
 	?>
 			<h3><?php _e('Files ready to upload','cftp_admin'); ?></h3>
 			<p><?php _e('Please complete the following information to finish the uploading proccess. Remember that "Name" is a required field.','cftp_admin'); ?></p>
+			<div class="message message_info"><strong><?php _e('Note','cftp_admin'); ?></strong>: <?php _e('You can skip assignations if you want. The files are kept uploaded and you can add them to clients or groups later.','cftp_admin'); ?></div>
 	<?php
 			/**
 			 * First, do a server side validation for files that were submited
@@ -350,9 +365,6 @@ $sql = $database->query($cq);
 						$(this).find('input[name$="[name]"]').each(function() {	
 							is_complete($(this)[0],'<?php echo $validation_no_name; ?>');
 						});
-						$(this).find('select').each(function() {	
-							is_selected($(this)[0],'<?php echo $validation_no_client; ?>');
-						});
 
 						// show the errors or continue if everything is ok
 						if (show_form_errors() == false) { return false; }
@@ -368,75 +380,67 @@ $sql = $database->query($cq);
 						';
 					}
 				?>
-				<table id="edit_files_tbl" class="tablesorter edit_files">
-					<thead>
-						<tr>
-							<th style="width:65px;"><?php _e('File','cftp_admin'); ?></th>
-							<th><?php _e('File Name','cftp_admin'); ?></th>
-							<th><?php _e('Information','cftp_admin'); ?></th>
-							<?php
-								/**
-								* Only show the ASSIGN TO column if the current
-								* uploader is a system user, and not a client.
-								*/
-								if ($current_level != 0) {
-							?>
-									<th><?php _e('Assign to','cftp_admin'); ?></th>
-							<?php
-								}
-							?>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-							$i = 0;
-							foreach ($uploaded_files as $file) {
-								clearstatcache();
-								$this_upload = new PSend_Upload_File();
-								$file_original = $file;
-								/** Generate a safe filename */
-								$file = $this_upload->safe_rename($file);
-		
-								$location = $work_folder.'/'.$file;
+				
+				<div class="container-fluid">
+					<?php
+						$i = 1;
+						foreach ($uploaded_files as $file) {
+							clearstatcache();
+							$this_upload = new PSend_Upload_File();
+							$file_original = $file;
+							/** Generate a safe filename */
+							$file = $this_upload->safe_rename($file);
+	
+							$location = $work_folder.'/'.$file;
 
+							/**
+							 * Check that the file is indeed present on the folder.
+							 * If not, it is added to the failed files array.
+							 */
+							if(file_exists($location)) {
 								/**
-								 * Check that the file is indeed present on the folder.
-								 * If not, it is added to the failed files array.
+								 * Remove the extension from the file name and replace every
+								 * underscore with a space to generate a valid upload name.
 								 */
-								if(file_exists($location)) {
-									/**
-									 * Remove the extension from the file name and replace every
-									 * underscore with a space to generate a valid upload name.
-									 */
-									$filename_no_ext = substr($file, 0, strrpos($file, '.'));
-									$file_title = str_replace('_',' ',$filename_no_ext);
-									if ($this_upload->is_filetype_allowed($file)) {
-							?>
-											<tr>
-												<td class="file_number">
-													<p>
-														<?php echo $i; ?>
-													</p>
-												</td>
-												<td>
-													<p class="on_disc_name"><?php echo $file; ?></p>
-													<input type="hidden" name="file[<?php echo $i; ?>][original]" value="<?php echo $file_original; ?>" />
-													<input type="hidden" name="file[<?php echo $i; ?>][file]" value="<?php echo $file; ?>" />
-												</td>
-												<td>
-													<label><?php _e('Name', 'cftp_admin');?></label>
-													<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="txtfield required" />
-													<label><?php _e('Description', 'cftp_admin');?></label>
-													<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"></textarea>
-												</td>
-												<?php
-													/**
-													* Only show the CLIENTS select field if the current
-													* uploader is a system user, and not a client.
-													*/
-													if ($current_level != 0) {
-												?>
-														<td>
+								$filename_no_ext = substr($file, 0, strrpos($file, '.'));
+								$file_title = str_replace('_',' ',$filename_no_ext);
+								if ($this_upload->is_filetype_allowed($file)) {
+						?>
+									<div class="row-fluid edit_files">
+										<div class="span1">
+											<div class="file_number">
+												<p><?php echo $i; ?></p>
+											</div>
+										</div>
+										<div class="span11 file_data">
+											<div class="row-fluid">
+												<div class="span6">
+													<div class="row-fluid">
+														<div class="span12">
+															<p class="on_disc_name">
+																<?php echo $file; ?>
+															</p>
+															<input type="hidden" name="file[<?php echo $i; ?>][original]" value="<?php echo $file_original; ?>" />
+															<input type="hidden" name="file[<?php echo $i; ?>][file]" value="<?php echo $file; ?>" />
+
+															<label><?php _e('Name', 'cftp_admin');?></label>
+															<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="txtfield required" />
+															<label><?php _e('Description', 'cftp_admin');?></label>
+															<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"></textarea>
+															
+															<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
+														</div>
+													</div>
+												</div>
+												<div class="span6">
+													<?php
+														/**
+														* Only show the CLIENTS select field if the current
+														* uploader is a system user, and not a client.
+														*/
+														if ($current_level != 0) {
+													?>
+															<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
 															<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="assign_select" >
 																<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
 																	<?php
@@ -463,22 +467,29 @@ $sql = $database->query($cq);
 																		}
 																	?>
 															</select>
-														</td>
-												<?php
-													}
-												?>
-											</tr>
+															<div class="list_mass_members">
+																<a href="#" class="button button_gray add-all"><?php _e('Add all','cftp_admin'); ?></a>
+																<a href="#" class="button button_gray remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
+															</div>
+													<?php
+														} /** Close $current_level check */
+													?>
+												</div>
+											</div>
+										</div>
+									</div>
 							<?php
-										$i++;
-									}
-								}
-								else {
-									$upload_failed[] = $file;
+									$i++;
 								}
 							}
-						?>
-					</tbody>
-				</table>
+							else {
+								$upload_failed[] = $file;
+							}
+						}
+					?>
+
+				</div> <!-- container -->
+
 				<?php
 					/**
 					 * Take the list of failed files and store them as a text string
@@ -547,21 +558,21 @@ $sql = $database->query($cq);
 		<?php
 			if(!empty($uploaded_files)) {
 		?>
-				$("#edit_files_tbl").tablesorter( {
-					sortList: [[0,0]], widgets: ['zebra'], headers: {
-						2: { sorter: false }, 
-						3: { sorter: false }
-					}
-				})
-
-				// Autoclick the continue button
-				//$('#upload_continue').click();
-
 				$('.assign_select').multiSelect({
 					selectableHeader: "<div class='multiselect_header'><?php _e('Available','cftp_admin'); ?></div>",
-					selectionHeader: "<div class='multiselect_header'><?php _e('Assign to','cftp_admin'); ?></div>"
+					selectionHeader: "<div class='multiselect_header'><?php _e('Selected','cftp_admin'); ?></div>"
 				})
 
+				$('.add-all').click(function(){
+				  $(this).parent().parent().find('select').multiSelect('select_all');
+				  return false;
+				});
+				$('.remove-all').click(function(){
+				  $(this).parent().parent().find('select').multiSelect('deselect_all');
+				  return false;
+				});
+				// Autoclick the continue button
+				//$('#upload_continue').click();
 		<?php
 			}
 			if(!empty($upload_finish)) {

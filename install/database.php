@@ -16,8 +16,6 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
   `description` text NOT NULL,
   `timestamp` int(15) NOT NULL,
   `uploader` varchar('.MAX_USER_CHARS.') NOT NULL,
-  `download_count` int(16) NOT NULL,
-  `hidden` int(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=257 ;
 ';
@@ -75,13 +73,14 @@ CREATE TABLE IF NOT EXISTS `tbl_members` (
 ';
 
 $q6 = '
-CREATE TABLE IF NOT EXISTS `tbl_files_relations` (
+CREATE TABLE IF NOT EXISTS `tbl_folders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent` int(11) DEFAULT NULL,
+  `name` varchar(32) NOT NULL,
   `timestamp` int(15) NOT NULL,
-  `file_id` int(11) NOT NULL,
   `client_id` int(11) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL,
-  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`parent`) REFERENCES tbl_folders(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (`id`)
@@ -89,6 +88,24 @@ CREATE TABLE IF NOT EXISTS `tbl_files_relations` (
 ';
 
 $q7 = '
+CREATE TABLE IF NOT EXISTS `tbl_files_relations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` int(15) NOT NULL,
+  `file_id` int(11) NOT NULL,
+  `client_id` int(11) DEFAULT NULL,
+  `group_id` int(11) DEFAULT NULL,
+  `folder_id` int(11) DEFAULT NULL,
+  `hidden` int(1) NOT NULL,
+  `download_count` int(16) NOT NULL,
+  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (`folder_id`) REFERENCES tbl_folders(`id`) ON UPDATE CASCADE,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+';
+
+$q8 = '
 INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (1, \'base_uri\', \''.$base_uri.'\'),
 (2, \'max_thumbnail_width\', \'100\'),
@@ -107,7 +124,7 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (15, \'admin_email_address\', \''.$got_admin_email.'\'),
 (16, \'clients_can_register\', \'0\')';
 
-$q8 = '
+$q9 = '
 INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`, `active`) VALUES
 (1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestamp.', 1);
 ';

@@ -421,6 +421,12 @@ input[type="text"], input[type="password"], textarea, select {
 	color:#888 !important;
 }
 
+.button_gray:focus {
+	box-shadow:3px 3px 3px rgba(140, 140, 140, 0.3) inset, -3px -3px 3px 1px rgba(140, 140, 140, 0.1) inset, 0 0 0 rgba(140, 140, 140, 0.5)!important;
+	text-shadow:0 -1px 0 #3E6A16!important;
+}
+
+
 .button_green {
 	background:#639822;
 	background:-moz-linear-gradient(center top , #82B741, #639822)!important;

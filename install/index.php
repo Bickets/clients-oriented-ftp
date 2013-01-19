@@ -68,13 +68,15 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 
 <body>
 
-	<div id="header">
-		<div id="lonely_logo">
-			<h1><?php echo SYSTEM_NAME.' '; _e('setup','cftp_admin'); ?></h1>
+	<header>
+		<div id="header">
+			<div id="lonely_logo">
+				<h1><?php echo SYSTEM_NAME.' '; _e('setup','cftp_admin'); ?></h1>
+			</div>
 		</div>
-	</div>
-	<div id="login_header_low">
-	</div>
+		<div id="login_header_low">
+		</div>
+	</header>
 	
 	<div id="main">
 	
@@ -121,7 +123,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 						/**
 						 * Try to execute each query individually
 						 */
-						try_query(array($q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8));
+						try_query(array($q1,$q2,$q3,$q4,$q5,$q6,$q7,$q8,$q9));
 						/**
 						 * Continue based on the value returned from the above function
 						 */

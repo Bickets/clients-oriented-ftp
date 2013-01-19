@@ -314,18 +314,37 @@ h4 {
 	margin-left:0;
 }
 
+
+/** EDIT FILE INFORMATION ON UPLOAD */
+
 .edit_files {
-	margin:20px 0 40px;
+	margin:0px 0 50px;
 }
 
-.edit_files .txtfield {
+.edit_files .file_data {
+	background:white;
+	border:1px solid #ccc;
+	-moz-border-radius:5px;
+	-moz-box-shadow:3px 3px 5px #dedede;
+	-webkit-border-radius:5px;
+	-webkit-box-shadow:3px 3px 5px #dedede;
+	border-radius:5px;
+	box-shadow:3px 3px 5px #dedede;
+	padding:15px;
+}
+
+.edit_files input[type="text"] {
+	font-size:1.2em;
 	width:96%;
+	padding:7px;
 }
 
 .edit_files textarea {
+	font-size:1.2em;
+	padding:7px;
 	width:96%!important;
 	margin:0 0 10px !important;
-	height:130px!important;
+	height:70px!important;
 }
 
 .edit_files .ms-container {
@@ -362,27 +381,39 @@ h4 {
 	border-top-color: #777;
 }
 
-.edit_files .file_number {
+.file_number {
 	font-family:'Open Sans', Arial, sans-serif;
-	font-size:30px;
-	color:white;
+	position:relative;
+}
+
+.file_number:after {
+	content: ' ';
+	height: 0;
+	position: absolute;
+	width: 0;
+	border: 10px solid transparent;
+	border-left-color: #3473aa;
+	left: 100%;
+	top: 10px;
+}
+
+.file_number p {
+	padding:10px 15px;
+	margin:0;
 	background:#3473aa !important;
-	padding:27px 0;
 	text-align:center;
-}
-
-.edit_files .odd .file_number {
-	background:#88b3d8 !important;
-}
-
-.edit_files tr:hover .file_number {
-	background:#1e4d75 !important;
+	font-weight:bold;
+	font-size:60px;
+	color:white;
 }
 
 .edit_files .on_disc_name {
-	font-size:1.4em;
-	margin:10px;
+	font-size:1.7em;
+	margin:0 0 20px;
+	word-wrap:break-word;
 }
+
+/****************/
 
 .td_checkbox {
 	width:50px;

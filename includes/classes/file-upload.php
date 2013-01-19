@@ -78,14 +78,13 @@ class PSend_Upload_File
 	function upload_move($arguments)
 	{
 		$this->uploaded_name = $arguments['uploaded_name'];
-		$this->folder = $arguments['move_to_folder'];
 		$this->filename = $arguments['filename'];
 
 		$this->file_final_name = time().'-'.$this->filename;
-		$this->path = $this->folder.$this->file_final_name;
+		$this->path = UPLOADED_FILES_FOLDER.'/'.$this->file_final_name;
 		if (rename($this->uploaded_name, $this->path)) {
 			chmod($this->path, 0644);
-			return $this->file_final_name;
+			return $this->path;
 		}
 		else {
 			return false;
@@ -103,6 +102,7 @@ class PSend_Upload_File
 		$this->description = encode_html($arguments['description']);
 		$this->assign_to = $arguments['assign_to'];
 		$this->uploader = $arguments['uploader'];
+		$this->hidden = (!empty($arguments['hidden'])) ? '1' : '0';
 		$this->timestamp = time();
 
 		$result = $database->query("INSERT INTO tbl_files (url, filename, description, timestamp, uploader)"
@@ -121,8 +121,8 @@ class PSend_Upload_File
 						break;
 				}
 				$this->assignment = substr($this->assignment, 1);
-				$assign_file = $database->query("INSERT INTO tbl_files_relations (file_id, $add_to, timestamp)"
-											."VALUES ('$this->file_id', '$this->assignment', '$this->timestamp')");
+				$assign_file = $database->query("INSERT INTO tbl_files_relations (file_id, $add_to, hidden, timestamp)"
+											."VALUES ('$this->file_id', '$this->assignment', '$this->hidden', '$this->timestamp')");
 			}
 		}
 

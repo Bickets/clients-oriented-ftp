@@ -21,7 +21,7 @@ header("Cache-Control: post-check=0, pre-check=0", false);
 header("Pragma: no-cache");
 
 // Settings
-$targetDir = USER_UPLOADS_TEMP_FOLDER;
+$targetDir = UPLOADED_FILES_FOLDER;
 
 $cleanupTargetDir = true; // Remove old files
 $maxFileAge = 5 * 3600; // Temp file age in seconds
