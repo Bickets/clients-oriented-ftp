@@ -93,7 +93,7 @@ $empty_fields = 0;
 $clients = array();
 $cq = "SELECT * FROM tbl_users WHERE level = '0' ORDER BY name ASC";
 $sql = $database->query($cq);
-	while($row = mysql_fetch_array($sql)) {
+while($row = mysql_fetch_array($sql)) {
 	$clients['c'.$row["id"]] = $row["name"];
 }
 /** Fill the groups array that will be used on the form */

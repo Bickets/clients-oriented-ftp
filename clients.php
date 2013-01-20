@@ -213,6 +213,7 @@ $(document).ready(function() {
 						<th><?php _e('E-mail','cftp_admin'); ?></th>
 						<th><?php _e('Files','cftp_admin'); ?></th>
 						<th><?php _e('Status','cftp_admin'); ?></th>
+						<th><?php _e('Groups on','cftp_admin'); ?></th>
 						<th class="extra"><?php _e('Notify','cftp_admin'); ?></th>
 						<th class="extra"><?php _e('Added on','cftp_admin'); ?></th>
 						<th class="extra"><?php _e('Address','cftp_admin'); ?></th>
@@ -226,6 +227,9 @@ $(document).ready(function() {
 						if ($count > 0) {
 							while($row = mysql_fetch_array($sql)) {
 								$client_user = $row["user"];
+								$client_id = $row["id"];
+								$sql_groups = $database->query("SELECT DISTINCT group_id FROM tbl_members WHERE client_id='$client_id'");
+								$count_groups = mysql_num_rows($sql_groups);
 					?>
 								<tr>
 									<td><input type="checkbox" name="selected_clients[]" value="<?php echo $row["id"]; ?>" /></td>
@@ -234,8 +238,15 @@ $(document).ready(function() {
 									<td><?php echo html_entity_decode($row["email"]); ?></td>
 									<td>
 										<?php
-											$sql_files = $database->query("SELECT * FROM tbl_files WHERE client_user='$client_user'");
-											$count_files=mysql_num_rows($sql_files);
+											$sql_files = $database->query("SELECT id FROM tbl_files_relations WHERE client_id='$client_id'");
+											$count_files = mysql_num_rows($sql_files);
+
+											while($row = mysql_fetch_array($sql_groups)) {
+												$group_id = $row["group_id"];
+												$sql_files = $database->query("SELECT id FROM tbl_files_relations WHERE group_id='$group_id'");
+												$count_files += mysql_num_rows($sql_files);
+											}
+
 											echo $count_files;
 										?>
 									</td>
@@ -246,6 +257,7 @@ $(document).ready(function() {
 											echo ($row['active'] === '0') ? $status_hidden : $status_visible;
 										?>
 									</td>
+									<td><?php echo $count_groups; ?></td>
 									<td class="extra"><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
 									<td class="extra"><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
 									<td class="extra"><?php echo html_entity_decode($row["address"]); ?></td>
