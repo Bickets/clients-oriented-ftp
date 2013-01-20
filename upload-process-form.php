@@ -3,7 +3,7 @@
  * Uploading files, step 2
  *
  * This file handles all the uploaded files, whether you are
- * coming from the "Upload from computer" or "Import from FTP"
+ * coming from the "Upload from computer" or "Find orphan files"
  * pages. The only difference is from which POST array it takes
  * the information to list the avaiable files to process.
  *
@@ -16,6 +16,7 @@
  * @subpackage Upload
  */
 $multiselect = 1;
+$tablesorter = 1;
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 $page_title = __('Upload files', 'cftp_admin');
@@ -104,6 +105,15 @@ $sql = $database->query($cq);
 }
 
 /**
+ * Make an array of file urls that are on the DB already.
+ */
+$sql = $database->query("SELECT DISTINCT url FROM tbl_files");
+$urls_db_files = array();
+while($row = mysql_fetch_array($sql)) {
+	$urls_db_files[] = $row["url"];
+}
+
+/**
  * A posted form will include information of the uploaded files
  * (name, description and client).
  */
@@ -115,6 +125,7 @@ $sql = $database->query($cq);
 		$this_admin = get_current_user_username();
 
 		foreach ($_POST['file'] as $file) {
+
 			if(!empty($file['name'])) {
 				/**
 				* If the uploader is a client, set the "client" var to the current
@@ -125,62 +136,77 @@ $sql = $database->query($cq);
 				}
 				
 				$this_upload = new PSend_Upload_File();
-				$file['file'] = $this_upload->safe_rename($file['file']);
+				if (!in_array($file['file'],$urls_db_files)) {
+					$file['file'] = $this_upload->safe_rename($file['file']);
+				}
 				$location = $work_folder.'/'.$file['file'];
+
 				if(file_exists($location)) {
 					/** Safe rename and chmod the file */
-					$move_arguments = array(
-											'uploaded_name' => $location,
-											'filename' => $file['file']
-										);
-					$new_filename = $this_upload->upload_move($move_arguments);
+					if (!in_array($file['file'],$urls_db_files)) {
+						$move_arguments = array(
+												'uploaded_name' => $location,
+												'filename' => $file['file']
+											);
+						$new_filename = $this_upload->upload_move($move_arguments);
+					}
+					else {
+						$new_filename = $file['file'];
+					}
 					if (!empty($new_filename)) {
 						$delete_key = array_search($file['original'], $uploaded_files);					
 						unset($uploaded_files[$delete_key]);
 						
 						/**
-						 * Unassigned files are kept as orphans and can be realted
+						 * Unassigned files are kept as orphans and can be related
 						 * to clients or groups later.
 						 */
+
+						/** Add to the database for each client / group selected */
+						$add_arguments = array(
+												'file' => $new_filename,
+												'name' => $file['name'],
+												'description' => $file['description'],
+												'uploader' => $this_admin
+											);
+						if (!empty($file['hidden'])) {
+							$add_arguments['hidden'] = $file['hidden'];
+						}
 						if (!empty($file['assignments'])) {
-							/** Add to the database for each client / group selected */
-							$add_arguments = array(
-													'file' => $new_filename,
+							$add_arguments['assign_to'] = $file['assignments'];
+						}
+						else {
+							$upload_finish_orphans[] = $file['name'];
+						}
+						if (!in_array($new_filename,$urls_db_files)) {
+							$add_arguments['add_to_db'] = true;
+						}
+						if($this_upload->upload_add_to_database($add_arguments)) {
+							/** Mark is as correctly uploaded / assigned */
+							$upload_finish[] = array(
+													'file' => $file['file'],
 													'name' => $file['name'],
-													'description' => $file['description'],
-													'assign_to' => $file['assignments'],
-													'uploader' => $this_admin
+													'description' => $file['description']
 												);
 							if (!empty($file['hidden'])) {
-								$add_arguments['hidden'] = $file['hidden'];
+								$upload_finish['hidden'] = $file['hidden'];
 							}
-							if($this_upload->upload_add_to_database($add_arguments)) {
-								/** Mark is as correctly uploaded / assigned */
-								$upload_finish[] = array(
-														'file' => $file['file'],
-														'name' => $file['name'],
-														'description' => $file['description'],
-														'assignments' => $file['assignments'],
-														'client_name' => $clients[$file['assignments']]
-													);
-								if (!empty($file['hidden'])) {
-									$upload_finish['hidden'] = $file['hidden'];
-								}
-	
-								/**
-								 * If the uploader is a client, notify the user who
-								 * created this clients' account.
-								 */
-								if ($current_level == 0) {
-									$who_made_me = get_client_by_username(get_current_user_username());
-									$creator_info = get_user_by_username($who_made_me['created_by']);
-									$clients_to_email[] = $creator_info['email'];
-								}
-								else {
-									$clients_to_email[] = $file['client'];
-								}
+
+							/**
+							 * If the uploader is a client, notify the user who
+							 * created this clients' account.
+							 */
+							if ($current_level == 0) {
+								$who_made_me = get_client_by_username(get_current_user_username());
+								$creator_info = get_user_by_username($who_made_me['created_by']);
+								$clients_to_email[] = $creator_info['email'];
+							}
+							else {
+								$clients_to_email[] = $file['client'];
 							}
 						}
+
+
 					}
 				}
 			}
@@ -219,7 +245,7 @@ $sql = $database->query($cq);
 		}
 
 	}
-	
+
 	/**
 	 * Generate the table of files that were assigned to a client
 	 * on this last POST. These files appear on this table only once,
@@ -235,17 +261,6 @@ $sql = $database->query($cq);
 					<th><?php _e('File Name','cftp_admin'); ?></th>
 					<th><?php _e('Name','cftp_admin'); ?></th>
 					<th><?php _e('Description','cftp_admin'); ?></th>
-					<?php
-						/*
-						 * Don't generate this columns if the uploader is a client.
-						 */
-						if ($current_level != 0) {
-					?>
-							<th><?php _e('Assigned to','cftp_admin'); ?></th>
-							<th><?php _e('Client was notified','cftp_admin'); ?></th>
-					<?php
-						}
-					?>
 					<th><?php _e("Actions",'cftp_admin'); ?></th>
 				</tr>
 			</thead>
@@ -257,39 +272,6 @@ $sql = $database->query($cq);
 						<td><?php echo $uploaded['file']; ?></td>
 						<td><?php echo $uploaded['name']; ?></td>
 						<td><?php echo $uploaded['description']; ?></td>
-						<?php
-							/*
-							 * Don't generate this columns if the uploader is a client.
-							 */
-							if ($current_level != 0) {
-						?>
-							<td><?php echo $uploaded['client_name']; ?></td>
-							<td><?php
-									/**
-									 * Unset $reason so the next client will start fresh
-									 */
-									if(isset($reason)) {
-										unset($reason);
-									}
-									switch ($users_emailed[$uploaded['client']]) {
-										case 0:
-											_e('No','cftp_admin');
-											$reason = __('Disabled for this client','cftp_admin');
-											break;
-										case 1:
-											_e('Yes','cftp_admin');
-											break;
-										case 2:
-											_e('No','cftp_admin');
-											$reason = __('Error sending notification','cftp_admin');
-											break;
-									}
-									echo (isset($reason) ? ' ('.$reason.')' : '');
-								?>
-							</td>
-						<?php
-							}
-						?>
 						<td>
 							<?php
 								/*
@@ -338,6 +320,55 @@ $sql = $database->query($cq);
 
 	}
 
+	/**
+	 * Generate the table of files that were uploaded but not assigned
+	 * to any client or group on this last POST.
+	 * These files appear on this table only once, so if there is
+	 * another submition of the form, only the new files will be displayed.
+	 */
+	if(!empty($upload_finish_orphans)) {
+?>
+		<h3><?php _e('Orphan files','cftp_admin'); ?></h3>
+		<p><?php _e('These files have not been assigned to any client or group.','cftp_admin'); ?></p>
+		<table id="orphan_files_tbl" class="tablesorter edit_files vertical_middle">
+			<thead>
+				<tr>
+					<th><?php _e('File Name','cftp_admin'); ?></th>
+					<th><?php _e("Actions",'cftp_admin'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+				foreach($upload_finish_orphans as $uploaded_orphan) {
+			?>
+					<tr>
+						<td><?php echo $uploaded_orphan; ?></td>
+						<td>
+							<?php
+								/*
+								 * Show the different actions buttons depending on the uploader
+								 * account type (user or client).
+								 */
+								if ($current_level != 0) {
+							?>
+									<a href="edit-file.php?id=" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
+							<?php
+								}
+								else {
+							?>
+									<a href="my_files/" class="button button_blue"><?php _e('View my files','cftp_admin'); ?></a>
+							<?php
+								}
+							?>
+						</td>
+					</tr>
+			<?php
+				}
+			?>
+			</tbody>
+		</table>
+<?php
+	}
 		/**
 		 * Generate the table of files ready to be assigned to a client.
 		 */
@@ -388,8 +419,6 @@ $sql = $database->query($cq);
 							clearstatcache();
 							$this_upload = new PSend_Upload_File();
 							$file_original = $file;
-							/** Generate a safe filename */
-							$file = $this_upload->safe_rename($file);
 	
 							$location = $work_folder.'/'.$file;
 
@@ -398,6 +427,8 @@ $sql = $database->query($cq);
 							 * If not, it is added to the failed files array.
 							 */
 							if(file_exists($location)) {
+								/** Generate a safe filename */
+								//$file = $this_upload->safe_rename($file);
 								/**
 								 * Remove the extension from the file name and replace every
 								 * underscore with a space to generate a valid upload name.
@@ -595,6 +626,14 @@ $sql = $database->query($cq);
 							}
 						?>
 					}
+				})
+				
+		<?php
+			}
+			if(!empty($upload_finish_orphans)) {
+		?>
+				$("#orphan_files_tbl").tablesorter({
+					sortList: [[0,0]], widgets: ['zebra']
 				})
 				
 		<?php

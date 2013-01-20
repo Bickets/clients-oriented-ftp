@@ -100,17 +100,24 @@ class PSend_Upload_File
 		$this->post_file = $arguments['file'];
 		$this->name = encode_html($arguments['name']);
 		$this->description = encode_html($arguments['description']);
-		$this->assign_to = $arguments['assign_to'];
 		$this->uploader = $arguments['uploader'];
 		$this->hidden = (!empty($arguments['hidden'])) ? '1' : '0';
 		$this->timestamp = time();
+		
+		if(isset($arguments['add_to_db'])) {
+			$result = $database->query("INSERT INTO tbl_files (url, filename, description, timestamp, uploader)"
+										."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->timestamp', '$this->uploader')");
+			$this->file_id = mysql_insert_id();
+		}
+		else {
+			$result = $database->query("SELECT id FROM tbl_files WHERE url = '$this->post_file'");
+			while($row = mysql_fetch_array($result)) {
+				$this->file_id = $row["id"];
+			}
+		}
 
-		$result = $database->query("INSERT INTO tbl_files (url, filename, description, timestamp, uploader)"
-									."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->timestamp', '$this->uploader')");
-
-		$this->file_id = mysql_insert_id();
-
-		if (!empty($this->assign_to)) {
+		if (!empty($arguments['assign_to'])) {
+			$this->assign_to = $arguments['assign_to'];
 			foreach ($this->assign_to as $this->assignment) {
 				switch ($this->assignment[0]) {
 					case 'c':

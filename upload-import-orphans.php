@@ -1,7 +1,7 @@
 <?php
 /**
- * Import files uploaded from FTP, step 1
- * Shows a list of files found on the upload/temp folder,
+ * Find files that where uploaded but not assigned, step 1
+ * Shows a list of files found on the upload/ folder,
  * if they are allowed according to the sytem settings.
  * Files uploaded by the "Upload from computer" form also
  * remain on this folder until assigned to a client, so if
@@ -15,7 +15,7 @@
 $tablesorter = 1;
 $allowed_levels = array(9,8,7);
 require_once('sys.includes.php');
-$page_title = __('Import files from FTP', 'cftp_admin');
+$page_title = __('Find orphan files', 'cftp_admin');
 include('header.php');
 
 $database->MySQLDB();
@@ -23,9 +23,9 @@ $database->MySQLDB();
 /**
  * Use the folder defined on sys.vars.php
  * Composed of the absolute path to that file plus the
- * default temp folder (upload/temp).
+ * default uploads folder.
  */
-$work_folder = USER_UPLOADS_TEMP_FOLDER;
+$work_folder = UPLOADED_FILES_FOLDER;
 ?>
 
 <div id="main">
@@ -40,20 +40,48 @@ $work_folder = USER_UPLOADS_TEMP_FOLDER;
 			message_no_clients();
 		}
 		else {
+			/**
+			 * Make a list of existing files on the database.
+			 * When a file doesn't correspond to a record, it can
+			 * be safely renamed.
+			 */
+			$sql = $database->query("SELECT url, id FROM tbl_files");
+			$db_files = array();
+			while($row = mysql_fetch_array($sql)) {
+				$db_files[$row["url"]] = $row["id"];
+			}
+
+			/** Make an array of already assigned files */
+			$sql = $database->query("SELECT DISTINCT file_id FROM tbl_files_relations");
+			$assigned = array();
+			while($row = mysql_fetch_array($sql)) {
+				$assigned[] = $row["file_id"];
+			}
+
 			/** Read the temp folder and list every allowed file */
 			if ($handle = opendir($work_folder)) {
 				while (false !== ($filename = readdir($handle))) {
 					$filename_path = $work_folder.'/'.$filename;
 					if(!is_dir($filename_path)) {
 						if ($filename != "." && $filename != "..") {
-							/** Safe rename the file in case it was uploadad by FTP */
-							$file_object = new PSend_Upload_File();
-							$new_filename = $file_object->safe_rename_on_disc($filename,$work_folder);
-							if(isset($new_filename)) {
+							/** Check types of files that are not on the database */							
+							if (!array_key_exists($filename,$db_files)) {
+								$file_object = new PSend_Upload_File();
+								$new_filename = $file_object->safe_rename_on_disc($filename,$work_folder);
 								/** Check if the filetype is allowed */
 								if ($file_object->is_filetype_allowed($new_filename)) {
 									/** Add it to the array of available files */
-									$files_to_add[$new_filename] = $filename_path;
+									$new_filename_path = $work_folder.'/'.$new_filename;
+									$files_to_add[$new_filename] = $new_filename_path;
+								}
+							}
+							else {
+								/**
+								 * These following files EXIST on DB ($db_files)
+								 * but not on the assigned table ($assigned)
+								 */
+								if(!in_array($db_files[$filename],$assigned)) {
+									$files_to_add[$filename] = $filename_path;
 								}
 							}
 						}
@@ -70,7 +98,10 @@ $work_folder = USER_UPLOADS_TEMP_FOLDER;
 	?>
 
 				<p><strong><?php _e('Important','cftp_admin'); ?>:</strong> <?php _e('This list only shows the files that are allowed according to your security settings. If the file you need to add is not listed here, make sure to add the extension to the "Allowed file extensions" box on the options page.','cftp_admin'); ?></p>
-				<p><?php _e('Also, please note that the listed files were renamed if they contained invalid characters.','cftp_admin'); ?></p>
+				<?php
+					$msg = __('Please note that the listed files will be renamed if they contain invalid characters.','cftp_admin');
+					echo system_message('info',$msg);
+				?>
 
 				<form action="upload-process-form.php" name="upload_by_ftp" id="upload_by_ftp" method="post" enctype="multipart/form-data">
 					<table id="add_files_from_ftp" class="tablesorter">
@@ -143,7 +174,7 @@ $work_folder = USER_UPLOADS_TEMP_FOLDER;
 							echo ' <strong>'.$work_folder.'</strong>.';
 						?>
 					</p>
-					<p><?php _e('This is the same folder where the files uploaded by the web interface will be located before you assign them to a client. So if you finish uploading your files but then fail to complete the form, the files will still be there for you to use later.', 'cftp_admin'); ?></p>
+					<p><?php _e('This is the same folder where the files uploaded by the web interface will be located on. So if you finish uploading your files but do not assign them to any clients/groups, the files will still be there for you to use later.', 'cftp_admin'); ?></p>
 				</div>
 			<?php
 			}

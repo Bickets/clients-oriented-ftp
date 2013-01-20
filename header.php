@@ -153,7 +153,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 						?>
 							<ul>
 								<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from computer', 'cftp_admin'); ?></a></li>
-								<li><a href="<?php echo BASE_URI; ?>upload-by-ftp.php"><?php _e('Import from FTP', 'cftp_admin'); ?></a></li>
+								<li><a href="<?php echo BASE_URI; ?>upload-import-orphans.php"><?php _e('Find orphan files', 'cftp_admin'); ?></a></li>
 							</ul>
 					<?php } ?>
 				</li>
