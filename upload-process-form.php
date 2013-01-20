@@ -436,6 +436,13 @@ while($row = mysql_fetch_array($sql)) {
 								$filename_no_ext = substr($file, 0, strrpos($file, '.'));
 								$file_title = str_replace('_',' ',$filename_no_ext);
 								if ($this_upload->is_filetype_allowed($file)) {
+									if (in_array($file,$urls_db_files)) {
+										$file_sql = $database->query("SELECT filename, description FROM tbl_files WHERE url = '$file'");
+										while($row = mysql_fetch_array($file_sql)) {
+											$file_title = $row["filename"];
+											$description = $row["description"];
+										}
+									}
 						?>
 									<div class="row-fluid edit_files">
 										<div class="span1">
@@ -457,7 +464,7 @@ while($row = mysql_fetch_array($sql)) {
 															<label><?php _e('Name', 'cftp_admin');?></label>
 															<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="txtfield required" />
 															<label><?php _e('Description', 'cftp_admin');?></label>
-															<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"></textarea>
+															<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"><?php echo (isset($description)) ? $description : ''; ?></textarea>
 															
 															<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
 														</div>
