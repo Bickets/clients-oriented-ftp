@@ -124,6 +124,14 @@ while($row = mysql_fetch_array($sql)) {
 		 */
 		$this_admin = get_current_user_username();
 
+		/**
+		 * Get the ID of the current client that is uploading files.
+		 */
+		if ($current_level == 0) {
+			$client_my_info = get_client_by_username($this_admin);
+			$client_my_id = $client_my_info["id"];
+		}
+
 		foreach ($_POST['file'] as $file) {
 
 			if(!empty($file['name'])) {
@@ -174,6 +182,11 @@ while($row = mysql_fetch_array($sql)) {
 						}
 						if (!empty($file['assignments'])) {
 							$add_arguments['assign_to'] = $file['assignments'];
+						}
+						/** Uploader is a client */
+						if ($current_level == 0) {
+							$add_arguments['assign_to'] = array('c'.$client_my_id);
+							$add_arguments['hidden'] = '0';
 						}
 						else {
 							$upload_finish_orphans[] = $file['name'];
@@ -376,7 +389,9 @@ while($row = mysql_fetch_array($sql)) {
 	?>
 			<h3><?php _e('Files ready to upload','cftp_admin'); ?></h3>
 			<p><?php _e('Please complete the following information to finish the uploading proccess. Remember that "Name" is a required field.','cftp_admin'); ?></p>
-			<div class="message message_info"><strong><?php _e('Note','cftp_admin'); ?></strong>: <?php _e('You can skip assignations if you want. The files are kept uploaded and you can add them to clients or groups later.','cftp_admin'); ?></div>
+			<?php if ($current_level != 0) { ?>
+				<div class="message message_info"><strong><?php _e('Note','cftp_admin'); ?></strong>: <?php _e('You can skip assignations if you want. The files are kept uploaded and you can add them to clients or groups later.','cftp_admin'); ?></div>
+			<?php } ?>
 	<?php
 			/**
 			 * First, do a server side validation for files that were submited
@@ -466,7 +481,9 @@ while($row = mysql_fetch_array($sql)) {
 															<label><?php _e('Description', 'cftp_admin');?></label>
 															<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"><?php echo (isset($description)) ? $description : ''; ?></textarea>
 															
-															<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
+															<?php if ($current_level != 0) { ?>
+																<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
+															<?php } ?>
 														</div>
 													</div>
 												</div>
