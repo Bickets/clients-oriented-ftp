@@ -110,10 +110,15 @@ class PSend_Upload_File
 			$this->file_id = mysql_insert_id();
 		}
 		else {
-			$result = $database->query("SELECT id FROM tbl_files WHERE url = '$this->post_file'");
-			while($row = mysql_fetch_array($result)) {
+			$id_sql = $database->query("SELECT id FROM tbl_files WHERE url = '$this->post_file'");
+			while($row = mysql_fetch_array($id_sql)) {
 				$this->file_id = $row["id"];
 			}
+			$result = $database->query("UPDATE tbl_files SET
+											filename = '$this->name',
+											description = '$this->description'
+											WHERE id = '$this->file_id'
+										");
 		}
 
 		if (!empty($arguments['assign_to'])) {
