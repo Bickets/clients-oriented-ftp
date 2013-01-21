@@ -238,12 +238,12 @@ include('header.php');
 		?>
 			<div class="form_actions_left">
 				<div class="form_actions_limit_results">
-					<form action="manage-files.php?client_id=<?php echo $this_id; ?>" name="files_search" method="post" class="inline_form">
+					<form action="manage-files.php?<?php echo $search_on; ?>=<?php echo $this_id; ?>" name="files_search" method="post" class="inline_form">
 						<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
 						<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
 					</form>
 	
-					<form action="manage-files.php?client_id=<?php echo $this_id; ?>" name="files_filters" method="post" class="inline_form">
+					<form action="manage-files.php?<?php echo $search_on; ?>=<?php echo $this_id; ?>" name="files_filters" method="post" class="inline_form">
 						<select name="status" id="status" class="txtfield">
 							<option value="all"><?php _e('All statuses','cftp_admin'); ?></option>
 							<option value="1"><?php _e('Hidden','cftp_admin'); ?></option>
@@ -260,7 +260,7 @@ include('header.php');
 				</div>
 			</div>
 	
-			<form action="manage-files.php?client_id=<?php echo $this_id; ?>" name="files_list" method="post">
+			<form action="manage-files.php?<?php echo $search_on; ?>=<?php echo $this_id; ?>" name="files_list" method="post">
 				<div class="form_actions_right">
 					<div class="form_actions">
 						<div class="form_actions_submit">
