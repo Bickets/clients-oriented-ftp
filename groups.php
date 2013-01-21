@@ -149,15 +149,6 @@ include('header.php');
 				<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
 				<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
 			</form>
-
-			<form action="groups.php<?php if(isset($member_exists)) { ?>?member=<?php echo $member; } ?>" name="groups_filters" method="post" class="inline_form">
-				<select name="role" id="role" class="txtfield">
-					<option value="all"><?php _e('All groups','cftp_admin'); ?></option>
-					<option value="0"><?php _e('Empty groups','cftp_admin'); ?></option>
-					<option value="1"><?php _e('Has at least 1 member','cftp_admin'); ?></option>
-				</select>
-				<input type="submit" id="btn_proceed_filter_clients" value="<?php _e('Filter','cftp_admin'); ?>" class="button_form" />
-			</form>
 		</div>
 	</div>
 
