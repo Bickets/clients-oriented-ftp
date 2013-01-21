@@ -9,18 +9,38 @@ $tablesorter = 1;
 $allowed_levels = array(9,8);
 require_once('sys.includes.php');
 
+$page_title = __('Manage files','cftp_admin');
+
 /**
  * The client's id is passed on the URI.
  * Then get_client_by_id() gets all the other account values.
  */
-$this_id = $_GET['client_id'];
-$this_client = get_client_by_id($this_id);
+if (isset($_GET['client_id'])) {
+	$this_id = $_GET['client_id'];
+	$this_client = get_client_by_id($this_id);
+	/** Add the name of the client to the page's title. */
+	if(!empty($this_client)) {
+		$page_title .= ' '.__('for client').' '.html_entity_decode($this_client['name']);
+		$search_on = 'client_id';
+	}
+}
 
-$page_title = __('Manage files','cftp_admin');
-
-/** Add the name of the client to the page's title. */
-if(!empty($this_client)) {
-	$page_title .= ' '.__('for').' '.html_entity_decode($this_client['name']);
+/**
+ * The group's id is passed on the URI also.
+ */
+if (isset($_GET['group_id'])) {
+	$this_id = $_GET['group_id'];
+	$sql_name = $database->query("SELECT name from tbl_groups WHERE id='$this_id'");
+	if (mysql_num_rows($sql_name) > 0) {
+		while($row_group = mysql_fetch_array($sql_name)) {
+			$group_name = $row_group["name"];
+		}
+		/** Add the name of the client to the page's title. */
+		if(!empty($group_name)) {
+			$page_title .= ' '.__('for group').' '.html_entity_decode($group_name);
+			$search_on = 'group_id';
+		}
+	}
 }
 
 include('header.php');
@@ -158,7 +178,7 @@ include('header.php');
 			}
 
 			$database->MySQLDB();
-			$cq = 'SELECT * FROM tbl_files_relations WHERE client_id="' . $this_id .'"';
+			$cq = 'SELECT * FROM tbl_files_relations WHERE '.$search_on.'="' . $this_id .'"';
 
 			/** Add the status filter */	
 			if(isset($_POST['status']) && $_POST['status'] != 'all') {
@@ -310,7 +330,7 @@ include('header.php');
 									 * Construct the complete file URI to use on the download button.
 									 */
 									$this_file_uri = UPLOADED_FILES_FOLDER.$row['url'];
-									$sql_this_file = $database->query("SELECT * FROM tbl_files_relations WHERE file_id='".$row['id']."' AND client_id = ".$this_id);
+									$sql_this_file = $database->query("SELECT * FROM tbl_files_relations WHERE file_id='".$row['id']."' AND $search_on = ".$this_id);
 									while($data_file = mysql_fetch_array($sql_this_file)) {
 										$file_id = $data_file['id'];
 										$hidden = $data_file['hidden'];
