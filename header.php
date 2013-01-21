@@ -108,11 +108,10 @@ if (in_session_or_cookies($core_update_allowed)) {
 
 	<header>
 		<div id="header">
-			<div id="header_info">
-				<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
-				<p><?php _e('Provided by', 'cftp_admin'); ?> <?php echo SYSTEM_NAME; ?> <?php _e('version', 'cftp_admin'); ?> <?php echo CURRENT_VERSION; ?></p>
+			<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
+			<div id="logout">
+				<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self"><?php _e('Logout', 'cftp_admin'); ?></a>
 			</div>
-			<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self" id="logout" class="button button_blue"><?php _e('Logout', 'cftp_admin'); ?></a>
 		</div>
 	
 		<?php
@@ -140,8 +139,8 @@ if (in_session_or_cookies($core_update_allowed)) {
 	
 		<nav id="top_menu">
 			<ul class="sf-menu">
-					<li><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
-			<li>
+				<li><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
+				<li>
 					<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload files', 'cftp_admin'); ?></a>
 						<?php
 							/**

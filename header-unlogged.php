@@ -62,7 +62,6 @@ $database->MySQLDB();
 		<div id="header">
 			<div id="lonely_logo">
 				<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
-				<p><?php _e('Provided by', 'cftp_admin'); ?> <?php echo SYSTEM_NAME; ?></p>
 			</div>
 		</div>
 		<div id="login_header_low">

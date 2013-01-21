@@ -55,9 +55,7 @@ h4 {
 }
 
 #lonely_logo {
-	margin-top:17px;
 	text-align:center;
-	font-family:'Open Sans', sans-serif;
 }
 
 #lonely_logo p {
@@ -217,20 +215,9 @@ h4 {
 #loginform { width:340px; margin-top:40px; padding-top:20px; }
 
 #loginform .field {
-	width:190px;
+	width:175px !important;
 	font-size:11px;
 	padding:4px;
-	margin-bottom:7px;
-	border:1px solid #CCCCCC;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-}
-
-#loginform .boton {
-	width:200px;
-	font-size:12px;
-	height:30px;
 	margin-bottom:7px;
 	border:1px solid #CCCCCC;
 	-moz-border-radius:5px;
