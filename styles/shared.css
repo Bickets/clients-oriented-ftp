@@ -82,28 +82,24 @@ body {
 
 
 #footer {
-	background:#555;
-	color:#FFFFFF;
+	background:#eee;
+	color:#888;
+	text-align:center;
+	padding:15px;
 
 	clear:both;
 	-moz-box-shadow:2px 2px 3px #E1E1E1;
 	-webkit-box-shadow:2px 2px 3px #E1E1E1;
 	box-shadow:2px 2px 3px #E1E1E1;
 
-	padding:5px 10px;
-	text-align:right;
-	font-size:11px;
-	text-shadow:1px 1px 3px black;
+	padding:15px 10px;
+	font-size:.9em;
 
-	height:18px;
-	display:block;
-	float:left;
 	margin:50px 0 10px 0;
 }
 
 #footer a {
-	color:white;
-	text-decoration:underline;
+	color:#666;
 }
 
 /* Messages */
