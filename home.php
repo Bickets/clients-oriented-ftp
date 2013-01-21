@@ -71,7 +71,7 @@ $database->MySQLDB();
 										<h4><?php _e('Upload files','cftp_admin'); ?></h4>
 										<img src="img/home-widget-files.png" alt="" />
 										<a href="upload-from-computer.php" class="button button_blue button_big"><?php _e('Upload from computer','cftp_admin'); ?></a>
-										<a href="upload-by-ftp.php" class="button button_blue button_big"><?php _e('Import from FTP','cftp_admin'); ?></a>
+										<a href="upload-by-ftp.php" class="button button_blue button_big"><?php _e('Find orphan files','cftp_admin'); ?></a>
 										<div class="message message_info">
 											<p><?php _e('Total files:','cftp_admin'); ?>
 												<strong>
