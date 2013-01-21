@@ -18,7 +18,7 @@ $(document).ready(function() {
 	$("#clients_tbl").tablesorter( {
 		sortList: [[1,0]], widgets: ['zebra'], headers: {
 			0: { sorter: false },
-			11: { sorter: false }
+			12: { sorter: false }
 		}
 	})
 	.tablesorterPager({container: $("#pager")})
@@ -264,7 +264,7 @@ $(document).ready(function() {
 											
 											_e('Own','cftp_admin'); echo ' <strong>'.$own_files.'</strong><br />';
 											_e('On groups','cftp_admin'); echo ' <strong>'.$groups_files.'</strong><br />';
-											_e('Total','cftp_admin'); echo ' <strong>'.$count_files.'</strong>';
+											//_e('Total','cftp_admin'); echo ' <strong>'.$count_files.'</strong>';
 										?>
 									</td>
 									<td class="<?php echo ($row['active'] === '0') ? 'account_status_inactive' : 'account_status_active'; ?>">
