@@ -46,6 +46,14 @@ $database->MySQLDB();
 	
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.button').click(function() {
+				$(this).blur();
+			});
+		});
+	</script>
 </head>
 
 <body>
