@@ -230,8 +230,10 @@ $(document).ready(function() {
 								$client_id = $row["id"];
 								$sql_groups = $database->query("SELECT DISTINCT group_id FROM tbl_members WHERE client_id='$client_id'");
 								$count_groups = mysql_num_rows($sql_groups);
-								while($row_groups = mysql_fetch_array($sql_groups)) {
-									$groups_ids[] = $row_groups["group_id"];
+								if ($count_groups > 0) {
+									while($row_groups = mysql_fetch_array($sql_groups)) {
+										$groups_ids[] = $row_groups["group_id"];
+									}
 									$found_groups = implode(',',$groups_ids);
 								}
 					?>
@@ -245,7 +247,11 @@ $(document).ready(function() {
 											$own_files = 0;
 											$groups_files = 0;
 
-											$sql_files = $database->query("SELECT DISTINCT id, file_id, client_id, group_id FROM tbl_files_relations WHERE client_id='$client_id' OR group_id IN ($found_groups)");
+											$fq = "SELECT DISTINCT id, file_id, client_id, group_id FROM tbl_files_relations WHERE client_id='$client_id'";
+											if (!empty($found_groups)) {
+												$fq .= " OR group_id IN ($found_groups)";
+											}
+											$sql_files = $database->query($fq);
 											$count_files = mysql_num_rows($sql_files);
 											while($row_files = mysql_fetch_array($sql_files)) {
 												if (!is_null($row_files['client_id'])) {
@@ -276,6 +282,7 @@ $(document).ready(function() {
 									<td class="extra"><?php echo html_entity_decode($row["contact"]); ?></td>
 									<td>
 										<a href="manage-files.php?client_id=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
+										<a href="groups.php?member=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('View groups','cftp_admin'); ?></a>
 										<a href="my_files/?client=<?php echo $row["user"]; ?>" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
 										<a href="clients-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
 									</td>

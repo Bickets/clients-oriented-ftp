@@ -20,7 +20,7 @@ $page_title = __('Manage files','cftp_admin');
 
 /** Add the name of the client to the page's title. */
 if(!empty($this_client)) {
-	$page_title .= ' for '.html_entity_decode($this_client['name']);
+	$page_title .= ' '.__('for').' '.html_entity_decode($this_client['name']);
 }
 
 include('header.php');

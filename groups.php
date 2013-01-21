@@ -10,7 +10,36 @@ $tablesorter = 1;
 $allowed_levels = array(9,8);
 require_once('sys.includes.php');
 $page_title = __('Groups administration','cftp_admin');;
+
+if(!empty($_GET['member'])) {
+	$member = $_GET['member'];
+	/** Add the name of the client to the page's title. */
+	$sql_name = $database->query("SELECT name from tbl_users WHERE id='$member'");
+	if (mysql_num_rows($sql_name) > 0) {
+		while($row_member = mysql_fetch_array($sql_name)) {
+			$page_title = ' '.__('Groups where').' '.html_entity_decode($row_member['name']).' '.__('is member');
+		}
+		$member_exists = 1;
+		/** Find groups where the client is member */
+		$sql_is_member = $database->query("SELECT DISTINCT group_id FROM tbl_members WHERE client_id='$member'");
+		if (mysql_num_rows($sql_is_member) > 0) {
+			while($row_groups = mysql_fetch_array($sql_is_member)) {
+				$groups_ids[] = $row_groups["group_id"];
+			}
+			$found_groups = implode(',',$groups_ids);
+		}
+		else {
+			$found_groups = '';
+		}
+	}
+	else {
+		$no_results_error = 'client_not_exists';
+	}
+}
+
 include('header.php');
+
+
 ?>
 
 <script type="text/javascript">
@@ -90,7 +119,22 @@ include('header.php');
 	if(isset($_POST['search']) && !empty($_POST['search'])) {
 		$search_terms = $_POST['search'];
 		$cq .= " WHERE (name LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
+		$next_clause = ' AND';
 		$no_results_error = 'search';
+	}
+	else {
+		$next_clause = ' WHERE';
+	}
+	
+	/** Add the member */
+	if (isset($found_groups)) {
+		if ($found_groups != '') {
+			$cq .= $next_clause. " id IN ($found_groups)";
+		}
+		else {
+			$cq .= $next_clause. " id = NULL";
+		}
+		$no_results_error = 'is_not_member';
 	}
 
 	$cq .= " ORDER BY name ASC";
@@ -101,12 +145,12 @@ include('header.php');
 
 	<div class="form_actions_left">
 		<div class="form_actions_limit_results">
-			<form action="groups.php" name="groups_search" method="post" class="inline_form">
+			<form action="groups.php<?php if(isset($member_exists)) { ?>?member=<?php echo $member; } ?>" name="groups_search" method="post" class="inline_form">
 				<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
 				<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
 			</form>
 
-			<form action="groups.php" name="groups_filters" method="post" class="inline_form">
+			<form action="groups.php<?php if(isset($member_exists)) { ?>?member=<?php echo $member; } ?>" name="groups_filters" method="post" class="inline_form">
 				<select name="role" id="role" class="txtfield">
 					<option value="all"><?php _e('All groups','cftp_admin'); ?></option>
 					<option value="0"><?php _e('Empty groups','cftp_admin'); ?></option>
@@ -117,7 +161,7 @@ include('header.php');
 		</div>
 	</div>
 
-	<form action="groups.php" name="groups_list" method="post">
+	<form action="groups.php<?php if(isset($member_exists)) { ?>?member=<?php echo $member; } ?>" name="groups_list" method="post">
 		<div class="form_actions_right">
 			<div class="form_actions">
 				<div class="form_actions_submit">
@@ -147,6 +191,12 @@ include('header.php');
 							break;
 						case 'filter':
 							$no_results_message = __('The filters you selected returned no results.','cftp_admin');;
+							break;
+						case 'client_not_exists':
+							$no_results_message = __('The client does not exist.','cftp_admin');;
+							break;
+						case 'is_not_member':
+							$no_results_message = __('There are no groups where this client is member.','cftp_admin');;
 							break;
 					}
 				}
