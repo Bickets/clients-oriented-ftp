@@ -44,36 +44,34 @@ class FilesActions
 		return $this->file_information;
 	}
 
-	function delete_files($file_id)
+	function delete_files($rel_id)
 	{
 		global $database;
 		$this->check_level = array(9,8);
-		if (isset($file_id)) {
-			/**
-			 * Get all the relevant file information using the id parameter
-			 *
-			 * @see get_file_data_by_id
-			 */
-			$this->file_information = $this->get_file_data_by_id($file_id);
-			$this->file_url = $this->file_information['url'];
-			$this->client_user = $this->file_information['client_user'];
-			$this->client_id = $this->file_information['client_id'];
+		if (isset($rel_id)) {
 			/** Do a permissions check */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				/** Delete the reference to the file on the database */
-				$this->sql = $database->query('DELETE FROM tbl_files WHERE client_user="' . $this->client_user .'" AND id="' . $file_id . '"');
 				/**
-				 * Use the client and uri information to delete the file
-				 * and the thumbnail (if it was created).
+				 * Get all the relevant file information using the id parameter
+				 *
+				 * @see get_file_data_by_id
+				 */
+				$this->sql_id = $database->query('SELECT file_id FROM tbl_files_relations WHERE id="'.$rel_id.'"');
+				while($this->data_file = mysql_fetch_array($this->sql_id)) {
+					$this->file_id = $this->data_file['file_id'];
+				}
+				$this->sql_url = $database->query('SELECT url FROM tbl_files WHERE id="'.$this->file_id.'"');
+				while($this->data_file_2 = mysql_fetch_array($this->sql_url)) {
+					$this->file_url = $this->data_file_2['url'];
+				}
+				/** Delete the reference to the file on the database */
+				$this->sql = $database->query('DELETE FROM tbl_files WHERE id="' . $this->file_id . '"');
+				/**
+				 * Use the id and uri information to delete the file.
 				 *
 				 * @see delete_file
 				 */
-				$this->original = UPLOADED_FILES_FOLDER . $this->file_url;
-				$this->thumb = UPLOADED_FILES_FOLDER . $this->file_url;
-				delete_file($this->original);
-				if (file_exists($this->thumb)) {
-					delete_file($this->thumb);
-				}
+				delete_file(UPLOADED_FILES_FOLDER . $this->file_url);
 			}
 		}
 	}
@@ -83,11 +81,21 @@ class FilesActions
 		global $database;
 		$this->check_level = array(9,8,7);
 		if (isset($file_id)) {
-			$this->file_information = $this->get_file_data_by_id($file_id);
-			$this->client_id = $this->file_information['client_id'];
 			/** Do a permissions check */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$this->sql = $database->query('UPDATE tbl_files SET hidden='.$change_to.' WHERE id="' . $file_id . '"');
+				$this->sql = $database->query('UPDATE tbl_files_relations SET hidden='.$change_to.' WHERE id="' . $file_id . '"');
+			}
+		}
+	}
+
+	function unassign_file($file_id)
+	{
+		global $database;
+		$this->check_level = array(9,8,7);
+		if (isset($file_id)) {
+			/** Do a permissions check */
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
+				$this->sql = $database->query('DELETE FROM tbl_files_relations WHERE id="' . $file_id . '"');
 			}
 		}
 	}
