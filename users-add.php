@@ -71,6 +71,16 @@ if ($_POST) {
 					case 1:
 						$msg = __('User added correctly.','cftp_admin');
 						echo system_message('ok',$msg);
+
+						/** Record the action log */
+						$new_log_action = new LogActions();
+						$log_action_args = array(
+												'action' => 2,
+												'owner_id' => $global_id,
+												'affected_account' => $new_response['new_id']
+											);
+						$new_record_action = $new_log_action->log_action_save($log_action_args);
+
 					break;
 					case 0:
 						$msg = __('There was an error. Please try again.','cftp_admin');

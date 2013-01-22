@@ -111,68 +111,73 @@ nav ul {
 	position: relative;
 	margin:0;
 }
-	nav ul:after {
-		content: ""; clear: both; display: block;
-	}
 
-	nav ul li {
-		float: left;
-			transition: all 0.5s ease-out;
-			-moz-transition: all 0.5s ease-out;
-			-webkit-transition: all 0.5s ease-out;
-	}
-		nav ul li:hover {
-			background: #000;
-		}
-			nav ul li:hover a {
-				color: #fff;
-				text-decoration:none;
-			}
+nav ul:after {
+	content: ""; clear: both; display: block;
+}
+
+nav ul li {
+	float: left;
+	transition: all 0.5s ease-out;
+	-moz-transition: all 0.5s ease-out;
+	-webkit-transition: all 0.5s ease-out;
+}
+
+nav ul li:hover {
+	background: #000;
+}
+
+nav ul li:hover a {
+	color: #fff;
+	text-decoration:none;
+}
+
+nav ul li a {
+	display: block; padding: 15px 26px;
+	color: #fff; text-decoration: none;
+}
 		
-		nav ul li a {
-			display: block; padding: 15px 26px;
-			color: #fff; text-decoration: none;
-		}
-			
-	nav ul li:not(.home) a:before {
-		color:rgba(255, 255, 255, 0.2);
-		content:"▼";
-		font-size:.8em;
-		margin-left:8px;
-		float:right;
-	}
+nav ul li:not(.home) a:before {
+	color:rgba(255, 255, 255, 0.2);
+	content:"▼";
+	font-size:.8em;
+	margin-left:8px;
+	float:right;
+}
 
-	nav ul ul li a:before {
-		content:""!important;
-	}
+nav ul ul li a:before {
+	content:""!important;
+}
 
-	nav ul ul {
-		background: #000;
-		border-radius: 0px;
-		padding: 0;
-		position: absolute;
-		top: 100%;
+nav ul ul {
+	background: #000;
+	border-radius: 0px;
+	padding: 0;
+	position: absolute;
+	top: 100%;
 
-		-moz-box-shadow:0 5px 5px #ccc;
-		-webkit-box-shadow:0 5px 5px #ccc;
-		box-shadow:0 5px 5px #ccc;
-	}
+	-moz-box-shadow:0 5px 5px #ccc;
+	-webkit-box-shadow:0 5px 5px #ccc;
+	box-shadow:0 5px 5px #ccc;
+}
 
-		nav ul ul li {
-			float: none; 
-			position: relative;
-		}
-			nav ul ul li a {
-				padding: 20px 40px;
-				color: #fff;
-			}	
-				nav ul ul li a:hover {
-					background: #000;
-				}
-		
-	nav ul ul ul {
-		position: absolute; left: 100%; top:0;
-	}
+nav ul ul li {
+	float: none; 
+	position: relative;
+}
+
+nav ul ul li a {
+	padding: 20px 40px;
+	color: #fff;
+}	
+
+nav ul ul li a:hover {
+	background: #000;
+}
+	
+nav ul ul ul {
+	position: absolute; left: 100%; top:0;
+}
 
 /** FOOTER */
 

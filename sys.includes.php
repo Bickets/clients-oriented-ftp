@@ -37,6 +37,7 @@ require_once(ROOT_DIR.'/includes/templates.php');
 require_once(ROOT_DIR.'/includes/classes/actions-clients.php');
 require_once(ROOT_DIR.'/includes/classes/actions-files.php');
 require_once(ROOT_DIR.'/includes/classes/actions-groups.php');
+require_once(ROOT_DIR.'/includes/classes/actions-log.php');
 require_once(ROOT_DIR.'/includes/classes/actions-users.php');
 require_once(ROOT_DIR.'/includes/classes/file-upload.php');
 require_once(ROOT_DIR.'/includes/classes/form-validation.php');

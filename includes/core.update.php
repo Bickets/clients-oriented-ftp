@@ -273,23 +273,27 @@ if (in_session_or_cookies($allowed_update)) {
 
 
 	/**
-	 * r2xx updates
+	 * r241 updates
 	 * A new database table was added, that stores users and clients actions.
 	 */
-	/*
-	$q = $database->query("SELECT id FROM tbl_log");
+	$q = $database->query("SELECT id FROM tbl_actions_log");
 	if (!$q) {
 		$q1 = '
-		CREATE TABLE IF NOT EXISTS `tbl_log` (
+		CREATE TABLE IF NOT EXISTS `tbl_actions_log` (
 		  `id` int(11) NOT NULL AUTO_INCREMENT,
 		  `timestamp` int(15) NOT NULL,
 		  `action` int(2) NOT NULL,
-		  `owner` int(2) NOT NULL,
-		  `affected` int(2) NOT NULL,
+		  `owner_id` int(11) NOT NULL,
+		  `affected_file` int(11) DEFAULT NULL,
+		  `affected_account` int(11) DEFAULT NULL,
+		  FOREIGN KEY (`owner_id`) REFERENCES tbl_users(`id`),
+		  FOREIGN KEY (`affected_file`) REFERENCES tbl_files(`id`),
+		  FOREIGN KEY (`affected_account`) REFERENCES tbl_users(`id`),
 		  PRIMARY KEY (`id`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 		';
+		$database->query($q1);
+		$updates_made++;
 	}
-	*/
 }
 ?>

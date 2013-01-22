@@ -58,7 +58,9 @@ define('TABLE_USERS','tbl_users');
 define('TABLE_GROUPS','tbl_groups');
 define('TABLE_MEMBERS','tbl_members');
 define('TABLE_FOLDERS','tbl_folders');
-$current_tables = array(TABLE_FILES,TABLE_FILES_RELATIONS,TABLE_OPTIONS,TABLE_USERS,TABLE_GROUPS,TABLE_MEMBERS,TABLE_FOLDERS);
+define('TABLE_LOG','tbl_actions_log');
+$current_tables = array(TABLE_FILES,TABLE_OPTIONS,TABLE_USERS);
+//$current_tables = array(TABLE_FILES,TABLE_FILES_RELATIONS,TABLE_OPTIONS,TABLE_USERS,TABLE_GROUPS,TABLE_MEMBERS,TABLE_FOLDERS,TABLE_LOG);
 
 /**
  * This values affect both validation methods (client and server side)

@@ -123,6 +123,7 @@ class ClientActions
 
 		if ($this->sql_query) {
 			$this->state['actions'] = 1;
+			$this->state['new_id'] = mysql_insert_id();
 
 			/** Send account data by email */
 			$this->notify_client = new PSend_Email();

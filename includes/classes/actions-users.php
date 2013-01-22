@@ -110,6 +110,7 @@ class UserActions
 
 		if ($this->sql_query) {
 			$this->state['query'] = 1;
+			$this->state['new_id'] = mysql_insert_id();
 
 			/** Send account data by email */
 			$this->notify_user = new PSend_Email();

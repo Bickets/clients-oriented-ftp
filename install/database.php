@@ -106,6 +106,21 @@ CREATE TABLE IF NOT EXISTS `tbl_files_relations` (
 ';
 
 $q8 = '
+CREATE TABLE IF NOT EXISTS `tbl_actions_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` int(15) NOT NULL,
+  `action` int(2) NOT NULL,
+  `owner_id` int(11) NOT NULL,
+  `affected_file` int(11) DEFAULT NULL,
+  `affected_account` int(11) DEFAULT NULL,
+  FOREIGN KEY (`owner_id`) REFERENCES tbl_users(`id`),
+  FOREIGN KEY (`affected_file`) REFERENCES tbl_files(`id`),
+  FOREIGN KEY (`affected_account`) REFERENCES tbl_users(`id`),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+';
+
+$q9 = '
 INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (1, \'base_uri\', \''.$base_uri.'\'),
 (2, \'max_thumbnail_width\', \'100\'),
@@ -124,7 +139,7 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (15, \'admin_email_address\', \''.$got_admin_email.'\'),
 (16, \'clients_can_register\', \'0\')';
 
-$q9 = '
+$q10 = '
 INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`, `active`) VALUES
 (1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestamp.', 1);
 ';

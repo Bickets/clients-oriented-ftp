@@ -156,6 +156,26 @@ function get_client_by_username($client)
 	}
 }
 
+/**
+ * Get all the client information knowing only the log in username
+ *
+ * @return array
+ */
+function get_logged_account_id($username)
+{
+	global $database;
+	$get_account_id = $database->query("SELECT id FROM tbl_users WHERE user='$username'");
+	while ($row = mysql_fetch_assoc($get_account_id)) {
+		$return_id = $row['id'];
+		if(!empty($return_id)) {
+			return $return_id;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
 
 /**
  * Used on the file uploading process to determine if the client

@@ -35,6 +35,7 @@ include('header-unlogged.php');
 				$db_pass = $row['password'];
 				$user_level = $row["level"];
 				$active_status = $row['active'];
+				$logged_id = $row['id'];
 			}
 			if ($db_pass == $sysuser_password) {
 				if ($active_status != '0') {
@@ -52,12 +53,21 @@ include('header-unlogged.php');
 					}
 
 					/** If "remember me" checkbox is on, set the cookie */
-					if ($_POST['login_form_remember']=='on') {
+					if (!empty($_POST['login_form_remember'])) {
 						setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
 						setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
 						setcookie("access",$access_string,time()+COOKIE_EXP_TIME);
 						setcookie("userlevel",$user_level,time()+COOKIE_EXP_TIME);
 					}
+					
+					/** Record the action log */
+					$new_log_action = new LogActions();
+					$log_action_args = array(
+											'action' => 1,
+											'owner_id' => $logged_id
+										);
+					$new_record_action = $new_log_action->log_action_save($log_action_args);
+
 					if ($user_level == '0') {
 						header("location:".BASE_URI."my_files/");
 					}
@@ -130,7 +140,7 @@ include('header-unlogged.php');
 					</li>
 					<li>
 						<label for="login_form_remember"><?php _e('Remember me','cftp_admin'); ?></label>
-						<input type="checkbox" name="login_form_remember" id="login_form_remember" />
+						<input type="checkbox" name="login_form_remember" id="login_form_remember" value="on" />
 					</li>
 					<li class="form_submit_li">
 						<input type="submit" name="Submit" value="<?php _e('Continue to log in','cftp_admin'); ?>" id="button_login" class="button button_blue button_submit" />
