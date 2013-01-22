@@ -205,7 +205,6 @@ $database->MySQLDB();
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		
 		$.plot(
 			$("#sys_info"), [{
 				data: [
@@ -218,19 +217,14 @@ $database->MySQLDB();
 			], {
 				series:{
 					bars:{show: true},
-					label: {
-						display: 'outsideEnd',
-						field: 'data1',  // field name
-						orientation: 'horizontal',  //  or 'vertical'
-						
-						color: '#0000FF',
-						'text-anchor': 'middle'
-					},
 				},
 				bars:{
 					  barWidth:.5,
 					  align: 'center'
-				},            
+				},
+				legend: {
+					show: true
+				},
 				grid:{
 					hoverable: true,
 					borderWidth: 0,
@@ -248,54 +242,6 @@ $database->MySQLDB();
 				}
 			}
 		);
-
-
-
-
-
-
-
-
-/*  var line1 = [<?php echo $total_files; ?>, <?php echo $total_clients; ?>, <?php echo $total_groups; ?>, <?php echo $total_users; ?>];
-  var ticks = ['<?php _e('Files','cftp_admin'); ?>', '<?php _e('Clients','cftp_admin'); ?>', '<?php _e('Groups','cftp_admin'); ?>', '<?php _e('Users','cftp_admin'); ?>'];
-  var plot3 = $.jqplot('sys_info', [line1], {
-    seriesDefaults: {
-		renderer: $.jqplot.BarRenderer,
-		rendererOptions:{
-			shadowOffset: 1,
-			shadowDepth: 2,
-			shadowAlpha: 0.05,
-			barWidth: 45
-		}
-	},
-	grid: {
-		gridLineColor: '#dddddd',
-		 borderWidth: 0,
-		 shadow: false,
-	},
-    series:[
-     {pointLabels:{
-        show: true,
-        labels:[<?php echo $total_files; ?>, <?php echo $total_clients; ?>, <?php echo $total_groups; ?>, <?php echo $total_users; ?>]
-      }}],
-    axes: {
-      xaxis:{
-		  	renderer:$.jqplot.CategoryAxisRenderer,
-			ticks: ticks
-	  },
-      yaxis:{padMax:1.10}},
-	  seriesColors: [ "#000", "#000", "#999", "#000"],
-  });
-*/
-
-
-
-
-
-
-
-
-
 	});
 </script>
 
