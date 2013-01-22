@@ -42,15 +42,48 @@ $this_template_css = BASE_URI.'templates/'.TEMPLATE_USE.'/main.css';
 $database->MySQLDB();
 
 /**
+ * Get all the client's information
+ */
+$client_info = get_client_by_username($this_user);
+
+/**
+ * Get the list of different groups the client belongs to.
+ */
+$sql_groups = $database->query("SELECT DISTINCT group_id FROM tbl_members WHERE client_id='".$client_info['id']."'");
+$count_groups = mysql_num_rows($sql_groups);
+if ($count_groups > 0) {
+	while($row_groups = mysql_fetch_array($sql_groups)) {
+		$groups_ids[] = $row_groups["group_id"];
+	}
+	$found_groups = implode(',',$groups_ids);
+}
+
+/**
  * Gets the files list on a default query that can be used on the template.
  * Only files that are not marked as hidden are retrieved.
  */
-$files_query = 'SELECT * FROM tbl_files WHERE hidden=0';
-$template_files_sql = $database->query($files_query);
-
-/** Used to get the full name of the current client */
-$current_fullname_sql = $database->query('SELECT * FROM tbl_users WHERE user="' . $this_user .'"');
-while ($name_sql_row = mysql_fetch_array($current_fullname_sql)) {
-	$user_full_name = $name_sql_row['name'];
+$fq = "SELECT DISTINCT id, file_id, client_id, group_id FROM tbl_files_relations WHERE ";
+if (!empty($found_groups)) {
+	$fq .= "(client_id='".$client_info['id']."' OR group_id IN ($found_groups)) AND hidden = '0'";
 }
+else {
+	$fq .= "client_id='".$client_info['id']."' AND hidden = '0'";
+}
+$files_sql = $database->query($fq);
+$count_files = mysql_num_rows($files_sql);
+while($row_files = mysql_fetch_array($files_sql)) {
+	$found_files_ids[] = $row_files['file_id'];
+}
+$found_files = implode(',',array_unique($found_files_ids));
+
+$files_query = "SELECT * FROM tbl_files WHERE id IN ($found_files)";
+
+/** Add the search terms */	
+if(isset($_POST['search']) && !empty($_POST['search'])) {
+	$search_terms = $_POST['search'];
+	$files_query .= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
+	$no_results_error = 'search';
+}
+
+$template_files_sql = $database->query($files_query);
 ?>

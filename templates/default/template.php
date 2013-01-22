@@ -12,17 +12,6 @@ $window_title = __('File downloads','cftp_template');
 $tablesorter = 1;
 include_once(ROOT_DIR.'/header.php'); // include the required functions for every template
 
-/** Overwrite the default query to add the search parameter */
-$files_query = 'SELECT * FROM tbl_files WHERE client_user="' . $this_user .'" AND hidden=0';
-
-/** Add the search terms */	
-if(isset($_POST['search']) && !empty($_POST['search'])) {
-	$search_terms = $_POST['search'];
-	$files_query .= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
-	$no_results_error = 'search';
-}
-
-$template_files_sql = $database->query($files_query);
 $count = mysql_num_rows($template_files_sql);
 ?>
 
