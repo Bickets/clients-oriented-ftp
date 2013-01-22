@@ -137,7 +137,7 @@ nav ul li a {
 	color: #fff; text-decoration: none;
 }
 		
-nav ul li:not(.home) a:before {
+nav ul li:not(.no_arrow) a:before {
 	color:rgba(255, 255, 255, 0.2);
 	content:"▼";
 	font-size:.8em;

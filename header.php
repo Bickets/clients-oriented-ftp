@@ -133,8 +133,8 @@ $global_id = get_logged_account_id($global_user);
 	
 		<nav id="top_menu">
 			<ul>
-				<li class="home"><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
-				<li>
+				<li class="no_arrow"><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
+				<li<?php if (in_session_or_cookies(array(0))) { echo ' class="no_arrow"'; } ?>>
 					<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload files', 'cftp_admin'); ?></a>
 						<?php
 							/**
@@ -226,7 +226,7 @@ $global_id = get_logged_account_id($global_user);
 					$clients_allowed = array(0);
 					if (in_session_or_cookies($clients_allowed)) {
 				?>
-						<li><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+						<li class="no_arrow"><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
 				<?php
 					}
 				?>
