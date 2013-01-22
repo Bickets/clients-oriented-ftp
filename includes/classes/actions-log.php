@@ -14,7 +14,7 @@
  * 4-	A client registers an account for himself
  * 5-	A file is uploaded by an user
  * 6-	A file is uploaded by a client
- * 7-	A file is downloaded by a user (on "Client view" mode)
+ * 7-	A file is downloaded by a user (on "Client view" mode) //unused
  * 8-	A file is downloaded by a client
  * 9-	A file has been unassigned from a client.
  * 10-	A file has been unassigned from a group.

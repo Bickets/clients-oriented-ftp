@@ -175,7 +175,8 @@ while($row = mysql_fetch_array($sql)) {
 												'file' => $new_filename,
 												'name' => $file['name'],
 												'description' => $file['description'],
-												'uploader' => $this_admin
+												'uploader' => $this_admin,
+												'uploader_id' => $global_id
 											);
 						if (!empty($file['hidden'])) {
 							$add_arguments['hidden'] = $file['hidden'];
@@ -187,9 +188,11 @@ while($row = mysql_fetch_array($sql)) {
 						if ($current_level == 0) {
 							$add_arguments['assign_to'] = array('c'.$client_my_id);
 							$add_arguments['hidden'] = '0';
+							$add_arguments['uploader_type'] = 'client';
 						}
 						else {
 							$upload_finish_orphans[] = $file['name'];
+							$add_arguments['uploader_type'] = 'user';
 						}
 						if (!in_array($new_filename,$urls_db_files)) {
 							$add_arguments['add_to_db'] = true;

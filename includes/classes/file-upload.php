@@ -101,6 +101,8 @@ class PSend_Upload_File
 		$this->name = encode_html($arguments['name']);
 		$this->description = encode_html($arguments['description']);
 		$this->uploader = $arguments['uploader'];
+		$this->uploader_id = $arguments['uploader_id'];
+		$this->uploader_type = $arguments['uploader_type'];
 		$this->hidden = (!empty($arguments['hidden'])) ? '1' : '0';
 		$this->timestamp = time();
 		
@@ -108,6 +110,21 @@ class PSend_Upload_File
 			$result = $database->query("INSERT INTO tbl_files (url, filename, description, timestamp, uploader)"
 										."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->timestamp', '$this->uploader')");
 			$this->file_id = mysql_insert_id();
+
+			/** Record the action log */
+			if ($this->uploader_type == 'user') {
+				$this->action_type = 5;
+			}
+			elseif ($this->uploader_type == 'client') {
+				$this->action_type = 6;
+			}
+			$new_log_action = new LogActions();
+			$log_action_args = array(
+									'action' => $this->action_type,
+									'owner_id' => $this->uploader_id,
+									'affected_file' => $this->file_id
+								);
+			$new_record_action = $new_log_action->log_action_save($log_action_args);
 		}
 		else {
 			$id_sql = $database->query("SELECT id FROM tbl_files WHERE url = '$this->post_file'");
