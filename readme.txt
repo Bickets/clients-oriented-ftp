@@ -57,9 +57,6 @@ Many thanks to the authors of the following scripts, which are used on ProjectSe
 - Bootstrap (custom download)
   http://twitter.github.com/bootstrap/
 
-- Superfish
-  http://users.tpg.com.au/j_birch/plugins/superfish/
-
 - EasyTabs.js
   http://os.alfajango.com/easytabs/
 

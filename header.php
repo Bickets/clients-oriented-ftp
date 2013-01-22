@@ -74,7 +74,6 @@ if (in_session_or_cookies($core_update_allowed)) {
 		}
 	?>
 	
-	<script src="<?php echo BASE_URI; ?>includes/js/superfish.js" type="text/javascript"></script>
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.easytabs.min.js" type="text/javascript"></script>
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.hashchange.min.js" type="text/javascript"></script>
@@ -129,8 +128,6 @@ if (in_session_or_cookies($core_update_allowed)) {
 	
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$("ul.sf-menu").superfish();
-				
 				$('.button').click(function() {
 					$(this).blur();
 				});
@@ -138,8 +135,8 @@ if (in_session_or_cookies($core_update_allowed)) {
 		</script>
 	
 		<nav id="top_menu">
-			<ul class="sf-menu">
-				<li><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
+			<ul>
+				<li class="home"><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
 				<li>
 					<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload files', 'cftp_admin'); ?></a>
 						<?php
@@ -236,9 +233,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 				<?php
 					}
 				?>
-		
 			</ul>
-			<div class="clear"></div>
 		</nav>
 	</header>
 

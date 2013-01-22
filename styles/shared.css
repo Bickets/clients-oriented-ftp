@@ -41,10 +41,9 @@ body {
 }
 
 #header {
-/*	background:#1E478D url(../img/header.jpg) no-repeat top center;*/
-	background:#1E478D;
+/*	background:#1E478D url(../img/header.jpg) no-repeat top center;
+*/	background:#232835;
 	color:#f0f0f0;
-	border-bottom:1px solid #333;
 	position:relative;
 	overflow:hidden;
 	padding:25px 20px 20px;
@@ -76,15 +75,106 @@ body {
 	transition: all 0.8s ease-out;
 	-moz-transition: all 0.8s ease-out;
 	-webkit-transition: all 0.8s ease-out;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
 }
 
 #logout a:hover {
-	background-color:#0c2858;
+	background-color:#000;
 }
 
+/** MENU */
+
+#top_menu {
+	background: #3c404b; 
+
+	-moz-box-shadow:0 5px 5px #E1E1E1;
+	-webkit-box-shadow:0 5px 5px #E1E1E1;
+	box-shadow:0 5px 5px #E1E1E1;
+}
+
+nav {
+	margin: 0 auto; 
+	text-align: left;
+	font-family:'Open Sans',Arial,sans-serif;
+}
+
+nav ul ul {
+	display: none;
+}
+
+nav ul li:hover > ul {
+	display: block;
+}
+
+nav ul {
+	padding: 0 20px;
+	list-style: none;
+	position: relative;
+	margin:0;
+}
+	nav ul:after {
+		content: ""; clear: both; display: block;
+	}
+
+	nav ul li {
+		float: left;
+			transition: all 0.5s ease-out;
+			-moz-transition: all 0.5s ease-out;
+			-webkit-transition: all 0.5s ease-out;
+	}
+		nav ul li:hover {
+			background: #000;
+		}
+			nav ul li:hover a {
+				color: #fff;
+				text-decoration:none;
+			}
+		
+		nav ul li a {
+			display: block; padding: 15px 26px;
+			color: #fff; text-decoration: none;
+		}
+			
+	nav ul li:not(.home) a:before {
+		color:rgba(255, 255, 255, 0.2);
+		content:"▼";
+		font-size:.8em;
+		margin-left:8px;
+		float:right;
+	}
+
+	nav ul ul li a:before {
+		content:""!important;
+	}
+
+	nav ul ul {
+		background: #000;
+		border-radius: 0px;
+		padding: 0;
+		position: absolute;
+		top: 100%;
+
+		-moz-box-shadow:0 5px 5px #ccc;
+		-webkit-box-shadow:0 5px 5px #ccc;
+		box-shadow:0 5px 5px #ccc;
+	}
+
+		nav ul ul li {
+			float: none; 
+			position: relative;
+		}
+			nav ul ul li a {
+				padding: 20px 40px;
+				color: #fff;
+			}	
+				nav ul ul li a:hover {
+					background: #000;
+				}
+		
+	nav ul ul ul {
+		position: absolute; left: 100%; top:0;
+	}
+
+/** FOOTER */
 
 #footer {
 	background:#eee;
@@ -618,160 +708,3 @@ div.pager input, div.pager select {
 	-webkit-border-radius:5px;
 	border-radius:5px;
 }
-
-/* Header Menu */
-
-#top_menu {
-	background:#222;
-	color:#FFFFFF;
-	clear:both;
-	padding:0;
-	border-top:1px solid #555;
-	border-bottom:7px solid #CCCCCC;
-	-moz-box-shadow:0 5px 5px #E1E1E1;
-	-webkit-box-shadow:0 5px 5px #E1E1E1;
-	box-shadow:0 5px 5px #E1E1E1;
-}
-
-/* Superfish */
-
-/*** ESSENTIAL STYLES ***/
-.sf-menu, .sf-menu * {
-	margin:			0;
-	padding:		0;
-	list-style:		none;
-}
-.sf-menu {
-	line-height:	1.0;
-}
-.sf-menu ul {
-	position:		absolute;
-	top:			-999em;
-	width:			16em; /* left offset of submenus need to match (see below) */
-}
-.sf-menu ul li {
-	width:			100%;
-}
-.sf-menu li:hover {
-	visibility:		inherit; /* fixes IE7 'sticky bug' */
-}
-.sf-menu li {
-	float:			left;
-	position:		relative;
-}
-.sf-menu a {
-	display:		block;
-	position:		relative;
-}
-.sf-menu li:hover ul,
-.sf-menu li.sfHover ul {
-	left:			0;
-	top:			3.5em; /* match top ul list item height */
-	z-index:		99;
-	background:		#222;
-}
-ul.sf-menu li:hover li ul,
-ul.sf-menu li.sfHover li ul {
-	top:			-999em;
-}
-ul.sf-menu li li:hover ul,
-ul.sf-menu li li.sfHover ul {
-	left:			16em; /* match ul width */
-	top:			0;
-}
-ul.sf-menu li li:hover li ul,
-ul.sf-menu li li.sfHover li ul {
-	top:			-999em;
-}
-ul.sf-menu li li li:hover ul,
-ul.sf-menu li li li.sfHover ul {
-	left:			13em; /* match ul width */
-	top:			0;
-}
-
-/*** DEMO SKIN ***/
-.sf-menu {
-	float:			left;
-}
-.sf-menu a {
-	border-right:	1px solid #333;
-	border-left:	1px solid #000;
-	padding: 		1.3em 2.4em;
-	text-decoration:none;
-}
-.sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
-	color:			#fff;
-	text-decoration:none;
-}
-.sf-menu li {
-	background:		#222;
-}
-.sf-menu li li {
-	background:		#222;
-	font-weight:	normal;
-}
-.sf-menu li li li {
-	background:		#222;
-	font-weight:	normal;
-}
-.sf-menu li:hover, .sf-menu li.sfHover,
-.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
-	background:		#444;
-	outline:		0;
-	text-decoration:none;
-}
-
-/*** arrows **/
-.sf-menu a.sf-with-ul {
-	padding-right: 	2.25em;
-	min-width:		1px; /* trigger IE7 hasLayout so spans position accurately */
-}
-.sf-sub-indicator {
-	position:		absolute;
-	display:		block;
-	right:			.75em;
-	top:			1.4em; /* IE6 only */
-	width:			10px;
-	height:			10px;
-	text-indent: 	-999em;
-	overflow:		hidden;
-	background:		url('../img/arrows-ffffff.png') no-repeat -10px -100px; /* 8-bit indexed alpha png. IE6 gets solid image only */
-}
-a > .sf-sub-indicator {  /* give all except IE6 the correct values */
-	top:			1.4em;
-	background-position: 0 -100px; /* use translucent arrow for modern browsers*/
-}
-/* apply hovers to modern browsers */
-a:focus > .sf-sub-indicator,
-a:hover > .sf-sub-indicator,
-a:active > .sf-sub-indicator,
-li:hover > a > .sf-sub-indicator,
-li.sfHover > a > .sf-sub-indicator {
-	background-position: -10px -100px; /* arrow hovers for modern browsers*/
-}
-
-/* point right for anchors in subs */
-.sf-menu ul .sf-sub-indicator { background-position:  -10px 0; }
-.sf-menu ul a > .sf-sub-indicator { background-position:  0 0; }
-/* apply hovers to modern browsers */
-.sf-menu ul a:focus > .sf-sub-indicator,
-.sf-menu ul a:hover > .sf-sub-indicator,
-.sf-menu ul a:active > .sf-sub-indicator,
-.sf-menu ul li:hover > a > .sf-sub-indicator,
-.sf-menu ul li.sfHover > a > .sf-sub-indicator {
-	background-position: -10px 0; /* arrow hovers for modern browsers*/
-}
-
-/*** shadows for all but IE6
-.sf-shadow ul {
-	background:	url('../img/shadow.png') no-repeat bottom right;
-	padding: 0 8px 9px 0;
-	-moz-border-radius-bottomleft: 17px;
-	-moz-border-radius-topright: 17px;
-	-webkit-border-top-right-radius: 17px;
-	-webkit-border-bottom-left-radius: 17px;
-}
-.sf-shadow ul.sf-shadow-off {
-	background: transparent;
-}
- ***/
