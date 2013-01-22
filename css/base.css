@@ -68,11 +68,8 @@ h4 {
 }
 
 #login_header_low {
-	background:#222;
-	color:#FFFFFF;
+	background:#3c404b;
 	clear:both;
-	padding:4px 0;
-	border-top:1px solid #555;
 	border-bottom:7px solid #CCCCCC;
 	-moz-box-shadow:0 5px 5px #E1E1E1;
 	-webkit-box-shadow:0 5px 5px #E1E1E1;
