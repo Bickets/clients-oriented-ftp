@@ -77,3 +77,6 @@ Many thanks to the authors of the following scripts, which are used on ProjectSe
 
 - multiselect.js
   http://loudev.com/
+
+- flot
+  https://github.com/flot/flot

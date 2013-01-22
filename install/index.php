@@ -53,13 +53,13 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo $page_title_install; ?> | <?php echo SYSTEM_NAME; ?></title>
 	<link rel="shortcut icon" href="../favicon.ico" />
-	<link rel="stylesheet" media="all" type="text/css" href="../styles/shared.css" />
-	<link rel="stylesheet" media="all" type="text/css" href="../styles/base.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="../css/shared.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="../css/base.css" />
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 	<script src="../includes/js/jquery.validations.js" type="text/javascript"></script>
 
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/bootstrap.min.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="../css/bootstrap.min.css" />
 	<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/bootstrap/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>

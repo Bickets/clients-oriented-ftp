@@ -8,6 +8,8 @@
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 $page_title = __('Welcome to ProjectSend', 'cftp_admin');
+
+$flot = 1;
 include('header.php');
 $database->MySQLDB();
 ?>
@@ -26,7 +28,7 @@ $database->MySQLDB();
 	<div class="home">
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div class="span12">
+				<div class="span8">
 					<ul class="home_spaces">
 						<?php
 							/** Show SIMPLE UPLOAD widget and current logo to clients */
@@ -52,8 +54,8 @@ $database->MySQLDB();
 													/** Count the VISIBLE files on this client's account */
 													$my_username = get_current_user_username();
 													$sql = $database->query("SELECT distinct id FROM tbl_files WHERE client_user = '$my_username' AND hidden = '0'");
-													$count = mysql_num_rows($sql);
-													echo $count;
+													$total_files = mysql_num_rows($sql);
+													echo $total_files;
 												?>
 												</strong>
 											</p>
@@ -77,8 +79,8 @@ $database->MySQLDB();
 												<strong>
 												<?php
 													$sql = $database->query("SELECT distinct id FROM tbl_files");
-													$count = mysql_num_rows($sql);
-													echo $count;
+													$total_files = mysql_num_rows($sql);
+													echo $total_files;
 												?>
 												</strong>
 											</p>
@@ -113,8 +115,8 @@ $database->MySQLDB();
 												<strong>
 												<?php
 													$sql = $database->query("SELECT distinct user FROM tbl_users WHERE level='0'");
-													$count = mysql_num_rows($sql);
-													echo $count;
+													$total_clients = mysql_num_rows($sql);
+													echo $total_clients;
 												?>
 												</strong>
 											</p>
@@ -139,8 +141,8 @@ $database->MySQLDB();
 												<strong>
 												<?php
 													$sql = $database->query("SELECT distinct id FROM tbl_groups");
-													$count = mysql_num_rows($sql);
-													echo $count;
+													$total_groups = mysql_num_rows($sql);
+													echo $total_groups;
 												?>
 												</strong>
 											</p>
@@ -165,8 +167,8 @@ $database->MySQLDB();
 												<strong>
 												<?php
 													$sql = $database->query("SELECT distinct user FROM tbl_users WHERE level != '0'");
-													$count = mysql_num_rows($sql);
-													echo $count;
+													$total_users = mysql_num_rows($sql);
+													echo $total_users;
 												?>
 												</strong>
 											</p>
@@ -186,11 +188,117 @@ $database->MySQLDB();
 						?>
 					</ul>
 				</div>
+				<div class="span4">	
+					<div class="widget">
+						<h4><?php _e('System information','cftp_admin'); ?></h4>
+						<div class="widget_int">
+							<div id="sys_info" style="height:300px;width:400px; "></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	
 </div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$.plot(
+			$("#sys_info"), [{
+				data: [
+					[1, <?php echo $total_files; ?>],
+					[2, <?php echo $total_clients; ?>],
+					[3, <?php echo $total_groups; ?>],
+					[4, <?php echo $total_users; ?>]
+				]
+			}
+			], {
+				series:{
+					bars:{show: true},
+					label: {
+						display: 'outsideEnd',
+						field: 'data1',  // field name
+						orientation: 'horizontal',  //  or 'vertical'
+						
+						color: '#0000FF',
+						'text-anchor': 'middle'
+					},
+				},
+				bars:{
+					  barWidth:.5,
+					  align: 'center'
+				},            
+				grid:{
+					hoverable: true,
+					borderWidth: 0,
+					backgroundColor: {
+						colors: ["#fff", "#f9f9f9"]
+					}
+				},
+				xaxis: {
+					ticks: [
+						[1, '<?php _e('Files','cftp_admin'); ?>'],
+						[2, '<?php _e('Clients','cftp_admin'); ?>'],
+						[3, '<?php _e('Groups','cftp_admin'); ?>'],
+						[4, '<?php _e('Users','cftp_admin'); ?>']
+					]
+				}
+			}
+		);
+
+
+
+
+
+
+
+
+/*  var line1 = [<?php echo $total_files; ?>, <?php echo $total_clients; ?>, <?php echo $total_groups; ?>, <?php echo $total_users; ?>];
+  var ticks = ['<?php _e('Files','cftp_admin'); ?>', '<?php _e('Clients','cftp_admin'); ?>', '<?php _e('Groups','cftp_admin'); ?>', '<?php _e('Users','cftp_admin'); ?>'];
+  var plot3 = $.jqplot('sys_info', [line1], {
+    seriesDefaults: {
+		renderer: $.jqplot.BarRenderer,
+		rendererOptions:{
+			shadowOffset: 1,
+			shadowDepth: 2,
+			shadowAlpha: 0.05,
+			barWidth: 45
+		}
+	},
+	grid: {
+		gridLineColor: '#dddddd',
+		 borderWidth: 0,
+		 shadow: false,
+	},
+    series:[
+     {pointLabels:{
+        show: true,
+        labels:[<?php echo $total_files; ?>, <?php echo $total_clients; ?>, <?php echo $total_groups; ?>, <?php echo $total_users; ?>]
+      }}],
+    axes: {
+      xaxis:{
+		  	renderer:$.jqplot.CategoryAxisRenderer,
+			ticks: ticks
+	  },
+      yaxis:{padMax:1.10}},
+	  seriesColors: [ "#000", "#000", "#999", "#000"],
+  });
+*/
+
+
+
+
+
+
+
+
+
+	});
+</script>
+
 <?php
 $database->Close();
 include('footer.php');

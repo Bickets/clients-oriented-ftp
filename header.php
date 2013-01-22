@@ -46,10 +46,10 @@ if (in_session_or_cookies($core_update_allowed)) {
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title><?php echo THIS_INSTALL_SET_TITLE; ?> &raquo; <?php echo $page_title; ?> | <?php echo SYSTEM_NAME; ?></title>
 	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/shared.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/shared.css" />
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/bootstrap.min.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/bootstrap.min.css" />
 	<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/bootstrap/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 	
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
@@ -63,7 +63,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 		if (!isset($this_template_css)) {
 			/** Back-end */
 	?>
-			<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/base.css" />
+			<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/base.css" />
 	<?php
 		}
 		else {
@@ -89,7 +89,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 	<?php } ?>
 	
 	<?php if (isset($multiselect)) { ?>
-		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/multi-select.css" />
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/multi-select.css" />
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/jquery.multi-select.js"></script>
 	<?php } ?>
 	
@@ -101,6 +101,10 @@ if (in_session_or_cookies($core_update_allowed)) {
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
 	<?php } ?>
 
+	<?php if (isset($flot)) { ?>
+		<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="<?php echo BASE_URI; ?>includes/flot/excanvas.js"></script><![endif]-->
+		<script language="javascript" type="text/javascript" src="<?php echo BASE_URI; ?>includes/flot/jquery.flot.js"></script>
+	<?php } ?>
 </head>
 
 <body>

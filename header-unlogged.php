@@ -35,13 +35,13 @@ $database->MySQLDB();
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo $page_title; ?> | <?php echo SYSTEM_NAME; ?></title>
 	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>favicon.ico" />
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/shared.css" />
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/base.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/shared.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/base.css" />
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>styles/bootstrap.min.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/bootstrap.min.css" />
 	<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/bootstrap/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 	
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
