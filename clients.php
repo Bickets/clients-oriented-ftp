@@ -226,6 +226,7 @@ $(document).ready(function() {
 					<?php
 						if ($count > 0) {
 							while($row = mysql_fetch_array($sql)) {
+								$found_groups = '';
 								$client_user = $row["user"];
 								$client_id = $row["id"];
 								$sql_groups = $database->query("SELECT DISTINCT group_id FROM tbl_members WHERE client_id='$client_id'");
