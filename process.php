@@ -34,7 +34,11 @@ class process {
 			// do a permissions check for logged in user
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 
-				$this->sql = $this->database->query('UPDATE tbl_files SET download_count=download_count+1 WHERE url="' . $_GET['file'] .'"');
+				$this->sql_url = $database->query('SELECT id FROM tbl_files WHERE url="' . $_GET['file'] .'"');
+				$this->row_url = mysql_fetch_array($this->sql_url);
+				$this->this_file_id = $this->row_url['id'];
+
+				$this->sql = $this->database->query('UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . $_GET['file'] .'"');
 
 				$file = UPLOADED_FILES_FOLDER.$_GET['file'];
 				if (file_exists($file)) {

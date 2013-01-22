@@ -53,8 +53,6 @@ class FilesActions
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				/**
 				 * Get all the relevant file information using the id parameter
-				 *
-				 * @see get_file_data_by_id
 				 */
 				$this->sql_id = $database->query('SELECT file_id FROM tbl_files_relations WHERE id="'.$rel_id.'"');
 				while($this->data_file = mysql_fetch_array($this->sql_id)) {
@@ -72,6 +70,8 @@ class FilesActions
 				 * @see delete_file
 				 */
 				delete_file(UPLOADED_FILES_FOLDER . $this->file_url);
+				
+				return $this->file_url;
 			}
 		}
 	}

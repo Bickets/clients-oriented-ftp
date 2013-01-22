@@ -80,7 +80,8 @@ class PSend_Upload_File
 		$this->uploaded_name = $arguments['uploaded_name'];
 		$this->filename = $arguments['filename'];
 
-		$this->file_final_name = time().'-'.$this->filename;
+		//$this->file_final_name = time().'-'.$this->filename;
+		$this->file_final_name = $this->filename;
 		$this->path = UPLOADED_FILES_FOLDER.'/'.$this->file_final_name;
 		if (rename($this->uploaded_name, $this->path)) {
 			chmod($this->path, 0644);
@@ -122,7 +123,8 @@ class PSend_Upload_File
 			$log_action_args = array(
 									'action' => $this->action_type,
 									'owner_id' => $this->uploader_id,
-									'affected_file' => $this->file_id
+									'affected_file' => $this->file_id,
+									'affected_file_name' => $this->name
 								);
 			$new_record_action = $new_log_action->log_action_save($log_action_args);
 		}

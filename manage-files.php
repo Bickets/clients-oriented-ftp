@@ -165,6 +165,15 @@ include('header.php');
 							foreach ($selected_files as $work_file) {
 								$this_file = new FilesActions();
 								$delete_file = $this_file->delete_files($work_file);
+
+								/** Record the action log */
+								$new_log_action = new LogActions();
+								$log_action_args = array(
+														'action' => 12,
+														'owner_id' => $global_id,
+														'affected_file_name' => $delete_file
+													);
+								$new_record_action = $new_log_action->log_action_save($log_action_args);
 							}
 							$msg = __('The selected files were deleted.','cftp_admin');
 							echo system_message('ok',$msg);

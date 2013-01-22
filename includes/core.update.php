@@ -286,9 +286,7 @@ if (in_session_or_cookies($allowed_update)) {
 		  `owner_id` int(11) NOT NULL,
 		  `affected_file` int(11) DEFAULT NULL,
 		  `affected_account` int(11) DEFAULT NULL,
-		  FOREIGN KEY (`owner_id`) REFERENCES tbl_users(`id`),
-		  FOREIGN KEY (`affected_file`) REFERENCES tbl_files(`id`),
-		  FOREIGN KEY (`affected_account`) REFERENCES tbl_users(`id`),
+		  `affected_file_name` text DEFAULT NULL,
 		  PRIMARY KEY (`id`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 		';
