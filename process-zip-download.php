@@ -66,6 +66,15 @@ foreach ($allowed_to_zip as $allowed_file_id => $this_allowed_file) {
 $zip->close();
 
 if ($added_files > 0) {
+
+	/** Record the action log */
+	$new_log_action = new LogActions();
+	$log_action_args = array(
+							'action' => 9,
+							'owner_id' => $global_id
+						);
+	$new_record_action = $new_log_action->log_action_save($log_action_args);
+
 	if (file_exists($zip_file)) {
 		$zip_file_name = 'download_files_'.generateRandomString();
 		header('Content-Type: application/zip');
