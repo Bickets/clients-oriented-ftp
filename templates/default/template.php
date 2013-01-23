@@ -166,6 +166,15 @@ $count = count($my_files);
 					<?php
 						if ($count > 0) {
 							foreach ($my_files as $file) {
+								$download_link = BASE_URI.
+													'process.php?do=download
+													&amp;client='.$this_user.'
+													&amp;url='.$file['url'].'
+													&amp;id='.$file['id'].'
+													&amp;origin='.$file['origin'];
+								if (!empty($file['group_id'])) {
+									$download_link .= '&amp;group_id='.$file['group_id'];
+								}
 					?>
 								<tr>
 									<td><input type="checkbox" name="files[]" value="<?php echo $file["id"]; ?>" /></td>
@@ -189,7 +198,7 @@ $count = count($my_files);
 										<?php } ?>
 									</td>
 									<td>
-										<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $file['url']; ?>" target="_blank" class="button button_blue">
+										<a href="<?php echo $download_link; ?>" target="_blank" class="button button_blue">
 											<?php _e('Download','cftp_template'); ?>
 										</a>
 									</td>
