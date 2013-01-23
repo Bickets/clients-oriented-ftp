@@ -169,6 +169,7 @@ $count = count($my_files);
 								$download_link = BASE_URI.
 													'process.php?do=download
 													&amp;client='.$this_user.'
+													&amp;client_id='.$client_info['id'].'
 													&amp;url='.$file['url'].'
 													&amp;id='.$file['id'].'
 													&amp;origin='.$file['origin'];

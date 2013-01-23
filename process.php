@@ -30,17 +30,38 @@ class process {
 	
 	function download_file() {
 		$this->check_level = array(9,8,7,0);
-		if (isset($_GET['file']) && isset($_GET['client'])) {
+		if (isset($_GET['url']) && isset($_GET['client'])) {
 			// do a permissions check for logged in user
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
+				$this->sum_sql = 'UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . $_GET['id'] .'"';
+				if ($_GET['origin'] == 'group') {
+					if (!empty($_GET['group_id'])) {
+						$this->group_id = $_GET['group_id'];
+						$this->sum_sql .= " AND group_id = '$this->group_id'";
+					}
+				} else {
+					$this->client_id = $_GET['client_id'];
+					$this->sum_sql .= " AND client_id = '$this->client_id'";
+				}
 
-				$this->sql_url = $database->query('SELECT id FROM tbl_files WHERE url="' . $_GET['file'] .'"');
-				$this->row_url = mysql_fetch_array($this->sql_url);
-				$this->this_file_id = $this->row_url['id'];
+				$this->sql = $this->database->query($this->sum_sql);
 
-				$this->sql = $this->database->query('UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . $_GET['file'] .'"');
+				/** Record the action log */
+				$current_level = get_current_user_level();
+				if ($current_level == 0) {
+					$new_log_action = new LogActions();
+					$log_action_args = array(
+											'action' => 8,
+											'owner_id' => $global_id,
+											'affected_file' => $_GET['id'],
+											'affected_file_name' => $_GET['url'],
+											'affected_account' => $_GET['client_id'],
+											'affected_account_name' => $_GET['client']
+										);
+					$new_record_action = $new_log_action->log_action_save($log_action_args);
+				}
 
-				$file = UPLOADED_FILES_FOLDER.$_GET['file'];
+				$file = UPLOADED_FILES_FOLDER.$_GET['url'];
 				if (file_exists($file)) {
 					header('Content-Description: File Transfer');
 					header('Content-Type: application/octet-stream');
