@@ -94,6 +94,7 @@ $(document).ready(function() {
 					}
 					$msg = __('The selected clients were marked as active.','cftp_admin');
 					echo system_message('ok',$msg);
+					$log_action_number = 19;
 					break;
 
 				case 'deactivate':
@@ -107,27 +108,30 @@ $(document).ready(function() {
 					}
 					$msg = __('The selected clients were marked as inactive.','cftp_admin');
 					echo system_message('ok',$msg);
+					$log_action_number = 20;
 					break;
 
 				case 'delete':
 					foreach ($selected_clients as $client) {
-
 						$this_client = new ClientActions();
 						$delete_client = $this_client->delete_client($client);
-
-						/** Record the action log */
-						$new_log_action = new LogActions();
-						$log_action_args = array(
-												'action' => 17,
-												'owner_id' => $global_id,
-												'affected_account_name' => $all_users[$client]
-											);
-						$new_record_action = $new_log_action->log_action_save($log_action_args);		
 					}
 					
 					$msg = __('The selected clients were deleted.','cftp_admin');
 					echo system_message('ok',$msg);
+					$log_action_number = 17;
 					break;
+			}
+
+			/** Record the action log */
+			foreach ($selected_clients as $client) {
+				$new_log_action = new LogActions();
+				$log_action_args = array(
+										'action' => $log_action_number,
+										'owner_id' => $global_id,
+										'affected_account_name' => $all_users[$client]
+									);
+				$new_record_action = $new_log_action->log_action_save($log_action_args);
 			}
 		}
 		else {

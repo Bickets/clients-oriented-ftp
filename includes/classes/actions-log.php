@@ -76,7 +76,7 @@ class LogActions
 		$lq .= ", '$this->timestamp')";
 		$this->sql_query = $database->query($lq);
 		
-		//echo $lq; exit;
+		//echo $lq.'<br />'; echo mysql_error().'<br />'; exit;
 	}
 
 }
