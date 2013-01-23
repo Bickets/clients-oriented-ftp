@@ -22,6 +22,7 @@ if (isset($_GET['client_id'])) {
 	if(!empty($this_client)) {
 		$page_title .= ' '.__('for client').' '.html_entity_decode($this_client['name']);
 		$search_on = 'client_id';
+		$name_for_actions = $this_client['username'];
 	}
 }
 
@@ -39,6 +40,7 @@ if (isset($_GET['group_id'])) {
 		if(!empty($group_name)) {
 			$page_title .= ' '.__('for group').' '.html_entity_decode($group_name);
 			$search_on = 'group_id';
+			$name_for_actions = html_entity_decode($group_name);
 		}
 	}
 }
@@ -104,7 +106,7 @@ include('header.php');
 		if(empty($this_id)) {
 	?>
 			<div class="whiteform whitebox whitebox_text">
-				<p><?php _e('Please go to the clients administration page and select "Manage files" from any client.','cftp_admin'); ?></p>
+				<p><?php _e('Please go to the clients or groups administration pages and select "Manage files" from any of the results.','cftp_admin'); ?></p>
 			</div>
 	<?php
 		}
@@ -120,6 +122,27 @@ include('header.php');
 				/** Continue only if 1 or more files were selected. */
 				if(!empty($_POST['files'])) {
 					$selected_files = $_POST['files'];
+					$files_to_get = implode(',',array_unique($selected_files));
+		
+					/**
+					 * Make a list of files to avoid individual queries.
+					 * First, get all the different files under this account.
+					 */
+					$sql_distinct_files = $database->query("SELECT file_id FROM tbl_files_relations WHERE id IN ($files_to_get)");
+					
+					while($data_file_relations = mysql_fetch_array($sql_distinct_files)) {
+						$all_files_relations[] = $data_file_relations['file_id'];
+						$files_to_get = implode(',',$all_files_relations);
+					}
+
+					/**
+					 * Then get the files names to add to the log action.
+					 */
+					$sql_file = $database->query("SELECT id, filename FROM tbl_files WHERE id IN ($files_to_get)");
+					while($data_file = mysql_fetch_array($sql_file)) {
+						$all_files[$data_file['id']] = $data_file['filename'];
+					}
+					
 					switch($_POST['files_actions']) {
 						case 'hide':
 							/**
@@ -134,6 +157,7 @@ include('header.php');
 							}
 							$msg = __('The selected files were marked as hidden.','cftp_admin');
 							echo system_message('ok',$msg);
+							$log_action_number = 21;
 							break;
 
 						case 'show':
@@ -147,6 +171,7 @@ include('header.php');
 							}
 							$msg = __('The selected files were marked as visible.','cftp_admin');
 							echo system_message('ok',$msg);
+							$log_action_number = 22;
 							break;
 
 						case 'unassign':
@@ -159,25 +184,31 @@ include('header.php');
 							}
 							$msg = __('The selected files were unassigned from this client.','cftp_admin');
 							echo system_message('ok',$msg);
+							$log_action_number = 10;
 							break;
 
 						case 'delete':
 							foreach ($selected_files as $work_file) {
 								$this_file = new FilesActions();
 								$delete_file = $this_file->delete_files($work_file);
-
-								/** Record the action log */
-								$new_log_action = new LogActions();
-								$log_action_args = array(
-														'action' => 12,
-														'owner_id' => $global_id,
-														'affected_file_name' => $delete_file
-													);
-								$new_record_action = $new_log_action->log_action_save($log_action_args);
 							}
 							$msg = __('The selected files were deleted.','cftp_admin');
 							echo system_message('ok',$msg);
+							$log_action_number = 12;
 							break;
+					}
+
+					/** Record the action log */
+					foreach ($all_files as $work_file_id => $work_file) {
+						$new_log_action = new LogActions();
+						$log_action_args = array(
+												'action' => $log_action_number,
+												'owner_id' => $global_id,
+												'affected_file' => $work_file_id,
+												'affected_file_name' => $work_file,
+												'affected_account_name' => $name_for_actions
+											);
+						$new_record_action = $new_log_action->log_action_save($log_action_args);
 					}
 				}
 				else {
