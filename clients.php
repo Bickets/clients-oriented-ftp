@@ -72,6 +72,16 @@ $(document).ready(function() {
 		/** Continue only if 1 or more clients were selected. */
 		if(!empty($_POST['selected_clients'])) {
 			$selected_clients = $_POST['selected_clients'];
+			$clients_to_get = implode(',',array_unique($selected_clients));
+
+			/**
+			 * Make a list of users to avoid individual queries.
+			 */
+			$sql_user = $database->query("SELECT id, user FROM tbl_users WHERE id IN ('$clients_to_get')");
+			while($data_user = mysql_fetch_array($sql_user)) {
+				$all_users[$data_user['id']] = $data_user['user'];
+			}
+
 			switch($_POST['clients_actions']) {
 				case 'activate':
 					/**
@@ -101,8 +111,18 @@ $(document).ready(function() {
 
 				case 'delete':
 					foreach ($selected_clients as $client) {
+
 						$this_client = new ClientActions();
 						$delete_client = $this_client->delete_client($client);
+
+						/** Record the action log */
+						$new_log_action = new LogActions();
+						$log_action_args = array(
+												'action' => 17,
+												'owner_id' => $global_id,
+												'affected_account_name' => $all_users[$client]
+											);
+						$new_record_action = $new_log_action->log_action_save($log_action_args);		
 					}
 					
 					$msg = __('The selected clients were deleted.','cftp_admin');

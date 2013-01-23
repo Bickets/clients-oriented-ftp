@@ -23,6 +23,13 @@
  * 13-	A user was edited.
  * 14-	A client was edited.
  * 15-	A group was edited.
+ * 16-	A user was deleted.
+ * 17-	A client was deleted.
+ * 18-	A group was deleted.
+ * 19-	A client account was activated.
+ * 20-	A client account was deactivated.
+ * 21-	A file was marked as hidden.
+ * 22-	A file was marked as visible.
  *
  * * Currently unused
  *
@@ -48,6 +55,7 @@ class LogActions
 		$this->affected_file = (!empty($arguments['affected_file'])) ? $arguments['affected_file'] : '';
 		$this->affected_account = (!empty($arguments['affected_account'])) ? $arguments['affected_account'] : '';
 		$this->affected_file_name = (!empty($arguments['affected_file_name'])) ? $arguments['affected_file_name'] : '';
+		$this->affected_account_name = (!empty($arguments['affected_account_name'])) ? $arguments['affected_account_name'] : '';
 
 		/** Insert the client information into the database */
 		$this->timestamp = time();
@@ -56,15 +64,19 @@ class LogActions
 			if (!empty($this->affected_file)) { $lq .= ",affected_file"; }
 			if (!empty($this->affected_account)) { $lq .= ",affected_account"; }
 			if (!empty($this->affected_file_name)) { $lq .= ",affected_file_name"; }
+			if (!empty($this->affected_account_name)) { $lq .= ",affected_account_name"; }
 		
 		$lq .= ",timestamp) VALUES ('$this->action', '$this->owner_id'";
 		
 			if (!empty($this->affected_file)) { $lq .= ",$this->affected_file"; }
 			if (!empty($this->affected_account)) { $lq .= ",$this->affected_account"; }
 			if (!empty($this->affected_file_name)) { $lq .= ",'$this->affected_file_name'"; }
+			if (!empty($this->affected_account_name)) { $lq .= ",'$this->affected_account_name'"; }
 
 		$lq .= ", '$this->timestamp')";
 		$this->sql_query = $database->query($lq);
+		
+		//echo $lq; exit;
 	}
 
 }

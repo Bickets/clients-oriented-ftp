@@ -89,6 +89,16 @@ include('header.php');
 		/** Continue only if 1 or more users were selected. */
 		if(!empty($_POST['groups'])) {
 			$selected_groups = $_POST['groups'];
+			$groups_to_get = implode(',',array_unique($selected_groups));
+
+			/**
+			 * Make a list of groups to avoid individual queries.
+			 */
+			$sql_grps = $database->query("SELECT id, name FROM tbl_groups WHERE id IN ('$groups_to_get')");
+			while($data_group = mysql_fetch_array($sql_grps)) {
+				$all_groups[$data_group['id']] = $data_group['name'];
+			}
+
 			switch($_POST['groups_actions']) {
 				case 'delete':
 					$deleted_groups = 0;
@@ -97,6 +107,15 @@ include('header.php');
 						$this_group = new GroupActions();
 						$delete_group = $this_group->delete_group($groups);
 						$deleted_groups++;
+
+						/** Record the action log */
+						$new_log_action = new LogActions();
+						$log_action_args = array(
+												'action' => 18,
+												'owner_id' => $global_id,
+												'affected_account_name' => $all_groups[$groups]
+											);
+						$new_record_action = $new_log_action->log_action_save($log_action_args);		
 					}
 					
 					if ($deleted_groups > 0) {

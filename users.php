@@ -60,6 +60,16 @@ include('header.php');
 		/** Continue only if 1 or more users were selected. */
 		if(!empty($_POST['users'])) {
 			$selected_users = $_POST['users'];
+			$users_to_get = implode(',',array_unique($selected_users));
+
+			/**
+			 * Make a list of users to avoid individual queries.
+			 */
+			$sql_user = $database->query("SELECT id, user FROM tbl_users WHERE id IN ('$users_to_get')");
+			while($data_user = mysql_fetch_array($sql_user)) {
+				$all_users[$data_user['id']] = $data_user['user'];
+			}
+
 			switch($_POST['users_actions']) {
 				case 'delete':
 					$my_info = get_user_by_username(get_current_user_username());
@@ -73,6 +83,16 @@ include('header.php');
 							$this_user = new UserActions();
 							$delete_user = $this_user->delete_user($user);
 							$deleted_users++;
+
+							/** Record the action log */
+							$new_log_action = new LogActions();
+							$log_action_args = array(
+													'action' => 16,
+													'owner_id' => $global_id,
+													'affected_account_name' => $all_users[$user]
+												);
+							$new_record_action = $new_log_action->log_action_save($log_action_args);		
+
 						}
 						else {
 							$msg = __('You cannot delete your own account.','cftp_admin');

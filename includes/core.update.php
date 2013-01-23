@@ -287,6 +287,7 @@ if (in_session_or_cookies($allowed_update)) {
 		  `affected_file` int(11) DEFAULT NULL,
 		  `affected_account` int(11) DEFAULT NULL,
 		  `affected_file_name` text DEFAULT NULL,
+		  `affected_account_name` text DEFAULT NULL,
 		  PRIMARY KEY (`id`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
 		';

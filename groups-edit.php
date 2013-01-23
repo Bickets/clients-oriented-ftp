@@ -108,6 +108,15 @@ if ($_POST) {
 					case 1:
 						$msg = __('Group edited correctly.','cftp_admin');
 						echo system_message('ok',$msg);
+
+						/** Record the action log */
+						$new_log_action = new LogActions();
+						$log_action_args = array(
+												'action' => 15,
+												'owner_id' => $global_id,
+												'affected_account' => $group_id
+											);
+						$new_record_action = $new_log_action->log_action_save($log_action_args);
 					break;
 					case 0:
 						$msg = __('There was an error. Please try again.','cftp_admin');
