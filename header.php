@@ -133,7 +133,16 @@ $global_id = get_logged_account_id($global_user);
 	
 		<nav id="top_menu">
 			<ul>
-				<li class="no_arrow"><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
+				<?php
+					/**
+					 * Show the HOME menu item only to
+					 * system users.
+					 */
+					$groups_allowed = array(9,8,7);
+					if (in_session_or_cookies($groups_allowed)) {
+				?>
+						<li class="no_arrow"><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Home', 'cftp_admin'); ?></a></li>
+					<?php } ?>
 				<li<?php if (in_session_or_cookies(array(0))) { echo ' class="no_arrow"'; } ?>>
 					<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload files', 'cftp_admin'); ?></a>
 						<?php

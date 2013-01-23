@@ -77,9 +77,6 @@ if (!empty($found_groups)) {
 	}
 }
 
-
-
-
 $my_files = array();
 
 if (!empty($found_own_files_ids)) {

@@ -5,7 +5,7 @@
  * @package		ProjectSend
  *
  */
-$allowed_levels = array(9,8,7,0);
+$allowed_levels = array(9,8,7);
 require_once('sys.includes.php');
 $page_title = __('Welcome to ProjectSend', 'cftp_admin');
 
