@@ -12,7 +12,7 @@ $window_title = __('File downloads','cftp_template');
 $tablesorter = 1;
 include_once(ROOT_DIR.'/header.php'); // include the required functions for every template
 
-$count = mysql_num_rows($template_files_sql);
+$count = count($my_files);
 ?>
 
 <div id="wrapper">
@@ -165,17 +165,17 @@ $count = mysql_num_rows($template_files_sql);
 				<tbody>
 					<?php
 						if ($count > 0) {
-							while($row = mysql_fetch_array($template_files_sql)) {
+							foreach ($my_files as $file) {
 					?>
 								<tr>
-									<td><input type="checkbox" name="files[]" value="<?php echo $row["id"]; ?>" /></td>
-									<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
-									<td><?php echo htmlentities($row['description']); ?></td>
-									<td><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$row['url']); echo format_file_size($this_file); ?></td>
-									<td class="extra"><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
+									<td><input type="checkbox" name="files[]" value="<?php echo $file["id"]; ?>" /></td>
+									<td><strong><?php echo htmlentities($file['name']); ?></strong></td>
+									<td><?php echo htmlentities($file['description']); ?></td>
+									<td><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file); ?></td>
+									<td class="extra"><?php echo date(TIMEFORMAT_USE,$file['timestamp']); ?></td>
 									<td class="extra">
 										<?php
-											$pathinfo = pathinfo($row['url']);
+											$pathinfo = pathinfo($file['url']);
 											$extension = strtolower($pathinfo['extension']);
 											if (
 												$extension == "gif" ||
@@ -185,11 +185,11 @@ $count = mysql_num_rows($template_files_sql);
 												$extension == "png"
 											) {
 										?>
-											<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $row['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>" class="thumbnail" alt="" />
+											<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>" class="thumbnail" alt="" />
 										<?php } ?>
 									</td>
 									<td>
-										<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="button button_blue">
+										<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $file['url']; ?>" target="_blank" class="button button_blue">
 											<?php _e('Download','cftp_template'); ?>
 										</a>
 									</td>
