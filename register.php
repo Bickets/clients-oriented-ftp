@@ -93,7 +93,8 @@ include('header-unlogged.php');
 							$log_action_args = array(
 													'action' => 4,
 													'owner_id' => $new_response['new_id'],
-													'affected_account' => $new_response['new_id']
+													'affected_account' => $new_response['new_id'],
+													'affected_account_name' => $add_client_data_user
 												);
 							$new_record_action = $new_log_action->log_action_save($log_action_args);
 						break;

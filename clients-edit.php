@@ -122,12 +122,14 @@ if ($_POST) {
 						$msg = __('Client edited correctly.','cftp_admin');
 						echo system_message('ok',$msg);
 
+						$saved_client = get_client_by_id($client_id);
 						/** Record the action log */
 						$new_log_action = new LogActions();
 						$log_action_args = array(
 												'action' => 14,
 												'owner_id' => $global_id,
-												'affected_account' => $client_id
+												'affected_account' => $client_id,
+												'affected_account_name' => $saved_client['username']
 											);
 						$new_record_action = $new_log_action->log_action_save($log_action_args);
 					break;

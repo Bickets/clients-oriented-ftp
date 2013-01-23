@@ -108,12 +108,14 @@ if ($_POST) {
 						$msg = __('User edited correctly.','cftp_admin');
 						echo system_message('ok',$msg);
 
+						$saved_user = get_user_by_id($user_id);
 						/** Record the action log */
 						$new_log_action = new LogActions();
 						$log_action_args = array(
 												'action' => 13,
 												'owner_id' => $global_id,
-												'affected_account' => $user_id
+												'affected_account' => $user_id,
+												'affected_account_name' => $saved_user['username']
 											);
 						$new_record_action = $new_log_action->log_action_save($log_action_args);
 					break;

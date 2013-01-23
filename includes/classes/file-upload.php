@@ -124,7 +124,8 @@ class PSend_Upload_File
 									'action' => $this->action_type,
 									'owner_id' => $this->uploader_id,
 									'affected_file' => $this->file_id,
-									'affected_file_name' => $this->name
+									'affected_file_name' => $this->name,
+									'affected_account_name' => $this->uploader
 								);
 			$new_record_action = $new_log_action->log_action_save($log_action_args);
 		}

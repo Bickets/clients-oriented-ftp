@@ -71,7 +71,8 @@ if ($added_files > 0) {
 	$new_log_action = new LogActions();
 	$log_action_args = array(
 							'action' => 9,
-							'owner_id' => $global_id
+							'owner_id' => $global_id,
+							'affected_account_name' => $current_username
 						);
 	$new_record_action = $new_log_action->log_action_save($log_action_args);
 

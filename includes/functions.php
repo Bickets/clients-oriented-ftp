@@ -223,6 +223,33 @@ function get_user_by_username($user)
 	}
 }
 
+/**
+ * Get all the user information knowing only the log in username
+ *
+ * @return array
+ */
+function get_user_by_id($user)
+{
+	global $database;
+	$get_client_info = $database->query("SELECT * FROM tbl_users WHERE id='$user'");
+	while ($row = mysql_fetch_assoc($get_client_info)) {
+		$information = array(
+							'id' => $row['id'],
+							'username' => $row['user'],
+							'name' => $row['name'],
+							'email' => $row['email'],
+							'level' => $row['level'],
+							'created_date' => $row['timestamp']
+						);
+		if(!empty($information)) {
+			return $information;
+		}
+		else {
+			return false;
+		}
+	}
+}
+
 
 /**
  * Standard footer mark up and information generated on this function to

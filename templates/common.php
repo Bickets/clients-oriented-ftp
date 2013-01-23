@@ -62,7 +62,7 @@ if ($count_groups > 0) {
  * Gets the files list on a default query that can be used on the template.
  * Only files that are not marked as hidden are retrieved.
  */
-$fq = "SELECT DISTINCT id, file_id, client_id, group_id FROM tbl_files_relations WHERE ";
+$fq = "SELECT id, file_id, client_id, group_id FROM tbl_files_relations WHERE ";
 if (!empty($found_groups)) {
 	$fq .= "(client_id='".$client_info['id']."' OR group_id IN ($found_groups)) AND hidden = '0'";
 }

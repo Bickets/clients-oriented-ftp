@@ -64,7 +64,8 @@ include('header-unlogged.php');
 					$new_log_action = new LogActions();
 					$log_action_args = array(
 											'action' => 1,
-											'owner_id' => $logged_id
+											'owner_id' => $logged_id,
+											'affected_account_name' => $sysuser_username
 										);
 					$new_record_action = $new_log_action->log_action_save($log_action_args);
 
