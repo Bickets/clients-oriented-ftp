@@ -184,7 +184,12 @@ include('header.php');
 							}
 							$msg = __('The selected files were unassigned from this client.','cftp_admin');
 							echo system_message('ok',$msg);
-							$log_action_number = 10;
+							if ($search_on == 'group_id') {
+								$log_action_number = 11;
+							}
+							elseif ($search_on == 'client_id') {
+								$log_action_number = 10;
+							}
 							break;
 
 						case 'delete':
