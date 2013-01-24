@@ -105,8 +105,8 @@ class UserActions
 		$this->enc_password = md5(mysql_real_escape_string($this->password));
 
 		$this->timestamp = time();
-		$this->sql_query = $database->query("INSERT INTO tbl_users (user,password,name,email,level,timestamp)"
-											."VALUES ('$this->username', '$this->enc_password', '$this->name', '$this->email','$this->role', '$this->timestamp')");
+		$this->sql_query = $database->query("INSERT INTO tbl_users (user,password,name,email,level)"
+											."VALUES ('$this->username', '$this->enc_password', '$this->name', '$this->email','$this->role')");
 
 		if ($this->sql_query) {
 			$this->state['query'] = 1;

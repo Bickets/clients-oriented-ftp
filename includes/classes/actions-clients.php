@@ -118,8 +118,8 @@ class ClientActions
 
 		/** Insert the client information into the database */
 		$this->timestamp = time();
-		$this->sql_query = $database->query("INSERT INTO tbl_users (name,user,password,address,phone,email,notify,contact,timestamp,created_by,active)"
-											."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact', '$this->timestamp','$this->this_admin', '$this->active')");
+		$this->sql_query = $database->query("INSERT INTO tbl_users (name,user,password,address,phone,email,notify,contact,created_by,active)"
+											."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact','$this->this_admin', '$this->active')");
 
 		if ($this->sql_query) {
 			$this->state['actions'] = 1;
