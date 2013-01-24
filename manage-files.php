@@ -381,10 +381,11 @@ include('header.php');
 										$hidden = $data_file['hidden'];
 										$download_count = $data_file['download_count'];
 									}
+									$date = date(TIMEFORMAT_USE,strtotime($row['timestamp']));
 						?>
 									<tr>
 										<td><input type="checkbox" name="files[]" value="<?php echo $file_id; ?>" /></td>
-										<td><?php echo date(TIMEFORMAT_USE, $row['timestamp']); ?></td>
+										<td><?php echo $date; ?></td>
 										<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
 										<td><?php echo htmlentities($row['description']); ?></td>
 										<td><?php $this_file = filesize($this_file_uri); echo format_file_size($this_file); ?></td>

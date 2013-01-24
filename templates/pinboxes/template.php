@@ -112,6 +112,7 @@ $count = count($my_files);
 						if (!empty($file['group_id'])) {
 							$download_link .= '&amp;group_id='.$file['group_id'];
 						}
+						$date = date(TIMEFORMAT_USE,strtotime($file['timestamp']));
 				?>
 						<div class="photo">
 							<div class="photo_int">

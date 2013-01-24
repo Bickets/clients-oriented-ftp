@@ -176,13 +176,14 @@ $count = count($my_files);
 								if (!empty($file['group_id'])) {
 									$download_link .= '&amp;group_id='.$file['group_id'];
 								}
+								$date = date(TIMEFORMAT_USE,strtotime($file['timestamp']));
 					?>
 								<tr>
 									<td><input type="checkbox" name="files[]" value="<?php echo $file["id"]; ?>" /></td>
 									<td><strong><?php echo htmlentities($file['name']); ?></strong></td>
 									<td><?php echo htmlentities($file['description']); ?></td>
 									<td><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file); ?></td>
-									<td class="extra"><?php echo date(TIMEFORMAT_USE,$file['timestamp']); ?></td>
+									<td class="extra"><?php echo $date; ?></td>
 									<td class="extra">
 										<?php
 											$pathinfo = pathinfo($file['url']);
