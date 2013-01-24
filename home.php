@@ -96,8 +96,6 @@ $database->MySQLDB();
 								<li class="home_widget_small">
 									<div class="home_container">
 										<?php
-											$sql_inactive = $database->query("SELECT distinct user FROM tbl_users WHERE active='0' AND level='0'");
-											$count_inactive = mysql_num_rows($sql_inactive);
 											if ($count_inactive > 0) {
 										?>
 												<div class="home_inactive_msg">

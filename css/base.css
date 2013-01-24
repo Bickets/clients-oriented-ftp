@@ -166,6 +166,18 @@ h4 {
 	position:relative;
 }
 
+.mnu_inactive_msg {
+	background:#000;
+	color:#ccc;
+	text-align:center;
+	padding:2px 8px;
+	margin:0 0 0 5px;
+
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
 .home_inactive_msg {
 	position:absolute;
 	top:7px;

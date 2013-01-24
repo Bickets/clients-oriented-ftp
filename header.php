@@ -170,7 +170,20 @@ $global_id = get_logged_account_id($global_user);
 					if (in_session_or_cookies($clients_allowed)) {
 				?>
 						<li>
-							<a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Clients', 'cftp_admin'); ?></a>
+							<a href="<?php echo BASE_URI; ?>clients.php">
+								<?php _e('Clients', 'cftp_admin'); ?>
+								<?php
+									$sql_inactive = $database->query("SELECT distinct user FROM tbl_users WHERE active='0' AND level='0'");
+									$count_inactive = mysql_num_rows($sql_inactive);
+									if ($count_inactive > 0) {
+								?>
+										<span class="mnu_inactive_msg">
+											<?php echo $count_inactive; ?>
+										</span>
+								<?php
+									}
+								?>
+							</a>
 							<ul>
 								<li><a href="<?php echo BASE_URI; ?>clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
 								<li><a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
