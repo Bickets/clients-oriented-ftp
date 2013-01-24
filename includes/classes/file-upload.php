@@ -108,8 +108,8 @@ class PSend_Upload_File
 		$this->timestamp = time();
 		
 		if(isset($arguments['add_to_db'])) {
-			$result = $database->query("INSERT INTO tbl_files (url, filename, description, timestamp, uploader)"
-										."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->timestamp', '$this->uploader')");
+			$result = $database->query("INSERT INTO tbl_files (url, filename, description, uploader)"
+										."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->uploader')");
 			$this->file_id = mysql_insert_id();
 
 			/** Record the action log */
@@ -143,18 +143,50 @@ class PSend_Upload_File
 
 		if (!empty($arguments['assign_to'])) {
 			$this->assign_to = $arguments['assign_to'];
+
+			/**
+			 * Get the usernames of clients and names of groups
+			 * to use on the log.
+			 */
+			$names_sql = $database->query("SELECT id, user FROM tbl_users");
+			while($res = mysql_fetch_array($names_sql)) {
+				$this->users[$res["id"]] = $res["user"];
+			}
+			$gnames_sql = $database->query("SELECT id, name FROM tbl_groups");
+			while($res = mysql_fetch_array($gnames_sql)) {
+				$this->groups[$res["id"]] = $res["name"];
+			}
+			
 			foreach ($this->assign_to as $this->assignment) {
+				$this->id_only = substr($this->assignment, 1);
 				switch ($this->assignment[0]) {
 					case 'c':
 						$add_to = 'client_id';
+						$this->account_name = $this->users[$this->id_only];
+						$this->action_number = 25;
 						break;
 					case 'g':
 						$add_to = 'group_id';
+						$this->account_name = $this->groups[$this->id_only];
+						$this->action_number = 26;
 						break;
 				}
 				$this->assignment = substr($this->assignment, 1);
-				$assign_file = $database->query("INSERT INTO tbl_files_relations (file_id, $add_to, hidden, timestamp)"
-											."VALUES ('$this->file_id', '$this->assignment', '$this->hidden', '$this->timestamp')");
+				$assign_file = $database->query("INSERT INTO tbl_files_relations (file_id, $add_to, hidden)"
+											."VALUES ('$this->file_id', '$this->assignment', '$this->hidden')");
+
+				/** Record the action log */
+				$new_log_action = new LogActions();
+				$log_action_args = array(
+										'action' => $this->action_number,
+										'owner_id' => $this->uploader_id,
+										'affected_file' => $this->file_id,
+										'affected_file_name' => $this->name,
+										'affected_account' => $this->assignment,
+										'affected_account_name' => $this->account_name
+									);
+				$new_record_action = $new_log_action->log_action_save($log_action_args);
+
 			}
 		}
 

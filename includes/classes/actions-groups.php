@@ -56,16 +56,16 @@ class GroupActions
 		/** Who is creating the group? */
 		$this->this_admin = get_current_user_username();
 
-		$this->sql_query = $database->query("INSERT INTO tbl_groups (name,description,created_by,timestamp)"
-											."VALUES ('$this->name', '$this->description','$this->this_admin', '$this->timestamp')");
+		$this->sql_query = $database->query("INSERT INTO tbl_groups (name,description,created_by)"
+											."VALUES ('$this->name', '$this->description','$this->this_admin')");
 
 		$this->id = mysql_insert_id();
 		$this->state['new_id'] = $this->id;
 
 		/** Create the members records */
 		foreach ($this->members as $this->member) {
-			$this->sql_member = $database->query("INSERT INTO tbl_members (timestamp,added_by,client_id,group_id)"
-											."VALUES ('$this->timestamp', '$this->this_admin', '$this->member', '$this->id' )");
+			$this->sql_member = $database->query("INSERT INTO tbl_members (added_by,client_id,group_id)"
+											."VALUES ('$this->this_admin', '$this->member', '$this->id' )");
 		}
 
 		if ($this->sql_query) {
@@ -106,8 +106,8 @@ class GroupActions
 		/** Create the members records */
 		if (!empty($this->members)) {
 			foreach ($this->members as $this->member) {
-				$this->sql_member = $database->query("INSERT INTO tbl_members (timestamp,added_by,client_id,group_id)"
-												."VALUES ('$this->timestamp', '$this->this_admin', '$this->member', '$this->id' )");
+				$this->sql_member = $database->query("INSERT INTO tbl_members (added_by,client_id,group_id)"
+												."VALUES ('$this->this_admin', '$this->member', '$this->id' )");
 			}
 		}
 

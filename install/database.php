@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `tbl_users` (
 $q4 = '
 CREATE TABLE IF NOT EXISTS `tbl_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `timestamp` int(15) NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `created_by` varchar(32) NOT NULL,
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `tbl_groups` (
 $q5 = '
 CREATE TABLE IF NOT EXISTS `tbl_members` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `timestamp` int(15) NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `added_by` varchar(32) NOT NULL,
   `client_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `tbl_folders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent` int(11) DEFAULT NULL,
   `name` varchar(32) NOT NULL,
-  `timestamp` int(15) NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `client_id` int(11) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL,
   FOREIGN KEY (`parent`) REFERENCES tbl_folders(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `tbl_folders` (
 $q7 = '
 CREATE TABLE IF NOT EXISTS `tbl_files_relations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `timestamp` int(15) NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `file_id` int(11) NOT NULL,
   `client_id` int(11) DEFAULT NULL,
   `group_id` int(11) DEFAULT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files_relations` (
 $q8 = '
 CREATE TABLE IF NOT EXISTS `tbl_actions_log` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `timestamp` int(15) NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `action` int(2) NOT NULL,
   `owner_id` int(11) NOT NULL,
   `owner_user` text DEFAULT NULL,

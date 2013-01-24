@@ -658,12 +658,29 @@ function render_log_action($params)
 			$action_text = __('created the group','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
+		case 25:
+			$action_ico = 'file-assign';
+			$part1 = $owner_user;
+			$action_text = __('assigned the file','cftp_admin');
+			$part2 = $affected_file_name;
+			$part3 = __('to the client:','cftp_admin');
+			$part4 = $affected_account_name;
+			break;
+		case 26:
+			$action_ico = 'file-assign';
+			$part1 = $owner_user;
+			$action_text = __('assigned the file','cftp_admin');
+			$part2 = $affected_file_name;
+			$part3 = __('to the group:','cftp_admin');
+			$part4 = $affected_account_name;
+			break;
 	}
 	
+	$date = date(TIMEFORMAT_USE,strtotime($timestamp));
 	$rendered = '<div class="log_ico">
 					<img src="'.BASE_URI.'/img/log_icons/'.$action_ico.'.png" alt="Action icon">
 				</div>
-				<div class="date">'.date(TIMEFORMAT_USE,$timestamp).'</div>
+				<div class="date">'.$date.'</div>
 					<div class="action">';
 						if (!empty($part1)) {
 							$rendered .= '<span>'.$part1.'</span> ';

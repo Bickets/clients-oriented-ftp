@@ -32,6 +32,8 @@
  * 22-	A file was marked as visible.
  * 23-	A user creates a new group.
  * 24-	Account logs in trhough cookies.*
+ * 25-	A file is assigned to a client.
+ * 26-	A file is assigned to a group.
  *
  * More to be added soon.
  */
@@ -59,7 +61,6 @@ class LogActions
 		$this->affected_account_name = (!empty($arguments['affected_account_name'])) ? $arguments['affected_account_name'] : '';
 
 		/** Insert the client information into the database */
-		$this->timestamp = time();
 		$lq = "INSERT INTO tbl_actions_log (action,owner_id,owner_user";
 		
 			if (!empty($this->affected_file)) { $lq .= ",affected_file"; }
@@ -67,14 +68,14 @@ class LogActions
 			if (!empty($this->affected_file_name)) { $lq .= ",affected_file_name"; }
 			if (!empty($this->affected_account_name)) { $lq .= ",affected_account_name"; }
 		
-		$lq .= ",timestamp) VALUES ('$this->action', '$this->owner_id', '$this->owner_user'";
+		$lq .= ") VALUES ('$this->action', '$this->owner_id', '$this->owner_user'";
 		
 			if (!empty($this->affected_file)) { $lq .= ",$this->affected_file"; }
 			if (!empty($this->affected_account)) { $lq .= ",$this->affected_account"; }
 			if (!empty($this->affected_file_name)) { $lq .= ",'$this->affected_file_name'"; }
 			if (!empty($this->affected_account_name)) { $lq .= ",'$this->affected_account_name'"; }
 
-		$lq .= ", '$this->timestamp')";
+		$lq .= ")";
 		$this->sql_query = $database->query($lq);
 		
 		//echo $lq.'<br />'; echo mysql_error().'<br />'; exit;
