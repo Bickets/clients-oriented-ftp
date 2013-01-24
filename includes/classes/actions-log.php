@@ -30,7 +30,8 @@
  * 20-	A client account was deactivated.
  * 21-	A file was marked as hidden.
  * 22-	A file was marked as visible.
- * 23-	Account logs in trhough cookies.*
+ * 23-	A user creates a new group.
+ * 24-	Account logs in trhough cookies.*
  *
  * More to be added soon.
  */
@@ -51,6 +52,7 @@ class LogActions
 		/** Define the account information */
 		$this->action = $arguments['action'];
 		$this->owner_id = $arguments['owner_id'];
+		$this->owner_user = get_current_user_username();
 		$this->affected_file = (!empty($arguments['affected_file'])) ? $arguments['affected_file'] : '';
 		$this->affected_account = (!empty($arguments['affected_account'])) ? $arguments['affected_account'] : '';
 		$this->affected_file_name = (!empty($arguments['affected_file_name'])) ? $arguments['affected_file_name'] : '';
@@ -58,14 +60,14 @@ class LogActions
 
 		/** Insert the client information into the database */
 		$this->timestamp = time();
-		$lq = "INSERT INTO tbl_actions_log (action,owner_id";
+		$lq = "INSERT INTO tbl_actions_log (action,owner_id,owner_user";
 		
 			if (!empty($this->affected_file)) { $lq .= ",affected_file"; }
 			if (!empty($this->affected_account)) { $lq .= ",affected_account"; }
 			if (!empty($this->affected_file_name)) { $lq .= ",affected_file_name"; }
 			if (!empty($this->affected_account_name)) { $lq .= ",affected_account_name"; }
 		
-		$lq .= ",timestamp) VALUES ('$this->action', '$this->owner_id'";
+		$lq .= ",timestamp) VALUES ('$this->action', '$this->owner_id', '$this->owner_user'";
 		
 			if (!empty($this->affected_file)) { $lq .= ",$this->affected_file"; }
 			if (!empty($this->affected_account)) { $lq .= ",$this->affected_account"; }

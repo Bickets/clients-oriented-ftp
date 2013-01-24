@@ -60,6 +60,7 @@ class GroupActions
 											."VALUES ('$this->name', '$this->description','$this->this_admin', '$this->timestamp')");
 
 		$this->id = mysql_insert_id();
+		$this->state['new_id'] = $this->id;
 
 		/** Create the members records */
 		foreach ($this->members as $this->member) {

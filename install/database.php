@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `tbl_actions_log` (
   `timestamp` int(15) NOT NULL,
   `action` int(2) NOT NULL,
   `owner_id` int(11) NOT NULL,
+  `owner_user` text DEFAULT NULL,
   `affected_file` int(11) DEFAULT NULL,
   `affected_account` int(11) DEFAULT NULL,
   `affected_file_name` text DEFAULT NULL,

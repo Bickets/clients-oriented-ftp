@@ -484,12 +484,188 @@ function delete_recursive($dir)
  * Generates a random string to be used on the automatically
  * created zip files.
  */
-function generateRandomString($length = 10) {
+function generateRandomString($length = 10)
+{
     $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
     $rnd_result = '';
     for ($i = 0; $i < $length; $i++) {
         $rnd_result .= $characters[rand(0, strlen($characters) - 1)];
     }
     return $rnd_result;
+}
+
+
+/**
+ * Renders an action recorded on the log.
+ */
+function render_log_action($params)
+{
+	$action = $params['action'];
+	$timestamp = $params['timestamp'];
+	$owner_id = $params['owner_id'];
+	$owner_user = $params['owner_user'];
+	$affected_file = $params['affected_file'];
+	$affected_file_name = $params['affected_file_name'];
+	$affected_account = $params['affected_account'];
+	$affected_account_name = $params['affected_account_name'];
+	
+	switch ($action) {
+		case 0:
+			$action_text = __('ProjectSend was installed','cftp_admin');
+			break;
+		case 1:
+			$part1 = $owner_user;
+			$action_text = __('logged in to the system.','cftp_admin');
+			break;
+		case 2:
+			$part1 = $owner_user;
+			$action_text = __('created the user account','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 3:
+			$part1 = $owner_user;
+			$action_text = __('created the client account','cftp_admin');
+			$part2 = $affected_account_name;
+		case 4:
+			$part1 = $affected_account_name;
+			$action_text = __('created a client account for himself.','cftp_admin');
+			break;
+		case 5:
+			$part1 = $owner_user;
+			$action_text = __('(user) uploaded the file','cftp_admin');
+			$part2 = $affected_file_name;
+			break;
+		case 6:
+			$part1 = $owner_user;
+			$action_text = __('(client) uploaded the file','cftp_admin');
+			$part2 = $affected_file_name;
+			break;
+		case 7:
+			$part1 = $owner_user;
+			$action_text = __('(user) downloaded the file','cftp_admin');
+			$part2 = $affected_file_name;
+			$part3 = __('assigned to:','cftp_admin');
+			$part4 = $affected_account_name;
+			break;
+		case 8:
+			$part1 = $owner_user;
+			$action_text = __('(client) downloaded the file','cftp_admin');
+			$part2 = $affected_file_name;
+			break;
+		case 9:
+			$part1 = $owner_user;
+			$action_text = __('generated a zip file','cftp_admin');
+			break;
+		case 10:
+			$part1 = $owner_user;
+			$action_text = __('unassigned the file','cftp_admin');
+			$part2 = $affected_file_name;
+			$part3 = __('from the client:','cftp_admin');
+			$part4 = $affected_account_name;
+			break;
+		case 11:
+			$part1 = $owner_user;
+			$action_text = __('unassigned the file','cftp_admin');
+			$part2 = $affected_file_name;
+			$part3 = __('from the group:','cftp_admin');
+			$part4 = $affected_account_name;
+			break;
+		case 12:
+			$part1 = $owner_user;
+			$action_text = __('deleted the file','cftp_admin');
+			$part2 = $affected_file_name;
+			break;
+		case 13:
+			$part1 = $owner_user;
+			$action_text = __('edited the user','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 14:
+			$part1 = $owner_user;
+			$action_text = __('edited the client','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 15:
+			$part1 = $owner_user;
+			$action_text = __('edited the group','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 16:
+			$part1 = $owner_user;
+			$action_text = __('deleted the user','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 17:
+			$part1 = $owner_user;
+			$action_text = __('deleted the client','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 18:
+			$part1 = $owner_user;
+			$action_text = __('deleted the group','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 19:
+			$part1 = $owner_user;
+			$action_text = __('activated the client','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 20:
+			$part1 = $owner_user;
+			$action_text = __('deactivated the client','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 21:
+			$part1 = $owner_user;
+			$action_text = __('marked as hidden the file','cftp_admin');
+			$part2 = $affected_file_name;
+			$part3 = __('from:','cftp_admin');
+			$part4 = $affected_account_name;
+			break;
+		case 22:
+			$part1 = $owner_user;
+			$action_text = __('marked as visible the file','cftp_admin');
+			$part2 = $affected_file_name;
+			$part3 = __('from:','cftp_admin');
+			$part4 = $affected_account_name;
+			break;
+		case 23:
+			$part1 = $owner_user;
+			$action_text = __('created the group','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+	}
+	
+	$rendered = '<li>
+					<div class="date">'.date(TIMEFORMAT_USE,$timestamp).'</div>
+					<div class="action">';
+						if (!empty($part1)) {
+							$rendered .= '<strong>'.$part1.'</strong> ';
+						}
+
+						$rendered .= $action_text;
+
+						if (!empty($part2)) {
+							$rendered .= ' <strong>'.$part2.'</strong>';
+						}
+
+						if (!empty($part3)) {
+							$rendered .= ' '.$part3.' ';
+						}
+
+						if (!empty($part4)) {
+							$rendered .= ' <strong>'.$part4.'</strong>';
+						}
+	$rendered .= '	</div>
+				</li>';
+/*
+	$parts = array($part1, $part2, $part3, $part4, $action_text);
+	foreach ($parts as $part) {
+		if (!empty($part)) {
+			unset($part);
+		}
+	}
+*/
+	return $rendered;
 }
 ?>

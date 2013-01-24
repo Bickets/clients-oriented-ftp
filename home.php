@@ -28,7 +28,7 @@ $database->MySQLDB();
 	<div class="home">
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<div class="span8">
+				<div class="span4">
 					<ul class="home_spaces">
 						<?php
 							/** Show SIMPLE UPLOAD widget and current logo to clients */
@@ -188,6 +188,44 @@ $database->MySQLDB();
 						?>
 					</ul>
 				</div>
+
+
+				<div class="span4">	
+					<div class="widget">
+						<h4><?php _e('Recent activites','cftp_admin'); ?></h4>
+						<div class="widget_int">
+							<ul class="activities_log">
+								<?php
+									$sql_log = $database->query("SELECT * FROM tbl_actions_log ORDER BY id DESC LIMIT 10");
+									$log_count = mysql_num_rows($sql_log);
+									if ($log_count > 0) {
+										while($log = mysql_fetch_array($sql_log)) {
+										?>
+											<li>
+												<?php
+													echo render_log_action(
+																		array(
+																			'action' => $log['action'],
+																			'timestamp' => $log['timestamp'],
+																			'owner_id' => $log['owner_id'],
+																			'owner_user' => $log['owner_user'],
+																			'affected_file' => $log['affected_file'],
+																			'affected_file_name' => $log['affected_file_name'],
+																			'affected_account' => $log['affected_account'],
+																			'affected_account_name' => $log['affected_account_name']
+																		)
+													);
+												?>
+											</li>
+										<?php
+										}
+									}
+								?>
+							</ul>
+						</div>
+					</div>
+				</div>
+
 				<div class="span4">	
 					<div class="widget">
 						<h4><?php _e('System information','cftp_admin'); ?></h4>
