@@ -110,6 +110,7 @@ $global_id = get_logged_account_id($global_user);
 	<?php if (isset($flot)) { ?>
 		<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="<?php echo BASE_URI; ?>includes/flot/excanvas.js"></script><![endif]-->
 		<script language="javascript" type="text/javascript" src="<?php echo BASE_URI; ?>includes/flot/jquery.flot.js"></script>
+		<script language="javascript" type="text/javascript" src="<?php echo BASE_URI; ?>includes/flot/jquery.flot.resize.js"></script>
 	<?php } ?>
 </head>
 

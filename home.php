@@ -196,7 +196,7 @@ $database->MySQLDB();
 						<div class="widget_int">
 							<ul class="activities_log">
 								<?php
-									$sql_log = $database->query("SELECT * FROM tbl_actions_log ORDER BY id DESC LIMIT 10");
+									$sql_log = $database->query("SELECT * FROM tbl_actions_log ORDER BY id DESC LIMIT 6");
 									$log_count = mysql_num_rows($sql_log);
 									if ($log_count > 0) {
 										while($log = mysql_fetch_array($sql_log)) {
@@ -230,7 +230,7 @@ $database->MySQLDB();
 					<div class="widget">
 						<h4><?php _e('System information','cftp_admin'); ?></h4>
 						<div class="widget_int">
-							<div id="sys_info" style="height:300px;width:400px; "></div>
+							<div id="sys_info" style="height:340px;width:100%; "></div>
 						</div>
 					</div>
 				</div>

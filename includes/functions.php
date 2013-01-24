@@ -511,36 +511,44 @@ function render_log_action($params)
 	
 	switch ($action) {
 		case 0:
+			$action_ico = 'install';
 			$action_text = __('ProjectSend was installed','cftp_admin');
 			break;
 		case 1:
+			$action_ico = 'login';
 			$part1 = $owner_user;
 			$action_text = __('logged in to the system.','cftp_admin');
 			break;
 		case 2:
+			$action_ico = 'user-add';
 			$part1 = $owner_user;
 			$action_text = __('created the user account','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 		case 3:
+			$action_ico = 'client-add';
 			$part1 = $owner_user;
 			$action_text = __('created the client account','cftp_admin');
 			$part2 = $affected_account_name;
 		case 4:
+			$action_ico = 'client-add';
 			$part1 = $affected_account_name;
 			$action_text = __('created a client account for himself.','cftp_admin');
 			break;
 		case 5:
+			$action_ico = 'file-add';
 			$part1 = $owner_user;
 			$action_text = __('(user) uploaded the file','cftp_admin');
 			$part2 = $affected_file_name;
 			break;
 		case 6:
+			$action_ico = 'file-add';
 			$part1 = $owner_user;
 			$action_text = __('(client) uploaded the file','cftp_admin');
 			$part2 = $affected_file_name;
 			break;
 		case 7:
+			$action_ico = 'file-download';
 			$part1 = $owner_user;
 			$action_text = __('(user) downloaded the file','cftp_admin');
 			$part2 = $affected_file_name;
@@ -548,15 +556,18 @@ function render_log_action($params)
 			$part4 = $affected_account_name;
 			break;
 		case 8:
+			$action_ico = 'file-download';
 			$part1 = $owner_user;
 			$action_text = __('(client) downloaded the file','cftp_admin');
 			$part2 = $affected_file_name;
 			break;
 		case 9:
+			$action_ico = 'download-zip';
 			$part1 = $owner_user;
 			$action_text = __('generated a zip file','cftp_admin');
 			break;
 		case 10:
+			$action_ico = 'file-unassign';
 			$part1 = $owner_user;
 			$action_text = __('unassigned the file','cftp_admin');
 			$part2 = $affected_file_name;
@@ -564,6 +575,7 @@ function render_log_action($params)
 			$part4 = $affected_account_name;
 			break;
 		case 11:
+			$action_ico = 'file-unassign';
 			$part1 = $owner_user;
 			$action_text = __('unassigned the file','cftp_admin');
 			$part2 = $affected_file_name;
@@ -571,51 +583,61 @@ function render_log_action($params)
 			$part4 = $affected_account_name;
 			break;
 		case 12:
+			$action_ico = 'file-delete';
 			$part1 = $owner_user;
 			$action_text = __('deleted the file','cftp_admin');
 			$part2 = $affected_file_name;
 			break;
 		case 13:
+			$action_ico = 'user-edit';
 			$part1 = $owner_user;
 			$action_text = __('edited the user','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 		case 14:
+			$action_ico = 'client-edit';
 			$part1 = $owner_user;
 			$action_text = __('edited the client','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 		case 15:
+			$action_ico = 'group-edit';
 			$part1 = $owner_user;
 			$action_text = __('edited the group','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 		case 16:
+			$action_ico = 'user-delete';
 			$part1 = $owner_user;
 			$action_text = __('deleted the user','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 		case 17:
+			$action_ico = 'client-delete';
 			$part1 = $owner_user;
 			$action_text = __('deleted the client','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 		case 18:
+			$action_ico = 'group-delete';
 			$part1 = $owner_user;
 			$action_text = __('deleted the group','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 		case 19:
+			$action_ico = 'client-activate';
 			$part1 = $owner_user;
 			$action_text = __('activated the client','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 		case 20:
+			$action_ico = 'client-deactivate';
 			$part1 = $owner_user;
 			$action_text = __('deactivated the client','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 		case 21:
+			$action_ico = 'file-hidden';
 			$part1 = $owner_user;
 			$action_text = __('marked as hidden the file','cftp_admin');
 			$part2 = $affected_file_name;
@@ -623,6 +645,7 @@ function render_log_action($params)
 			$part4 = $affected_account_name;
 			break;
 		case 22:
+			$action_ico = 'file-visible';
 			$part1 = $owner_user;
 			$action_text = __('marked as visible the file','cftp_admin');
 			$part2 = $affected_file_name;
@@ -630,23 +653,26 @@ function render_log_action($params)
 			$part4 = $affected_account_name;
 			break;
 		case 23:
+			$action_ico = 'group-add';
 			$part1 = $owner_user;
 			$action_text = __('created the group','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
 	}
 	
-	$rendered = '<li>
-					<div class="date">'.date(TIMEFORMAT_USE,$timestamp).'</div>
+	$rendered = '<div class="log_ico">
+					<img src="'.BASE_URI.'/img/log_icons/'.$action_ico.'.png" alt="Action icon">
+				</div>
+				<div class="date">'.date(TIMEFORMAT_USE,$timestamp).'</div>
 					<div class="action">';
 						if (!empty($part1)) {
-							$rendered .= '<strong>'.$part1.'</strong> ';
+							$rendered .= '<span>'.$part1.'</span> ';
 						}
 
 						$rendered .= $action_text;
 
 						if (!empty($part2)) {
-							$rendered .= ' <strong>'.$part2.'</strong>';
+							$rendered .= ' <span>'.$part2.'</span>';
 						}
 
 						if (!empty($part3)) {
@@ -654,18 +680,10 @@ function render_log_action($params)
 						}
 
 						if (!empty($part4)) {
-							$rendered .= ' <strong>'.$part4.'</strong>';
+							$rendered .= ' <span>'.$part4.'</span>';
 						}
-	$rendered .= '	</div>
-				</li>';
-/*
-	$parts = array($part1, $part2, $part3, $part4, $action_text);
-	foreach ($parts as $part) {
-		if (!empty($part)) {
-			unset($part);
-		}
-	}
-*/
+	$rendered .= '</div>';
+
 	return $rendered;
 }
 ?>

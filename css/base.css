@@ -241,6 +241,41 @@ h4 {
 	border-radius:5px 5px 0 0;
 }
 
+/* Home log widget */
+
+.activities_log li {
+	padding:7px;
+	border-bottom:1px solid #ccc;
+}
+
+.activities_log li:nth-child(odd) {
+	background:#fafafa;
+}
+
+.activities_log li:last-child {
+	border-bottom:none !important;
+}
+
+.activities_log li .date {
+	font-size:.9em;
+	color:#999;
+}
+
+.activities_log li .log_ico {
+	float:left;
+	margin:0 15px 8px 0;
+	opacity:.1;
+}
+
+.activities_log li:hover .log_ico {
+	opacity:1;
+}
+
+.activities_log li span {
+	font-weight:bold;
+	color:#2a69a0;
+}
+
 
 /**/
 
