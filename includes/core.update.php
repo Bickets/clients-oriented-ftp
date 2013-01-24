@@ -336,6 +336,23 @@ if (in_session_or_cookies($allowed_update)) {
 				$updates_made++;
 			}
 		}
+		
+		/**
+		 * r266 updates
+		 * Set timestamp columns as real timestamp data, instead of INT
+		 */
+		if ($last_update < 266) {
+			$q1 = "ALTER TABLE `tbl_users` ADD COLUMN `timestamp2` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()";
+			$q2 = "UPDATE `tbl_users` SET `timestamp2` = FROM_UNIXTIME(`timestamp`)";
+			$q3 = "ALTER TABLE `tbl_users` DROP COLUMN `timestamp`";
+			$q4 = "ALTER TABLE `tbl_users` CHANGE `timestamp2` `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()";
+			$database->query($q1);
+			$database->query($q2);
+			$database->query($q3);
+			$database->query($q4);
+			$updates_made++;
+		}
+
 
 
 

@@ -261,6 +261,7 @@ $(document).ready(function() {
 									}
 									$found_groups = implode(',',$groups_ids);
 								}
+								$date = date(TIMEFORMAT_USE,strtotime($row['timestamp']));
 					?>
 								<tr>
 									<td><input type="checkbox" name="selected_clients[]" value="<?php echo $row["id"]; ?>" /></td>
@@ -301,7 +302,7 @@ $(document).ready(function() {
 									</td>
 									<td><?php echo $count_groups; ?></td>
 									<td class="extra"><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
-									<td class="extra"><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
+									<td class="extra"><?php echo $date; ?></td>
 									<td class="extra"><?php echo html_entity_decode($row["address"]); ?></td>
 									<td class="extra"><?php echo html_entity_decode($row["phone"]); ?></td>
 									<td class="extra"><?php echo html_entity_decode($row["contact"]); ?></td>

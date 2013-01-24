@@ -208,6 +208,7 @@ include('header.php');
 			
 			<?php
 				while($row = mysql_fetch_array($sql)) {
+					$date = date(TIMEFORMAT_USE,strtotime($row['timestamp']));
 				?>
 				<tr>
 					<td>
@@ -226,7 +227,7 @@ include('header.php');
 						}
 					?>
 					</td>
-					<td><?php echo date(TIMEFORMAT_USE,$row['timestamp']); ?></td>
+					<td><?php echo $date; ?></td>
 					<td>
 						<a href="users-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
 					</td>
