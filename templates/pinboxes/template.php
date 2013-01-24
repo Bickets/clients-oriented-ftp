@@ -9,12 +9,14 @@ $ld = 'pinboxes_template'; // specify the language domain for this template
 include_once(ROOT_DIR.'/templates/common.php'); // include the required functions for every template
 
 $window_title = __('Available files','pinboxes_template');
+
+$count = count($my_files);
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title><?php echo $user_full_name.' | '.$window_title; ?> | <?php echo SYSTEM_NAME; ?></title>
+		<title><?php echo $client_info['name'].' | '.$window_title; ?> | <?php echo SYSTEM_NAME; ?></title>
 		<link rel="stylesheet" media="all" type="text/css" href="<?php echo $this_template; ?>main.css" />
 		<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
 		<link href='http://fonts.googleapis.com/css?family=Metrophobic' rel='stylesheet' type='text/css'>
@@ -31,6 +33,26 @@ $window_title = __('Available files','pinboxes_template');
 						itemSelector : '.photo'
 					  });
 					});
+
+					$('.button').click(function() {
+						$(this).blur();
+					});
+
+					var search_text = '<?php _e('Search...', 'pinboxes_template'); ?>';
+					$("#search_text").val(search_text);
+
+					$("#search_text").focus(function(){
+					   if($(this).val() == search_text) {
+						  $(this).val("");
+					   }
+					});
+					
+					$("#search_text").blur(function(){
+					   if($(this).val() == "") {
+						  $(this).val(search_text);
+					   }
+					});
+
 				}
 			);
 		</script>
@@ -47,11 +69,17 @@ $window_title = __('Available files','pinboxes_template');
 		
 		<div id="menu">
 			<p class="welcome">
-				<?php _e('Welcome','pinboxes_template'); ?>, <?php echo $user_full_name; ?>
+				<?php _e('Welcome','pinboxes_template'); ?>, <?php echo $client_info['name']; ?>
 			</p>
 			<ul>
-				<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php" target="_self"><?php _e('Upload files', 'cftp_admin'); ?></a></li><li>
-				<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self"><?php _e('Logout', 'cftp_admin'); ?></a></li>
+				<li id="search_box">
+					<form action="" name="files_search" method="post">
+						<input type="text" name="search" id="search_text" value="<?php echo (isset($_POST['search']) && !empty($_POST['search'])) ? $_POST['search'] : ''; ?>">
+						<input type="submit" id="search_go" value="<?php _e('Search','pinboxes_template'); ?>" />
+					</form>
+				</li><li>
+				<a href="<?php echo BASE_URI; ?>upload-from-computer.php" target="_self"><?php _e('Upload files', 'pinboxes_template'); ?></a></li><li>
+				<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self"><?php _e('Logout', 'pinboxes_template'); ?></a></li>
 			</ul>
 		</div>
 			
@@ -60,7 +88,6 @@ $window_title = __('Available files','pinboxes_template');
 			<div class="wrapper">
 		
 		<?php
-			$count = mysql_num_rows($template_files_sql);
 			if (!$count) {
 		?>
 				<div class="no_files">
@@ -74,7 +101,17 @@ $window_title = __('Available files','pinboxes_template');
 		?>
 				<div class="photo_list">
 				<?php
-					while($row = mysql_fetch_array($template_files_sql)) {
+					foreach ($my_files as $file) {
+						$download_link = BASE_URI.
+											'process.php?do=download
+											&amp;client='.$this_user.'
+											&amp;client_id='.$client_info['id'].'
+											&amp;url='.$file['url'].'
+											&amp;id='.$file['id'].'
+											&amp;origin='.$file['origin'];
+						if (!empty($file['group_id'])) {
+							$download_link .= '&amp;group_id='.$file['group_id'];
+						}
 				?>
 						<div class="photo">
 							<div class="photo_int">
@@ -82,21 +119,21 @@ $window_title = __('Available files','pinboxes_template');
 									/**
 									 * Generate the thumbnail if the file is an image.
 									 */
-									$pathinfo = pathinfo($row['url']);
+									$pathinfo = pathinfo($file['url']);
 									$extension = strtolower($pathinfo['extension']);
 									$img_formats = array('gif','jpg','pjpeg','jpeg','png');
 									if (in_array($extension,$img_formats)) {
 								?>
 										<div class="img_prev">
-											<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
-												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $row['url']; ?>&amp;w=250" alt="<?php echo htmlentities($row['filename']); ?>" />
+											<a href="<?php echo $download_link; ?>" target="_blank">
+												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=250" alt="<?php echo htmlentities($file['name']); ?>" />
 											</a>
 										</div>
 								<?php
 								} else {
 								?>
 										<div class="ext_prev">
-											<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
+											<a href="<?php echo $download_link; ?>" target="_blank">
 												<h6><?php echo $extension; ?></h6>
 											</a>
 										</div>
@@ -105,15 +142,15 @@ $window_title = __('Available files','pinboxes_template');
 								?>
 							</div>
 							<div class="img_data">
-								<h2><?php echo htmlentities($row['filename']); ?></h2>
+								<h2><?php echo htmlentities($file['name']); ?></h2>
 								<div class="photo_info">
-									<?php echo $row['description']; ?>
+									<?php echo $file['description']; ?>
 									<p class="file_size">
-										<?php _e('File size:','pinboxes_template'); ?> <strong><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$row['url']); echo format_file_size($this_file); ?></strong>
+										<?php _e('File size:','pinboxes_template'); ?> <strong><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file); ?></strong>
 									</p>
 								</div>
 								<div class="download_link">
-									<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank" class="button button_gray">
+									<a href="<?php echo $download_link; ?>" target="_blank" class="button button_gray">
 										<?php _e('Download','pinboxes_template'); ?>
 									</a>
 								</div>

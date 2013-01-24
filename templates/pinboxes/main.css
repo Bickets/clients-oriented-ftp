@@ -96,6 +96,8 @@ p.welcome {
 	font-size:1em;
 	font-weight:bold;
 	transition: all 0.4s ease-out;
+	-moz-transition: all 0.4s ease-out;
+	-webkit-transition: all 0.4s ease-out;
 }
 
 #menu ul li a:hover {
@@ -129,8 +131,11 @@ p.welcome {
 	background:#fff;
 	margin:0 15px 15px 0;
 	border:1px solid #ccc;
+/*
 	transition: all 0.7s ease-out;
-
+	-moz-transition: all 0.7s ease-out;
+	-webkit-transition: all 0.7s ease-out;
+*/
 	-moz-border-radius:3px;
 	-webkit-border-radius:3px;
 	border-radius:3px;
@@ -165,6 +170,8 @@ p.welcome {
 	color:white;
 	background:#e54d5c;
 	transition: all 0.7s ease-out;
+	-moz-transition: all 0.7s ease-out;
+	-webkit-transition: all 0.7s ease-out;
 }
 
 .ext_prev a:hover {
@@ -208,13 +215,40 @@ p.welcome {
 .download_link a {
 }
 
+/* Search box */
 
+#search_text {
+	background:none;
+	border:none;
+	font-size:1.2em;
+	color:#999999;
+	padding-bottom:3px;
+	margin-top:-3px;
+	border-bottom:1px solid #eee;
+	transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-webkit-transition: all 0.3s ease-out;
+}
+
+#search_text:focus {
+	color:#333;
+}
+
+#search_go {
+	width:14px;
+	height:18px;
+	cursor:pointer;
+	background:url(img/search.png) no-repeat top left;
+	border:none;
+	text-indent:-999em;
+	margin-right:20px;
+}
 
 /* Buttons */
 
 .button:hover {
 	text-decoration:none;
-	box-shadow:3px 3px 3px rgba(100, 100, 100, 0.3) inset, -3px -3px -3px 1px rgba(100, 100, 100, 0.1) inset, 0 1px 0 rgba(100, 100, 100, 0.5);
+	box-shadow:3px 3px 3px rgba(180, 180, 180, 0.3) inset, -3px -3px -3px 1px rgba(180, 180, 180, 0.1) inset, 0 1px 0 rgba(180, 180, 180, 0.5);
 	color:#111;
 }
 
@@ -228,7 +262,9 @@ p.welcome {
 	text-align:center;
 	display:inline-block;
 	cursor:pointer;
-	transition: all 1.1s ease-out;
+	transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-webkit-transition: all 0.3s ease-out;
 
 	text-shadow:1px 1px 1px #fff!important;
 
@@ -241,7 +277,7 @@ p.welcome {
 }
 
 .button:focus {
-	box-shadow:3px 3px 3px rgba(0, 0, 0, 0.3) inset, -3px -3px 3px 1px rgba(0, 0, 0, 0.1) inset, 0 0 0 rgba(0, 0, 0, 0.5);
+	box-shadow:3px 3px 3px rgba(135, 135, 135, 0.3) inset, -3px -3px 3px 1px rgba(135, 135, 135, 0.1) inset, 0 0 0 rgba(135, 135, 135, 0.5);
 }
 
 .button_gray {
