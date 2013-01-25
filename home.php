@@ -187,48 +187,60 @@ $database->MySQLDB();
 					</ul>
 				</div>
 
-
-				<div class="span4">	
-					<div class="widget">
-						<h4><?php _e('Recent activites','cftp_admin'); ?></h4>
-						<div class="widget_int">
-							<ul class="activities_log">
-								<?php
-									$sql_log = $database->query("SELECT * FROM tbl_actions_log ORDER BY id DESC LIMIT 6");
-									$log_count = mysql_num_rows($sql_log);
-									if ($log_count > 0) {
-										while($log = mysql_fetch_array($sql_log)) {
-										?>
-											<li>
-												<?php
-													echo render_log_action(
-																		array(
-																			'action' => $log['action'],
-																			'timestamp' => $log['timestamp'],
-																			'owner_id' => $log['owner_id'],
-																			'owner_user' => $log['owner_user'],
-																			'affected_file' => $log['affected_file'],
-																			'affected_file_name' => $log['affected_file_name'],
-																			'affected_account' => $log['affected_account'],
-																			'affected_account_name' => $log['affected_account_name']
-																		)
-													);
-												?>
-											</li>
-										<?php
-										}
-									}
-								?>
-							</ul>
+				<div class="span8">	
+					<div class="row-fluid">
+						<div class="span12">
+							<div class="widget">
+								<h4><?php _e('Statistics for the last 15 days','cftp_admin'); ?></h4>
+								<div class="widget_int">
+									<div id="statistics" style="height:300px;width:100%;"></div>
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-
-				<div class="span4">	
-					<div class="widget">
-						<h4><?php _e('System information','cftp_admin'); ?></h4>
-						<div class="widget_int">
-							<div id="sys_info" style="height:340px;width:100%; "></div>
+					<div class="row-fluid">
+						<div class="span6">
+							<div class="widget">
+								<h4><?php _e('Recent activites','cftp_admin'); ?></h4>
+								<div class="widget_int">
+									<ul class="activities_log">
+										<?php
+											$sql_log = $database->query("SELECT * FROM tbl_actions_log ORDER BY id DESC LIMIT 6");
+											$log_count = mysql_num_rows($sql_log);
+											if ($log_count > 0) {
+												while($log = mysql_fetch_array($sql_log)) {
+												?>
+													<li>
+														<?php
+															echo render_log_action(
+																				array(
+																					'action' => $log['action'],
+																					'timestamp' => $log['timestamp'],
+																					'owner_id' => $log['owner_id'],
+																					'owner_user' => $log['owner_user'],
+																					'affected_file' => $log['affected_file'],
+																					'affected_file_name' => $log['affected_file_name'],
+																					'affected_account' => $log['affected_account'],
+																					'affected_account_name' => $log['affected_account_name']
+																				)
+															);
+														?>
+													</li>
+												<?php
+												}
+											}
+										?>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="span6">
+							<div class="widget">
+								<h4><?php _e('System information','cftp_admin'); ?></h4>
+								<div class="widget_int">
+									<div id="sys_info" style="height:340px;width:100%; "></div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -237,7 +249,6 @@ $database->MySQLDB();
 	</div>
 	
 </div>
-
 
 <script type="text/javascript">
 	$(document).ready(function(){
@@ -256,7 +267,7 @@ $database->MySQLDB();
 				},
 				bars:{
 					  barWidth:.5,
-					  align: 'center'
+					  align: 'center',
 				},
 				legend: {
 					show: true
@@ -275,9 +286,105 @@ $database->MySQLDB();
 						[3, '<?php _e('Groups','cftp_admin'); ?>'],
 						[4, '<?php _e('Users','cftp_admin'); ?>']
 					]
+				},
+				yaxis: {
+					min: 0,
+					tickSize:1,
+					tickDecimals:0
 				}
 			}
 		);
+
+		// statistics
+		<?php include('home_statistics.php'); ?>
+
+		function showTooltip(x, y, contents) {
+			$('<div id="stats_tooltip">' + contents + '</div>').css( {
+				top: y + 5,
+				left: x + 5,
+			}).appendTo("body").fadeIn(200);
+		}
+		
+		var previousPoint = null;
+		$("#statistics").bind("plothover", function (event, pos, item) {
+			$("#x").text(pos.x.toFixed(2));
+			$("#y").text(pos.y.toFixed(2));
+		
+				if (item) {
+					if (previousPoint != item.dataIndex) {
+						previousPoint = item.dataIndex;
+						
+						$("#stats_tooltip").remove();
+						var x = item.datapoint[0].toFixed(2),
+							y = item.datapoint[1].toFixed(2);
+
+						showTooltip(item.pageX, item.pageY,
+									item.series.label + ": " + y);
+					}
+				}
+				else {
+					$("#stats_tooltip").remove();
+					previousPoint = null;            
+				}
+		});	
+
+		var options = {
+			grid: {
+				hoverable: true,
+				borderWidth: 0,
+				color: "#666",
+				labelMargin: 10,
+				axisMargin: 0,
+				mouseActiveRadius: 10
+			},
+			series: {
+				lines: {
+					show: true,
+					lineWidth: 2
+				},
+				points: {
+					show: true,
+					radius: 3,
+					symbol: "circle",
+					fill: true
+				}
+			},
+			xaxis: {
+				mode: "time",
+				minTickSize: [1, "day"],
+				timeformat: "%d/%m/%y",
+				labelWidth: "30"
+			},
+			yaxis: {
+				min: 0,
+				tickSize:1,
+				tickDecimals:0
+			},
+			legend: {
+				margin: 10,
+				sorted: true,
+				show: false
+			},
+			colors: ["#0094bb","#86ae00","#f2b705"]
+		};
+
+		$.plot(
+			$("#statistics"), [
+				{
+					data: d5,
+					label: '<?php _e('Uploads','cftp_admin'); ?>'
+				},
+				{
+					data: d8,
+					label: '<?php _e('Downloads','cftp_admin'); ?>'
+				},
+				{
+					data: d9,
+					label: '<?php _e('Zip Downloads','cftp_admin'); ?>'
+				}
+			], options
+		);
+
 	});
 </script>
 

@@ -224,6 +224,7 @@ h4 {
 	vertical-align:middle;
 	border:1px solid #ccc;
 	width:100%;
+	margin-bottom:30px;
 
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;
@@ -280,7 +281,7 @@ h4 {
 }
 
 .activities_log li:hover .log_ico {
-	opacity:1;
+	opacity:.7;
 }
 
 .activities_log li span {
@@ -288,6 +289,15 @@ h4 {
 	color:#2a69a0;
 }
 
+/** Home statistics tooltip */
+
+#stats_tooltip {
+	position:absolute;
+	display:none;
+	background:black;
+	color:#FFFFFF;
+	padding:5px;
+}
 
 /**/
 
