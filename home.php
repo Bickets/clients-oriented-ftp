@@ -73,6 +73,7 @@ $database->MySQLDB();
 														<?php
 															echo render_log_action(
 																				array(
+																					'print' => true,
 																					'action' => $log['action'],
 																					'timestamp' => $log['timestamp'],
 																					'owner_id' => $log['owner_id'],
@@ -90,6 +91,9 @@ $database->MySQLDB();
 											}
 										?>
 									</ul>
+									<div class="view_full_log">
+										<a href="actions-log.php" class="button button_blue"><?php _e('View all','cftp_admin'); ?></a>
+									</div>
 								</div>
 							</div>
 						</div>
