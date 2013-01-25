@@ -44,6 +44,7 @@ if ($page_status === 1) {
 		$add_user_data_user = $data['user'];
 		$add_user_data_email = $data['email'];
 		$add_user_data_level = $data['level'];
+		if ($data['active'] == 1) { $add_user_data_active = 1; } else { $add_user_data_active = 0; }
 	}
 }
 
@@ -58,6 +59,7 @@ if ($_POST) {
 	$add_user_data_name = mysql_real_escape_string($_POST['add_user_form_name']);
 	$add_user_data_email = mysql_real_escape_string($_POST['add_user_form_email']);
 	$add_user_data_level = mysql_real_escape_string($_POST['add_user_form_level']);
+	$add_user_data_active = (isset($_POST["add_user_form_active"])) ? 1 : 0;
 
 	/** Arguments used on validation and user creation. */
 	$edit_arguments = array(
@@ -65,6 +67,7 @@ if ($_POST) {
 							'name' => $add_user_data_name,
 							'email' => $add_user_data_email,
 							'role' => $add_user_data_level,
+							'active' => $add_user_data_active,
 							'type' => 'edit_user'
 						);
 

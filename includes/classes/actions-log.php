@@ -34,6 +34,8 @@
  * 24-	Account logs in trhough cookies.*
  * 25-	A file is assigned to a client.
  * 26-	A file is assigned to a group.
+ * 27-	A user account was marked as active.
+ * 28-	A user account was marked as inactive.
  *
  * More to be added soon.
  */

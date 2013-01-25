@@ -15,6 +15,12 @@ include('header.php');
 
 $database->MySQLDB();
 
+/**
+ * Set checkboxes as 1 to defaul them to checked when first entering
+ * the form
+ */
+$add_user_data_active = 1;
+
 if ($_POST) {
 	$new_user = new UserActions();
 
@@ -26,6 +32,7 @@ if ($_POST) {
 	$add_user_data_email = encode_html($_POST['add_user_form_email']);
 	$add_user_data_level = encode_html($_POST['add_user_form_level']);
 	$add_user_data_user = encode_html($_POST['add_user_form_user']);
+	$add_user_data_active = (isset($_POST["add_user_form_active"])) ? 1 : 0;
 
 	/** Arguments used on validation and user creation. */
 	$new_arguments = array(
@@ -36,6 +43,7 @@ if ($_POST) {
 							'name' => $add_user_data_name,
 							'email' => $add_user_data_email,
 							'role' => $add_user_data_level,
+							'active' => $add_user_data_active,
 							'type' => 'new_user'
 						);
 

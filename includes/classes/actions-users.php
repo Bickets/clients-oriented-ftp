@@ -102,11 +102,12 @@ class UserActions
 		$this->name = $arguments['name'];
 		$this->email = $arguments['email'];
 		$this->role = $arguments['role'];
+		$this->active = $arguments['active'];
 		$this->enc_password = md5(mysql_real_escape_string($this->password));
 
 		$this->timestamp = time();
-		$this->sql_query = $database->query("INSERT INTO tbl_users (user,password,name,email,level)"
-											."VALUES ('$this->username', '$this->enc_password', '$this->name', '$this->email','$this->role')");
+		$this->sql_query = $database->query("INSERT INTO tbl_users (user,password,name,email,level,active)"
+											."VALUES ('$this->username', '$this->enc_password', '$this->name', '$this->email','$this->role', '$this->active')");
 
 		if ($this->sql_query) {
 			$this->state['query'] = 1;
@@ -143,6 +144,7 @@ class UserActions
 		$this->name = $arguments['name'];
 		$this->email = $arguments['email'];
 		$this->role = $arguments['role'];
+		$this->active = $arguments['active'];
 
 		$this->password = $arguments['password'];
 		$this->enc_password = md5(mysql_real_escape_string($this->password));
@@ -151,7 +153,11 @@ class UserActions
 		$this->edit_user_query = "UPDATE tbl_users SET 
 								name = '$this->name',
 								email = '$this->email',
-								level = '$this->role'";
+								level = '$this->role',
+								active = '";
+
+		/** Add the active status value to the query '' */
+		$this->edit_user_query .= ($this->active == '1') ? "1'" : "0'";
 
 		/** Add the password to the query if it's not the dummy value '' */
 		if (!empty($arguments['password'])) {
@@ -182,6 +188,21 @@ class UserActions
 			/** Do a permissions check */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				$this->sql = $database->query('DELETE FROM tbl_users WHERE id="' . $user .'"');
+			}
+		}
+	}
+
+	/**
+	 * Mark the user as active or inactive.
+	 */
+	function change_user_active_status($user_id,$change_to)
+	{
+		global $database;
+		$this->check_level = array(9);
+		if (isset($user_id)) {
+			/** Do a permissions check */
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
+				$this->sql = $database->query('UPDATE tbl_users SET active='.$change_to.' WHERE id="' . $user_id . '"');
 			}
 		}
 	}

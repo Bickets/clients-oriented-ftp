@@ -481,6 +481,18 @@ function delete_recursive($dir)
 }
 
 /**
+ * Takes a text string and makes an excerpt.
+ */
+function make_excerpt($string, $length, $break = "...")
+{
+	if (strlen($string) > $length) {
+		$pos = strpos($string, " ", $length);
+		return substr($string, 0, $pos) . $break;
+	}
+	return $string;
+}
+
+/**
  * Generates a random string to be used on the automatically
  * created zip files.
  */
@@ -673,6 +685,18 @@ function render_log_action($params)
 			$part2 = $affected_file_name;
 			$part3 = __('to the group:','cftp_admin');
 			$part4 = $affected_account_name;
+			break;
+		case 27:
+			$action_ico = 'user-activate';
+			$part1 = $owner_user;
+			$action_text = __('activated the user','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
+		case 28:
+			$action_ico = 'user-deactivate';
+			$part1 = $owner_user;
+			$action_text = __('deactivated the user','cftp_admin');
+			$part2 = $affected_account_name;
 			break;
 	}
 	

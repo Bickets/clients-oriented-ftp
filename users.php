@@ -35,12 +35,15 @@ include('header.php');
 				return false; 
 			}
 			else {
-				var msg_1 = '<?php _e("You are about to delete",'cftp_admin'); ?>';
-				var msg_2 = '<?php _e("users. Are you sure you want to continue?",'cftp_admin'); ?>';
-				if (confirm(msg_1+' '+checks.length+' '+msg_2)) {
-					return true;
-				} else {
-					return false;
+				var action = $('#users_actions').val();
+				if (action == 'delete') {
+					var msg_1 = '<?php _e("You are about to delete",'cftp_admin'); ?>';
+					var msg_2 = '<?php _e("users. Are you sure you want to continue?",'cftp_admin'); ?>';
+					if (confirm(msg_1+' '+checks.length+' '+msg_2)) {
+						return true;
+					} else {
+						return false;
+					}
 				}
 			}
 		});
@@ -56,7 +59,7 @@ include('header.php');
 	/**
 	 * Apply the corresponding action to the selected users.
 	 */
-	if(isset($_POST['users_actions']) && $_POST['users_actions'] != 'none') {
+	if(isset($_POST['users_actions'])) {
 		/** Continue only if 1 or more users were selected. */
 		if(!empty($_POST['users'])) {
 			$selected_users = $_POST['users'];
@@ -70,29 +73,60 @@ include('header.php');
 				$all_users[$data_user['id']] = $data_user['user'];
 			}
 
+			$my_info = get_user_by_username(get_current_user_username());
+			$affected_users = 0;
+
 			switch($_POST['users_actions']) {
-				case 'delete':
-					$my_info = get_user_by_username(get_current_user_username());
-					$deleted_users = 0;
-		
-					foreach ($selected_users as $user) {
+				case 'activate':
+					/**
+					 * Changes the value on the "active" column value on the database.
+					 * Inactive users are not allowed to log in.
+					 */
+					foreach ($selected_users as $work_user) {
+						$this_user = new UserActions();
+						$hide_user = $this_user->change_user_active_status($work_user,'1');
+					}
+					$msg = __('The selected users were marked as active.','cftp_admin');
+					echo system_message('ok',$msg);
+					$log_action_number = 27;
+					break;
+
+				case 'deactivate':
+					/**
+					 * Reverse of the previous action. Setting the value to 0 means
+					 * that the user is inactive.
+					 */
+					foreach ($selected_users as $work_user) {
+						/**
+						 * A user should not be able to deactivate himself
+						 */
+						if ($work_user != $my_info['id']) {
+							$this_user = new UserActions();
+							$hide_user = $this_user->change_user_active_status($work_user,'0');
+							$affected_users++;
+						}
+						else {
+							$msg = __('You cannot deactivate your own account.','cftp_admin');
+							echo system_message('error',$msg);
+						}
+					}
+
+					if ($affected_users > 0) {
+						$msg = __('The selected users were marked as inactive.','cftp_admin');
+						echo system_message('ok',$msg);
+						$log_action_number = 28;
+					}
+					break;
+
+				case 'delete':		
+					foreach ($selected_users as $work_user) {
 						/**
 						 * A user should not be able to delete himself
 						 */
-						if ($user != $my_info['id']) {
+						if ($work_user != $my_info['id']) {
 							$this_user = new UserActions();
-							$delete_user = $this_user->delete_user($user);
-							$deleted_users++;
-
-							/** Record the action log */
-							$new_log_action = new LogActions();
-							$log_action_args = array(
-													'action' => 16,
-													'owner_id' => $global_id,
-													'affected_account_name' => $all_users[$user]
-												);
-							$new_record_action = $new_log_action->log_action_save($log_action_args);		
-
+							$delete_user = $this_user->delete_user($work_user);
+							$affected_users++;
 						}
 						else {
 							$msg = __('You cannot delete your own account.','cftp_admin');
@@ -100,11 +134,23 @@ include('header.php');
 						}
 					}
 					
-					if ($deleted_users > 0) {
+					if ($affected_users > 0) {
 						$msg = __('The selected users were deleted.','cftp_admin');
 						echo system_message('ok',$msg);
+						$log_action_number = 16;
 					}
 				break;
+			}
+
+			/** Record the action log */
+			foreach ($selected_users as $user) {
+				$new_log_action = new LogActions();
+				$log_action_args = array(
+										'action' => $log_action_number,
+										'owner_id' => $global_id,
+										'affected_account_name' => $all_users[$user]
+									);
+				$new_record_action = $new_log_action->log_action_save($log_action_args);
 			}
 		}
 		else {
@@ -150,6 +196,12 @@ include('header.php');
 					<option value="8"><?php _e('Account Manager','cftp_admin'); ?></option>
 					<option value="7"><?php _e('Uploader','cftp_admin'); ?></option>
 				</select>
+
+				<select name="status" id="status" class="txtfield">
+					<option value="all"><?php _e('All statuses','cftp_admin'); ?></option>
+					<option value="1"><?php _e('Active','cftp_admin'); ?></option>
+					<option value="0"><?php _e('Inactive','cftp_admin'); ?></option>
+				</select>
 				<input type="submit" id="btn_proceed_filter_clients" value="<?php _e('Filter','cftp_admin'); ?>" class="button_form" />
 			</form>
 		</div>
@@ -161,7 +213,8 @@ include('header.php');
 				<div class="form_actions_submit">
 					<label><?php _e('Selected users actions','cftp_admin'); ?>:</label>
 					<select name="users_actions" id="users_actions" class="txtfield">
-						<option value="none"><?php _e('Select action','cftp_admin'); ?></option>
+						<option value="activate"><?php _e('Activate','cftp_admin'); ?></option>
+						<option value="deactivate"><?php _e('Deactivate','cftp_admin'); ?></option>
 						<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
 					</select>
 					<input type="submit" id="do_action" name="proceed" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
@@ -200,6 +253,7 @@ include('header.php');
 					<th><?php _e('Log in username','cftp_admin'); ?></th>
 					<th><?php _e('E-mail','cftp_admin'); ?></th>
 					<th><?php _e('Role','cftp_admin'); ?></th>
+					<th><?php _e('Status','cftp_admin'); ?></th>
 					<th><?php _e('Added on','cftp_admin'); ?></th>
 					<th><?php _e('Actions','cftp_admin'); ?></th>
 				</tr>
@@ -226,6 +280,13 @@ include('header.php');
 							case '7': echo USER_ROLE_LVL_7; break;
 						}
 					?>
+					</td>
+					<td class="<?php echo ($row['active'] === '0') ? 'account_status_inactive' : 'account_status_active'; ?>">
+						<?php
+							$status_hidden = __('Inactive','cftp_admin');
+							$status_visible = __('Active','cftp_admin');
+							echo ($row['active'] === '0') ? $status_hidden : $status_visible;
+						?>
 					</td>
 					<td><?php echo $date; ?></td>
 					<td>

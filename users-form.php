@@ -102,6 +102,10 @@ switch ($user_form_type) {
 				<option value="7" <?php echo (isset($add_user_data_level) && $add_user_data_level == '7') ? 'selected="selected"' : ''; ?>><?php echo USER_ROLE_LVL_7; ?></option>
 			</select>
 		</li>
+		<li>
+			<label for="add_user_form_active"><?php _e('Active (user can log in)','cftp_admin'); ?></label>
+			<input type="checkbox" name="add_user_form_active" id="add_user_form_active" <?php echo (isset($add_user_data_active) && $add_user_data_active == 1) ? 'checked="checked"' : ''; ?> />
+		</li>
 		<li class="form_submit_li">
 			<input type="submit" name="Submit" value="<?php echo $submit_value; ?>" class="button button_blue button_submit" />
 		</li>
