@@ -30,6 +30,11 @@ define('UPLOAD_TIME_LIMIT', 120*60);
 @set_time_limit(GLOBAL_TIME_LIMIT);
 
 /**
+ * Define the RSS url to use on the home news list.
+ */
+define('NEWS_FEED_URI','http://feeds.feedburner.com/subwaydesign');
+
+/**
  * Include the personal configuration file
  * It must be created before installing ProjectSend.
  *
