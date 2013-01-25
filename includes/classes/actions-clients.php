@@ -220,7 +220,7 @@ class ClientActions
 	function change_client_active_status($client_id,$change_to)
 	{
 		global $database;
-		$this->check_level = array(9,8,7);
+		$this->check_level = array(9,8);
 		if (isset($client_id)) {
 			/** Do a permissions check */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
