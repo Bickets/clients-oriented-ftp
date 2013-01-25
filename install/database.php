@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
   `timestamp` int(15) NOT NULL,
   `uploader` varchar('.MAX_USER_CHARS.') NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=257 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 ';
 
 $q2 = '
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `tbl_users` (
   `created_by` varchar('.MAX_USER_CHARS.') NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 ';
 
 $q4 = '
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `tbl_groups` (
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 ';
 
 $q5 = '
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `tbl_members` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 ';
 
 $q6 = '
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `tbl_folders` (
   FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 ';
 
 $q7 = '
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files_relations` (
   FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (`folder_id`) REFERENCES tbl_folders(`id`) ON UPDATE CASCADE,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 ';
 
 $q8 = '
@@ -117,10 +117,20 @@ CREATE TABLE IF NOT EXISTS `tbl_actions_log` (
   `affected_file_name` text DEFAULT NULL,
   `affected_account_name` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 ';
 
 $q9 = '
+CREATE TABLE IF NOT EXISTS `tbl_notifications` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  `file_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+';
+
+$q10 = '
 INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (1, \'base_uri\', \''.$base_uri.'\'),
 (2, \'max_thumbnail_width\', \'100\'),
@@ -139,7 +149,7 @@ INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
 (15, \'admin_email_address\', \''.$got_admin_email.'\'),
 (16, \'clients_can_register\', \'0\')';
 
-$q10 = '
+$q11 = '
 INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`, `active`) VALUES
 (1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestamp.', 1);
 ';

@@ -221,7 +221,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  `name` varchar(32) NOT NULL,
 				  `description` text NOT NULL,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 				';
 				$database->query($q1);
 				/** Create the MEMBERS table */
@@ -235,7 +235,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  PRIMARY KEY (`id`),
 				  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 				';
 				$database->query($q2);
 				$updates_made++;
@@ -274,7 +274,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 				';
 				$database->query($q1);
 				$updates_made++;
@@ -304,7 +304,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  FOREIGN KEY (`folder_id`) REFERENCES tbl_folders(`id`) ON UPDATE CASCADE,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 				';
 				$database->query($q1);
 				$updates_made++;
@@ -330,7 +330,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  `affected_file_name` text DEFAULT NULL,
 				  `affected_account_name` text DEFAULT NULL,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=62 ;
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 				';
 				$database->query($q1);
 				$updates_made++;
@@ -354,6 +354,28 @@ if (in_session_or_cookies($allowed_update)) {
 		}
 
 
+		/**
+		 * r275 updates
+		 * A new database table was added.
+		 * It stores the new files-to clients relations to be
+		 * used on notifications.
+		 */
+		if ($last_update < 275) {
+			$q = $database->query("SELECT id FROM tbl_notifications");
+			if (!$q) {
+				$q1 = '
+				CREATE TABLE IF NOT EXISTS `tbl_notifications` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+				  `file_id` int(11) NOT NULL,
+				  `client_id` int(11) NOT NULL,
+				  PRIMARY KEY (`id`)
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				';
+				$database->query($q1);
+				$updates_made++;
+			}
+		}
 
 
 		/** Update the database */

@@ -636,6 +636,7 @@ while($row = mysql_fetch_array($sql)) {
 			if(!empty($upload_finish)) {
 		?>
 				$("#uploaded_files_tbl").tablesorter( {
+					widthFixed: true,
 					sortList: [[0,0]], widgets: ['zebra'], headers: {
 						<?php
 							/**
@@ -660,6 +661,7 @@ while($row = mysql_fetch_array($sql)) {
 			if(!empty($upload_finish_orphans)) {
 		?>
 				$("#orphan_files_tbl").tablesorter({
+					widthFixed: true,
 					sortList: [[0,0]], widgets: ['zebra']
 				})
 				

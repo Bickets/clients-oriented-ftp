@@ -48,6 +48,7 @@ h4 {
 #system_msg {
 	padding:10px;
 	background:#FFFBE4;
+	border-bottom:1px solid #CCCCCC;
 }
 
 #system_msg p {
