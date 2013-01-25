@@ -23,7 +23,7 @@ include('header.php');
 				5: { sorter: false }
 			}
 		})
-		.tablesorterPager({container: $("#pager")})
+		.tablesorterPager({container: $("#pager"), size: 20})
 
 		$("#select_all").click(function(){
 			var status = $(this).prop("checked");
@@ -248,7 +248,7 @@ include('header.php');
 		</table>
 	</form>
 	
-	<?php if ($count > 10) { ?>
+	<?php if ($count > 20) { ?>
 		<div id="pager" class="pager">
 			<form>
 				<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
@@ -259,8 +259,7 @@ include('header.php');
 				<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
 				<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
 				<select class="pagesize">
-					<option selected="selected" value="10">10</option>
-					<option value="20">20</option>
+					<option selected="selected" value="20">20</option>
 					<option value="30">30</option>
 					<option value="40">40</option>
 				</select>
