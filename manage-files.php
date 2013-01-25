@@ -52,6 +52,7 @@ include('header.php');
 	$(document).ready(function() {
 		$("#files_list")
 			.tablesorter( {
+				widthFixed: true,
 				sortList: [[1,1]], widgets: ['zebra'], headers: {
 					0: { sorter: false },
 					8: { sorter: false }

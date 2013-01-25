@@ -45,6 +45,7 @@ include('header.php');
 <script type="text/javascript">
 	$(document).ready( function() {
 		$("#groups_tbl").tablesorter( {
+			widthFixed: true,
 			sortList: [[1,0]], widgets: ['zebra'], headers: {
 				0: { sorter: false }, 
 				6: { sorter: false }
