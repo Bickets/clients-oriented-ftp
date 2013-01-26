@@ -144,12 +144,12 @@ $work_folder = UPLOADED_FILES_FOLDER;
 								0: { sorter: false }
 							}
 						})
-						
-						$("#select_all").click(function(){
-							var status = $(this).attr("checked");
-							$("td>input:checkbox").attr("checked",status);
-						});
 
+						$("#select_all").click(function(){
+							var status = $(this).prop("checked");
+							$("td>input:checkbox").prop("checked",status);
+						});
+						
 						$("form").submit(function() {
 							var checks = $("td>input:checkbox").serializeArray(); 
 							if (checks.length == 0) { 

@@ -68,20 +68,7 @@ if(isset($upload_failed_hidden_post) && count($upload_failed_hidden_post) > 0) {
 /** Define the arrays */
 $upload_failed = array();
 $move_failed = array();
-$clients_to_email = array();
-
-/**
- * Another hidden field sends the list of e-mails from users
- * which have new files assigned.
- * This is also passed as a string separated by commas, and
- * transformed into a filtered array.
- * E-mails are only sent after there are no more files to
- * assign, so they must be sent on the form on every step so
- * no clients are lost.
- */
-if(isset($_POST['upload_email_clients'])) {
-	$clients_to_email = array_filter(explode(',',$_POST['upload_email_clients']));
-}
+$upload_finish_orphans = array();
 
 /**
  * $empty_fields counts the amount of "name" fields that
@@ -150,7 +137,9 @@ while($row = mysql_fetch_array($sql)) {
 				$location = $work_folder.'/'.$file['file'];
 
 				if(file_exists($location)) {
-					/** Safe rename and chmod the file */
+					/**
+					 * If the file isn't already on the database, rename/chmod.
+					 */
 					if (!in_array($file['file'],$urls_db_files)) {
 						$move_arguments = array(
 												'uploaded_name' => $location,
@@ -159,12 +148,12 @@ while($row = mysql_fetch_array($sql)) {
 						$new_filename = $this_upload->upload_move($move_arguments);
 					}
 					else {
-						$new_filename = $file['file'];
+						$new_filename = $file['original'];
 					}
 					if (!empty($new_filename)) {
 						$delete_key = array_search($file['original'], $uploaded_files);					
 						unset($uploaded_files[$delete_key]);
-						
+
 						/**
 						 * Unassigned files are kept as orphans and can be related
 						 * to clients or groups later.
@@ -184,6 +173,9 @@ while($row = mysql_fetch_array($sql)) {
 						if (!empty($file['assignments'])) {
 							$add_arguments['assign_to'] = $file['assignments'];
 						}
+						else {
+							$upload_finish_orphans[] = $file['original'];
+						}
 						/** Uploader is a client */
 						if ($current_level == 0) {
 							$add_arguments['assign_to'] = array('c'.$client_my_id);
@@ -191,7 +183,6 @@ while($row = mysql_fetch_array($sql)) {
 							$add_arguments['uploader_type'] = 'client';
 						}
 						else {
-							$upload_finish_orphans[] = $file['name'];
 							$add_arguments['uploader_type'] = 'user';
 						}
 						if (!in_array($new_filename,$urls_db_files)) {
@@ -207,22 +198,7 @@ while($row = mysql_fetch_array($sql)) {
 							if (!empty($file['hidden'])) {
 								$upload_finish['hidden'] = $file['hidden'];
 							}
-
-							/**
-							 * If the uploader is a client, notify the user who
-							 * created this clients' account.
-							 */
-							if ($current_level == 0) {
-								$who_made_me = get_client_by_username(get_current_user_username());
-								$creator_info = get_user_by_username($who_made_me['created_by']);
-								$clients_to_email[] = $creator_info['email'];
-							}
-							else {
-								$clients_to_email[] = $file['client'];
-							}
 						}
-
-
 					}
 				}
 			}
@@ -230,36 +206,6 @@ while($row = mysql_fetch_array($sql)) {
 				$empty_fields++;
 			}
 		}
-
-		/**
-		 * E-mail the clients which just got new files uploaded.
-		 * First, remove any duplicates from the array of clients.
-		 */
-		$clients_to_email = array_unique($clients_to_email);
-
-		if(empty($uploaded_files) && !empty($upload_finish)) {
-			foreach ($clients_to_email as $client) {
-				$get_notify_email = check_if_notify_client($client);
-				if ($get_notify_email != false) {
-					$notify_client = new PSend_Email();
-					/**
-					 * When sending the e-mail, save the returned value of
-					 * the function to an array where the key is the username
-					 * of the client.
-					 * This is used later on the confirmation table, in the
-					 * Notify column.
-					 * The possible returned values are 1 for ok and 2 for
-					 * error.
-					 */
-					$users_emailed[$client] = $notify_client->psend_send_email('new_file_by_user',$get_notify_email);
-				}
-				else {
-					/** A value of 0 means that notify is disable for this client */
-					$users_emailed[$client] = 0;
-				}
-			}
-		}
-
 	}
 
 	/**
@@ -313,27 +259,6 @@ while($row = mysql_fetch_array($sql)) {
 			</tbody>
 		</table>
 <?php
-		/**
-		 * If the uploader is a client, files are correctly assigned,
-		 * and no files are left, notify the system administrator.
-		 */
-		if ($current_level == 0) {
-			if(empty($uploaded_files)) {
-				$client_uploader_id = get_client_by_username($this_admin);
-				$notify_sysadmin = new PSend_Email();
-				$email_sysadmin = $notify_sysadmin->psend_send_email('new_file_by_client',ADMIN_EMAIL_ADDRESS,'','',$client_uploader_id['id']);
-				
-				if ($email_sysadmin == 1) {
-					$msg = __('An e-mail was sent to the site administrator as a notification about the new files.','cftp_admin');
-					echo system_message('ok',$msg);
-				}
-				else {
-					$msg = __('The site administrator could not be e-mailed about the new files.','cftp_admin');
-					echo system_message('error',$msg);
-				}
-			}
-		}
-
 	}
 
 	/**
@@ -385,229 +310,215 @@ while($row = mysql_fetch_array($sql)) {
 		</table>
 <?php
 	}
+
+	/**
+	 * Generate the table of files ready to be assigned to a client.
+	 */
+	if(!empty($uploaded_files)) {
+?>
+		<h3><?php _e('Files ready to upload','cftp_admin'); ?></h3>
+		<p><?php _e('Please complete the following information to finish the uploading proccess. Remember that "Name" is a required field.','cftp_admin'); ?></p>
+		<?php if ($current_level != 0) { ?>
+			<div class="message message_info"><strong><?php _e('Note','cftp_admin'); ?></strong>: <?php _e('You can skip assignations if you want. The files are kept uploaded and you can add them to clients or groups later.','cftp_admin'); ?></div>
+		<?php } ?>
+<?php
 		/**
-		 * Generate the table of files ready to be assigned to a client.
+		 * First, do a server side validation for files that were submited
+		 * via the form, but the name field was left empty.
 		 */
-		if(!empty($uploaded_files)) {
-	?>
-			<h3><?php _e('Files ready to upload','cftp_admin'); ?></h3>
-			<p><?php _e('Please complete the following information to finish the uploading proccess. Remember that "Name" is a required field.','cftp_admin'); ?></p>
-			<?php if ($current_level != 0) { ?>
-				<div class="message message_info"><strong><?php _e('Note','cftp_admin'); ?></strong>: <?php _e('You can skip assignations if you want. The files are kept uploaded and you can add them to clients or groups later.','cftp_admin'); ?></div>
-			<?php } ?>
-	<?php
-			/**
-			 * First, do a server side validation for files that were submited
-			 * via the form, but the name field was left empty.
-			 */
-			if(!empty($empty_fields)) {
-				$msg = 'Name and client are required fields for all uploaded files.';
-				echo system_message('error',$msg);
-			}
-	?>
+		if(!empty($empty_fields)) {
+			$msg = 'Name and client are required fields for all uploaded files.';
+			echo system_message('error',$msg);
+		}
+?>
 
-			<script type="text/javascript">
-				$(document).ready(function() {
-					$("form").submit(function() {
-						clean_form(this);
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("form").submit(function() {
+					clean_form(this);
 
-						$(this).find('input[name$="[name]"]').each(function() {	
-							is_complete($(this)[0],'<?php echo $validation_no_name; ?>');
-						});
-
-						// show the errors or continue if everything is ok
-						if (show_form_errors() == false) { return false; }
-
+					$(this).find('input[name$="[name]"]').each(function() {	
+						is_complete($(this)[0],'<?php echo $validation_no_name; ?>');
 					});
+
+					// show the errors or continue if everything is ok
+					if (show_form_errors() == false) { return false; }
+
 				});
-			</script>
+			});
+		</script>
 
-			<form action="upload-process-form.php" name="save_files" id="save_files" method="post">
+		<form action="upload-process-form.php" name="save_files" id="save_files" method="post">
+			<?php
+				foreach($uploaded_files as $add_uploaded_field) {
+					echo '<input type="hidden" name="finished_files[]" value="'.$add_uploaded_field.'" />
+					';
+				}
+			?>
+			
+			<div class="container-fluid">
 				<?php
-					foreach($uploaded_files as $add_uploaded_field) {
-						echo '<input type="hidden" name="finished_files[]" value="'.$add_uploaded_field.'" />
-						';
-					}
-				?>
-				
-				<div class="container-fluid">
-					<?php
-						$i = 1;
-						foreach ($uploaded_files as $file) {
-							clearstatcache();
-							$this_upload = new PSend_Upload_File();
-							$file_original = $file;
-	
-							$location = $work_folder.'/'.$file;
+					$i = 1;
+					foreach ($uploaded_files as $file) {
+						clearstatcache();
+						$this_upload = new PSend_Upload_File();
+						$file_original = $file;
 
+						$location = $work_folder.'/'.$file;
+
+						/**
+						 * Check that the file is indeed present on the folder.
+						 * If not, it is added to the failed files array.
+						 */
+						if(file_exists($location)) {
+							/** Generate a safe filename */
+							//$file = $this_upload->safe_rename($file);
 							/**
-							 * Check that the file is indeed present on the folder.
-							 * If not, it is added to the failed files array.
+							 * Remove the extension from the file name and replace every
+							 * underscore with a space to generate a valid upload name.
 							 */
-							if(file_exists($location)) {
-								/** Generate a safe filename */
-								//$file = $this_upload->safe_rename($file);
-								/**
-								 * Remove the extension from the file name and replace every
-								 * underscore with a space to generate a valid upload name.
-								 */
-								$filename_no_ext = substr($file, 0, strrpos($file, '.'));
-								$file_title = str_replace('_',' ',$filename_no_ext);
-								if ($this_upload->is_filetype_allowed($file)) {
-									if (in_array($file,$urls_db_files)) {
-										$file_sql = $database->query("SELECT filename, description FROM tbl_files WHERE url = '$file'");
-										while($row = mysql_fetch_array($file_sql)) {
-											$file_title = $row["filename"];
-											$description = $row["description"];
-										}
+							$filename_no_ext = substr($file, 0, strrpos($file, '.'));
+							$file_title = str_replace('_',' ',$filename_no_ext);
+							if ($this_upload->is_filetype_allowed($file)) {
+								if (in_array($file,$urls_db_files)) {
+									$file_sql = $database->query("SELECT filename, description FROM tbl_files WHERE url = '$file'");
+									while($row = mysql_fetch_array($file_sql)) {
+										$file_title = $row["filename"];
+										$description = $row["description"];
 									}
-						?>
-									<div class="row-fluid edit_files">
-										<div class="span1">
-											<div class="file_number">
-												<p><?php echo $i; ?></p>
-											</div>
+								}
+					?>
+								<div class="row-fluid edit_files">
+									<div class="span1">
+										<div class="file_number">
+											<p><?php echo $i; ?></p>
 										</div>
-										<div class="span11 file_data">
-											<div class="row-fluid">
-												<div class="span6">
-													<div class="row-fluid">
-														<div class="span12">
-															<p class="on_disc_name">
-																<?php echo $file; ?>
-															</p>
-															<input type="hidden" name="file[<?php echo $i; ?>][original]" value="<?php echo $file_original; ?>" />
-															<input type="hidden" name="file[<?php echo $i; ?>][file]" value="<?php echo $file; ?>" />
+									</div>
+									<div class="span11 file_data">
+										<div class="row-fluid">
+											<div class="span6">
+												<div class="row-fluid">
+													<div class="span12">
+														<p class="on_disc_name">
+															<?php echo $file; ?>
+														</p>
+														<input type="hidden" name="file[<?php echo $i; ?>][original]" value="<?php echo $file_original; ?>" />
+														<input type="hidden" name="file[<?php echo $i; ?>][file]" value="<?php echo $file; ?>" />
 
-															<label><?php _e('Name', 'cftp_admin');?></label>
-															<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="txtfield required" />
-															<label><?php _e('Description', 'cftp_admin');?></label>
-															<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"><?php echo (isset($description)) ? $description : ''; ?></textarea>
-															
-															<?php if ($current_level != 0) { ?>
-																<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
-															<?php } ?>
-														</div>
+														<label><?php _e('Name', 'cftp_admin');?></label>
+														<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="txtfield required" />
+														<label><?php _e('Description', 'cftp_admin');?></label>
+														<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"><?php echo (isset($description)) ? $description : ''; ?></textarea>
+														
+														<?php if ($current_level != 0) { ?>
+															<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
+														<?php } ?>
 													</div>
 												</div>
-												<div class="span6">
-													<?php
-														/**
-														* Only show the CLIENTS select field if the current
-														* uploader is a system user, and not a client.
-														*/
-														if ($current_level != 0) {
-													?>
-															<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
-															<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="assign_select" >
-																<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
-																	<?php
-																		/**
-																		 * The clients list is generated early on the file so the
-																		 * array doesn't need to be made once on every file.
-																		 */
-																		foreach($clients as $client => $client_name) {
-																		?>
-																			<option value="<?php echo $client; ?>"><?php echo $client_name; ?></option>
-																		<?php
-																		}
+											</div>
+											<div class="span6">
+												<?php
+													/**
+													* Only show the CLIENTS select field if the current
+													* uploader is a system user, and not a client.
+													*/
+													if ($current_level != 0) {
+												?>
+														<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
+														<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="assign_select" >
+															<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
+																<?php
+																	/**
+																	 * The clients list is generated early on the file so the
+																	 * array doesn't need to be made once on every file.
+																	 */
+																	foreach($clients as $client => $client_name) {
 																	?>
-																<optgroup label="<?php _e('Groups', 'cftp_admin');?>">
+																		<option value="<?php echo $client; ?>"><?php echo $client_name; ?></option>
 																	<?php
-																		/**
-																		 * The groups list is generated early on the file so the
-																		 * array doesn't need to be made once on every file.
-																		 */
-																		foreach($groups as $group => $group_name) {
-																		?>
-																			<option value="<?php echo $group; ?>"><?php echo $group_name; ?></option>
-																		<?php
-																		}
+																	}
+																?>
+															<optgroup label="<?php _e('Groups', 'cftp_admin');?>">
+																<?php
+																	/**
+																	 * The groups list is generated early on the file so the
+																	 * array doesn't need to be made once on every file.
+																	 */
+																	foreach($groups as $group => $group_name) {
 																	?>
-															</select>
-															<div class="list_mass_members">
-																<a href="#" class="button button_gray add-all"><?php _e('Add all','cftp_admin'); ?></a>
-																<a href="#" class="button button_gray remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
-															</div>
-													<?php
-														} /** Close $current_level check */
-													?>
-												</div>
+																		<option value="<?php echo $group; ?>"><?php echo $group_name; ?></option>
+																	<?php
+																	}
+																?>
+														</select>
+														<div class="list_mass_members">
+															<a href="#" class="button button_gray add-all"><?php _e('Add all','cftp_admin'); ?></a>
+															<a href="#" class="button button_gray remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
+														</div>
+												<?php
+													} /** Close $current_level check */
+												?>
 											</div>
 										</div>
 									</div>
-							<?php
-									$i++;
-								}
-							}
-							else {
-								$upload_failed[] = $file;
+								</div>
+						<?php
+								$i++;
 							}
 						}
-					?>
-
-				</div> <!-- container -->
-
-				<?php
-					/**
-					 * Take the list of failed files and store them as a text string
-					 * that will be passed on a hidden field when posting the form.
-					 */
-					$upload_failed = array_filter($upload_failed);
-					$upload_failed_hidden = implode(',',$upload_failed);
-				?>
-				<input type="hidden" name="upload_failed" value="<?php echo $upload_failed_hidden; ?>" />
-		
-				<?php
-					/**
-					 * Pass the clients to email on a hidden input, so only when the
-					 * queue is empty we send the e-mails to avoid sending several
-					 * copies to the same client.
-					 */
-					if(!empty($clients_to_email)) {
-						$clients_to_email = array_filter($clients_to_email);
-						$clients_to_email = implode(',',$clients_to_email);
-				?>
-						<input type="hidden" name="upload_email_clients" value="<?php echo $clients_to_email; ?>" />
-				<?php
+						else {
+							$upload_failed[] = $file;
+						}
 					}
 				?>
-		
-				<div align="right">
-					<input type="submit" name="submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" id="upload_continue" />
-				</div>
-			</form>
 
-	<?php
-		}
+			</div> <!-- container -->
+
+			<?php
+				/**
+				 * Take the list of failed files and store them as a text string
+				 * that will be passed on a hidden field when posting the form.
+				 */
+				$upload_failed = array_filter($upload_failed);
+				$upload_failed_hidden = implode(',',$upload_failed);
+			?>
+			<input type="hidden" name="upload_failed" value="<?php echo $upload_failed_hidden; ?>" />
+			
+			<div align="right">
+				<input type="submit" name="submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" id="upload_continue" />
+			</div>
+		</form>
+
+<?php
+	}
 		
-		/**
-		 * Generate the table for the failed files.
-		 */
-		if(count($upload_failed) > 0) {
-	?>
-			<h3><?php _e('Files not uploaded','cftp_admin'); ?></h3>
-			<table id="failed_files_tbl" class="tablesorter edit_files">
-				<thead>
+	/**
+	 * Generate the table for the failed files.
+	 */
+	if(count($upload_failed) > 0) {
+?>
+		<h3><?php _e('Files not uploaded','cftp_admin'); ?></h3>
+		<table id="failed_files_tbl" class="tablesorter edit_files">
+			<thead>
+				<tr>
+					<th><?php _e('File Name','cftp_admin'); ?></th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php
+				foreach($upload_failed as $failed) {
+			?>
 					<tr>
-						<th><?php _e('File Name','cftp_admin'); ?></th>
+						<td><?php echo $failed; ?></td>
 					</tr>
-				</thead>
-				<tbody>
-				<?php
-					foreach($upload_failed as $failed) {
-				?>
-						<tr>
-							<td><?php echo $failed; ?></td>
-						</tr>
-				<?php
-					}
-				?>
-				</tbody>
-			</table>
-	<?php
-		}
-	?>
+			<?php
+				}
+			?>
+			</tbody>
+		</table>
+<?php
+	}
+?>
 
 </div>
 

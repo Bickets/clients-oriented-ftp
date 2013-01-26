@@ -58,6 +58,7 @@ else {
 define('TABLE_CLIENTS','tbl_clients');
 define('TABLE_FILES','tbl_files');
 define('TABLE_FILES_RELATIONS','tbl_files_relations');
+define('TABLE_NOTIFICATIONS','tbl_notifications');
 define('TABLE_OPTIONS','tbl_options');
 define('TABLE_USERS','tbl_users');
 define('TABLE_GROUPS','tbl_groups');

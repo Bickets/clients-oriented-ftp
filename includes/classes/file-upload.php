@@ -141,8 +141,17 @@ class PSend_Upload_File
 										");
 		}
 
+		/** Define type of uploader for the notifications queries. */
+		if ($this->uploader_type == 'user') {
+			$this->notif_uploader_type = 1;
+		}
+		elseif ($this->uploader_type == 'client') {
+			$this->notif_uploader_type = 0;
+		}
+
 		if (!empty($arguments['assign_to'])) {
 			$this->assign_to = $arguments['assign_to'];
+			$this->distinct_notifications = array();
 
 			/**
 			 * Get the usernames of clients and names of groups
@@ -161,20 +170,20 @@ class PSend_Upload_File
 				$this->id_only = substr($this->assignment, 1);
 				switch ($this->assignment[0]) {
 					case 'c':
-						$add_to = 'client_id';
+						$this->add_to = 'client_id';
 						$this->account_name = $this->users[$this->id_only];
 						$this->action_number = 25;
 						break;
 					case 'g':
-						$add_to = 'group_id';
+						$this->add_to = 'group_id';
 						$this->account_name = $this->groups[$this->id_only];
 						$this->action_number = 26;
 						break;
 				}
 				$this->assignment = substr($this->assignment, 1);
-				$assign_file = $database->query("INSERT INTO tbl_files_relations (file_id, $add_to, hidden)"
+				$assign_file = $database->query("INSERT INTO tbl_files_relations (file_id, $this->add_to, hidden)"
 											."VALUES ('$this->file_id', '$this->assignment', '$this->hidden')");
-
+				
 				/** Record the action log */
 				$new_log_action = new LogActions();
 				$log_action_args = array(
@@ -187,6 +196,39 @@ class PSend_Upload_File
 									);
 				$new_record_action = $new_log_action->log_action_save($log_action_args);
 
+
+				/***********************************************************************************************/
+				/***********************************************************************************************/
+				/***********************************************************************************************/
+				/** agregar aca las notificaciones */
+				$this->members_to_notify = array();
+				
+				if ($this->add_to == 'group_id') {
+					$this->get_group_members_sql = "SELECT DISTINCT client_id from tbl_members WHERE group_id='$this->assignment'";
+					$this->get_group_members = $database->query($this->get_group_members_sql);
+					while ($this->row = mysql_fetch_array($this->get_group_members)) {
+						$this->members_to_notify[] = $this->row['client_id'];
+					}
+				}
+				else {
+					$this->members_to_notify[] = $this->assignment;
+				}
+				
+				if (!empty($this->members_to_notify)) {
+					foreach ($this->members_to_notify as $this->add_notify) {
+						$this->current_assignment = $this->file_id.'-'.$this->add_notify;
+						if (!in_array($this->current_assignment, $this->distinct_notifications)) {
+							$this->add_not_query = "INSERT INTO tbl_notifications (file_id, client_id, upload_type)
+												VALUES ('$this->file_id', '$this->add_notify', '$this->notif_uploader_type')";
+							$this->add_notification = $database->query($this->add_not_query);
+							$this->distinct_notifications[] = $this->current_assignment;
+						}
+					}
+				}
+				/***********************************************************************************************/
+				/***********************************************************************************************/
+				/***********************************************************************************************/
+				/***********************************************************************************************/
 			}
 		}
 
@@ -196,6 +238,8 @@ class PSend_Upload_File
 		else {
 			return false;
 		}
+
+	print_r($this->distinct_notifications);
 	}
 
 }
