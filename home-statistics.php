@@ -66,7 +66,7 @@
 			}
 			if (!$wrote) {
 				echo '0';
-				//echo rand(0,29);
+				//echo rand(0,180);
 			}
 			echo ']';
 			$i++;

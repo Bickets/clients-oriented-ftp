@@ -151,15 +151,14 @@ $database->MySQLDB();
 				},
 				xaxis: {
 					ticks: [
-						[1, '<?php _e('Files','cftp_admin'); ?>'],
-						[2, '<?php _e('Clients','cftp_admin'); ?>'],
-						[3, '<?php _e('Groups','cftp_admin'); ?>'],
-						[4, '<?php _e('Users','cftp_admin'); ?>']
+						[1, '<?php _e('Files','cftp_admin'); ?>: <?php echo $total_files; ?>'],
+						[2, '<?php _e('Clients','cftp_admin'); ?>: <?php echo $total_clients; ?>'],
+						[3, '<?php _e('Groups','cftp_admin'); ?>: <?php echo $total_groups; ?>'],
+						[4, '<?php _e('Users','cftp_admin'); ?>: <?php echo $total_users; ?>']
 					]
 				},
 				yaxis: {
 					min: 0,
-					tickSize:1,
 					tickDecimals:0
 				}
 			}
@@ -222,12 +221,11 @@ $database->MySQLDB();
 			xaxis: {
 				mode: "time",
 				minTickSize: [1, "day"],
-				timeformat: "%d/%m/%y",
+				timeformat: "%d/%m",
 				labelWidth: "30"
 			},
 			yaxis: {
 				min: 0,
-				tickSize:1,
 				tickDecimals:0
 			},
 			legend: {
