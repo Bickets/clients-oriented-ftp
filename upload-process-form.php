@@ -118,8 +118,11 @@ while($row = mysql_fetch_array($sql)) {
 			$client_my_info = get_client_by_username($this_admin);
 			$client_my_id = $client_my_info["id"];
 		}
+		
+		$n = 0;
 
 		foreach ($_POST['file'] as $file) {
+			$n++;
 
 			if(!empty($file['name'])) {
 				/**
@@ -190,13 +193,13 @@ while($row = mysql_fetch_array($sql)) {
 						}
 						if($this_upload->upload_add_to_database($add_arguments)) {
 							/** Mark is as correctly uploaded / assigned */
-							$upload_finish[] = array(
+							$upload_finish[$n] = array(
 													'file' => $file['file'],
 													'name' => $file['name'],
 													'description' => $file['description']
 												);
 							if (!empty($file['hidden'])) {
-								$upload_finish['hidden'] = $file['hidden'];
+								$upload_finish[$n]['hidden'] = $file['hidden'];
 							}
 						}
 					}
@@ -223,6 +226,7 @@ while($row = mysql_fetch_array($sql)) {
 					<th><?php _e('File Name','cftp_admin'); ?></th>
 					<th><?php _e('Name','cftp_admin'); ?></th>
 					<th><?php _e('Description','cftp_admin'); ?></th>
+					<th><?php _e("Status",'cftp_admin'); ?></th>
 					<th><?php _e("Actions",'cftp_admin'); ?></th>
 				</tr>
 			</thead>
@@ -234,6 +238,13 @@ while($row = mysql_fetch_array($sql)) {
 						<td><?php echo $uploaded['file']; ?></td>
 						<td><?php echo $uploaded['name']; ?></td>
 						<td><?php echo $uploaded['description']; ?></td>
+						<td class="<?php echo (!empty($uploaded['hidden'])) ? 'file_status_hidden' : 'file_status_visible'; ?>">
+							<?php
+								$status_hidden = __('Hidden','cftp_admin');
+								$status_visible = __('Visible','cftp_admin');
+								echo (!empty($uploaded['hidden'])) ? $status_hidden : $status_visible;
+							?>
+						</td>
 						<td>
 							<?php
 								/*
