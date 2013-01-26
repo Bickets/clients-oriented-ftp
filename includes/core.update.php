@@ -353,7 +353,6 @@ if (in_session_or_cookies($allowed_update)) {
 			$updates_made++;
 		}
 
-
 		/**
 		 * r275 updates
 		 * A new database table was added.
@@ -378,6 +377,21 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+		/**
+		 * r278 updates
+		 * Set timestamp columns as real timestamp data, instead of INT
+		 */
+		if ($last_update < 278) {
+			$q1 = "ALTER TABLE `tbl_files` ADD COLUMN `timestamp2` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()";
+			$q2 = "UPDATE `tbl_files` SET `timestamp2` = FROM_UNIXTIME(`timestamp`)";
+			$q3 = "ALTER TABLE `tbl_files` DROP COLUMN `timestamp`";
+			$q4 = "ALTER TABLE `tbl_files` CHANGE `timestamp2` `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()";
+			$database->query($q1);
+			$database->query($q2);
+			$database->query($q3);
+			$database->query($q4);
+			$updates_made++;
+		}
 
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");

@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `tbl_files` (
   `url` text NOT NULL,
   `filename` text NOT NULL,
   `description` text NOT NULL,
-  `timestamp` int(15) NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `uploader` varchar('.MAX_USER_CHARS.') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `tbl_users` (
   `name` text NOT NULL,
   `email` varchar(60) NOT NULL,
   `level` tinyint(1) NOT NULL,
-  `timestamp` int(15) NOT NULL,
+  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `address` text COLLATE latin1_general_ci NOT NULL,
   `phone` varchar(32) COLLATE latin1_general_ci NOT NULL,
   `notify` tinyint(1) NOT NULL,
