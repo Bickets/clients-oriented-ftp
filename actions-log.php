@@ -18,7 +18,7 @@ include('header.php');
 	$(document).ready( function() {
 		$("#activities_tbl").tablesorter( {
 			widthFixed: true,
-			sortList: [[1,1]], widgets: ['zebra'], headers: {
+			widgets: ['zebra'], headers: {
 				0: { sorter: false }, 
 				5: { sorter: false }
 			}
@@ -112,7 +112,7 @@ include('header.php');
 		$no_results_error = 'filter';
 	}
 
-	$cq .= " ORDER BY id";
+	$cq .= " ORDER BY id DESC";
 	
 	$sql = $database->query($cq);
 	$count = mysql_num_rows($sql);
