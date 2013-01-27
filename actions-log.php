@@ -215,7 +215,6 @@ include('header.php');
 				while($log = mysql_fetch_array($sql)) {
 					$this_action = render_log_action(
 										array(
-											'print' => false,
 											'action' => $log['action'],
 											'timestamp' => $log['timestamp'],
 											'owner_id' => $log['owner_id'],

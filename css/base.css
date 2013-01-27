@@ -260,6 +260,7 @@ h4 {
 .activities_log li {
 	padding:7px;
 	border-bottom:1px solid #EFEFEF;
+	overflow:hidden;
 }
 
 .activities_log li:nth-child(odd) {
@@ -277,7 +278,7 @@ h4 {
 
 .activities_log li .log_ico {
 	float:left;
-	margin:0 15px 8px 0;
+	margin:0 15px 0 0;
 	opacity:.1;
 }
 

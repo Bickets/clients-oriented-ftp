@@ -68,23 +68,33 @@ $database->MySQLDB();
 											$log_count = mysql_num_rows($sql_log);
 											if ($log_count > 0) {
 												while($log = mysql_fetch_array($sql_log)) {
+													$rendered = render_log_action(
+																		array(
+																			'action' => $log['action'],
+																			'timestamp' => $log['timestamp'],
+																			'owner_id' => $log['owner_id'],
+																			'owner_user' => $log['owner_user'],
+																			'affected_file' => $log['affected_file'],
+																			'affected_file_name' => $log['affected_file_name'],
+																			'affected_account' => $log['affected_account'],
+																			'affected_account_name' => $log['affected_account_name']
+																		)
+													);
 												?>
 													<li>
-														<?php
-															echo render_log_action(
-																				array(
-																					'print' => true,
-																					'action' => $log['action'],
-																					'timestamp' => $log['timestamp'],
-																					'owner_id' => $log['owner_id'],
-																					'owner_user' => $log['owner_user'],
-																					'affected_file' => $log['affected_file'],
-																					'affected_file_name' => $log['affected_file_name'],
-																					'affected_account' => $log['affected_account'],
-																					'affected_account_name' => $log['affected_account_name']
-																				)
-															);
-														?>
+														<div class="log_ico">
+															<img src="img/log_icons/<?php echo $rendered['icon']; ?>.png" alt="Action icon">
+														</div>
+														<div class="date"><?php echo $rendered['timestamp']; ?></div>
+														<div class="action">
+															<?php
+																if (!empty($rendered['1'])) { echo '<span>'.$rendered['1'].'</span> '; }
+																echo $rendered['text'];
+																if (!empty($rendered['2'])) { echo '<span>'.$rendered['2'].'</span> '; }
+																if (!empty($rendered['3'])) { echo '<span>'.$rendered['3'].'</span> '; }
+																if (!empty($rendered['4'])) { echo '<span>'.$rendered['4'].'</span> '; }
+															?>
+														</div>
 													</li>
 												<?php
 												}

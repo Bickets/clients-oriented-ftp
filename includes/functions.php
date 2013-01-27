@@ -512,7 +512,6 @@ function generateRandomString($length = 10)
  */
 function render_log_action($params)
 {
-	$print = $params['print'];
 	$action = $params['action'];
 	$timestamp = $params['timestamp'];
 	$owner_id = $params['owner_id'];
@@ -703,43 +702,15 @@ function render_log_action($params)
 	}
 	
 	$date = date(TIMEFORMAT_USE,strtotime($timestamp));
+
+	if (!empty($part1)) { $log['1'] = $part1; }
+	if (!empty($part2)) { $log['2'] = $part2; }
+	if (!empty($part3)) { $log['3'] = $part3; }
+	if (!empty($part4)) { $log['4'] = $part4; }
+	$log['icon'] = $action_ico;
+	$log['timestamp'] = $date;
+	$log['text'] = $action_text;
 	
-	if ($print == true) {
-		$rendered = '<div class="log_ico">
-						<img src="'.BASE_URI.'/img/log_icons/'.$action_ico.'.png" alt="Action icon">
-					</div>
-					<div class="date">'.$date.'</div>
-						<div class="action">';
-							if (!empty($part1)) {
-								$rendered .= '<span>'.$part1.'</span> ';
-							}
-	
-							$rendered .= $action_text;
-	
-							if (!empty($part2)) {
-								$rendered .= ' <span>'.$part2.'</span>';
-							}
-	
-							if (!empty($part3)) {
-								$rendered .= ' '.$part3.' ';
-							}
-	
-							if (!empty($part4)) {
-								$rendered .= ' <span>'.$part4.'</span>';
-							}
-		$rendered .= '</div>';
-	
-		return $rendered;
-	}
-	else {
-		if (!empty($part1)) { $log['1'] = $part1; }
-		if (!empty($part2)) { $log['2'] = $part2; }
-		if (!empty($part3)) { $log['3'] = $part3; }
-		if (!empty($part4)) { $log['4'] = $part4; }
-		$log['timestamp'] = $date;
-		$log['text'] = $action_text;
-		
-		return $log;
-	}
+	return $log;
 }
 ?>
