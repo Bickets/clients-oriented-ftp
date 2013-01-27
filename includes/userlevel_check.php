@@ -20,12 +20,13 @@ function check_valid_cookie()
 		$cookie_pass = mysql_real_escape_string($_COOKIE['password']);
 		$cookie_user = mysql_real_escape_string($_COOKIE['loggedin']);
 		$cookie_level = mysql_real_escape_string($_COOKIE['userlevel']);
-		if($cookie_level == '0') {
-			$sql_cookie = mysql_query("SELECT * FROM tbl_users WHERE user='$cookie_user' AND password='$cookie_pass'");
-		}
-		else {
-			$sql_cookie = mysql_query("SELECT * FROM tbl_users WHERE user='$cookie_user' AND password='$cookie_pass' AND level='$cookie_level'");
-		}
+		/**
+		 * Compare the cookies to the database information. Level
+		 * and active are compared in case the cookie exists but
+		 * the client has been deactivated, or the user level has
+		 * changed.
+		 */
+		$sql_cookie = mysql_query("SELECT * FROM tbl_users WHERE user='$cookie_user' AND password='$cookie_pass' AND level='$cookie_level' AND active = '1'");
 		$count = mysql_num_rows($sql_cookie);
 		if($count>0){
 			return true;
