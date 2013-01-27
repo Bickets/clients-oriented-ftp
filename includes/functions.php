@@ -699,6 +699,17 @@ function render_log_action($params)
 			$action_text = __('deactivated the user','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
+		case 29:
+			$action_ico = 'branding-change';
+			$part1 = $owner_user;
+			$action_text = __('uploaded a new logo on "Branding"','cftp_admin');
+			break;
+		case 30:
+			$action_ico = 'update';
+			$part1 = $owner_user;
+			$action_text = __('updated ProjectSend to version','cftp_admin');
+			$part2 = $affected_account_name;
+			break;
 	}
 	
 	$date = date(TIMEFORMAT_USE,strtotime($timestamp));

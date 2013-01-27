@@ -28,6 +28,12 @@ check_for_session();
 if (!isset($page_title)) { $page_title = __('System Administration','cftp_admin'); }
 
 /**
+ * Global information on the current account to use accross the system.
+ */
+$global_user = get_current_user_username();
+$global_id = get_logged_account_id($global_user);
+
+/**
  * Call the database update file to see if any change is needed,
  * but only if logged in as a system user.
  */
@@ -35,12 +41,6 @@ $core_update_allowed = array(9,8,7);
 if (in_session_or_cookies($core_update_allowed)) {
 	require_once(ROOT_DIR.'/includes/core.update.php');
 }
-
-/**
- * Global information on the current account to use accross the system.
- */
-$global_user = get_current_user_username();
-$global_id = get_logged_account_id($global_user);
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->

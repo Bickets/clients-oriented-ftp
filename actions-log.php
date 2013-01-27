@@ -151,6 +151,10 @@ include('header.php');
 						<option value="23"><?php _e('A user creates a new group.','cftp_admin'); ?></option>
 						<option value="25"><?php _e('A file is assigned to a client.','cftp_admin'); ?></option>
 						<option value="26"><?php _e('A file is assigned to a group.','cftp_admin'); ?></option>
+						<option value="27"><?php _e('A user account was marked as active.','cftp_admin'); ?></option>
+						<option value="28"><?php _e('A user account was marked as inactive.','cftp_admin'); ?></option>
+						<option value="29"><?php _e('The logo on "Branding" was changed.','cftp_admin'); ?></option>
+						<option value="30"><?php _e('ProjectSend was updated.','cftp_admin'); ?></option>
 				</select>
 				<input type="submit" id="btn_proceed_filter_clients" value="<?php _e('Filter','cftp_admin'); ?>" class="button_form" />
 			</form>

@@ -36,6 +36,8 @@
  * 26-	A file is assigned to a group.
  * 27-	A user account was marked as active.
  * 28-	A user account was marked as inactive.
+ * 29-	The logo on "Branding" was changed.
+ * 30-	ProjectSend was updated.
  *
  * More to be added soon.
  */

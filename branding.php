@@ -47,6 +47,14 @@ if ($_POST) {
 				$sql = $database->query($q, $database->connection);
 				$msg = __('The image was uploaded correctly.','cftp_admin');
 				echo system_message('ok',$msg);
+
+				/** Record the action log */
+				$new_log_action = new LogActions();
+				$log_action_args = array(
+										'action' => 29,
+										'owner_id' => $global_id
+									);
+				$new_record_action = $new_log_action->log_action_save($log_action_args);
 			}
 			else {
 					$msg = __('The file could not be moved to the corresponding folder.','cftp_admin');

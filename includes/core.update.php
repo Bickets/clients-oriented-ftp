@@ -423,6 +423,15 @@ if (in_session_or_cookies($allowed_update)) {
 
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");
+
+		/** Record the action log */
+		$new_log_action = new LogActions();
+		$log_action_args = array(
+								'action' => 30,
+								'owner_id' => $global_id,
+								'affected_account_name' => $current_version
+							);
+		$new_record_action = $new_log_action->log_action_save($log_action_args);
 	}
 }
 ?>
