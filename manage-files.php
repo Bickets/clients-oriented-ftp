@@ -6,7 +6,7 @@
  * @package ProjectSend
  */
 $tablesorter = 1;
-$allowed_levels = array(9,8);
+$allowed_levels = array(9,8,7);
 require_once('sys.includes.php');
 
 $page_title = __('Manage files','cftp_admin');
@@ -274,6 +274,13 @@ include('header.php');
 					$no_results_error = 'search';
 				}
 	
+				/** If the user is an uploader, only show files he uploaded. */	
+				$me = get_user_by_username($global_user);
+				if($me['level'] == '7') {
+					$fq .= " AND uploader = '$global_user'";
+					$no_results_error = 'account_level';
+				}
+	
 				$sql_files = $database->query($fq);
 				$count = mysql_num_rows($sql_files);
 			}
@@ -342,6 +349,9 @@ include('header.php');
 									break;
 								case 'none_assigned':
 									$no_results_message = __('There are no files assigned to this client.','cftp_admin');;
+									break;
+								case 'account_level':
+									$no_results_message = __('You have not uploaded any files for this account.','cftp_admin');;
 									break;
 							}
 						}
