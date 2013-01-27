@@ -7,6 +7,7 @@
  * @subpackage	Install
  */
 $timestamp = time();
+$current_version = substr(CURRENT_VERSION, 1);
 
 $q1 = '
 CREATE TABLE IF NOT EXISTS `tbl_files` (
@@ -26,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `tbl_options` (
   `name` varchar(50) COLLATE latin1_general_ci NOT NULL,
   `value` text COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 ';
 
 $q3 = '
@@ -132,23 +133,31 @@ CREATE TABLE IF NOT EXISTS `tbl_notifications` (
 ';
 
 $q10 = '
-INSERT INTO `tbl_options` (`id`, `name`, `value`) VALUES
-(1, \'base_uri\', \''.$base_uri.'\'),
-(2, \'max_thumbnail_width\', \'100\'),
-(3, \'max_thumbnail_height\', \'100\'),
-(4, \'thumbnails_folder\', \'../../img/custom/thumbs/\'),
-(5, \'thumbnail_default_quality\', \'90\'),
-(6, \'max_logo_width\', \'300\'),
-(7, \'max_logo_height\', \'300\'),
-(8, \'this_install_title\', \''.$this_install_title.'\'),
-(9, \'selected_clients_template\', \'default\'),
-(10, \'logo_thumbnails_folder\', \'/img/custom/thumbs\'),
-(11, \'timezone\', \'America/Argentina/Buenos_Aires\'),
-(12, \'timeformat\', \'d/m/Y\'),
-(13, \'allowed_file_types\', \'7z,ace,ai,avi,bin,bmp,cdr,doc,docm,docx,eps,fla,flv,gif,gz,gzip,htm,html,iso,jpeg,jpg,mp3,mp4,mpg,odt,oog,ppt,pptx,pptm,pps,ppsx,pdf,png,psd,rar,rtf,tar,tif,tiff,txt,wav,xls,xlsm,xlsx,zip\'),
-(14, \'logo_filename\', \'logo.png\'),
-(15, \'admin_email_address\', \''.$got_admin_email.'\'),
-(16, \'clients_can_register\', \'0\')';
+INSERT INTO `tbl_options` (`name`, `value`) VALUES
+(\'base_uri\', \''.$base_uri.'\'),
+(\'max_thumbnail_width\', \'100\'),
+(\'max_thumbnail_height\', \'100\'),
+(\'thumbnails_folder\', \'../../img/custom/thumbs/\'),
+(\'thumbnail_default_quality\', \'90\'),
+(\'max_logo_width\', \'300\'),
+(\'max_logo_height\', \'300\'),
+(\'this_install_title\', \''.$this_install_title.'\'),
+(\'selected_clients_template\', \'default\'),
+(\'logo_thumbnails_folder\', \'/img/custom/thumbs\'),
+(\'timezone\', \'America/Argentina/Buenos_Aires\'),
+(\'timeformat\', \'d/m/Y\'),
+(\'allowed_file_types\', \'7z,ace,ai,avi,bin,bmp,cdr,doc,docm,docx,eps,fla,flv,gif,gz,gzip,htm,html,iso,jpeg,jpg,mp3,mp4,mpg,odt,oog,ppt,pptx,pptm,pps,ppsx,pdf,png,psd,rar,rtf,tar,tif,tiff,txt,wav,xls,xlsm,xlsx,zip\'),
+(\'logo_filename\', \'logo.png\'),
+(\'admin_email_address\', \''.$got_admin_email.'\'),
+(\'clients_can_register\', \'0\'),
+(\'last_update\', \''.$current_version.'\'),
+(\'mail_system_use\', \'mail\'),
+(\'mail_smtp_host\', \'\'),
+(\'mail_smtp_port\', \'\'),
+(\'mail_smtp_user\', \'\'),
+(\'mail_smtp_pass\', \'\'),
+(\'mail_from_name\', \''.$this_install_title.'\')
+';
 
 $q11 = '
 INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`, `active`) VALUES

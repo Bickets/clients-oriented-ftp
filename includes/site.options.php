@@ -56,6 +56,17 @@ if(!empty($options_values)) {
 	if (isset($options_values['admin_email_address'])) {
 		define('ADMIN_EMAIL_ADDRESS',$options_values['admin_email_address']);
 	}
+	/**
+	 * For versions 282 and up
+	 */	
+	if (isset($options_values['mail_system_use'])) {
+		define('MAIL_SYSTEM',$options_values['mail_system_use']);
+		define('SMTP_HOST',$options_values['mail_smtp_host']);
+		define('SMTP_PORT',$options_values['mail_smtp_port']);
+		define('SMTP_USER',$options_values['mail_smtp_user']);
+		define('SMTP_PASS',$options_values['mail_smtp_pass']);
+		define('MAIL_FROM_NAME',$options_values['mail_from_name']);
+	}
 
 	/**
 	 * Set the default timezone based on the value of the Timezone select box

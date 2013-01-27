@@ -393,6 +393,34 @@ if (in_session_or_cookies($allowed_update)) {
 			$updates_made++;
 		}
 
+
+		/**
+		 * r282 updates
+		 * Add new options to select the handler for sending emails.
+		 */
+		if ($last_update < 282) {
+			$new_database_values = array(
+											'mail_system_use' => 'mail',
+											'mail_smtp_host' => '',
+											'mail_smtp_port' => '',
+											'mail_smtp_user' => '',
+											'mail_smtp_pass' => '',
+											'mail_from_name' => THIS_INSTALL_SET_TITLE
+										);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");
 	}

@@ -80,3 +80,6 @@ Many thanks to the authors of the following scripts, which are used on ProjectSe
 
 - flot
   https://github.com/flot/flot
+
+- phpmailer
+  http://phpmailer.worxware.com/

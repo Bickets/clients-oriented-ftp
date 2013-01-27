@@ -19,6 +19,13 @@ if ($_POST) {
 	 * Escape all the posted values on a single function.
 	 * Defined on functions.php
 	 */
+	 
+	/** Temp fix, this should be done in a different way */
+	$allowed_empty_values = array('mail_smtp_host','mail_smtp_port','mail_smtp_user','mail_smtp_pass');
+	foreach ($allowed_empty_values as $check_field) {
+		if (empty($_POST[$check_field])) { $_POST[$check_field] = ''; }
+	}
+	
 	$_POST = mysql_real_escape_array($_POST);
 	$keys = array_keys($_POST);
 
@@ -29,7 +36,7 @@ if ($_POST) {
 	 * Check if all the options are filled.
 	 */
 	for ($i = 0; $i < $options_total; $i++) {
-		if ($_POST[$keys[$i]] == '') {
+		if (!isset($_POST[$keys[$i]])) {
 			$query_state = 'err_fill';
 		}
 		else {
@@ -110,7 +117,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 					is_complete_all_options(this,'<?php _e('Please complete all the fields.','cftp_admin'); ?>');
 
 					// show the errors or continue if everything is ok
-					if (show_form_errors() == false) { return false; }
+					if (show_form_errors() == false) { alert('<?php _e('Please complete all the fields.','cftp_admin'); ?>'); return false; }
 				});
 			});
 		</script>
@@ -121,6 +128,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 				<div id="tab-container" class='tab-container'>
 					<ul class="etabs">
 						<li class="tab"><a href="#tab_general"><?php _e('General Options','cftp_admin'); ?></a></li>
+						<li class="tab"><a href="#tab_email"><?php _e('E-mail notifications','cftp_admin'); ?></a></li>
 						<li class="tab"><a href="#tab_security"><?php _e('Security','cftp_admin'); ?></a></li>
 						<li class="tab"><a href="#tab_thumbs"><?php _e('Thumbnails','cftp_admin'); ?></a></li>
 						<li class="tab"><a href="#tab_logo"><?php _e('Company logo','cftp_admin'); ?></a></li>
@@ -148,10 +156,6 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									<li>
 										<label for="this_install_title"><?php _e('Site name','cftp_admin'); ?></label>
 										<input name="this_install_title" id="this_install_title" value="<?php echo THIS_INSTALL_SET_TITLE; ?>" />
-									</li>
-									<li>
-										<label for="admin_email_address"><?php _e('E-mail for notifications','cftp_admin'); ?></label>
-										<input name="admin_email_address" id="admin_email_address" value="<?php echo ADMIN_EMAIL_ADDRESS; ?>" />
 									</li>
 									<li>
 										<label for="selected_clients_template"><?php _e("Client's template",'cftp_admin'); ?></label>
@@ -190,6 +194,63 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										<input type="checkbox" value="1" name="clients_can_register" class="checkbox_options" <?php echo (CLIENTS_CAN_REGISTER == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 					
+									<li class="options_divide"></li>
+								</ul>
+							</div>
+						</div>
+
+						<div id="tab_email">
+							<div class="options_box whitebox">
+								<ul class="form_fields">
+									<li>
+										<h3><?php _e('E-mail sending options','cftp_admin'); ?></h3>
+										<p><?php _e('Here you can select which mail system will be used when sending the notifications. If you have a valid e-mail account, SMTP is the recommended option.','cftp_admin'); ?></p>
+									</li>
+									<li>
+										<label for="mail_system_use"><?php _e('Mailer','cftp_admin'); ?></label>
+										<select name="mail_system_use" id="mail_system_use">
+											<option value="mail" <?php echo (MAIL_SYSTEM == 'mail') ? 'selected="selected"' : ''; ?>>PHP Mail (basic)</option>
+											<option value="sendmail" <?php echo (MAIL_SYSTEM == 'sendmail') ? 'selected="selected"' : ''; ?>>Sendmail</option>
+											<option value="smtp" <?php echo (MAIL_SYSTEM == 'smtp') ? 'selected="selected"' : ''; ?>>SMTP</option>
+										</select>
+									</li>					
+									<li>
+					
+									<li class="options_divide"></li>
+									<li>
+										<h3><?php _e('"From" information','cftp_admin'); ?></h3>
+									</li>
+									<li>
+										<label for="admin_email_address"><?php _e('E-mail address','cftp_admin'); ?></label>
+										<input name="admin_email_address" id="admin_email_address" value="<?php echo ADMIN_EMAIL_ADDRESS; ?>" />
+									</li>					
+									<li>
+										<label for="mail_from_name"><?php _e('Name','cftp_admin'); ?></label>
+										<input name="mail_from_name" id="mail_from_name" value="<?php echo MAIL_FROM_NAME; ?>" />
+									</li>					
+									<li class="options_divide"></li>
+
+									<li>
+										<h3><?php _e('SMTP options','cftp_admin'); ?></h3>
+										<p><?php _e('If you selected SMTP as your mailer, please complete these options.','cftp_admin'); ?></p>
+									</li>
+									<li>
+										<label for="mail_smtp_host"><?php _e('Host','cftp_admin'); ?></label>
+										<input name="mail_smtp_host" id="mail_smtp_host" class="empty" value="<?php echo SMTP_HOST; ?>" />
+									</li>					
+									<li>
+										<label for="mail_smtp_port"><?php _e('Port','cftp_admin'); ?></label>
+										<input name="mail_smtp_port" id="mail_smtp_port" class="empty" value="<?php echo SMTP_PORT; ?>" />
+									</li>					
+									<li>
+										<label for="mail_smtp_user"><?php _e('Username','cftp_admin'); ?></label>
+										<input name="mail_smtp_user" id="mail_smtp_user" class="empty" value="<?php echo SMTP_USER; ?>" />
+									</li>					
+									<li>
+										<label for="mail_smtp_pass"><?php _e('Password','cftp_admin'); ?></label>
+										<input type="password" name="mail_smtp_pass" id="mail_smtp_pass" class="empty" value="<?php echo SMTP_PASS; ?>" />
+									</li>					
+
 									<li class="options_divide"></li>
 								</ul>
 							</div>
