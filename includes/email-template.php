@@ -15,13 +15,7 @@ $img_safe_style = 'display:block; margin:0; border:none;';
  * Define the header. A table cell remains open and the content of the
  * e-mail is inserted there.
  */
-$email_template_header = '<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset='.EMAIL_ENCODING.'" />
-<title>%SUBJECT%</title>
-</head>
-
+$email_template_header = '
 <body style="background:#f4f4f4; margin:40px 0; padding:40px 0;" bgcolor="#f4f4f4">
 <table width="550" border="0" cellspacing="0" cellpadding="0" style="background:#fff;	border:1px solid #ccc; -moz-border-radius:5px; -moz-box-shadow:3px 3px 5px #dedede; -webkit-border-radius:5px; -webkit-box-shadow:3px 3px 5px #dedede; border-radius:5px; box-shadow:3px 3px 5px #dedede;" bgcolor="#FFFFFF" align="center">
 	<tr>

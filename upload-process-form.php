@@ -502,6 +502,13 @@ while($row = mysql_fetch_array($sql)) {
 
 <?php
 	}
+	/**
+	 * There are no more files to assign.
+	 * Send the notifications
+	 */
+	else {
+		include(ROOT_DIR.'/upload-send-notifications.php');
+	}
 		
 	/**
 	 * Generate the table for the failed files.

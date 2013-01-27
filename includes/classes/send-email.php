@@ -21,18 +21,18 @@ include_once(ROOT_DIR.'/includes/email-template.php');
 
 /** Strings for the "New file uploaded" BY A SUSTEM USER e-mail */
 $email_strings_file_by_user = array(
-									'subject' => __('New file uploaded for you','cftp_admin'),
-									'body' => __('A new file has been uploaded for you to download.','cftp_admin'),
+									'subject' => __('New files uploaded for you','cftp_admin'),
+									'body' => __('The following files are now available for you to download.','cftp_admin'),
 									'body2' => __("If you don't want to be notified about new files, please contact the uploader.",'cftp_admin'),
-									'body3' => __('You can access a list of all your files','cftp_admin'),
+									'body3' => __('You can access a list of all your files or upload your own','cftp_admin'),
 									'body4' => __('by logging in here','cftp_admin')
 								);
 
 /** Strings for the "New file uploaded" BY A CLIENT e-mail */
 $email_strings_file_by_client = array(
-									'subject' => __('New file uploaded by a client.','cftp_admin'),
-									'body' => __('A new file has been uploaded by the client','cftp_admin'),
-									'body2' => __("You can manage this client's account and the corresponding files",'cftp_admin'),
+									'subject' => __('New files uploaded by clients','cftp_admin'),
+									'body' => __('New files has been uploaded by the following clients','cftp_admin'),
+									'body2' => __("You can manage these files",'cftp_admin'),
 									'body3' => __('by logging in here','cftp_admin')
 								);
 
@@ -73,9 +73,6 @@ $email_strings_new_user = array(
 
 class PSend_Email
 {
-
-	var $email_headers = '';
-	
 	/**
 	 * The body of the e-mails is gotten from the html templates
 	 * found on the /emails folder.
@@ -85,80 +82,11 @@ class PSend_Email
 		global $email_template_header;
 		global $email_template_footer;
 
-		$this->get_body = 'emails/'.$filename;
+		$this->get_body = ROOT_DIR.'/emails/'.$filename;
 		$this->make_body = $email_template_header;
 		$this->make_body .= file_get_contents($this->get_body);
 		$this->make_body .= $email_template_footer;
 		return $this->make_body;
-	}
-
-	/**
-	 * Prepare the headers using the information obtained on sys.options.php
-	 * (main admin e-mail, the title for this ProjectSend installation,
-	 * and the character encoding values).
-	 */
-	function email_set_headers()
-	{
-		$this->email_headers = 'From: '.THIS_INSTALL_SET_TITLE.' <'.ADMIN_EMAIL_ADDRESS.'>' . "\n";
-		$this->email_headers .= 'Return-Path:<'.ADMIN_EMAIL_ADDRESS.'>' . "\r\n";
-		$this->email_headers .= 'MIME-Version: 1.0' . "\n";
-		$this->email_headers .= 'Content-type: text/html; charset='.EMAIL_ENCODING."\r\n";
-		$this->email_headers .= "Sensitivity: Private\n";
-		return $this->email_headers;
-	}
-
-	/**
-	 * Prepare the body for the "New File by user" e-mail and replace the
-	 * tags with the strings values set at the top of this file and the
-	 * link to the log in page.
-	 */
-	function email_new_file_by_user()
-	{
-		global $email_strings_file_by_user;
-		$this->email_body = $this->email_prepare_body('new-file-for-client.html');
-		$this->email_body = str_replace(
-									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%BODY4%','%LINK%'),
-									array(
-										$email_strings_file_by_user['subject'],
-										$email_strings_file_by_user['body'],
-										$email_strings_file_by_user['body2'],
-										$email_strings_file_by_user['body3'],
-										$email_strings_file_by_user['body4'],
-										BASE_URI
-									),
-									$this->email_body
-								);
-		return array(
-					'subject' => $email_strings_file_by_user['subject'],
-					'body' => $this->email_body
-				);
-	}
-
-	/**
-	 * Prepare the body for the "New File by client" e-mail and replace the
-	 * tags with the strings values set at the top of this file and the
-	 * link to the log in page.
-	 */
-	function email_new_file_by_client($client_id)
-	{
-		global $email_strings_file_by_client;
-		$this->client_info = get_client_by_id($client_id);
-		$this->email_body = $this->email_prepare_body('new-file-by-client.html');
-		$this->email_body = str_replace(
-									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LINK%'),
-									array(
-											$email_strings_file_by_client['subject'],
-											$email_strings_file_by_client['body'].' <strong>'.$this->client_info['name'].'</strong> ('.$this->client_info['username'].')',
-											$email_strings_file_by_client['body2'],
-											$email_strings_file_by_client['body3'],
-											BASE_URI
-									),
-									$this->email_body
-								);
-		return array(
-					'subject' => $email_strings_file_by_client['subject'].' '.$this->client_info['name'],
-					'body' => $this->email_body
-				);
 	}
 
 	/**
@@ -245,6 +173,61 @@ class PSend_Email
 	}
 
 	/**
+	 * Prepare the body for the "New files for client" e-mail and replace the
+	 * tags with the strings values set at the top of this file and the
+	 * link to the log in page.
+	 */
+	function email_new_files_for_client($files_list)
+	{
+		global $email_strings_file_by_user;
+		$this->email_body = $this->email_prepare_body('new-file-for-client.html');
+		$this->email_body = str_replace(
+									array('%SUBJECT%','%BODY1%','%FILES%','%BODY2%','%BODY3%','%BODY4%','%LINK%'),
+									array(
+										$email_strings_file_by_user['subject'],
+										$email_strings_file_by_user['body'],
+										$files_list,
+										$email_strings_file_by_user['body2'],
+										$email_strings_file_by_user['body3'],
+										$email_strings_file_by_user['body4'],
+										BASE_URI
+									),
+									$this->email_body
+								);
+		return array(
+					'subject' => $email_strings_file_by_user['subject'],
+					'body' => $this->email_body
+				);
+	}
+
+	/**
+	 * Prepare the body for the "New files by client" e-mail and replace the
+	 * tags with the strings values set at the top of this file and the
+	 * link to the log in page.
+	 */
+	function email_new_files_by_client($files_list)
+	{
+		global $email_strings_file_by_client;
+		$this->email_body = $this->email_prepare_body('new-file-by-client.html');
+		$this->email_body = str_replace(
+									array('%SUBJECT%','%BODY1%','%FILES%','%BODY2%','%BODY3%','%LINK%'),
+									array(
+										$email_strings_file_by_client['subject'],
+										$email_strings_file_by_client['body'],
+										$files_list,
+										$email_strings_file_by_client['body2'],
+										$email_strings_file_by_client['body3'],
+										BASE_URI
+									),
+									$this->email_body
+								);
+		return array(
+					'subject' => $email_strings_file_by_client['subject'],
+					'body' => $this->email_body
+				);
+	}
+
+	/**
 	 * Finally, try to send the e-mail and return a status, where
 	 * 1 = Message sent OK
 	 * 2 = Error sending the e-mail
@@ -252,15 +235,16 @@ class PSend_Email
 	 * Returns custom values instead of a boolean value to allow more
 	 * codes in the future, on new validations and functions.
 	 */
-	function psend_send_email($type,$address,$username = '',$password = '',$client_id = '',$name = '')
+	function psend_send_email($type,$address,$username = '',$password = '',$client_id = '',$name = '',$files_list = '')
 	{
-		$this->headers = $this->email_set_headers();
+		require_once(ROOT_DIR.'/includes/phpmailer/class.phpmailer.php');
+
 		switch($type) {
-			case 'new_file_by_user':
-				$this->mail_info = $this->email_new_file_by_user();
+			case 'new_files_for_client':
+				$this->mail_info = $this->email_new_files_for_client($files_list);
 			break;
 			case 'new_file_by_client':
-				$this->mail_info = $this->email_new_file_by_client($client_id);
+				$this->mail_info = $this->email_new_files_by_client($files_list);
 			break;
 			case 'new_client':
 				$this->mail_info = $this->email_new_client($username,$password);
@@ -272,16 +256,51 @@ class PSend_Email
 				$this->mail_info = $this->email_new_user($username,$password);
 			break;
 		}
-		$this->subject = $this->mail_info['subject'];
-		$this->body = $this->mail_info['body'];
-		if(@mail($address,$this->subject,$this->body,$this->headers)) {
+		
+		/**
+		 * phpMailer
+		 */
+		$this->send_mail = new PHPMailer();
+		switch (MAIL_SYSTEM) {
+			case 'smtp':
+					$this->send_mail->IsSMTP();
+					$this->send_mail->SMTPAuth = true;
+					$this->send_mail->Host = SMTP_HOST;
+					$this->send_mail->Port = SMTP_PORT;
+					$this->send_mail->Username = SMTP_USER;
+					$this->send_mail->Password = SMTP_PASS;
+				break;
+			case 'gmail':
+					$this->send_mail->IsSMTP();
+					$this->send_mail->SMTPAuth = true;
+					$this->send_mail->SMTPSecure = "tls";
+					$this->send_mail->Host = 'smtp.gmail.com';
+					$this->send_mail->Port = 587;
+					$this->send_mail->Username = SMTP_USER;
+					$this->send_mail->Password = SMTP_PASS;
+				break;
+			case 'sendmail':
+					$this->send_mail->IsSendmail();
+				break;
+		}
+		
+		$this->send_mail->CharSet = EMAIL_ENCODING;
+
+		$this->send_mail->Subject = $this->mail_info['subject'];
+		$this->send_mail->MsgHTML($this->mail_info['body']);
+		$this->send_mail->AltBody = __('This email contains HTML formatting and cannot be displayed right now. Please use an HTML compatible reader.','cftp_admin');
+
+		$this->send_mail->SetFrom(ADMIN_EMAIL_ADDRESS, MAIL_FROM_NAME);
+		$this->send_mail->AddReplyTo(ADMIN_EMAIL_ADDRESS, MAIL_FROM_NAME);
+
+		$this->send_mail->AddAddress($address);
+		
+		if($this->send_mail->Send()) {
 			return 1;
 		}
 		else {
 			return 2;
 		}
 	}
-
 }
-
 ?>

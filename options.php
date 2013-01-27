@@ -203,21 +203,6 @@ $allowed_file_types = implode(',',$allowed_file_types);
 							<div class="options_box whitebox">
 								<ul class="form_fields">
 									<li>
-										<h3><?php _e('E-mail sending options','cftp_admin'); ?></h3>
-										<p><?php _e('Here you can select which mail system will be used when sending the notifications. If you have a valid e-mail account, SMTP is the recommended option.','cftp_admin'); ?></p>
-									</li>
-									<li>
-										<label for="mail_system_use"><?php _e('Mailer','cftp_admin'); ?></label>
-										<select name="mail_system_use" id="mail_system_use">
-											<option value="mail" <?php echo (MAIL_SYSTEM == 'mail') ? 'selected="selected"' : ''; ?>>PHP Mail (basic)</option>
-											<option value="sendmail" <?php echo (MAIL_SYSTEM == 'sendmail') ? 'selected="selected"' : ''; ?>>Sendmail</option>
-											<option value="smtp" <?php echo (MAIL_SYSTEM == 'smtp') ? 'selected="selected"' : ''; ?>>SMTP</option>
-										</select>
-									</li>					
-									<li>
-					
-									<li class="options_divide"></li>
-									<li>
 										<h3><?php _e('"From" information','cftp_admin'); ?></h3>
 									</li>
 									<li>
@@ -227,6 +212,36 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									<li>
 										<label for="mail_from_name"><?php _e('Name','cftp_admin'); ?></label>
 										<input name="mail_from_name" id="mail_from_name" value="<?php echo MAIL_FROM_NAME; ?>" />
+									</li>					
+									<li class="options_divide"></li>
+
+									<li>
+										<h3><?php _e('E-mail sending options','cftp_admin'); ?></h3>
+										<p><?php _e('Here you can select which mail system will be used when sending the notifications. If you have a valid e-mail account, SMTP is the recommended option.','cftp_admin'); ?></p>
+									</li>
+									<li>
+										<label for="mail_system_use"><?php _e('Mailer','cftp_admin'); ?></label>
+										<select name="mail_system_use" id="mail_system_use">
+											<option value="mail" <?php echo (MAIL_SYSTEM == 'mail') ? 'selected="selected"' : ''; ?>>PHP Mail (basic)</option>
+											<option value="smtp" <?php echo (MAIL_SYSTEM == 'smtp') ? 'selected="selected"' : ''; ?>>SMTP</option>
+											<option value="gmail" <?php echo (MAIL_SYSTEM == 'gmail') ? 'selected="selected"' : ''; ?>>Gmail</option>
+											<option value="sendmail" <?php echo (MAIL_SYSTEM == 'sendmail') ? 'selected="selected"' : ''; ?>>Sendmail</option>
+										</select>
+									</li>					
+									<li>
+					
+									<li class="options_divide"></li>
+									<li>
+										<h3><?php _e('SMTP & Gmail shared options','cftp_admin'); ?></h3>
+										<p><?php _e('You need to include your username (usually your e-mail address) and password if you have selected either SMTP or Gmail as your mailer.','cftp_admin'); ?></p>
+									</li>
+									<li>
+										<label for="mail_smtp_user"><?php _e('Username','cftp_admin'); ?></label>
+										<input name="mail_smtp_user" id="mail_smtp_user" class="empty" value="<?php echo SMTP_USER; ?>" />
+									</li>					
+									<li>
+										<label for="mail_smtp_pass"><?php _e('Password','cftp_admin'); ?></label>
+										<input type="password" name="mail_smtp_pass" id="mail_smtp_pass" class="empty" value="<?php echo SMTP_PASS; ?>" />
 									</li>					
 									<li class="options_divide"></li>
 
@@ -241,14 +256,6 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									<li>
 										<label for="mail_smtp_port"><?php _e('Port','cftp_admin'); ?></label>
 										<input name="mail_smtp_port" id="mail_smtp_port" class="empty" value="<?php echo SMTP_PORT; ?>" />
-									</li>					
-									<li>
-										<label for="mail_smtp_user"><?php _e('Username','cftp_admin'); ?></label>
-										<input name="mail_smtp_user" id="mail_smtp_user" class="empty" value="<?php echo SMTP_USER; ?>" />
-									</li>					
-									<li>
-										<label for="mail_smtp_pass"><?php _e('Password','cftp_admin'); ?></label>
-										<input type="password" name="mail_smtp_pass" id="mail_smtp_pass" class="empty" value="<?php echo SMTP_PASS; ?>" />
 									</li>					
 
 									<li class="options_divide"></li>
