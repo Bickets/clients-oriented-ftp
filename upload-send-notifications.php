@@ -62,30 +62,32 @@ while ($row = mysql_fetch_array($clients_sql)) {
  * Prepare the list of clients and admins that will be
  * notified, adding to each one the corresponding files.
  */
-foreach ($clients_data as $client) {
-	$email_body = '';
-	if ($client['notify'] == '1' && $client['active'] == '1') {
-		/**
-		 * Only clients that are active will receive e-mails.
-		 */
-		foreach ($found_notifications as $notification) {
-			if ($notification['client_id'] == $client['id']) {
-				if ($notification['upload_type'] == '1') {
-					/** If file is uploaded by user, add to client's email body */
-					$use_id = $notification['file_id'];
-					$notes_to_clients[$client['user']][] = array(
-																'file_name' => $file_data[$use_id]['filename'],
-																'description' => $file_data[$use_id]['description']
-															);
-					//echo make_excerpt($file_data[$use_id]['description'],200)."<br /><br /><br />";
-				}
-				else {
-					/** Add the file to the account's creator email */
-					$use_id = $notification['file_id'];
-					$notes_to_admin[$client['created_by']][$client['name']][] = array(
+if (!empty($clients_data)) {
+	foreach ($clients_data as $client) {
+		$email_body = '';
+		if ($client['notify'] == '1' && $client['active'] == '1') {
+			/**
+			 * Only clients that are active will receive e-mails.
+			 */
+			foreach ($found_notifications as $notification) {
+				if ($notification['client_id'] == $client['id']) {
+					if ($notification['upload_type'] == '1') {
+						/** If file is uploaded by user, add to client's email body */
+						$use_id = $notification['file_id'];
+						$notes_to_clients[$client['user']][] = array(
 																	'file_name' => $file_data[$use_id]['filename'],
 																	'description' => $file_data[$use_id]['description']
 																);
+						//echo make_excerpt($file_data[$use_id]['description'],200)."<br /><br /><br />";
+					}
+					else {
+						/** Add the file to the account's creator email */
+						$use_id = $notification['file_id'];
+						$notes_to_admin[$client['created_by']][$client['name']][] = array(
+																		'file_name' => $file_data[$use_id]['filename'],
+																		'description' => $file_data[$use_id]['description']
+																	);
+					}
 				}
 			}
 		}
@@ -93,45 +95,49 @@ foreach ($clients_data as $client) {
 }
 
 /** Prepare the emails for CLIENTS */
-foreach ($notes_to_clients as $mail_username => $mail_files) {
-	$address = $mail_by_user[$mail_username];
-	$files_list = '';
-	foreach ($mail_files as $mail_file) {
-		/** Make the list of files */
-		$files_list.= '<li style="margin-bottom:11px;">';
-		$files_list.= '<p style="font-weight:bold; margin:0 0 5px 0; font-size:14px;">'.$mail_file['file_name'].'</p>';
-		if (!empty($mail_file['description'])) {
-			$files_list.= '<p>'.$mail_file['description'].'</p>';
-		}
-		$files_list.= '</li>';
-	}
-	/** Create the object and send the email */
-	$notify_client = new PSend_Email();
-	$try_sending = $notify_client->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
-	if ($try_sending == 1) {
-		$notifications_sent++;
-	}
-}
-
-/** Prepare the emails for ADMINS */
-foreach ($notes_to_admin as $admin) {
-	$files_list = '';
-	foreach ($admin as $mail_username => $mail_files) {
-		$files_list.= '<li style="font-size:15px; font-weight:bold; margin-bottom:5px;">'.$mail_username.'</li>';
+if (!empty($notes_to_clients)) {
+	foreach ($notes_to_clients as $mail_username => $mail_files) {
+		$address = $mail_by_user[$mail_username];
+		$files_list = '';
 		foreach ($mail_files as $mail_file) {
 			/** Make the list of files */
 			$files_list.= '<li style="margin-bottom:11px;">';
-			$files_list.= '<p style="font-weight:bold; margin:0 0 5px 0;">'.$mail_file['file_name'].'</p>';
+			$files_list.= '<p style="font-weight:bold; margin:0 0 5px 0; font-size:14px;">'.$mail_file['file_name'].'</p>';
 			if (!empty($mail_file['description'])) {
 				$files_list.= '<p>'.$mail_file['description'].'</p>';
 			}
 			$files_list.= '</li>';
 		}
 		/** Create the object and send the email */
-		$notify_admin = new PSend_Email();
-		$try_sending = $notify_admin->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
+		$notify_client = new PSend_Email();
+		$try_sending = $notify_client->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
 		if ($try_sending == 1) {
 			$notifications_sent++;
+		}
+	}
+}
+
+/** Prepare the emails for ADMINS */
+if (!empty($notes_to_admin)) {
+	foreach ($notes_to_admin as $admin) {
+		$files_list = '';
+		foreach ($admin as $mail_username => $mail_files) {
+			$files_list.= '<li style="font-size:15px; font-weight:bold; margin-bottom:5px;">'.$mail_username.'</li>';
+			foreach ($mail_files as $mail_file) {
+				/** Make the list of files */
+				$files_list.= '<li style="margin-bottom:11px;">';
+				$files_list.= '<p style="font-weight:bold; margin:0 0 5px 0;">'.$mail_file['file_name'].'</p>';
+				if (!empty($mail_file['description'])) {
+					$files_list.= '<p>'.$mail_file['description'].'</p>';
+				}
+				$files_list.= '</li>';
+			}
+			/** Create the object and send the email */
+			$notify_admin = new PSend_Email();
+			$try_sending = $notify_admin->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
+			if ($try_sending == 1) {
+				$notifications_sent++;
+			}
 		}
 	}
 }
