@@ -89,7 +89,7 @@ $database->MySQLDB();
 														<div class="action">
 															<?php
 																if (!empty($rendered['1'])) { echo '<span>'.$rendered['1'].'</span> '; }
-																echo $rendered['text'];
+																echo $rendered['text'].' ';
 																if (!empty($rendered['2'])) { echo '<span>'.$rendered['2'].'</span> '; }
 																if (!empty($rendered['3'])) { echo '<span>'.$rendered['3'].'</span> '; }
 																if (!empty($rendered['4'])) { echo '<span>'.$rendered['4'].'</span> '; }
