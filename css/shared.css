@@ -152,7 +152,7 @@ nav ul ul li a:before {
 nav ul ul {
 	background: #000;
 	border-radius: 0px;
-	padding: 0;
+	padding: 10px 0;
 	position: absolute;
 	top: 100%;
 
@@ -167,7 +167,7 @@ nav ul ul li {
 }
 
 nav ul ul li a {
-	padding: 20px 40px;
+	padding: 13px 40px;
 	color: #fff;
 }	
 
@@ -382,7 +382,7 @@ input[type="text"], input[type="password"], textarea, select {
 	display:inline;
 }
 
-.form_actions {
+.form_actions, .form_actions_limit_results {
 	padding:0;
 	margin-bottom:5px;
 	overflow:hidden;

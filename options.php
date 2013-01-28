@@ -4,6 +4,7 @@
  *
  * @package ProjectSend
  */
+$easytabs = 1;
 $allowed_levels = array(9);
 require_once('sys.includes.php');
 $page_title = __('System options','cftp_admin');

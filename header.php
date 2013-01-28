@@ -31,7 +31,16 @@ if (!isset($page_title)) { $page_title = __('System Administration','cftp_admin'
  * Global information on the current account to use accross the system.
  */
 $global_user = get_current_user_username();
-$global_id = get_logged_account_id($global_user);
+$global_level = get_current_user_level();
+if ($global_level != 0) {
+	$global_account = get_user_by_username($global_user);
+}
+else {
+	$global_account = get_client_by_username($global_user);
+}
+//$global_id = get_logged_account_id($global_user);
+$global_id = $global_account['id'];
+$global_name = $global_account['name'];
 
 /**
  * Call the database update file to see if any change is needed,
@@ -81,8 +90,11 @@ if (in_session_or_cookies($core_update_allowed)) {
 	?>
 	
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
-	<script src="<?php echo BASE_URI; ?>includes/js/jquery.easytabs.min.js" type="text/javascript"></script>
-	<script src="<?php echo BASE_URI; ?>includes/js/jquery.hashchange.min.js" type="text/javascript"></script>
+
+	<?php if (isset($easytabs)) { ?>
+		<script src="<?php echo BASE_URI; ?>includes/js/jquery.easytabs.min.js" type="text/javascript"></script>
+		<script src="<?php echo BASE_URI; ?>includes/js/jquery.hashchange.min.js" type="text/javascript"></script>
+	<?php } ?>
 
 	<?php if (isset($tablesorter)) { ?>
 		<script src="<?php echo BASE_URI; ?>includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
@@ -145,20 +157,28 @@ if (in_session_or_cookies($core_update_allowed)) {
 						<li class="no_arrow"><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Dashboard', 'cftp_admin'); ?></a></li>
 					<?php } ?>
 				<li<?php if (in_session_or_cookies(array(0))) { echo ' class="no_arrow"'; } ?>>
-					<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload files', 'cftp_admin'); ?></a>
-						<?php
-							/**
-							 * Hide the subitems from clients, since their upload form
-							 * link is the same that was defined on the above item.
-							 */
-							$clients_allowed = array(9,8,7);
-							if (in_session_or_cookies($clients_allowed)) {
-						?>
+					<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Files', 'cftp_admin'); ?></a>
 							<ul>
-								<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from computer', 'cftp_admin'); ?></a></li>
-								<li><a href="<?php echo BASE_URI; ?>upload-import-orphans.php"><?php _e('Find orphan files', 'cftp_admin'); ?></a></li>
+								<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from device', 'cftp_admin'); ?></a></li>
+								<li><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
+								<?php
+									/**
+									 * Hide the subitems from clients, since their upload form
+									 * link is the same that was defined on the above item.
+									 */
+									$clients_allowed = array(9,8,7);
+									if (in_session_or_cookies($clients_allowed)) {
+								?>
+										<li><a href="<?php echo BASE_URI; ?>upload-import-orphans.php"><?php _e('Find orphan files', 'cftp_admin'); ?></a></li>
+								<?php
+									}
+									else {
+								?>
+										<li class="no_arrow"><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+								<?php
+									}
+								?>
 							</ul>
-					<?php } ?>
 				</li>
 		
 				<?php
@@ -241,18 +261,6 @@ if (in_session_or_cookies($core_update_allowed)) {
 							</ul>
 						</li>
 				<?php } ?>
-	
-				<?php
-					/**
-					 * Show the MY FILES menu only to clients.
-					 */
-					$clients_allowed = array(0);
-					if (in_session_or_cookies($clients_allowed)) {
-				?>
-						<li class="no_arrow"><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
-				<?php
-					}
-				?>
 			</ul>
 		</nav>
 

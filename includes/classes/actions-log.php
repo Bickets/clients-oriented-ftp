@@ -53,12 +53,13 @@ class LogActions
 	function log_action_save($arguments)
 	{
 		global $database;
+		global $global_name;
 		$this->state = array();
 
 		/** Define the account information */
 		$this->action = $arguments['action'];
 		$this->owner_id = $arguments['owner_id'];
-		$this->owner_user = get_current_user_username();
+		$this->owner_user = $global_name;
 		$this->affected_file = (!empty($arguments['affected_file'])) ? $arguments['affected_file'] : '';
 		$this->affected_account = (!empty($arguments['affected_account'])) ? $arguments['affected_account'] : '';
 		$this->affected_file_name = (!empty($arguments['affected_file_name'])) ? $arguments['affected_file_name'] : '';

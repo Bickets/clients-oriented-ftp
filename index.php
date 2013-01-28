@@ -36,6 +36,7 @@ include('header-unlogged.php');
 				$user_level = $row["level"];
 				$active_status = $row['active'];
 				$logged_id = $row['id'];
+				$global_name = $row['name'];
 			}
 			if ($db_pass == $sysuser_password) {
 				if ($active_status != '0') {
@@ -65,7 +66,7 @@ include('header-unlogged.php');
 					$log_action_args = array(
 											'action' => 1,
 											'owner_id' => $logged_id,
-											'affected_account_name' => $sysuser_username
+											'affected_account_name' => $global_name
 										);
 					$new_record_action = $new_log_action->log_action_save($log_action_args);
 
