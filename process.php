@@ -123,11 +123,22 @@ class process {
 		unset($_SESSION['access']);
 		unset($_SESSION['userlevel']);
 		session_destroy();
-		// if there is a cookie, unset it
+
+		/** If there is a cookie, unset it */
 		setcookie("loggedin","",time()-COOKIE_EXP_TIME);
 		setcookie("password","",time()-COOKIE_EXP_TIME);
 		setcookie("access","",time()-COOKIE_EXP_TIME);
 		setcookie("userlevel","",time()-COOKIE_EXP_TIME);
+
+		/** Record the action log */
+		$new_log_action = new LogActions();
+		$log_action_args = array(
+								'action' => 31,
+								'owner_id' => $logged_id,
+								'affected_account_name' => $global_name
+							);
+		$new_record_action = $new_log_action->log_action_save($log_action_args);
+
 		header("location:index.php");
 	}
 }

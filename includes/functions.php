@@ -710,6 +710,11 @@ function render_log_action($params)
 			$action_text = __('updated ProjectSend to version','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
+		case 31:
+			$action_ico = 'logout';
+			$part1 = $owner_user;
+			$action_text = __('logged out of the system.','cftp_admin');
+			break;
 	}
 	
 	$date = date(TIMEFORMAT_USE,strtotime($timestamp));

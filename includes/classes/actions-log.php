@@ -38,6 +38,7 @@
  * 28-	A user account was marked as inactive.
  * 29-	The logo on "Branding" was changed.
  * 30-	ProjectSend was updated.
+ * 31-	Account (user or client) logs out.
  *
  * More to be added soon.
  */
