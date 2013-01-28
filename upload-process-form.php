@@ -191,12 +191,15 @@ while($row = mysql_fetch_array($sql)) {
 						if (!in_array($new_filename,$urls_db_files)) {
 							$add_arguments['add_to_db'] = true;
 						}
-						if($this_upload->upload_add_to_database($add_arguments)) {
+						
+						$process_file = $this_upload->upload_add_to_database($add_arguments);
+						if($process_file['database'] == true) {
 							/** Mark is as correctly uploaded / assigned */
 							$upload_finish[$n] = array(
 													'file' => $file['file'],
 													'name' => $file['name'],
-													'description' => $file['description']
+													'description' => $file['description'],
+													'new_file_id' => $process_file['new_file_id']
 												);
 							if (!empty($file['hidden'])) {
 								$upload_finish[$n]['hidden'] = $file['hidden'];
@@ -258,7 +261,7 @@ while($row = mysql_fetch_array($sql)) {
 							}
 						?>
 						<td>
-							<a href="edit-file.php?id=" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
+							<a href="edit-file.php?id=<?php echo $uploaded['new_file_id']; ?>" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
 							<?php
 								/*
 								 * Show the "My files" button only to clients

@@ -111,6 +111,7 @@ class PSend_Upload_File
 			$result = $database->query("INSERT INTO tbl_files (url, filename, description, uploader)"
 										."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->uploader')");
 			$this->file_id = mysql_insert_id();
+			$this->state['new_file_id'] = $this->file_id;
 
 			/** Record the action log */
 			if ($this->uploader_type == 'user') {
@@ -232,11 +233,13 @@ class PSend_Upload_File
 		}
 
 		if(!empty($result)) {
-			return true;
+			$this->state['database'] = true;
 		}
 		else {
-			return false;
+			$this->state['database'] = false;
 		}
+		
+		return $this->state;
 
 	print_r($this->distinct_notifications);
 	}
