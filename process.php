@@ -31,7 +31,7 @@ class process {
 	function download_file() {
 		$this->check_level = array(9,8,7,0);
 		if (isset($_GET['url']) && isset($_GET['client'])) {
-			// do a permissions check for logged in user
+			/** Do a permissions check for logged in user */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				$current_level = get_current_user_level();
 
@@ -71,7 +71,9 @@ class process {
 										'affected_file' => $_GET['id'],
 										'affected_file_name' => $_GET['url'],
 										'affected_account' => $_GET['client_id'],
-										'affected_account_name' => $_GET['client']
+										'affected_account_name' => $_GET['client'],
+										'get_user_real_name' => true,
+										'get_file_real_name' => true
 									);
 				$new_record_action = $new_log_action->log_action_save($log_action_args);
 

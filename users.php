@@ -69,9 +69,9 @@ include('header.php');
 			/**
 			 * Make a list of users to avoid individual queries.
 			 */
-			$sql_user = $database->query("SELECT id, user FROM tbl_users WHERE id IN ('$users_to_get')");
+			$sql_user = $database->query("SELECT id, name FROM tbl_users WHERE id IN ('$users_to_get')");
 			while($data_user = mysql_fetch_array($sql_user)) {
-				$all_users[$data_user['id']] = $data_user['user'];
+				$all_users[$data_user['id']] = $data_user['name'];
 			}
 
 			$my_info = get_user_by_username(get_current_user_username());

@@ -197,7 +197,8 @@ include('header.php');
 											'owner_id' => $global_id,
 											'affected_file' => $work_file_id,
 											'affected_file_name' => $work_file,
-											'affected_account_name' => $name_for_actions
+											'affected_account_name' => $name_for_actions,
+											'get_user_real_name' => true
 										);
 					$new_record_action = $new_log_action->log_action_save($log_action_args);
 				}

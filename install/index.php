@@ -166,7 +166,8 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 								$new_log_action = new LogActions();
 								$log_action_args = array(
 														'action' => 0,
-														'owner_id' => 1
+														'owner_id' => 1,
+														'owner_user' => $got_admin_name
 													);
 								$new_record_action = $new_log_action->log_action_save($log_action_args);		
 								?>

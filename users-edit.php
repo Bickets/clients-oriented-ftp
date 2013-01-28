@@ -118,7 +118,8 @@ if ($_POST) {
 												'action' => 13,
 												'owner_id' => $global_id,
 												'affected_account' => $user_id,
-												'affected_account_name' => $saved_user['username']
+												'affected_account_name' => $saved_user['username'],
+												'get_user_real_name' => true
 											);
 						$new_record_action = $new_log_action->log_action_save($log_action_args);
 					break;

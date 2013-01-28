@@ -86,7 +86,7 @@ if ($_POST) {
 												'action' => 2,
 												'owner_id' => $global_id,
 												'affected_account' => $new_response['new_id'],
-												'affected_account_name' => $add_user_data_user
+												'affected_account_name' => $add_user_data_name
 											);
 						$new_record_action = $new_log_action->log_action_save($log_action_args);
 

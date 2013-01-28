@@ -157,9 +157,9 @@ class PSend_Upload_File
 			 * Get the usernames of clients and names of groups
 			 * to use on the log.
 			 */
-			$names_sql = $database->query("SELECT id, user FROM tbl_users");
+			$names_sql = $database->query("SELECT id, name FROM tbl_users");
 			while($res = mysql_fetch_array($names_sql)) {
-				$this->users[$res["id"]] = $res["user"];
+				$this->users[$res["id"]] = $res["name"];
 			}
 			$gnames_sql = $database->query("SELECT id, name FROM tbl_groups");
 			while($res = mysql_fetch_array($gnames_sql)) {
@@ -184,23 +184,24 @@ class PSend_Upload_File
 				$assign_file = $database->query("INSERT INTO tbl_files_relations (file_id, $this->add_to, hidden)"
 											."VALUES ('$this->file_id', '$this->assignment', '$this->hidden')");
 				
-				/** Record the action log */
-				$new_log_action = new LogActions();
-				$log_action_args = array(
-										'action' => $this->action_number,
-										'owner_id' => $this->uploader_id,
-										'affected_file' => $this->file_id,
-										'affected_file_name' => $this->name,
-										'affected_account' => $this->assignment,
-										'affected_account_name' => $this->account_name
-									);
-				$new_record_action = $new_log_action->log_action_save($log_action_args);
+				if ($this->uploader_type == 'user') {
+					/** Record the action log */
+					$new_log_action = new LogActions();
+					$log_action_args = array(
+											'action' => $this->action_number,
+											'owner_id' => $this->uploader_id,
+											'affected_file' => $this->file_id,
+											'affected_file_name' => $this->name,
+											'affected_account' => $this->assignment,
+											'affected_account_name' => $this->account_name
+										);
+					$new_record_action = $new_log_action->log_action_save($log_action_args);
+				}
 
 
-				/***********************************************************************************************/
-				/***********************************************************************************************/
-				/***********************************************************************************************/
-				/** agregar aca las notificaciones */
+				/**
+				 * Add the notification to the table
+				 */
 				$this->members_to_notify = array();
 				
 				if ($this->hidden == '0') {
@@ -227,10 +228,6 @@ class PSend_Upload_File
 						}
 					}
 				}
-				/***********************************************************************************************/
-				/***********************************************************************************************/
-				/***********************************************************************************************/
-				/***********************************************************************************************/
 			}
 		}
 

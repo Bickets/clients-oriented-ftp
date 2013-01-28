@@ -654,7 +654,7 @@ function render_log_action($params)
 			$part1 = $owner_user;
 			$action_text = __('marked as hidden the file','cftp_admin');
 			$part2 = $affected_file_name;
-			$part3 = __('from:','cftp_admin');
+			$part3 = __('to:','cftp_admin');
 			$part4 = $affected_account_name;
 			break;
 		case 22:
@@ -662,7 +662,7 @@ function render_log_action($params)
 			$part1 = $owner_user;
 			$action_text = __('marked as visible the file','cftp_admin');
 			$part2 = $affected_file_name;
-			$part3 = __('from:','cftp_admin');
+			$part3 = __('to:','cftp_admin');
 			$part4 = $affected_account_name;
 			break;
 		case 23:
