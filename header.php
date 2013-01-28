@@ -59,7 +59,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title><?php echo $page_title; ?> &raquo; <?php echo THIS_INSTALL_SET_TITLE; ?> | <?php echo SYSTEM_NAME; ?></title>
+	<title><?php echo $page_title; ?> &raquo; <?php echo THIS_INSTALL_SET_TITLE; ?></title>
 	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/shared.css" />
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>

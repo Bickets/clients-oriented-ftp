@@ -475,7 +475,7 @@ include('header.php');
 										<?php
 											}
 										?>
-										<a href="edit-file.php?file_id=<?php echo $row["id"]; ?>" target="_blank" class="button button_blue">
+										<a href="edit-file.php?file_id=<?php echo $row["id"]; ?>" class="button button_blue">
 											<?php _e('Edit file','cftp_template'); ?>
 										</a>
 									</td>
