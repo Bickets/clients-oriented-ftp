@@ -313,7 +313,7 @@ while($row = mysql_fetch_array($sql)) {
 								 */
 								if ($current_level != 0) {
 							?>
-									<a href="edit-file.php?id=" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
+									<a href="edit-file.php?id=<?php echo $uploaded['new_file_id']; ?>" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
 							<?php
 								}
 								else {
