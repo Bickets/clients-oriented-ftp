@@ -256,6 +256,8 @@ $current_level = get_current_user_level();
 
 							$msg = 'The file has been edited succesfuly.';
 							echo system_message('ok',$msg);
+							
+							include(ROOT_DIR.'/upload-send-notifications.php');
 						}
 					}
 				}
