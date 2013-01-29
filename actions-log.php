@@ -156,6 +156,9 @@ include('header.php');
 						<option value="28"><?php _e('A user account was marked as inactive','cftp_admin'); ?></option>
 						<option value="29"><?php _e('The logo on "Branding" was changed','cftp_admin'); ?></option>
 						<option value="30"><?php _e('ProjectSend was updated','cftp_admin'); ?></option>
+						<option value="31"><?php _e('Account (user or client) logs out.','cftp_admin'); ?></option>
+						<option value="32"><?php _e('A system user edited a file.','cftp_admin'); ?></option>
+						<option value="33"><?php _e('A client edited a file.','cftp_admin'); ?></option>
 				</select>
 				<input type="submit" id="btn_proceed_filter_clients" value="<?php _e('Filter','cftp_admin'); ?>" class="button_form" />
 			</form>

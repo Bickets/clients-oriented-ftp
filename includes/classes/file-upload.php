@@ -263,6 +263,156 @@ class PSend_Upload_File
 
 	}
 
+	/**
+	 * Used when editing a file
+	 */
+	function clean_assignments($arguments)
+	{
+		global $database;
+		$this->assign_to = $arguments['assign_to'];
+		$this->file_id = $arguments['file_id'];
+		$this->file_name = $arguments['file_name'];
+		$this->current_clients = $arguments['current_clients'];
+		$this->current_groups = $arguments['current_groups'];
+		$this->owner_id = $arguments['owner_id'];
+		
+		$this->assign_to_clients = array();
+		$this->assign_to_groups = array();
+		$this->delete_from_db_clients = array();
+		$this->delete_from_db_groups = array();
+
+		foreach ($this->assign_to as $this->assignment) {
+			$this->id_only = substr($this->assignment, 1);
+			switch ($this->assignment[0]) {
+				case 'c':
+					$this->assign_to_clients[] = $this->id_only;
+					break;
+				case 'g':
+					$this->assign_to_groups[] = $this->id_only;
+					break;
+			}
+		}
+		
+		foreach ($this->current_clients as $this->client) {
+			if (!in_array($this->client, $this->assign_to_clients)) {
+				$this->delete_from_db_clients[] = $this->client;
+			}
+		}
+		foreach ($this->current_groups as $this->group) {
+			if (!in_array($this->group, $this->assign_to_groups)) {
+				$this->delete_from_db_groups[] = $this->group;
+			}
+		}
+		
+		$this->delete_arguments = array(
+										'clients' => $this->delete_from_db_clients,
+										'groups' => $this->delete_from_db_groups,
+										'owner_id' => $this->owner_id
+									);
+
+		$this->delete_assignments($this->delete_arguments);
+	}
+
+	/**
+	 * Used when editing a file
+	 */
+	function clean_all_assignments($arguments)
+	{
+		global $database;
+		$this->file_id = $arguments['file_id'];
+		$this->file_name = $arguments['file_name'];
+		$this->owner_id = $arguments['owner_id'];
+		
+		$this->delete_from_db_clients = array();
+		$this->delete_from_db_groups = array();
+		$this->clean_query = "SELECT id, file_id, client_id, group_id FROM tbl_files_relations WHERE file_id = '$this->file_id'";
+		$this->clean_sql = $database->query($this->clean_query);
+		while ($this->row = mysql_fetch_array($this->clean_sql)) {
+			if (!empty($this->row['client_id'])) {
+				$this->delete_from_db_clients[] = $this->row['client_id'];
+			}
+			elseif (!empty($this->row['group_id'])) {
+				$this->delete_from_db_groups[] = $this->row['group_id'];
+			}
+		}
+		
+		$this->delete_arguments = array(
+										'clients' => $this->delete_from_db_clients,
+										'groups' => $this->delete_from_db_groups,
+										'owner_id' => $this->owner_id
+									);
+
+		$this->delete_assignments($this->delete_arguments);
+	}
+
+
+	/**
+	 * Receives the data from any of the 2 clear assignments functions
+	 */	
+	private function delete_assignments($arguments)
+	{
+		global $database;
+		$this->clients = $arguments['clients'];
+		$this->groups = $arguments['groups'];
+		$this->owner_id = $arguments['owner_id'];
+
+		/**
+		 * Get a list of clients names for the log
+		 */
+		if (!empty($this->clients)) {
+			$this->delete_clients = implode(',',array_unique($this->clients));
+			$this->clients_names_query = "SELECT id, name FROM tbl_users WHERE id IN ($this->delete_clients)";
+			$this->clients_names_sql = $database->query($this->clients_names_query);
+			while ($this->crow = mysql_fetch_array($this->clients_names_sql)) {
+				$this->clients_names[$this->crow['id']] = $this->crow['name'];
+			}
+
+			$this->clean_query = "DELETE FROM tbl_files_relations WHERE file_id = '$this->file_id' AND client_id IN ($this->delete_clients)";
+			$this->clean_sql = $database->query($this->clean_query);
+
+			/** Record the action log */
+			foreach ($this->clients as $this->deleted_client) {
+				$new_log_action = new LogActions();
+				$log_action_args = array(
+										'action' => 10,
+										'owner_id' => $this->owner_id,
+										'affected_file' => $this->file_id,
+										'affected_file_name' => $this->file_name,
+										'affected_account' => $this->deleted_client,
+										'affected_account_name' => $this->clients_names[$this->deleted_client]
+									);
+				$new_record_action = $new_log_action->log_action_save($log_action_args);
+			}
+		}
+		/**
+		 * Get a list of groups names for the log
+		 */
+		if (!empty($this->groups)) {
+			$this->delete_groups = implode(',',array_unique($this->groups));
+			$this->groups_names_query = "SELECT id, name FROM tbl_groups WHERE id IN ($this->delete_groups)";
+			$this->groups_names_sql = $database->query($this->groups_names_query);
+			while ($this->grow = mysql_fetch_array($this->groups_names_sql)) {
+				$this->groups_names[$this->grow['id']] = $this->grow['name'];
+			}
+
+			$this->clean_query = "DELETE FROM tbl_files_relations WHERE file_id = '$this->file_id' AND group_id IN ($this->delete_groups)";
+			$this->clean_sql = $database->query($this->clean_query);
+
+			/** Record the action log */
+			foreach ($this->groups as $this->deleted_group) {
+				$new_log_action = new LogActions();
+				$log_action_args = array(
+										'action' => 11,
+										'owner_id' => $this->owner_id,
+										'affected_file' => $this->file_id,
+										'affected_file_name' => $this->file_name,
+										'affected_account' => $this->deleted_group,
+										'affected_account_name' => $this->groups_names[$this->deleted_group]
+									);
+				$new_record_action = $new_log_action->log_action_save($log_action_args);
+			}
+		}
+	}
 }
 
 ?>

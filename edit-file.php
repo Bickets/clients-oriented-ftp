@@ -72,15 +72,14 @@ $current_level = get_current_user_level();
 			 * Continue if client exists and has files under his account.
 			 */
 			while($row = mysql_fetch_array($sql)) {
+				$edit_file_info['url'] = $row['url'];
+				$edit_file_info['id'] = $row['id'];
+
 				$edit_file_allowed = array(7,0);
 				if (in_session_or_cookies($edit_file_allowed)) {
 					if ($row['uploader'] != $global_user) {
 						$no_results_error = 'not_uploader';
 					}
-				}
-				else {
-					$edit_file_info['url'] = $row['url'];
-					$edit_file_info['id'] = $row['id'];
 				}
 			}
 		}
@@ -112,21 +111,22 @@ $current_level = get_current_user_level();
 			$file_on_clients = array();
 			$file_on_groups = array();
 
-			$assignments_query = 'SELECT file_id, client_id, group_id FROM tbl_files_relations WHERE file_id="' . $this_file_id . '"';
-			$assignments_sql = $database->query($assignments_query);
-			$assignments_count = mysql_num_rows($assignments_sql);
-			if ($assignments_count > 0) {
-				while ($assignment_row = mysql_fetch_array($assignments_sql)) {
-					if (!empty($assignment_row['client_id'])) {
-						$file_on_clients[] = $assignment_row['client_id'];
-					}
-					elseif (!empty($assignment_row['group_id'])) {
-						$file_on_groups[] = $assignment_row['group_id'];
+			if(isset($_POST['submit'])) {
+
+				$assignments_query = 'SELECT file_id, client_id, group_id FROM tbl_files_relations WHERE file_id="' . $this_file_id . '"';
+				$assignments_sql = $database->query($assignments_query);
+				$assignments_count = mysql_num_rows($assignments_sql);
+				if ($assignments_count > 0) {
+					while ($assignment_row = mysql_fetch_array($assignments_sql)) {
+						if (!empty($assignment_row['client_id'])) {
+							$file_on_clients[] = $assignment_row['client_id'];
+						}
+						elseif (!empty($assignment_row['group_id'])) {
+							$file_on_groups[] = $assignment_row['group_id'];
+						}
 					}
 				}
-			}
-
-			if(isset($_POST['submit'])) {
+	
 				$n = 0;
 				foreach ($_POST['file'] as $file) {
 					$n++;
@@ -162,8 +162,53 @@ $current_level = get_current_user_level();
 							$send_notifications = false;
 						}
 						
-						if (!empty($file['assignments'])) {
-							$add_arguments['assign_to'] = $file['assignments'];
+						if ($current_level != 0) {
+							if (!empty($file['assignments'])) {
+								/**
+								 * Remove already assigned clients/groups from the list.
+								 * Only adds assignments to the NEWLY selected ones.
+								 */
+								$full_list = $file['assignments'];
+								foreach ($file_on_clients as $this_client) { $compare_clients[] = 'c'.$this_client; }
+								foreach ($file_on_groups as $this_group) { $compare_groups[] = 'g'.$this_group; }
+								if (!empty($compare_clients)) {
+									$full_list = array_diff($full_list,$compare_clients);
+								}
+								if (!empty($compare_groups)) {
+									$full_list = array_diff($full_list,$compare_groups);
+								}
+								$add_arguments['assign_to'] = $full_list;
+								
+								/**
+								 * On cleaning the DB, only remove the clients/groups
+								 * That just have been deselected.
+								 */
+								$clean_who = $file['assignments'];
+							}
+							else {
+								$clean_who = 'All';
+							}
+							
+							/** CLEAN deletes the removed users/groups from the assignments table */
+							if ($clean_who == 'All') {
+								$clean_all_arguments = array(
+																'owner_id' => $global_id, /** For the log */
+																'file_id' => $this_file_id,
+																'file_name' => $file['name']
+															);
+								$clean_assignments = $this_upload->clean_all_assignments($clean_all_arguments);
+							}
+							else {						
+								$clean_arguments = array (
+														'owner_id' => $global_id, /** For the log */
+														'file_id' => $this_file_id,
+														'file_name' => $file['name'],
+														'assign_to' => $clean_who,
+														'current_clients' => $file_on_clients,
+														'current_groups' => $file_on_groups
+													);
+								$clean_assignments = $this_upload->clean_assignments($clean_arguments);
+							}
 						}
 						
 						/** Uploader is a client */
@@ -171,9 +216,11 @@ $current_level = get_current_user_level();
 							$add_arguments['assign_to'] = array('c'.$global_id);
 							$add_arguments['hidden'] = '0';
 							$add_arguments['uploader_type'] = 'client';
+							$action_log_number = 33;
 						}
 						else {
 							$add_arguments['uploader_type'] = 'user';
+							$action_log_number = 32;
 						}
 						/**
 						 * 1- Add the file to the database
@@ -183,16 +230,29 @@ $current_level = get_current_user_level();
 							$add_arguments['new_file_id'] = $process_file['new_file_id'];
 							$add_arguments['all_users'] = $users;
 							$add_arguments['all_groups'] = $groups;
-							/**
-							 * 2- Add the assignments to the database
-							 */
-							$process_assignment = $this_upload->upload_add_assignment($add_arguments);
-							/**
-							 * 3- Add the notifications to the database
-							 */
-							if ($send_notifications == true) {
-								$process_notifications = $this_upload->upload_add_notifications($add_arguments);
+							
+							if ($current_level != 0) {
+								/**
+								 * 2- Add the assignments to the database
+								 */
+								$process_assignment = $this_upload->upload_add_assignment($add_arguments);
+								/**
+								 * 3- Add the notifications to the database
+								 */
+								if ($send_notifications == true) {
+									$process_notifications = $this_upload->upload_add_notifications($add_arguments);
+								}
 							}
+
+							$new_log_action = new LogActions();
+							$log_action_args = array(
+													'action' => $action_log_number,
+													'owner_id' => $global_id,
+													'owner_user' => $global_user,
+													'affected_file' => $process_file['new_file_id'],
+													'affected_file_name' => $file['name']
+												);
+							$new_record_action = $new_log_action->log_action_save($log_action_args);
 
 							$msg = 'The file has been edited succesfuly.';
 							echo system_message('ok',$msg);
@@ -204,6 +264,23 @@ $current_level = get_current_user_level();
 	?>
 			<form action="edit-file.php?file_id=<?php echo $this_file_id; ?>" method="post" name="edit_file" id="edit_file">
 				<?php
+					/** Reconstruct the current assignments arrays */
+					$file_on_clients = array();
+					$file_on_groups = array();
+					$assignments_query = 'SELECT file_id, client_id, group_id FROM tbl_files_relations WHERE file_id="' . $this_file_id . '"';
+					$assignments_sql = $database->query($assignments_query);
+					$assignments_count = mysql_num_rows($assignments_sql);
+					if ($assignments_count > 0) {
+						while ($assignment_row = mysql_fetch_array($assignments_sql)) {
+							if (!empty($assignment_row['client_id'])) {
+								$file_on_clients[] = $assignment_row['client_id'];
+							}
+							elseif (!empty($assignment_row['group_id'])) {
+								$file_on_groups[] = $assignment_row['group_id'];
+							}
+						}
+					}
+
 					$i = 1;
 					$files_query = 'SELECT * FROM tbl_files WHERE id="' . $this_file_id . '"';
 					$sql = $database->query($files_query);

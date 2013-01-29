@@ -715,6 +715,18 @@ function render_log_action($params)
 			$part1 = $owner_user;
 			$action_text = __('logged out of the system.','cftp_admin');
 			break;
+		case 32:
+			$action_ico = 'file-edit';
+			$part1 = $owner_user;
+			$action_text = __('(user) edited the file','cftp_admin');
+			$part2 = $affected_file_name;
+			break;
+		case 33:
+			$action_ico = 'file-edit';
+			$part1 = $owner_user;
+			$action_text = __('(client) edited the file','cftp_admin');
+			$part2 = $affected_file_name;
+			break;
 	}
 	
 	$date = date(TIMEFORMAT_USE,strtotime($timestamp));

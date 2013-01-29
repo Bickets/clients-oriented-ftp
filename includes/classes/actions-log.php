@@ -39,6 +39,8 @@
  * 29-	The logo on "Branding" was changed.
  * 30-	ProjectSend was updated.
  * 31-	Account (user or client) logs out.
+ * 32-	A system user edited a file.
+ * 33-	A client edited a file.
  *
  * More to be added soon.
  */
