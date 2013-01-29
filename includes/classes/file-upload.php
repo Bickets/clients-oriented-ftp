@@ -105,7 +105,6 @@ class PSend_Upload_File
 		$this->uploader_id = $arguments['uploader_id'];
 		$this->uploader_type = $arguments['uploader_type'];
 		$this->hidden = (!empty($arguments['hidden'])) ? '1' : '0';
-		$this->timestamp = time();
 		
 		if(isset($arguments['add_to_db'])) {
 			$result = $database->query("INSERT INTO tbl_files (url, filename, description, uploader)"
@@ -134,6 +133,7 @@ class PSend_Upload_File
 			$id_sql = $database->query("SELECT id FROM tbl_files WHERE url = '$this->post_file'");
 			while($row = mysql_fetch_array($id_sql)) {
 				$this->file_id = $row["id"];
+				$this->state['new_file_id'] = $this->file_id;
 			}
 			$result = $database->query("UPDATE tbl_files SET
 											filename = '$this->name',
@@ -142,31 +142,40 @@ class PSend_Upload_File
 										");
 		}
 
-		/** Define type of uploader for the notifications queries. */
-		if ($this->uploader_type == 'user') {
-			$this->notif_uploader_type = 1;
+		if(!empty($result)) {
+			$this->state['database'] = true;
 		}
-		elseif ($this->uploader_type == 'client') {
-			$this->notif_uploader_type = 0;
+		else {
+			$this->state['database'] = false;
+		}
+		
+		return $this->state;
+	}
+
+	/**
+	 * Used to add new assignments and notifications
+	 */
+	function upload_add_assignment($arguments)
+	{
+		global $database;
+		$this->name = encode_html($arguments['name']);
+		$this->uploader_id = $arguments['uploader_id'];
+
+		/**
+		 * Get the usernames of clients and names of groups
+		 * to use on the log.
+		 */
+		$names_sql = $database->query("SELECT id, name FROM tbl_users");
+		while($res = mysql_fetch_array($names_sql)) {
+			$this->users[$res["id"]] = $res["name"];
+		}
+		$gnames_sql = $database->query("SELECT id, name FROM tbl_groups");
+		while($res = mysql_fetch_array($gnames_sql)) {
+			$this->groups[$res["id"]] = $res["name"];
 		}
 
 		if (!empty($arguments['assign_to'])) {
 			$this->assign_to = $arguments['assign_to'];
-			$this->distinct_notifications = array();
-
-			/**
-			 * Get the usernames of clients and names of groups
-			 * to use on the log.
-			 */
-			$names_sql = $database->query("SELECT id, name FROM tbl_users");
-			while($res = mysql_fetch_array($names_sql)) {
-				$this->users[$res["id"]] = $res["name"];
-			}
-			$gnames_sql = $database->query("SELECT id, name FROM tbl_groups");
-			while($res = mysql_fetch_array($gnames_sql)) {
-				$this->groups[$res["id"]] = $res["name"];
-			}
-			
 			foreach ($this->assign_to as $this->assignment) {
 				$this->id_only = substr($this->assignment, 1);
 				switch ($this->assignment[0]) {
@@ -198,50 +207,71 @@ class PSend_Upload_File
 										);
 					$new_record_action = $new_log_action->log_action_save($log_action_args);
 				}
+			}
+		}
+	}
 
+	/**
+	 * Used to create the new notifications on the database
+	 */
+	function upload_add_notifications($arguments)
+	{
+		global $database;
+		$this->uploader_type = $arguments['uploader_type'];
+		$this->file_id = $arguments['new_file_id'];
 
+		/** Define type of uploader for the notifications queries. */
+		if ($this->uploader_type == 'user') {
+			$this->notif_uploader_type = 1;
+		}
+		elseif ($this->uploader_type == 'client') {
+			$this->notif_uploader_type = 0;
+		}
+
+		if (!empty($arguments['assign_to'])) {
+			$this->assign_to = $arguments['assign_to'];
+			$this->distinct_notifications = array();
+
+			foreach ($this->assign_to as $this->assignment) {
+				$this->id_only = substr($this->assignment, 1);
+				switch ($this->assignment[0]) {
+					case 'c':
+						$this->add_to = 'client_id';
+						break;
+					case 'g':
+						$this->add_to = 'group_id';
+						break;
+				}
 				/**
 				 * Add the notification to the table
 				 */
 				$this->members_to_notify = array();
 				
-				if ($this->hidden == '0') {
-					if ($this->add_to == 'group_id') {
-						$this->get_group_members_sql = "SELECT DISTINCT client_id from tbl_members WHERE group_id='$this->assignment'";
-						$this->get_group_members = $database->query($this->get_group_members_sql);
-						while ($this->row = mysql_fetch_array($this->get_group_members)) {
-							$this->members_to_notify[] = $this->row['client_id'];
-						}
+				if ($this->add_to == 'group_id') {
+					$this->get_group_members_sql = "SELECT DISTINCT client_id from tbl_members WHERE group_id='$this->id_only'";
+					$this->get_group_members = $database->query($this->get_group_members_sql);
+					while ($this->row = mysql_fetch_array($this->get_group_members)) {
+						$this->members_to_notify[] = $this->row['client_id'];
 					}
-					else {
-						$this->members_to_notify[] = $this->assignment;
-					}
-					
-					if (!empty($this->members_to_notify)) {
-						foreach ($this->members_to_notify as $this->add_notify) {
-							$this->current_assignment = $this->file_id.'-'.$this->add_notify;
-							if (!in_array($this->current_assignment, $this->distinct_notifications)) {
-								$this->add_not_query = "INSERT INTO tbl_notifications (file_id, client_id, upload_type)
-													VALUES ('$this->file_id', '$this->add_notify', '$this->notif_uploader_type')";
-								$this->add_notification = $database->query($this->add_not_query);
-								$this->distinct_notifications[] = $this->current_assignment;
-							}
+				}
+				else {
+					$this->members_to_notify[] = $this->id_only;
+				}
+				
+				if (!empty($this->members_to_notify)) {
+					foreach ($this->members_to_notify as $this->add_notify) {
+						$this->current_assignment = $this->file_id.'-'.$this->add_notify;
+						if (!in_array($this->current_assignment, $this->distinct_notifications)) {
+							$this->add_not_query = "INSERT INTO tbl_notifications (file_id, client_id, upload_type)
+												VALUES ('$this->file_id', '$this->add_notify', '$this->notif_uploader_type')";
+							$this->add_notification = $database->query($this->add_not_query);
+							$this->distinct_notifications[] = $this->current_assignment;
 						}
 					}
 				}
 			}
 		}
 
-		if(!empty($result)) {
-			$this->state['database'] = true;
-		}
-		else {
-			$this->state['database'] = false;
-		}
-		
-		return $this->state;
-
-	print_r($this->distinct_notifications);
 	}
 
 }

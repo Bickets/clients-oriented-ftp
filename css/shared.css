@@ -155,6 +155,7 @@ nav ul ul {
 	padding: 10px 0;
 	position: absolute;
 	top: 100%;
+	z-index:1000;
 
 	-moz-box-shadow:0 5px 5px #ccc;
 	-webkit-box-shadow:0 5px 5px #ccc;

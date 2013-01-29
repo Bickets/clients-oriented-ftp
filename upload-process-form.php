@@ -78,14 +78,14 @@ $empty_fields = 0;
 
 /** Fill the clients array that will be used on the form */
 $clients = array();
-$cq = "SELECT * FROM tbl_users WHERE level = '0' ORDER BY name ASC";
+$cq = "SELECT id, name FROM tbl_users WHERE level = '0' ORDER BY name ASC";
 $sql = $database->query($cq);
 while($row = mysql_fetch_array($sql)) {
 	$clients['c'.$row["id"]] = $row["name"];
 }
 /** Fill the groups array that will be used on the form */
 $groups = array();
-$cq = "SELECT * FROM tbl_groups ORDER BY name ASC";
+$cq = "SELECT id, name FROM tbl_groups ORDER BY name ASC";
 $sql = $database->query($cq);
 	while($row = mysql_fetch_array($sql)) {
 	$groups['g'.$row["id"]] = $row["name"];
@@ -170,15 +170,22 @@ while($row = mysql_fetch_array($sql)) {
 												'uploader' => $this_admin,
 												'uploader_id' => $global_id
 											);
+
+						/** Set notifications to YES by default */
+						$send_notifications = true;
+
 						if (!empty($file['hidden'])) {
 							$add_arguments['hidden'] = $file['hidden'];
+							$send_notifications = false;
 						}
+						
 						if (!empty($file['assignments'])) {
 							$add_arguments['assign_to'] = $file['assignments'];
 						}
 						else {
 							$upload_finish_orphans[] = $file['original'];
 						}
+						
 						/** Uploader is a client */
 						if ($current_level == 0) {
 							$add_arguments['assign_to'] = array('c'.$client_my_id);
@@ -188,13 +195,30 @@ while($row = mysql_fetch_array($sql)) {
 						else {
 							$add_arguments['uploader_type'] = 'user';
 						}
+						
 						if (!in_array($new_filename,$urls_db_files)) {
 							$add_arguments['add_to_db'] = true;
 						}
 						
+						/**
+						 * 1- Add the file to the database
+						 */
 						$process_file = $this_upload->upload_add_to_database($add_arguments);
 						if($process_file['database'] == true) {
-							/** Mark is as correctly uploaded / assigned */
+							$add_arguments['new_file_id'] = $process_file['new_file_id'];
+							/**
+							 * 2- Add the assignments to the database
+							 */
+							$process_assignment = $this_upload->upload_add_assignment($add_arguments);
+							/**
+							 * 3- Add the notifications to the database
+							 */
+							if ($send_notifications == true) {
+								$process_notifications = $this_upload->upload_add_notifications($add_arguments);
+							}
+							/**
+							 * 4- Mark is as correctly uploaded / assigned
+							 */
 							$upload_finish[$n] = array(
 													'file' => $file['file'],
 													'name' => $file['name'],
