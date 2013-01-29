@@ -1,12 +1,15 @@
 <?php
 /**
  * Edit a file name or description.
- * Files can only be edited by the uploader and level 9 users.
+ * Files can only be edited by the uploader and level 9 or 8 users.
  *
  * @package ProjectSend
  */
+$multiselect = 1;
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
+$page_title = __('Edit file','cftp_admin');
+include('header.php');
 
 /**
  * The file's id is passed on the URI.
@@ -15,9 +18,30 @@ if (!empty($_GET['file_id'])) {
 	$this_file_id = $_GET['file_id'];
 }
 
-$page_title = __('Edit file','cftp_admin');
+/** Fill the users array that will be used on the notifications process */
+$users = array();
+$cq = "SELECT id, name, level FROM tbl_users";
+$sql = $database->query($cq);
+while($row = mysql_fetch_array($sql)) {
+	$users[$row["id"]] = $row["name"];
+	if ($row["level"] == '0') {
+		$clients[$row["id"]] = $row["name"];
+	}
+}
+/** Fill the groups array that will be used on the form */
+$groups = array();
+$cq = "SELECT id, name FROM tbl_groups ORDER BY name ASC";
+$sql = $database->query($cq);
+	while($row = mysql_fetch_array($sql)) {
+	$groups[$row["id"]] = $row["name"];
+}
 
-include('header.php');
+/**
+ * Get the user level to determine if the uploader is a
+ * system user or a client.
+ */
+$current_level = get_current_user_level();
+
 ?>
 
 <div id="main">
@@ -54,6 +78,10 @@ include('header.php');
 						$no_results_error = 'not_uploader';
 					}
 				}
+				else {
+					$edit_file_info['url'] = $row['url'];
+					$edit_file_info['id'] = $row['id'];
+				}
 			}
 		}
 
@@ -77,16 +105,226 @@ include('header.php');
 	<?php
 		}
 		else {
-			/** Validations OK */
+
+			/**
+			 * See what clients or groups already have this file assigned.
+			 */
+			$file_on_clients = array();
+			$file_on_groups = array();
+
+			$assignments_query = 'SELECT file_id, client_id, group_id FROM tbl_files_relations WHERE file_id="' . $this_file_id . '"';
+			$assignments_sql = $database->query($assignments_query);
+			$assignments_count = mysql_num_rows($assignments_sql);
+			if ($assignments_count > 0) {
+				while ($assignment_row = mysql_fetch_array($assignments_sql)) {
+					if (!empty($assignment_row['client_id'])) {
+						$file_on_clients[] = $assignment_row['client_id'];
+					}
+					elseif (!empty($assignment_row['group_id'])) {
+						$file_on_groups[] = $assignment_row['group_id'];
+					}
+				}
+			}
+
+			if(isset($_POST['submit'])) {
+				$n = 0;
+				foreach ($_POST['file'] as $file) {
+					$n++;
+					if(!empty($file['name'])) {
+						/**
+						* If the uploader is a client, set the "client" var to the current
+						* uploader username, since the "client" field is not posted.
+						*/
+						if ($current_level == 0) {
+							$file['assignments'] = 'c'.$global_user;
+						}
+						
+						$this_upload = new PSend_Upload_File();
+						/**
+						 * Unassigned files are kept as orphans and can be related
+						 * to clients or groups later.
+						 */
+					
+						/** Add to the database for each client / group selected */
+						$add_arguments = array(
+												'file' => $edit_file_info['url'],
+												'name' => $file['name'],
+												'description' => $file['description'],
+												'uploader' => $global_user,
+												'uploader_id' => $global_id
+											);
+					
+						/** Set notifications to YES by default */
+						$send_notifications = true;
+					
+						if (!empty($file['hidden'])) {
+							$add_arguments['hidden'] = $file['hidden'];
+							$send_notifications = false;
+						}
+						
+						if (!empty($file['assignments'])) {
+							$add_arguments['assign_to'] = $file['assignments'];
+						}
+						
+						/** Uploader is a client */
+						if ($current_level == 0) {
+							$add_arguments['assign_to'] = array('c'.$global_id);
+							$add_arguments['hidden'] = '0';
+							$add_arguments['uploader_type'] = 'client';
+						}
+						else {
+							$add_arguments['uploader_type'] = 'user';
+						}
+						/**
+						 * 1- Add the file to the database
+						 */
+						$process_file = $this_upload->upload_add_to_database($add_arguments);
+						if($process_file['database'] == true) {
+							$add_arguments['new_file_id'] = $process_file['new_file_id'];
+							$add_arguments['all_users'] = $users;
+							$add_arguments['all_groups'] = $groups;
+							/**
+							 * 2- Add the assignments to the database
+							 */
+							$process_assignment = $this_upload->upload_add_assignment($add_arguments);
+							/**
+							 * 3- Add the notifications to the database
+							 */
+							if ($send_notifications == true) {
+								$process_notifications = $this_upload->upload_add_notifications($add_arguments);
+							}
+
+							$msg = 'The file has been edited succesfuly.';
+							echo system_message('ok',$msg);
+						}
+					}
+				}
+			}
+			/** Validations OK, show the editor */
 	?>
-			<form action="edit-file.php?id=<?php echo $this_file_id; ?>" method="post">aaaaaa
+			<form action="edit-file.php?file_id=<?php echo $this_file_id; ?>" method="post" name="edit_file" id="edit_file">
+				<?php
+					$i = 1;
+					$files_query = 'SELECT * FROM tbl_files WHERE id="' . $this_file_id . '"';
+					$sql = $database->query($files_query);
+					while($row = mysql_fetch_array($sql)) {
+				?>
+						<div class="row-fluid edit_files">
+							<div class="span1">
+								<div class="file_number">
+									<p><?php echo $i; ?></p>
+								</div>
+							</div>
+							<div class="span11 file_data">
+								<div class="row-fluid">
+									<div class="span6">
+										<div class="row-fluid">
+											<div class="span12">
+												<p class="on_disc_name">
+													<?php echo $row['url']; ?>
+												</p>
+												<label><?php _e('Name', 'cftp_admin');?></label>
+												<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $row['filename']; ?>" class="txtfield required" />
+												<label><?php _e('Description', 'cftp_admin');?></label>
+												<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"><?php echo (!empty($row['description'])) ? $row['description'] : ''; ?></textarea>
+
+												<?php if ($global_level != 0) { ?>
+													<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Mark as hidden (will not send notifications) for new assigned clients and groups', 'cftp_admin');?></label>
+												<?php } ?>
+											</div>
+										</div>
+									</div>
+									<div class="span6">
+										<?php
+											/**
+											* Only show the CLIENTS select field if the current
+											* uploader is a system user, and not a client.
+											*/
+											if ($global_level != 0) {
+										?>
+												<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
+												<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="assign_select" >
+													<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
+														<?php
+															/**
+															 * The clients list is generated early on the file so the
+															 * array doesn't need to be made once on every file.
+															 */
+															foreach($clients as $client => $client_name) {
+															?>
+																<option value="<?php echo 'c'.$client; ?>"<?php if (in_array($client,$file_on_clients)) { echo ' selected="selected"'; } ?>>
+																	<?php echo $client_name; ?>
+																</option>
+															<?php
+															}
+														?>
+													<optgroup label="<?php _e('Groups', 'cftp_admin');?>">
+														<?php
+															/**
+															 * The groups list is generated early on the file so the
+															 * array doesn't need to be made once on every file.
+															 */
+															foreach($groups as $group => $group_name) {
+															?>
+																<option value="<?php echo 'g'.$group; ?>"<?php if (in_array($group,$file_on_groups)) { echo ' selected="selected"'; } ?>>
+																	<?php echo $group_name; ?>
+																</option>
+															<?php
+															}
+														?>
+												</select>
+												<div class="list_mass_members">
+													<a href="#" class="button button_gray add-all"><?php _e('Add all','cftp_admin'); ?></a>
+													<a href="#" class="button button_gray remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
+												</div>
+										<?php
+											} /** Close $current_level check */
+										?>
+									</div>
+								</div>
+							</div>
+						</div>
+				<?php
+					}
+				?>
+				<div align="right">
+					<input type="submit" name="submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" id="upload_continue" />
+				</div>
 			</form>
 	<?php
 		}
 
 		$database->Close();
 	?>
-
 </div>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.assign_select').multiSelect({
+			selectableHeader: "<div class='multiselect_header'><?php _e('Available','cftp_admin'); ?></div>",
+			selectionHeader: "<div class='multiselect_header'><?php _e('Selected','cftp_admin'); ?></div>"
+		})
+		$('.add-all').click(function(){
+		  $(this).parent().parent().find('select').multiSelect('select_all');
+		  return false;
+		});
+		$('.remove-all').click(function(){
+		  $(this).parent().parent().find('select').multiSelect('deselect_all');
+		  return false;
+		});
+
+		$("form").submit(function() {
+			clean_form(this);
+
+			$(this).find('input[name$="[name]"]').each(function() {	
+				is_complete($(this)[0],'<?php echo $validation_no_name; ?>');
+			});
+
+			// show the errors or continue if everything is ok
+			if (show_form_errors() == false) { return false; }
+
+		});
+	});
+</script>
 
 <?php include('footer.php'); ?>

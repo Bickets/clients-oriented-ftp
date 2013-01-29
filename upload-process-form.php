@@ -109,16 +109,10 @@ while($row = mysql_fetch_array($sql)) {
  */
 	if(isset($_POST['submit'])) {
 		/**
-		 * Get the username of the current logged in account
-		 * and use it when saving the files on the database.
-		 */
-		$this_admin = get_current_user_username();
-
-		/**
 		 * Get the ID of the current client that is uploading files.
 		 */
 		if ($current_level == 0) {
-			$client_my_info = get_client_by_username($this_admin);
+			$client_my_info = get_client_by_username($global_user);
 			$client_my_id = $client_my_info["id"];
 		}
 		
@@ -133,7 +127,7 @@ while($row = mysql_fetch_array($sql)) {
 				* uploader username, since the "client" field is not posted.
 				*/
 				if ($current_level == 0) {
-					$file['assignments'] = 'c'.$this_admin;
+					$file['assignments'] = 'c'.$global_user;
 				}
 				
 				$this_upload = new PSend_Upload_File();
@@ -170,7 +164,7 @@ while($row = mysql_fetch_array($sql)) {
 												'file' => $new_filename,
 												'name' => $file['name'],
 												'description' => $file['description'],
-												'uploader' => $this_admin,
+												'uploader' => $global_user,
 												'uploader_id' => $global_id
 											);
 
@@ -368,10 +362,14 @@ while($row = mysql_fetch_array($sql)) {
 ?>
 		<h3><?php _e('Files ready to upload','cftp_admin'); ?></h3>
 		<p><?php _e('Please complete the following information to finish the uploading proccess. Remember that "Name" is a required field.','cftp_admin'); ?></p>
-		<?php if ($current_level != 0) { ?>
+
+		<?php
+			if ($current_level != 0) {
+		?>
 			<div class="message message_info"><strong><?php _e('Note','cftp_admin'); ?></strong>: <?php _e('You can skip assignations if you want. The files are kept uploaded and you can add them to clients or groups later.','cftp_admin'); ?></div>
-		<?php } ?>
-<?php
+		<?php
+			}
+
 		/**
 		 * First, do a server side validation for files that were submited
 		 * via the form, but the name field was left empty.
