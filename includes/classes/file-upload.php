@@ -160,19 +160,8 @@ class PSend_Upload_File
 		global $database;
 		$this->name = encode_html($arguments['name']);
 		$this->uploader_id = $arguments['uploader_id'];
-
-		/**
-		 * Get the usernames of clients and names of groups
-		 * to use on the log.
-		 */
-		$names_sql = $database->query("SELECT id, name FROM tbl_users");
-		while($res = mysql_fetch_array($names_sql)) {
-			$this->users[$res["id"]] = $res["name"];
-		}
-		$gnames_sql = $database->query("SELECT id, name FROM tbl_groups");
-		while($res = mysql_fetch_array($gnames_sql)) {
-			$this->groups[$res["id"]] = $res["name"];
-		}
+		$this->groups = $arguments['all_groups'];
+		$this->users = $arguments['all_users'];
 
 		if (!empty($arguments['assign_to'])) {
 			$this->assign_to = $arguments['assign_to'];

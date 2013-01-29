@@ -76,19 +76,22 @@ $upload_finish_orphans = array();
  */
 $empty_fields = 0;
 
-/** Fill the clients array that will be used on the form */
-$clients = array();
-$cq = "SELECT id, name FROM tbl_users WHERE level = '0' ORDER BY name ASC";
+/** Fill the users array that will be used on the notifications process */
+$users = array();
+$cq = "SELECT id, name, level FROM tbl_users";
 $sql = $database->query($cq);
 while($row = mysql_fetch_array($sql)) {
-	$clients['c'.$row["id"]] = $row["name"];
+	$users[$row["id"]] = $row["name"];
+	if ($row["level"] == '0') {
+		$clients[$row["id"]] = $row["name"];
+	}
 }
 /** Fill the groups array that will be used on the form */
 $groups = array();
 $cq = "SELECT id, name FROM tbl_groups ORDER BY name ASC";
 $sql = $database->query($cq);
 	while($row = mysql_fetch_array($sql)) {
-	$groups['g'.$row["id"]] = $row["name"];
+	$groups[$row["id"]] = $row["name"];
 }
 
 /**
@@ -206,6 +209,8 @@ while($row = mysql_fetch_array($sql)) {
 						$process_file = $this_upload->upload_add_to_database($add_arguments);
 						if($process_file['database'] == true) {
 							$add_arguments['new_file_id'] = $process_file['new_file_id'];
+							$add_arguments['all_users'] = $users;
+							$add_arguments['all_groups'] = $groups;
 							/**
 							 * 2- Add the assignments to the database
 							 */
@@ -479,7 +484,7 @@ while($row = mysql_fetch_array($sql)) {
 																	 */
 																	foreach($clients as $client => $client_name) {
 																	?>
-																		<option value="<?php echo $client; ?>"><?php echo $client_name; ?></option>
+																		<option value="<?php echo 'c'.$client; ?>"><?php echo $client_name; ?></option>
 																	<?php
 																	}
 																?>
@@ -491,7 +496,7 @@ while($row = mysql_fetch_array($sql)) {
 																	 */
 																	foreach($groups as $group => $group_name) {
 																	?>
-																		<option value="<?php echo $group; ?>"><?php echo $group_name; ?></option>
+																		<option value="<?php echo 'g'.$group; ?>"><?php echo $group_name; ?></option>
 																	<?php
 																	}
 																?>
