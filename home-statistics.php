@@ -15,22 +15,13 @@
 	$results = $database->query("SELECT action, timestamp, COUNT(*) as total
 									FROM tbl_actions_log
 									WHERE timestamp >= DATE_SUB( CURDATE(),INTERVAL $max_stats_days DAY)
-									AND action IN ('1', '3', '4', '5', '8', '9')
+									AND action IN ('5', '8', '9')
 									GROUP BY DATE(timestamp), action
 								");
 
 	while($res = mysql_fetch_array($results)) {
 		$res['timestamp'] = strtotime($res['timestamp']);
 		switch ($res['action']) {
-			case 1:
-				$actions_to_graph['d1'][$res['timestamp']] = $res['total'];
-				break;
-			case 3:
-				$actions_to_graph['d3'][$res['timestamp']] = $res['total'];
-				break;
-			case 4:
-				$actions_to_graph['d4'][$res['timestamp']] = $res['total'];
-				break;
 			case 5:
 				$actions_to_graph['d5'][$res['timestamp']] = $res['total'];
 				break;
@@ -43,7 +34,7 @@
 		}
 	}
 	
-	$data_logs = array('d1','d3','d4','d5','d8','d9');
+	$data_logs = array('d5','d8','d9');
 	foreach ($data_logs as $gen_log) {
 		echo 'var '.$gen_log.' = [';
 		$i = 0;

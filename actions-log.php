@@ -50,7 +50,7 @@ include('header.php');
 				}
 			}
 			if (action == 'clear') {
-				var msg = '<?php _e("You are about to delete all activities from the log. Are you sure you want to continue?",'cftp_admin'); ?>';
+				var msg = '<?php _e("You are about to delete all activities from the log. Only those used for statistics will remain. Are you sure you want to continue?",'cftp_admin'); ?>';
 				if (confirm(msg)) {
 					return true;
 				} else {
@@ -95,8 +95,9 @@ include('header.php');
 					}
 				break;
 				case 'clear':
-					$del_sql = $database->query("DELETE FROM tbl_actions_log");
-					$msg = __('The selected activities were deleted.','cftp_admin');
+					$keep = '5,8,9';
+					$del_sql = $database->query("DELETE FROM tbl_actions_log WHERE NOT (action IN ($keep))");
+					$msg = __('The log was cleared. Only data used for statistics remained. You can delete them manually if you want.','cftp_admin');
 					echo system_message('ok',$msg);
 				break;
 			}
