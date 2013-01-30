@@ -196,10 +196,12 @@ include('header.php');
 											'action' => $log_action_number,
 											'owner_id' => $global_id,
 											'affected_file' => $work_file_id,
-											'affected_file_name' => $work_file,
-											'affected_account_name' => $name_for_actions,
-											'get_user_real_name' => true
+											'affected_file_name' => $work_file
 										);
+					if (!empty($name_for_actions)) {
+						$log_action_args['affected_account_name'] = $name_for_actions;
+						$log_action_args['get_user_real_name'] = true;
+					}
 					$new_record_action = $new_log_action->log_action_save($log_action_args);
 				}
 			}
@@ -330,10 +332,17 @@ include('header.php');
 							<div class="form_actions_submit">
 								<label><?php _e('Selected files actions','cftp_admin'); ?>:</label>
 								<select name="files_actions" id="files_actions" class="txtfield">
-									<option value="hide"><?php _e('Hide','cftp_admin'); ?></option>
-									<option value="show"><?php _e('Show','cftp_admin'); ?></option>
-									<option value="unassign"><?php _e('Unassign','cftp_admin'); ?></option>
-									<option value="delete"><?php _e('Delete for everyone','cftp_admin'); ?></option>
+									<?php
+										/** Options only available when viewing a client/group files list */
+										if (isset($search_on)) {
+									?>
+											<option value="hide"><?php _e('Hide','cftp_admin'); ?></option>
+											<option value="show"><?php _e('Show','cftp_admin'); ?></option>
+											<option value="unassign"><?php _e('Unassign','cftp_admin'); ?></option>
+									<?php
+										}
+									?>
+									<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
 								</select>
 								<input type="submit" name="do_action" id="do_action" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
 							</div>
@@ -389,9 +398,9 @@ include('header.php');
 						<?php
 							}
 						?>
-						<th><?php _e('Uploaded','cftp_template'); ?></th>
+						<th><?php _e('Upload date','cftp_template'); ?></th>
+						<th><?php _e('Type','cftp_template'); ?></th>
 						<th><?php _e('Name','cftp_template'); ?></th>
-						<th><?php _e('Description','cftp_template'); ?></th>
 						<th><?php _e('Size','cftp_template'); ?></th>
 						<th><?php _e('Uploader','cftp_template'); ?></th>
 						<?php
@@ -402,6 +411,11 @@ include('header.php');
 						?>
 								<th><?php _e('Status','cftp_template'); ?></th>
 								<th><?php _e('Download count','cftp_template'); ?></th>
+						<?php
+							}
+							else {
+						?>
+								<th><?php _e('Total downloads','cftp_template'); ?></th>
 						<?php
 							}
 						?>
@@ -415,19 +429,28 @@ include('header.php');
 								/**
 								 * Construct the complete file URI to use on the download button.
 								 */
-								$this_file_uri = UPLOADED_FILES_FOLDER.$row['url'];
+								$this_file_absolute = UPLOADED_FILES_FOLDER.$row['url'];
+								$this_file_uri = BASE_URI.UPLOADED_FILES_URL.$row['url'];
 								
 								/**
 								 * Download count and visibility status are only available when
 								 * filtering by client or group.
 								 */
+								$query_this_file = "SELECT * FROM tbl_files_relations WHERE file_id='".$row['id']."'";
 								if (isset($search_on)) {
-									$sql_this_file = $database->query("SELECT * FROM tbl_files_relations WHERE file_id='".$row['id']."' AND $search_on = ".$this_id);
-									while($data_file = mysql_fetch_array($sql_this_file)) {
-										$file_id = $data_file['id'];
-										$hidden = $data_file['hidden'];
-										$download_count = $data_file['download_count'];
-									}
+									$query_this_file .= " AND $search_on = $this_id";
+								}
+								else {
+									$sql_this_file = $database->query("SELECT SUM(download_count) as count FROM tbl_files_relations WHERE file_id='".$row['id']."'");
+									$download_count = mysql_result($sql_this_file, 0);
+								}
+
+								$sql_this_file = $database->query($query_this_file);
+
+								while($data_file = mysql_fetch_array($sql_this_file)) {
+									$file_id = $data_file['id'];
+									$hidden = $data_file['hidden'];
+									$download_count = $data_file['download_count'];
 								}
 								$date = date(TIMEFORMAT_USE,strtotime($row['timestamp']));
 					?>
@@ -441,9 +464,15 @@ include('header.php');
 										}
 									?>
 									<td><?php echo $date; ?></td>
+									<td>
+										<?php
+											$pathinfo = pathinfo($row['url']);
+											$extension = strtolower($pathinfo['extension']);
+											echo $extension;
+										?>
+									</td>
 									<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
-									<td><?php echo htmlentities($row['description']); ?></td>
-									<td><?php $this_file = filesize($this_file_uri); echo format_file_size($this_file); ?></td>
+									<td><?php $this_file = filesize($this_file_absolute); echo format_file_size($this_file); ?></td>
 									<td><?php echo $row['uploader']; ?></td>
 									<?php
 										/**
@@ -458,10 +487,10 @@ include('header.php');
 													echo ($hidden === '1') ? $status_hidden : $status_visible;
 												?>
 											</td>
-											<td><?php echo $download_count; ?></td>
 									<?php
 										}
 									?>
+									<td><?php echo $download_count; ?></td>
 									<td>
 										<?php
 											/**
@@ -469,9 +498,11 @@ include('header.php');
 											 */
 											if($current_level != '0') {
 										?>
-												<a href="<?php echo $this_file_uri; ?>" target="_blank" class="button button_blue">
-													<?php _e('Download','cftp_template'); ?>
-												</a>
+												<!--
+													<a href="<?php echo $this_file_uri; ?>" target="_blank" class="button button_blue">
+														<?php _e('Download','cftp_template'); ?>
+													</a>
+												-->
 										<?php
 											}
 										?>

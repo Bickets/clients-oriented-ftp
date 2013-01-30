@@ -553,6 +553,139 @@ input[type="text"], input[type="password"], textarea, select {
 }
 
 
+/** Files list view (File Manager) */
+
+#files_list .files {
+}
+
+#files_list .files li {
+	display:inline-block;
+	zoom:1;
+	width:190px;
+	background:white;
+	padding:0;
+	margin:0 10px 20px;
+	overflow:hidden;
+	text-align:left;
+
+	-webkit-box-shadow: 0px 0px 10px rgba(50, 50, 50, 0.1);
+	-moz-box-shadow:    0px 0px 10px rgba(50, 50, 50, 0.1);
+	box-shadow:         0px 0px 10px rgba(50, 50, 50, 0.1);
+}
+
+#files_list .files li .check {
+	margin:0 0 10px;
+}
+
+#files_list .files li .data_container {
+	margin:10px;
+}
+
+#files_list .files li .data_container img {
+	margin:0 auto 10px;
+	padding:5px;
+	border:1px solid #eee;
+}
+
+#files_list .files li .data_container .graphics {
+	height:112px;
+	background:url(../img/file-big.png) no-repeat top center;
+	margin:5px 0 10px;
+}
+
+#files_list .files li .data_container .graphics p {
+	text-align:center;
+	font-size:2em;
+	color:#4282c4;
+	padding-top:40px;
+}
+
+#files_list .files li .data_container .data {
+	overflow:hidden;
+	color:#8b8b8b;
+	font-size:.9em;
+	margin:6px 0 3px;
+}
+
+#files_list .files li .data_container .data .data_left {
+	width:70%;
+	float:left;
+}
+
+#files_list .files li .data_container .data .data_right {
+	text-align:right;
+}
+
+#files_list .files li .data_container .title {
+	color:#222;
+	font-size:1.2em;
+}
+
+#files_list .files li .icons {
+	overflow:hidden;
+	background:#e6e8e9;
+	padding:5px;
+}
+
+#files_list .files li .icons a {
+	font-size:.85em;
+	text-transform:uppercase;
+	color:white;
+	padding:2px 8px;
+	background:#4282c4;
+	text-align:center;
+	display:inline-block;
+	zoom:1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#files_list .files li .icons a:hover {
+	text-decoration:none;
+	background:#2a66a4;
+}
+
+#files_list .files li .icons .icons_left {
+	float:left;
+}
+
+#files_list .files li .icons .icons_right {
+	text-align:right;
+	float:right;
+}
+
+/*
+#files_list .files li .icons a.download_count {
+	background:url(../img/files-dcount.png) no-repeat;
+	padding-left:22px;
+}
+
+#files_list .files li .icons a.download_count span {
+	font-weight:bold;
+}
+
+#files_list .files li .icons a.download_count .who {
+	font-size:.7em;
+	text-transform:uppercase;
+	color:white;
+	padding:2px 8px;
+	background:#4282c4;
+	text-align:center;
+	display:inline-block;
+	zoom:1;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+#files_list .files li .icons a.file_edit {
+	background:url(../img/files-edit.png) no-repeat;
+	width:16px;
+	text-indent:-999em;
+	text-align:left;
+}
+*/
 
 /* Table sorter for jquery */
 
