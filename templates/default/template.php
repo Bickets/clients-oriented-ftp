@@ -155,7 +155,7 @@ $count = count($my_files);
 							<input type="checkbox" name="select_all" id="select_all" value="0" />
 						</th>
 						<th><?php _e('Name','cftp_template'); ?></th>
-						<th><?php _e('Description','cftp_template'); ?></th>
+						<th class="description"><?php _e('Description','cftp_template'); ?></th>
 						<th><?php _e('Size','cftp_template'); ?></th>
 						<th class="extra"><?php _e('Uploaded date','cftp_template'); ?></th>
 						<th class="extra"><?php _e('Image preview','cftp_template'); ?></th>
@@ -181,7 +181,7 @@ $count = count($my_files);
 								<tr>
 									<td><input type="checkbox" name="files[]" value="<?php echo $file["id"]; ?>" /></td>
 									<td><strong><?php echo htmlentities($file['name']); ?></strong></td>
-									<td><?php echo htmlentities($file['description']); ?></td>
+									<td class="description"><?php echo htmlentities($file['description']); ?></td>
 									<td><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file); ?></td>
 									<td class="extra"><?php echo $date; ?></td>
 									<td class="extra">

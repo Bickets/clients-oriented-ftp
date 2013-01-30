@@ -497,12 +497,15 @@ include('header.php');
 											 * Clients cannot download from here.
 											 */
 											if($current_level != '0') {
+												$download_link = BASE_URI.
+																	'process.php?do=download
+																	&amp;client='.$global_user.'
+																	&amp;url='.$row['url'].'
+																	&amp;n=1';
 										?>
-												<!--
-													<a href="<?php echo $this_file_uri; ?>" target="_blank" class="button button_blue">
-														<?php _e('Download','cftp_template'); ?>
-													</a>
-												-->
+												<a href="<?php echo $download_link; ?>" target="_blank" class="button button_blue">
+													<?php _e('Download','cftp_template'); ?>
+												</a>
 										<?php
 											}
 										?>
