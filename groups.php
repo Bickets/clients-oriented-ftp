@@ -11,6 +11,9 @@ $allowed_levels = array(9,8);
 require_once('sys.includes.php');
 $page_title = __('Groups administration','cftp_admin');;
 
+/**
+ * Used when viewing groups a certain client belongs to.
+ */
 if(!empty($_GET['member'])) {
 	$member = $_GET['member'];
 	/** Add the name of the client to the page's title. */
@@ -131,8 +134,33 @@ include('header.php');
 			echo system_message('error',$msg);
 		}
 	}
+	
+	/**
+	 * Generate the list of available groups.
+	 */
 
 	$database->MySQLDB();
+
+	$files_amount = array();
+	$count_files_query = "SELECT group_id, COUNT(file_id) as files FROM tbl_files_relations WHERE group_id IS NOT NULL GROUP BY group_id";
+	$count_files_sql = $database->query($count_files_query);
+	$count_files = mysql_num_rows($count_files_sql);
+	if ($count_files > 0) {
+		while ($crow = mysql_fetch_array($count_files_sql)) {
+			$files_amount[$crow['group_id']] = $crow['files'];
+		}
+	}
+
+	$members_amount = array();
+	$count_members_query = "SELECT group_id, COUNT(client_id) as members FROM tbl_members GROUP BY group_id";
+	$count_members_sql = $database->query($count_members_query);
+	$count_members = mysql_num_rows($count_members_sql);
+	if ($count_members > 0) {
+		while ($mrow = mysql_fetch_array($count_members_sql)) {
+			$members_amount[$mrow['group_id']] = $mrow['members'];
+		}
+	}
+
 	$cq = "SELECT * FROM tbl_groups";
 
 	/** Add the search terms */	
@@ -227,6 +255,7 @@ include('header.php');
 					<th><?php _e('Group name','cftp_admin'); ?></th>
 					<th><?php _e('Description','cftp_admin'); ?></th>
 					<th><?php _e('Members','cftp_admin'); ?></th>
+					<th><?php _e('Files','cftp_admin'); ?></th>
 					<th><?php _e('Created by','cftp_admin'); ?></th>
 					<th><?php _e('Added on','cftp_admin'); ?></th>
 					<th><?php _e('Actions','cftp_admin'); ?></th>
@@ -248,8 +277,16 @@ include('header.php');
 					<td><?php echo html_entity_decode($row["description"]); ?></td>
 					<td>
 						<?php
-							$members_sql = $database->query("SELECT id FROM tbl_members WHERE group_id = '".$row["id"]."'");
-							echo mysql_num_rows($members_sql);
+							if (isset($members_amount[$row['id']])) {
+								echo $members_amount[$row['id']];
+							}
+						?>
+					</td>
+					<td>
+						<?php
+							if (isset($files_amount[$row['id']])) {
+								echo $files_amount[$row['id']];
+							}
 						?>
 					</td>
 					<td><?php echo html_entity_decode($row["created_by"]); ?></td>
