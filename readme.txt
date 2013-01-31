@@ -7,6 +7,7 @@ a name and description to them.
 ProjectSend is hosted on Google Code.
 Feel free to participate!
 
+http://www.projectsend.org/
 http://code.google.com/p/clients-oriented-ftp/
 
 --------------------------------------------------------------------------------------------
@@ -83,3 +84,20 @@ Many thanks to the authors of the following scripts, which are used on ProjectSe
 
 - phpmailer
   http://phpmailer.worxware.com/
+
+--------------------------------------------------------------------------------------------
+
+Also, thank you to the following people/communities that helped during development, either
+by giving support, sending code, translations, etc.
+
+- Alejandro D'Ambrosio
+- Raúl Elenes
+- k.flipflip
+- Diego Carreira Vidal
+- Everyone that commented and gave suggestions on the issues and Facebook pages!
+
+- stackoverflow.com
+- iconfinder.com
+
+I know that there are more people that deserve to be on this list. I will keep adding them
+as I find their names/websites.

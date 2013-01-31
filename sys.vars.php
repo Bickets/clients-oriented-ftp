@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r282');
+define('CURRENT_VERSION', 'r310');
 
 /**
  * Turn off reporting of PHP errors, warnings and notices.
@@ -23,7 +23,7 @@ define('CURRENT_VERSION', 'r282');
  *
  * @link http://www.php.net/manual/en/function.error-reporting.php
  */
-//error_reporting(0);
+error_reporting(0);
 
 define('GLOBAL_TIME_LIMIT', 240*60);
 define('UPLOAD_TIME_LIMIT', 120*60);
@@ -105,7 +105,7 @@ define('CLIENT_UPLOADS_TEMP_FOLDER', ROOT_DIR.'/upload/temp');
  * on the footer blocks.
  *
  */
-define('SYSTEM_URI','http://code.google.com/p/clients-oriented-ftp/');
+define('SYSTEM_URI','http://projectsend.org/');
 define('SYSTEM_URI_LABEL','ProjectSend on Google Code');
 /** Previously cFTP */
 define('SYSTEM_NAME','ProjectSend');
