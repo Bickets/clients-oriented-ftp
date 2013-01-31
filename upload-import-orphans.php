@@ -58,6 +58,9 @@ $work_folder = UPLOADED_FILES_FOLDER;
 				$assigned[] = $row["file_id"];
 			}
 
+			/** This array will be compared to files on the DB */
+			$found_disc_files = array();
+
 			/** Read the temp folder and list every allowed file */
 			if ($handle = opendir($work_folder)) {
 				while (false !== ($filename = readdir($handle))) {
@@ -73,6 +76,7 @@ $work_folder = UPLOADED_FILES_FOLDER;
 									/** Add it to the array of available files */
 									$new_filename_path = $work_folder.'/'.$new_filename;
 									$files_to_add[$new_filename] = $new_filename_path;
+									$found_disc_files[] = $new_filename;
 								}
 							}
 							else {
@@ -88,6 +92,9 @@ $work_folder = UPLOADED_FILES_FOLDER;
 					}
 				}
 				closedir($handle);
+			}
+			
+			foreach ($found_disc_files as $found_file) {
 			}
 			
 			/**

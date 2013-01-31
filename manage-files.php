@@ -11,6 +11,7 @@ require_once('sys.includes.php');
 
 $page_title = __('Manage files','cftp_admin');
 
+$current_level = get_current_user_level();
 /**
  * The client's id is passed on the URI.
  * Then get_client_by_id() gets all the other account values.
@@ -100,13 +101,13 @@ include('header.php');
 					var file_id = $(this).attr('rel');
 					$.get('<?php echo BASE_URI; ?>process.php', { do:"get_downloaders", sys_user:"<?php echo $global_id; ?>", file_id:file_id },
 						function(data) {
-							$('.modal_content').html('<h4><?php _e('File:','cftp_admin'); ?> <strong>'+file_name+'</strong></h4>');
+							$('.modal_content').html('<h4><?php _e('Downloaders of file:','cftp_admin'); ?> <strong>'+file_name+'</strong></h4>');
 							$('.modal_content').append('<ul class="downloaders_list"></ul>');
 							var obj = $.parseJSON(data);
 							for (i = 0; i < obj.length; i++) {
-								$('.modal_content .downloaders_list').append('<li><img src="<?php echo BASE_URI; ?>/img/downloader-' + obj[i].type + '.png" alt="" /><p class="downloader_name">' + obj[i].name + '</p><p class="downloader_email">' +  obj[i].email + '</p></li>');
+								$('.modal_content .downloaders_list').append('<li><img src="<?php echo BASE_URI; ?>/img/downloader-' + obj[i].type + '.png" alt="" /><div class="downloader_count">' +  obj[i].count + ' <?php _e('times','cftp_admin'); ?></div><p class="downloader_name">' + obj[i].name + '</p><p class="downloader_email">' +  obj[i].email + '</p></li>');
 							}
-							$('.modal_content').append('<p class="downloaders_note"><?php _e('Please note that this is a list of downloaders only. If the total downloads count is higher than the amounts of accounts reflected on this list, it means that one or more of them downloaded the file more than once.','cftp_admin'); ?></p>');
+							//$('.modal_content').append('<p class="downloaders_note"><?php _e('Please note that this is a list of downloaders only. If the total downloads count is higher than the amounts of accounts reflected on this list, it means that one or more of them downloaded the file more than once.','cftp_admin'); ?></p>');
 						}
 					);					
 					return false;
@@ -308,7 +309,6 @@ include('header.php');
 			 * If the user is an uploader, or a client is editing his files
 			 * only show files uploaded by that account.
 			*/
-			$current_level = get_current_user_level();
 			if($current_level == '7' || $current_level == '0') {
 				$fq .= " AND uploader = '$global_user'";
 				$no_results_error = 'account_level';
@@ -511,11 +511,7 @@ include('header.php');
 											 * Clients cannot download from here.
 											 */
 											if($current_level != '0') {
-												$download_link = BASE_URI.
-																	'process.php?do=download
-																	&amp;client='.$global_user.'
-																	&amp;url='.$row['url'].'
-																	&amp;n=1';
+												$download_link = BASE_URI.'process.php?do=download&amp;client='.$global_user.'&amp;url='.$row['url'].'&amp;n=1';
 										?>
 												<a href="<?php echo $download_link; ?>" target="_blank">
 													<?php echo htmlentities($row['filename']); ?>
@@ -542,16 +538,23 @@ include('header.php');
 													echo ($hidden === '1') ? $status_hidden : $status_visible;
 												?>
 											</td>
+											<td>
+												<?php echo $download_count; ?> <?php _e('times','cftp_admin'); ?>
+											</td>
+									<?php
+										}
+										else {
+									?>
+											<td>
+												<div class="icons">
+													<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders button_blue'; } else { echo 'button_gray'; } ?> button" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
+														<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
+													</a>
+												</div>
+											</td>
 									<?php
 										}
 									?>
-									<td>
-										<div class="icons">
-											<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders button_blue'; } else { echo 'button_gray'; } ?> button" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
-												<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
-											</a>
-										</div>
-									</td>
 									<td>
 										<a href="edit-file.php?file_id=<?php echo $row["id"]; ?>" class="button button_blue button_small">
 											<?php _e('Edit','cftp_template'); ?>

@@ -576,9 +576,9 @@ input[type="text"], input[type="password"], textarea, select {
 	float: left;
 	z-index:5000;
 
-	width:300px;
-	height:400px;
-	margin:-200px 0 0 -150px;
+	width:400px;
+	height:340px;
+	margin:-170px 0 0 -200px;
 	background:white;
 	color:black;
 
@@ -630,7 +630,7 @@ input[type="text"], input[type="password"], textarea, select {
 
 .downloaders_list {
 	list-style:none;
-	height:220px;
+	height:230px;
 	overflow:auto;
 }
 
@@ -639,6 +639,10 @@ input[type="text"], input[type="password"], textarea, select {
 	padding:8px;
 	border:solid #eee;
 	border-width:1px 0;
+}
+
+.downloaders_list li:hover {
+	background:#eef0f2 !important;
 }
 
 .downloaders_list li img {
@@ -650,7 +654,7 @@ input[type="text"], input[type="password"], textarea, select {
 }
 
 .downloaders_list li:nth-child(even) {
-	background:#f0f0f0;
+	background:#f6f6f6;
 }
 
 .downloaders_list .downloader_name {
@@ -664,6 +668,10 @@ input[type="text"], input[type="password"], textarea, select {
 	font-size:.9em;
 	color:#777;
 	margin:0;
+}
+
+.downloaders_list .downloader_count {
+	float:right;
 }
 
 p.downloaders_note {

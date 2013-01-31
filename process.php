@@ -153,11 +153,12 @@ class process {
 
 				$this->filename = $this->row['filename'];
 
-				$this->sql_who = $this->database->query('SELECT DISTINCT client_id FROM tbl_files_relations WHERE file_id="' . $file_id .'"');
+				$this->sql_who = $this->database->query('SELECT DISTINCT client_id, download_count FROM tbl_files_relations WHERE file_id="' . $file_id .'" AND download_count != "0"');
 				while ($this->wrow = mysql_fetch_array($this->sql_who)) {
 					$this->downloaders_ids[] = $this->wrow['client_id'];
+					$this->downloaders_count[$this->wrow['client_id']] = $this->wrow['download_count'];
 				}
-				$this->users_ids = implode(',',array_filter($this->downloaders_ids));
+				$this->users_ids = implode(',',array_unique(array_filter($this->downloaders_ids)));
 
 				$this->downloaders_list = array();
 				$this->sql_who = $this->database->query("SELECT id, name, email, level FROM tbl_users WHERE id IN ($this->users_ids)");
@@ -168,6 +169,7 @@ class process {
 														'email' => $this->urow['email']
 													);
 					$this->downloaders_list[$i]['type'] = ($this->urow['name'] == 0) ? 'client' : 'user';
+					$this->downloaders_list[$i]['count'] = isset($this->downloaders_count[$this->urow['id']]) ? $this->downloaders_count[$this->urow['id']] : null;
 					$i++;
 				}
 

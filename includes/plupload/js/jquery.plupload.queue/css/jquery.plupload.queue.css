@@ -150,7 +150,7 @@ li.plupload_done a {
 .plupload_progress_bar {
 	width: 0px;
 	height: 7px;
-	background: #CDEB8B;
+	background: #86ae00;
 }
 
 .plupload_scroll .plupload_filelist_header .plupload_file_action, .plupload_scroll .plupload_filelist_footer .plupload_file_action {
