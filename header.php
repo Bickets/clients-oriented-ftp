@@ -90,6 +90,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 	?>
 	
 	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
+	<script src="<?php echo BASE_URI; ?>includes/js/jquery.psendmodal.js" type="text/javascript"></script>
 
 	<?php if (isset($easytabs)) { ?>
 		<script src="<?php echo BASE_URI; ?>includes/js/jquery.easytabs.min.js" type="text/javascript"></script>
@@ -156,8 +157,8 @@ if (in_session_or_cookies($core_update_allowed)) {
 				?>
 						<li class="no_arrow"><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Dashboard', 'cftp_admin'); ?></a></li>
 					<?php } ?>
-				<li<?php if (in_session_or_cookies(array(0))) { echo ' class="no_arrow"'; } ?>>
-					<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Files', 'cftp_admin'); ?></a>
+					<li>
+						<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Files', 'cftp_admin'); ?></a>
 							<ul>
 								<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from device', 'cftp_admin'); ?></a></li>
 								<li><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
@@ -193,7 +194,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 							<a href="<?php echo BASE_URI; ?>clients.php">
 								<?php _e('Clients', 'cftp_admin'); ?>
 								<?php
-									$sql_inactive = $database->query("SELECT distinct user FROM tbl_users WHERE active='0' AND level='0'");
+									$sql_inactive = $database->query("SELECT DISTINCT user FROM tbl_users WHERE active = '0' AND level = '0'");
 									$count_inactive = mysql_num_rows($sql_inactive);
 									if ($count_inactive > 0) {
 								?>
@@ -237,7 +238,20 @@ if (in_session_or_cookies($core_update_allowed)) {
 					if (in_session_or_cookies($users_allowed)) {
 				?>
 						<li>
-							<a href="<?php echo BASE_URI; ?>users.php"><?php _e('System Users', 'cftp_admin'); ?></a>
+							<a href="<?php echo BASE_URI; ?>users.php">
+								<?php _e('System Users', 'cftp_admin'); ?>
+								<?php
+									$sql_inactive = $database->query("SELECT DISTINCT user FROM tbl_users WHERE active = '0' AND level != '0'");
+									$count_inactive = mysql_num_rows($sql_inactive);
+									if ($count_inactive > 0) {
+								?>
+										<span class="mnu_inactive_msg">
+											<?php echo $count_inactive; ?>
+										</span>
+								<?php
+									}
+								?>
+							</a>
 							<ul>
 								<li><a href="<?php echo BASE_URI; ?>users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
 								<li><a href="<?php echo BASE_URI; ?>users.php"><?php _e('Manage system users', 'cftp_admin'); ?></a></li>

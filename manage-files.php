@@ -50,16 +50,6 @@ include('header.php');
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#files_list")
-			.tablesorter( {
-				widthFixed: true,
-				sortList: [[1,1]], widgets: ['zebra'], headers: {
-					0: { sorter: false },
-					8: { sorter: false }
-				}
-		})
-		.tablesorterPager({container: $("#pager")})
-
 		$("#select_all").click(function(){
 			var status = $(this).prop("checked");
 			$("td>input:checkbox").prop("checked",status);
@@ -93,11 +83,53 @@ include('header.php');
 				}
 			}
 		});
+		
+		<?php
+			if (!isset($search_on)) {
+		?>
+				$(document).psendmodal();
+				$(".downloaders").click(function() {
+					$('.overlay').stop(true, true).fadeIn();
+					$('.modal').stop(true, true).fadeIn();
+					$('.modal_content').html('<p class="loading-img">'+
+												'<img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" /></p>'+
+												'<p><?php _e('Please wait while the system gets the required information.','cftp_admin'); ?></p>'
+											);
+					
+					var file_name = $(this).attr('title');
+					var file_id = $(this).attr('rel');
+					$.get('<?php echo BASE_URI; ?>process.php', { do:"get_downloaders", sys_user:"<?php echo $global_id; ?>", file_id:file_id },
+						function(data) {
+							$('.modal_content').html('<h4><?php _e('File:','cftp_admin'); ?> <strong>'+file_name+'</strong></h4>');
+							$('.modal_content').append('<ul class="downloaders_list"></ul>');
+							var obj = $.parseJSON(data);
+							for (i = 0; i < obj.length; i++) {
+								$('.modal_content .downloaders_list').append('<li><img src="<?php echo BASE_URI; ?>/img/downloader-' + obj[i].type + '.png" alt="" /><p class="downloader_name">' + obj[i].name + '</p><p class="downloader_email">' +  obj[i].email + '</p></li>');
+							}
+							$('.modal_content').append('<p class="downloaders_note"><?php _e('Please note that this is a list of downloaders only. If the total downloads count is higher than the amounts of accounts reflected on this list, it means that one or more of them downloaded the file more than once.','cftp_admin'); ?></p>');
+						}
+					);					
+					return false;
+				});
+		<?php
+			}
+		?>
+
+		$("#files_list")
+			.tablesorter( {
+				widthFixed: true,
+				sortList: [[1,1]], widgets: ['zebra'], headers: {
+					0: { sorter: false },
+					8: { sorter: false }
+				}
+		})
+		.tablesorterPager({container: $("#pager")})
 
 	});
 </script>
 
 <div id="main">
+
 	<h2><?php echo $page_title; ?></h2>
 
 	<?php
@@ -398,8 +430,8 @@ include('header.php');
 						<?php
 							}
 						?>
-						<th><?php _e('Upload date','cftp_template'); ?></th>
-						<th><?php _e('Type','cftp_template'); ?></th>
+						<th><?php _e('Date','cftp_template'); ?></th>
+						<th><?php _e('Ext.','cftp_template'); ?></th>
 						<th><?php _e('Name','cftp_template'); ?></th>
 						<th><?php _e('Size','cftp_template'); ?></th>
 						<th><?php _e('Uploader','cftp_template'); ?></th>
@@ -450,7 +482,9 @@ include('header.php');
 								while($data_file = mysql_fetch_array($sql_this_file)) {
 									$file_id = $data_file['id'];
 									$hidden = $data_file['hidden'];
-									$download_count = $data_file['download_count'];
+									if (isset($search_on)) {
+										$download_count = $data_file['download_count'];
+									}
 								}
 								$date = date(TIMEFORMAT_USE,strtotime($row['timestamp']));
 					?>
@@ -471,7 +505,28 @@ include('header.php');
 											echo $extension;
 										?>
 									</td>
-									<td><strong><?php echo htmlentities($row['filename']); ?></strong></td>
+									<td class="file_name">
+										<?php
+											/**
+											 * Clients cannot download from here.
+											 */
+											if($current_level != '0') {
+												$download_link = BASE_URI.
+																	'process.php?do=download
+																	&amp;client='.$global_user.'
+																	&amp;url='.$row['url'].'
+																	&amp;n=1';
+										?>
+												<a href="<?php echo $download_link; ?>" target="_blank">
+													<?php echo htmlentities($row['filename']); ?>
+												</a>
+										<?php
+											}
+											else {
+												echo htmlentities($row['filename']);
+											}
+										?>
+									</td>
 									<td><?php $this_file = filesize($this_file_absolute); echo format_file_size($this_file); ?></td>
 									<td><?php echo $row['uploader']; ?></td>
 									<?php
@@ -490,27 +545,16 @@ include('header.php');
 									<?php
 										}
 									?>
-									<td><?php echo $download_count; ?></td>
 									<td>
-										<?php
-											/**
-											 * Clients cannot download from here.
-											 */
-											if($current_level != '0') {
-												$download_link = BASE_URI.
-																	'process.php?do=download
-																	&amp;client='.$global_user.'
-																	&amp;url='.$row['url'].'
-																	&amp;n=1';
-										?>
-												<a href="<?php echo $download_link; ?>" target="_blank" class="button button_blue">
-													<?php _e('Download','cftp_template'); ?>
-												</a>
-										<?php
-											}
-										?>
-										<a href="edit-file.php?file_id=<?php echo $row["id"]; ?>" class="button button_blue">
-											<?php _e('Edit file','cftp_template'); ?>
+										<div class="icons">
+											<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders button_blue'; } else { echo 'button_gray'; } ?> button" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
+												<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
+											</a>
+										</div>
+									</td>
+									<td>
+										<a href="edit-file.php?file_id=<?php echo $row["id"]; ?>" class="button button_blue button_small">
+											<?php _e('Edit','cftp_template'); ?>
 										</a>
 									</td>
 								</tr>

@@ -14,16 +14,19 @@ class process {
 		switch ($_GET['do']) {
 			case 'download':
 				$this->download_file();
-			break;
+				break;
 			case 'zip_download':
 				$this->download_zip();
-			break;
+				break;
+			case 'get_downloaders':
+				$this->get_downloaders();
+				break;
 			case 'logout':
 				$this->logout();
-			break;
+				break;
 			default:
 				header('Location: '.BASE_URI);
-			break;
+				break;
 		}
 		$this->database->Close();
 	}
@@ -122,6 +125,55 @@ class process {
 				ob_clean();
 				flush();
 				echo $file_list;
+			}
+		}
+	}
+
+	function get_downloaders() {
+		$this->check_level = array(9,8,7);
+		if (isset($_GET['sys_user']) && isset($_GET['file_id'])) {
+			// do a permissions check for logged in user
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
+				$file_id = $_GET['file_id'];
+				$current_level = get_current_user_level();
+				
+				$this->sql = $this->database->query('SELECT id, uploader, filename FROM tbl_files WHERE id="' . $file_id .'"');
+				$this->row = mysql_fetch_array($this->sql);
+				$this->uploader = $this->row['uploader'];
+
+				/** Uploaders can only generate this for their own files */
+				if ($current_level == '7') {
+					if ($this->uploader != $_GET['sys_user']) {
+						ob_clean();
+						flush();
+						_e("You don't have the required permissions to view this information about this file",'cftp_admin');
+						exit;
+					}
+				}
+
+				$this->filename = $this->row['filename'];
+
+				$this->sql_who = $this->database->query('SELECT DISTINCT client_id FROM tbl_files_relations WHERE file_id="' . $file_id .'"');
+				while ($this->wrow = mysql_fetch_array($this->sql_who)) {
+					$this->downloaders_ids[] = $this->wrow['client_id'];
+				}
+				$this->users_ids = implode(',',array_filter($this->downloaders_ids));
+
+				$this->downloaders_list = array();
+				$this->sql_who = $this->database->query("SELECT id, name, email, level FROM tbl_users WHERE id IN ($this->users_ids)");
+				$i = 0;
+				while ($this->urow = mysql_fetch_array($this->sql_who)) {
+					$this->downloaders_list[$i] = array(
+														'name' => $this->urow['name'],
+														'email' => $this->urow['email']
+													);
+					$this->downloaders_list[$i]['type'] = ($this->urow['name'] == 0) ? 'client' : 'user';
+					$i++;
+				}
+
+				ob_clean();
+				flush();
+				echo json_encode($this->downloaders_list);
 			}
 		}
 	}
