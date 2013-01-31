@@ -156,40 +156,23 @@ if (in_session_or_cookies($core_update_allowed)) {
 					if (in_session_or_cookies($groups_allowed)) {
 				?>
 						<li class="no_arrow"><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Dashboard', 'cftp_admin'); ?></a></li>
-					<?php } ?>
-					<li>
-						<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Files', 'cftp_admin'); ?></a>
-							<ul>
-								<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from device', 'cftp_admin'); ?></a></li>
-								<li><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
-								<?php
-									/**
-									 * Hide the subitems from clients, since their upload form
-									 * link is the same that was defined on the above item.
-									 */
-									$clients_allowed = array(9,8,7);
-									if (in_session_or_cookies($clients_allowed)) {
-								?>
-										<li><a href="<?php echo BASE_URI; ?>upload-import-orphans.php"><?php _e('Find orphan files', 'cftp_admin'); ?></a></li>
-								<?php
-									}
-									else {
-								?>
-										<li class="no_arrow"><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
-								<?php
-									}
-								?>
-							</ul>
-				</li>
-		
-				<?php
-					/**
-					 * Show the CLIENTS menu only to
-					 * System administrators and Account managers
-					 */
-					$clients_allowed = array(9,8);
-					if (in_session_or_cookies($clients_allowed)) {
-				?>
+						<li>
+							<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Files', 'cftp_admin'); ?></a>
+								<ul>
+									<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from device', 'cftp_admin'); ?></a></li>
+									<li><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
+									<li><a href="<?php echo BASE_URI; ?>upload-import-orphans.php"><?php _e('Find orphan files', 'cftp_admin'); ?></a></li>
+								</ul>
+						</li>
+			
+					<?php
+						/**
+						 * Show the CLIENTS menu only to
+						 * System administrators and Account managers
+						 */
+						$clients_allowed = array(9,8);
+						if (in_session_or_cookies($clients_allowed)) {
+					?>
 						<li>
 							<a href="<?php echo BASE_URI; ?>clients.php">
 								<?php _e('Clients', 'cftp_admin'); ?>
@@ -274,7 +257,18 @@ if (in_session_or_cookies($core_update_allowed)) {
 								<li><a href="<?php echo BASE_URI; ?>branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
 							</ul>
 						</li>
-				<?php } ?>
+			<?php
+					}
+				}
+				/** Generate the CLIENTS menu */
+				else {
+			?>
+					<li class="no_arrow"><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from device', 'cftp_admin'); ?></a></li>
+					<li class="no_arrow"><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
+					<li class="no_arrow"><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+			<?php
+				}
+			?>
 			</ul>
 		</nav>
 
