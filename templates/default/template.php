@@ -216,7 +216,7 @@ $count = count($my_files);
 						});
 						
 						$(document).psendmodal();
-						$('.overlay').stop(true, true).fadeIn();
+						$('.modal_overlay').stop(true, true).fadeIn();
 						$('.modal').stop(true, true).fadeIn();
 						$('.modal_content').html('<p class="loading-img">'+
 													'<img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" /></p>'+

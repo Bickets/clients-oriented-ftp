@@ -555,7 +555,7 @@ input[type="text"], input[type="password"], textarea, select {
 
 /** Modal content */
 
-.overlay {
+.modal_overlay {
 	display:none;
 	position:fixed;
 	left:0;
