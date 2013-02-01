@@ -8,109 +8,110 @@ msgstr ""
 "Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #. Text in echo
-#: manage-files.php:194
+#: psend/manage-files.php:454
 msgid "Actions"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:54
-#: manage-files.php:189
+#: psend/templates/default/template.php:86 psend/manage-files.php:433
+msgid "Date"
+msgstr ""
+
+#. Text in echo
+#: psend/templates/default/template.php:84
 msgid "Description"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:57
-#: templates/default/template.php:88
-#: manage-files.php:222
+#: psend/templates/default/template.php:88
+#: psend/templates/default/template.php:134
 msgid "Download"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:193
+#: psend/manage-files.php:445
 msgid "Download count"
 msgstr ""
 
+#. Text in echo
+#: psend/manage-files.php:560
+msgid "Edit"
+msgstr ""
+
+#. Text in echo
+#: psend/manage-files.php:434
+msgid "Ext."
+msgstr ""
+
 #. Text in function
-#: templates/default/template.php:1
+#: psend/templates/default/template.php:1
 msgid "File downloads"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:104
+#: psend/templates/default/template.php:149
 msgid "First"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:56
+#: psend/templates/default/template.php:87
 msgid "Image preview"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:109
+#: psend/templates/default/template.php:154
 msgid "Last"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:53
-#: manage-files.php:188
+#: psend/templates/default/template.php:83 psend/manage-files.php:435
 msgid "Name"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:108
+#: psend/templates/default/template.php:153
 msgid "Next"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:106
+#: psend/templates/default/template.php:151
 msgid "Page"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:105
+#: psend/templates/default/template.php:150
 msgid "Prev."
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:110
+#: psend/templates/default/template.php:155
 msgid "Show"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:55
-#: manage-files.php:190
+#: psend/templates/default/template.php:85 psend/manage-files.php:436
 msgid "Size"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:191
+#: psend/manage-files.php:444
 msgid "Status"
 msgstr ""
 
-#. Text in echo
-#: templates/default/template.php:41
-msgid "There are no files."
+#. Text in function
+#: psend/templates/default/template.php:61
+msgid "There are no files available."
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:68
-msgid "This will delete the file permanently. Continue?"
+#: psend/manage-files.php:450
+msgid "Total downloads"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:187
-msgid "Uploaded"
-msgstr ""
-
-#. Text in echo
-#: templates/default/template.php:52
-msgid "Uploaded date"
-msgstr ""
-
-#. Text in echo
-#: manage-files.php:192
+#: psend/manage-files.php:437
 msgid "Uploader"
 msgstr ""
-
