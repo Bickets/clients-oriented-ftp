@@ -32,7 +32,7 @@ define('UPLOAD_TIME_LIMIT', 120*60);
 /**
  * Define the RSS url to use on the home news list.
  */
-define('NEWS_FEED_URI','http://feeds.feedburner.com/subwaydesign');
+define('NEWS_FEED_URI','http://www.projectsend.org/feed/');
 
 /**
  * Include the personal configuration file

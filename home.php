@@ -48,7 +48,7 @@ $database->MySQLDB();
 							</div>
 							<div class="span6">
 								<div class="widget">
-									<h4><?php _e('System information','cftp_admin'); ?></h4>
+									<h4><?php _e('System data (relative view)','cftp_admin'); ?></h4>
 									<div class="widget_int">
 										<div id="sys_info" style="height:335px;width:100%; "></div>
 									</div>
