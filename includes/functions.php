@@ -671,6 +671,11 @@ function render_log_action($params)
 			$action_text = __('created the group','cftp_admin');
 			$part2 = $affected_account_name;
 			break;
+		case 24:
+			$action_ico = 'login';
+			$part1 = $owner_user;
+			$action_text = __('logged in to the system.','cftp_admin');
+			break;
 		case 25:
 			$action_ico = 'file-assign';
 			$part1 = $owner_user;

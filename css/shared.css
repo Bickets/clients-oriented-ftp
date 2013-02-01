@@ -54,6 +54,7 @@ body, html {
 	top:20px;
 	right:20px;
 	font-size:.85em;
+	line-height:1em;
 }
 
 #logout a {
@@ -61,7 +62,7 @@ body, html {
 	display:inline-block;
 	padding:10px 20px;
 	padding-left:35px;
-	background:transparent url(../img/logout.png) no-repeat 10px 9px;
+	background:transparent url(../img/logout.png) no-repeat 10px 7px;
 	text-decoration:none;
 	transition: all 0.8s ease-out;
 	-moz-transition: all 0.8s ease-out;

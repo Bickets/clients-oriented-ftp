@@ -56,6 +56,8 @@
 </script>
 
 <?php
+$name_placeholder = __("Will be visible on the client's file list",'cftp_admin');
+
 switch ($clients_form_type) {
 	case 'new_client':
 		$submit_value = __('Add client','cftp_admin');
@@ -80,6 +82,7 @@ switch ($clients_form_type) {
 		$form_action = 'register.php';
 		$info_box = true;
 		$extra_fields = false;
+		$name_placeholder = __("Your full name",'cftp_admin');
 		break;
 }
 ?>
@@ -88,7 +91,7 @@ switch ($clients_form_type) {
 	<ul class="form_fields">
 		<li>
 			<label for="add_client_form_name"><?php _e('Name','cftp_admin'); ?></label>
-			<input type="text" name="add_client_form_name" id="add_client_form_name" class="required" value="<?php echo (isset($add_client_data_name)) ? stripslashes($add_client_data_name) : ''; ?>" placeholder="<?php _e("Will be visible on the client's file list",'cftp_admin'); ?>" />
+			<input type="text" name="add_client_form_name" id="add_client_form_name" class="required" value="<?php echo (isset($add_client_data_name)) ? stripslashes($add_client_data_name) : ''; ?>" placeholder="<?php echo $name_placeholder; ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_user"><?php _e('Log in username','cftp_admin'); ?></label>

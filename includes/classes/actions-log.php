@@ -31,7 +31,7 @@
  * 21-	A file was marked as hidden.
  * 22-	A file was marked as visible.
  * 23-	A user creates a new group.
- * 24-	Account logs in trhough cookies.*
+ * 24-	Account logs in trhough cookies.
  * 25-	A file is assigned to a client.
  * 26-	A file is assigned to a group.
  * 27-	A user account was marked as active.
@@ -62,7 +62,7 @@ class LogActions
 		/** Define the account information */
 		$this->action = $arguments['action'];
 		$this->owner_id = $arguments['owner_id'];
-		$this->owner_user = $global_name;
+		$this->owner_user = (!empty($arguments['owner_user'])) ? $arguments['owner_user'] : $global_name;
 		$this->affected_file = (!empty($arguments['affected_file'])) ? $arguments['affected_file'] : '';
 		$this->affected_account = (!empty($arguments['affected_account'])) ? $arguments['affected_account'] : '';
 		$this->affected_file_name = (!empty($arguments['affected_file_name'])) ? $arguments['affected_file_name'] : '';

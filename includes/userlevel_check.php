@@ -29,6 +29,26 @@ function check_valid_cookie()
 		$sql_cookie = mysql_query("SELECT * FROM tbl_users WHERE user='$cookie_user' AND password='$cookie_pass' AND level='$cookie_level' AND active = '1'");
 		$count = mysql_num_rows($sql_cookie);
 		if($count>0){
+			if (!isset($_SESSION['loggedin'])) {
+				/** Set SESSION values */
+				$_SESSION['loggedin'] = $_COOKIE['loggedin'];
+				$_SESSION['userlevel'] = $_COOKIE['userlevel'];
+				$_SESSION['access'] = $_COOKIE['access'];
+				
+				while($row = mysql_fetch_array($sql_cookie)) {
+					$log_id = $row['id'];
+					$log_name = $row['name'];
+				}
+
+				/** Record the action log */
+				$new_log_action = new LogActions();
+				$log_action_args = array(
+										'action' => 24,
+										'owner_id' => $log_id,
+										'owner_user' => $log_name
+									);
+				$new_record_action = $new_log_action->log_action_save($log_action_args);
+			}
 			return true;
 		}
 	}

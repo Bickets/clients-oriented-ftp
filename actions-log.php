@@ -142,6 +142,7 @@ include('header.php');
 					<option value="all"><?php _e('All activities','cftp_admin'); ?></option>
 						<option value="0"><?php _e('ProjecSend has been installed','cftp_admin'); ?></option>
 						<option value="1"><?php _e('Account logs in through the form','cftp_admin'); ?></option>
+						<option value="24"><?php _e('Account logs in through cookies','cftp_admin'); ?></option>
 						<option value="31"><?php _e('Account (user or client) logs out','cftp_admin'); ?></option>
 						<option value="2"><?php _e('A user creates a new user account','cftp_admin'); ?></option>
 						<option value="3"><?php _e('A user creates a new client account','cftp_admin'); ?></option>
