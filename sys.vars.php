@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r310');
+define('CURRENT_VERSION', 'r315');
 
 /**
  * Turn off reporting of PHP errors, warnings and notices.
