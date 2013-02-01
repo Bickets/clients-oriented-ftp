@@ -20,7 +20,7 @@ if(!empty($_GET['member'])) {
 	$sql_name = $database->query("SELECT name from tbl_users WHERE id='$member'");
 	if (mysql_num_rows($sql_name) > 0) {
 		while($row_member = mysql_fetch_array($sql_name)) {
-			$page_title = ' '.__('Groups where').' '.html_entity_decode($row_member['name']).' '.__('is member');
+			$page_title = ' '.__('Groups where','cftp_admin').' '.html_entity_decode($row_member['name']).' '.__('is member','cftp_admin');
 		}
 		$member_exists = 1;
 		/** Find groups where the client is member */

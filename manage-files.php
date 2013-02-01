@@ -21,7 +21,7 @@ if (isset($_GET['client_id'])) {
 	$this_client = get_client_by_id($this_id);
 	/** Add the name of the client to the page's title. */
 	if(!empty($this_client)) {
-		$page_title .= ' '.__('for client').' '.html_entity_decode($this_client['name']);
+		$page_title .= ' '.__('for client','cftp_admin').' '.html_entity_decode($this_client['name']);
 		$search_on = 'client_id';
 		$name_for_actions = $this_client['username'];
 	}
@@ -39,7 +39,7 @@ if (isset($_GET['group_id'])) {
 		}
 		/** Add the name of the client to the page's title. */
 		if(!empty($group_name)) {
-			$page_title .= ' '.__('for group').' '.html_entity_decode($group_name);
+			$page_title .= ' '.__('for group','cftp_admin').' '.html_entity_decode($group_name);
 			$search_on = 'group_id';
 			$name_for_actions = html_entity_decode($group_name);
 		}
