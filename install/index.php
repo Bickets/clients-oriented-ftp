@@ -158,6 +158,8 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 								/** Chmod the upload folder to 755 to avoid errors later */
 								$uploads_folder = ROOT_DIR.'/upload';
 								chmod($uploads_folder, 0755);
+								$uploads_folder = ROOT_DIR.'/upload/files';
+								chmod($uploads_folder, 0755);
 	
 								$msg = __('Congratulations! Everything is up and running.','cftp_admin');
 								echo system_message('ok',$msg);

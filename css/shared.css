@@ -1,15 +1,7 @@
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
-
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0;}
-article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}
-body{line-height:1;}
-ol,ul{list-style:none;}
-blockquote,q{quotes:none;}
-blockquote:before,blockquote:after,q:before,q:after{content:none;}
-table{border-collapse:collapse;border-spacing:0;}
+ul {
+	margin:0 !important;
+	list-style:none; 
+}
 
 strong {
 	font-weight:bold;
@@ -31,18 +23,17 @@ a img {	border:none; }
 
 .clear { clear:both; }
 
-body {
+body, html {
 	color:#666666;
-	font-family:'Helvetica Neue', Arial, Helvetica, sans-serif;
-	font-size:0.8em;
+	font-size:.9em !important;
 	line-height:1.2em;
 	background:#F4F4F4 url(../img/bg-2-noise.jpg);
 	height:100%;
+	position:relative;
 }
 
 #header {
-/*	background:#1E478D url(../img/header.jpg) no-repeat top center;
-*/	background:#232835;
+	background:#232835;
 	color:#f0f0f0;
 	position:relative;
 	overflow:hidden;
@@ -91,10 +82,23 @@ body {
 	box-shadow:0 5px 5px #E1E1E1;
 }
 
+.mnu_inactive_msg {
+	background:#000;
+	color:#ccc;
+	text-align:center;
+	padding:2px 8px;
+	margin:0 0 0 5px;
+
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
+}
+
 nav {
 	margin: 0 auto; 
 	text-align: left;
 	font-family:'Open Sans',Arial,sans-serif;
+	line-height:.9em;
 }
 
 nav ul ul {
@@ -133,7 +137,7 @@ nav ul li:hover a {
 }
 
 nav ul li a {
-	display: block; padding: 15px 26px;
+	display: block; padding: 12px 18px;
 	color: #fff; text-decoration: none;
 }
 		
@@ -168,7 +172,7 @@ nav ul ul li {
 }
 
 nav ul ul li a {
-	padding: 13px 40px;
+	padding: 12px 40px;
 	color: #fff;
 }	
 
@@ -237,9 +241,10 @@ nav ul ul ul {
 }
 
 .message_error {
-	color:#8B281E;
-	background:#F6D5D2;
-	border:1px solid #AC6760;
+	color:#B94A48;
+	background:#F2DEDE;
+	border:1px solid #EED3D7;
+	text-shadow:1px 1px 1px white;
 }
 
 .message_info {
@@ -256,6 +261,10 @@ nav ul ul ul {
 }
 
 /* Tabs */
+
+.etabs {
+	text-align:center;
+}
 
 .tab {
 	-webkit-border-top-left-radius: 5px;
@@ -293,7 +302,7 @@ nav ul ul ul {
 }
 
 .tab.active {
-	background:#F4F4F4;
+	background:url(../img/bg-2-noise.jpg);
 	border-color:#ccc;
 	position:relative;
 	padding-top:1px;
@@ -317,18 +326,23 @@ nav ul ul ul {
 }
 
 /* forms */
-
+/*
 .form_fields li:not(.form_submit_li) {
 	margin-bottom:4px;
 	padding-bottom:4px;
 }
-
+*/
 .form_fields li label {
 	display:inline-block;
 	width:40%;
-	min-height:23px; /* for checkboxes li */
-	font-weight:bold;
-	cursor:pointer;
+}
+
+.textarea_label {
+	vertical-align:top;
+}
+
+.input[type="radio"], input[type="checkbox"] {
+	margin:0 5px 3px 0!important;
 }
 
 .form_fields .form_submit_li {
@@ -336,47 +350,53 @@ nav ul ul ul {
 }
 
 .required {
-	background-image:url(../img/req-field-off.png);
+/*	background-image:url(../img/req-field-off.png) !important;
 	background-position:right -6px;
 	background-repeat:no-repeat;
-/*	width:274px;
-	padding-right:30px;*/
+*/
+	width:264px !important;
+	padding-right:50px !important;
+	background:url(../img/req-text.png) no-repeat right -2px;
 }
 
-input[readonly] {
-	background-color: #f0f0f0;
-	color:#999999;
+#add_group_form_description {
+	width:308px;
+	height:150px;
+	margin-bottom:30px;
 }
 
 input[type="text"], input[type="password"], textarea, select {
 	width:308px;
-	font-size:12px;
-	padding:4px;
-	border:1px solid #BEBEC4;
-	color:#999;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;
-
-	transition: all 0.8s ease-out;
-	-moz-transition: all 0.8s ease-out;
-	-webkit-transition: all 0.8s ease-out;
-}
-
-.txtfield:focus {
-	color:#333;
 }
 
 /* Files actions */
 
 .form_actions_left {
-	display:inline;
+	display:inline-block;
+	zoom:1;
 	float:left;
 }
 
+.form_actions_left form {
+	display:inline-block;
+	zoom:1;
+}
+
 .form_actions_right {
-	display:inline;
+	display:inline-block;
+	zoom:1;
 	float:right;
+}
+
+.form_actions_left select, .form_actions_right select {
+	height:28px;
+	font-size:13px;
+}
+
+.form_actions_left input[type="text"] {
+	font-size:13px;
+	height:18px;
+	line-height:18px;
 }
 
 .inline_form {
@@ -386,7 +406,6 @@ input[type="text"], input[type="password"], textarea, select {
 .form_actions, .form_actions_limit_results {
 	padding:0;
 	margin-bottom:5px;
-	overflow:hidden;
 }
 
 .form_count_total {
@@ -431,7 +450,7 @@ input[type="text"], input[type="password"], textarea, select {
 	width:160px;
 	text-align:left;
 	cursor:pointer;
-	background:url(../img/checkbox.png) no-repeat top left;
+	background:url(../img/checkbox.png) no-repeat left 5px;
 	padding:3px 0 3px 27px;
 }
 
@@ -481,7 +500,7 @@ input[type="text"], input[type="password"], textarea, select {
 	text-align:center;
 	display:inline-block;
 	cursor:pointer;
-
+	line-height:1.3em;
 
 	text-shadow:0 1px 1px #3E6A16!important;
 	color:white!important;
@@ -568,7 +587,7 @@ input[type="text"], input[type="password"], textarea, select {
 	opacity:.9;
 }
 
-.modal {
+.modal_psend {
 	display:none;
 	position: fixed;
 	top: 50%;
@@ -623,6 +642,7 @@ input[type="text"], input[type="password"], textarea, select {
 
 .modal_close {
 	color:#888;
+	font-size:2em;
 }
 
 
@@ -851,6 +871,8 @@ p.downloaders_note {
 	text-indent:-999em;
 	border:1px solid #fff;
 	transition: all 0.4s ease-out;
+	-moz-transition: all 0.4s ease-out;
+	-webkit-transition: all 0.4s ease-out;
 }
 
 .active_view_button {

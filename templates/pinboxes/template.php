@@ -127,7 +127,7 @@ $count = count($my_files);
 								?>
 										<div class="img_prev">
 											<a href="<?php echo $download_link; ?>" target="_blank">
-												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=250" alt="<?php echo htmlentities($file['name']); ?>" />
+												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=250&amp;q=<?php echo THUMBS_QUALITY; ?>" alt="<?php echo htmlentities($file['name']); ?>" />
 											</a>
 										</div>
 								<?php

@@ -185,12 +185,12 @@ include('header.php');
 
 	<div class="form_actions_left">
 		<div class="form_actions_limit_results">
-			<form action="users.php" name="users_search" method="post" class="inline_form">
+			<form action="users.php" name="users_search" method="post" class="form-inline">
 				<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
-				<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
+				<button type="submit" id="btn_proceed_search" class="btn btn-small"><?php _e('Search','cftp_admin'); ?></button>
 			</form>
 
-			<form action="users.php" name="users_filters" method="post" class="inline_form">
+			<form action="users.php" name="users_filters" method="post" class="form-inline">
 				<select name="role" id="role" class="txtfield">
 					<option value="all"><?php _e('All roles','cftp_admin'); ?></option>
 					<option value="9"><?php _e('System Administrator','cftp_admin'); ?></option>
@@ -203,12 +203,12 @@ include('header.php');
 					<option value="1"><?php _e('Active','cftp_admin'); ?></option>
 					<option value="0"><?php _e('Inactive','cftp_admin'); ?></option>
 				</select>
-				<input type="submit" id="btn_proceed_filter_clients" value="<?php _e('Filter','cftp_admin'); ?>" class="button_form" />
+				<button type="submit" id="btn_proceed_filter_clients" class="btn btn-small"><?php _e('Filter','cftp_admin'); ?></button>
 			</form>
 		</div>
 	</div>
 
-	<form action="users.php" name="users_list" method="post">
+	<form action="users.php" name="users_list" method="post" class="form-inline">
 		<div class="form_actions_right">
 			<div class="form_actions">
 				<div class="form_actions_submit">
@@ -218,7 +218,7 @@ include('header.php');
 						<option value="deactivate"><?php _e('Deactivate','cftp_admin'); ?></option>
 						<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
 					</select>
-					<input type="submit" id="do_action" name="proceed" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+					<button type="submit" id="do_action" name="proceed" class="btn btn-small"><?php _e('Proceed','cftp_admin'); ?></button>
 				</div>
 			</div>
 		</div>

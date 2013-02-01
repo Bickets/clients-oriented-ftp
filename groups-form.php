@@ -40,7 +40,7 @@ switch ($groups_form_type) {
 			<input type="text" name="add_group_form_name" id="add_group_form_name" class="required" value="<?php echo (isset($add_group_data_name)) ? stripslashes($add_group_data_name) : ''; ?>" />
 		</li>
 		<li>
-			<label for="add_group_form_description"><?php _e('Description','cftp_admin'); ?></label>
+			<label for="add_group_form_description" class="textarea_label"><?php _e('Description','cftp_admin'); ?></label>
 			<textarea name="add_group_form_description" id="add_group_form_description"><?php echo (isset($add_group_data_description)) ? stripslashes($add_group_data_description) : ''; ?></textarea>
 		</li>
 		<li>
@@ -64,8 +64,8 @@ switch ($groups_form_type) {
 				?>
 			</select>
 			<div class="list_mass_members">
-				<a href="#" class="button button_gray button_big" id="add-all"><?php _e('Add all','cftp_admin'); ?></a>
-				<a href="#" class="button button_gray button_big" id="remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
+				<a href="#" class="btn add-all"><?php _e('Add all','cftp_admin'); ?></a>
+				<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
 			</div>
 		</li>
 		<li class="form_submit_li">
@@ -80,11 +80,11 @@ switch ($groups_form_type) {
 			selectableHeader: "<div class='multiselect_header'><?php _e('Available','cftp_admin'); ?></div>",
 			selectionHeader: "<div class='multiselect_header'><?php _e('Assigned to this group','cftp_admin'); ?></div>"
 		})
-		$('#add-all').click(function(){
+		$('.add-all').click(function(){
 		  $('#members-select').multiSelect('select_all');
 		  return false;
 		});
-		$('#remove-all').click(function(){
+		$('.remove-all').click(function(){
 		  $('#members-select').multiSelect('deselect_all');
 		  return false;
 		});

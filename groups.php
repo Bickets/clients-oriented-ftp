@@ -193,14 +193,14 @@ include('header.php');
 
 	<div class="form_actions_left">
 		<div class="form_actions_limit_results">
-			<form action="groups.php<?php if(isset($member_exists)) { ?>?member=<?php echo $member; } ?>" name="groups_search" method="post" class="inline_form">
+			<form action="groups.php<?php if(isset($member_exists)) { ?>?member=<?php echo $member; } ?>" name="groups_search" method="post" class="form-inline">
 				<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
-				<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
+				<button type="submit" id="btn_proceed_search" class="btn btn-small"><?php _e('Search','cftp_admin'); ?></button>
 			</form>
 		</div>
 	</div>
 
-	<form action="groups.php<?php if(isset($member_exists)) { ?>?member=<?php echo $member; } ?>" name="groups_list" method="post">
+	<form action="groups.php<?php if(isset($member_exists)) { ?>?member=<?php echo $member; } ?>" name="groups_list" method="post" class="form-inline">
 		<div class="form_actions_right">
 			<div class="form_actions">
 				<div class="form_actions_submit">
@@ -209,7 +209,7 @@ include('header.php');
 						<option value="none"><?php _e('Select action','cftp_admin'); ?></option>
 						<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
 					</select>
-					<input type="submit" id="do_action" name="proceed" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+					<button type="submit" id="do_action" name="proceed" class="btn btn-small"><?php _e('Proceed','cftp_admin'); ?></button>
 				</div>
 			</div>
 		</div>

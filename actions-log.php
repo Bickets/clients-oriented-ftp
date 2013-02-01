@@ -106,10 +106,21 @@ include('header.php');
 	$database->MySQLDB();
 	$cq = "SELECT * FROM tbl_actions_log";
 
+	/** Add the search terms */	
+	if(isset($_POST['search']) && !empty($_POST['search'])) {
+		$search_terms = $_POST['search'];
+		$cq .= " WHERE (owner_user LIKE '%$search_terms%' OR affected_file_name LIKE '%$search_terms%' OR affected_account_name LIKE '%$search_terms%')";
+		$next_clause = ' AND';
+		$no_results_error = 'search';
+	}
+	else {
+		$next_clause = ' WHERE';
+	}
+
 	/** Add the activities filter */	
 	if(isset($_POST['activity']) && $_POST['activity'] != 'all') {
 		$status_filter = $_POST['activity'];
-		$cq .= " WHERE action='$status_filter'";
+		$cq .= $next_clause. " action='$status_filter'";
 		$no_results_error = 'filter';
 	}
 
@@ -121,7 +132,12 @@ include('header.php');
 
 	<div class="form_actions_left">
 		<div class="form_actions_limit_results">
-			<form action="actions-log.php" name="actions_filters" method="post" class="inline_form">
+			<form action="actions-log.php" name="log_search" method="post" class="form-inline">
+				<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
+				<button type="submit" id="btn_proceed_search" class="btn btn-small"><?php _e('Search','cftp_admin'); ?></button>
+			</form>
+
+			<form action="actions-log.php" name="actions_filters" method="post" class="form-inline">
 				<select name="activity" id="activity" class="txtfield" style="width:360px;">
 					<option value="all"><?php _e('All activities','cftp_admin'); ?></option>
 						<option value="0"><?php _e('ProjecSend has been installed','cftp_admin'); ?></option>
@@ -161,12 +177,12 @@ include('header.php');
 						<option value="32"><?php _e('A system user edited a file.','cftp_admin'); ?></option>
 						<option value="33"><?php _e('A client edited a file.','cftp_admin'); ?></option>
 				</select>
-				<input type="submit" id="btn_proceed_filter_clients" value="<?php _e('Filter','cftp_admin'); ?>" class="button_form" />
+				<button type="submit" id="btn_proceed_filter_clients" class="btn btn-small"><?php _e('Filter','cftp_admin'); ?></button>
 			</form>
 		</div>
 	</div>
 
-	<form action="actions-log.php" name="actions_list" method="post">
+	<form action="actions-log.php" name="actions_list" method="post" class="form-inline">
 		<div class="form_actions_right">
 			<div class="form_actions">
 				<div class="form_actions_submit">
@@ -176,7 +192,7 @@ include('header.php');
 						<option value="delete"><?php _e('Delete selected','cftp_admin'); ?></option>
 						<option value="clear"><?php _e('Clear entire log','cftp_admin'); ?></option>
 					</select>
-					<input type="submit" id="do_action" name="proceed" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+					<button type="submit" id="do_action" name="proceed" class="btn btn-small"><?php _e('Proceed','cftp_admin'); ?></button>
 				</div>
 			</div>
 		</div>

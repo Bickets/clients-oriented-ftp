@@ -303,7 +303,7 @@ $current_level = get_current_user_level();
 													<?php echo $row['url']; ?>
 												</p>
 												<label><?php _e('Name', 'cftp_admin');?></label>
-												<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $row['filename']; ?>" class="txtfield required" />
+												<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $row['filename']; ?>" class="required" />
 												<label><?php _e('Description', 'cftp_admin');?></label>
 												<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"><?php echo (!empty($row['description'])) ? $row['description'] : ''; ?></textarea>
 
@@ -353,8 +353,8 @@ $current_level = get_current_user_level();
 														?>
 												</select>
 												<div class="list_mass_members">
-													<a href="#" class="button button_gray add-all"><?php _e('Add all','cftp_admin'); ?></a>
-													<a href="#" class="button button_gray remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
+													<a href="#" class="btn add-all"><?php _e('Add all','cftp_admin'); ?></a>
+													<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
 												</div>
 										<?php
 											} /** Close $current_level check */

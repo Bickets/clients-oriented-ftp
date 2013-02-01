@@ -284,7 +284,7 @@ while($row = mysql_fetch_array($sql)) {
 							}
 						?>
 						<td>
-							<a href="edit-file.php?id=<?php echo $uploaded['new_file_id']; ?>" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
+							<a href="edit-file.php?file_id=<?php echo $uploaded['new_file_id']; ?>" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
 							<?php
 								/*
 								 * Show the "My files" button only to clients
@@ -336,7 +336,7 @@ while($row = mysql_fetch_array($sql)) {
 								 */
 								if ($current_level != 0) {
 							?>
-									<a href="edit-file.php?id=<?php echo $uploaded['new_file_id']; ?>" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
+									<a href="edit-file.php?file_id=<?php echo $uploaded['new_file_id']; ?>" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
 							<?php
 								}
 								else {
@@ -454,7 +454,7 @@ while($row = mysql_fetch_array($sql)) {
 														<input type="hidden" name="file[<?php echo $i; ?>][file]" value="<?php echo $file; ?>" />
 
 														<label><?php _e('Name', 'cftp_admin');?></label>
-														<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="txtfield required" />
+														<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="required" />
 														<label><?php _e('Description', 'cftp_admin');?></label>
 														<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"><?php echo (isset($description)) ? $description : ''; ?></textarea>
 														
@@ -500,8 +500,8 @@ while($row = mysql_fetch_array($sql)) {
 																?>
 														</select>
 														<div class="list_mass_members">
-															<a href="#" class="button button_gray add-all"><?php _e('Add all','cftp_admin'); ?></a>
-															<a href="#" class="button button_gray remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
+															<a href="#" class="btn add-all"><?php _e('Add all','cftp_admin'); ?></a>
+															<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
 														</div>
 												<?php
 													} /** Close $current_level check */

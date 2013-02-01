@@ -91,7 +91,7 @@ include('header.php');
 				$(document).psendmodal();
 				$(".downloaders").click(function() {
 					$('.modal_overlay').stop(true, true).fadeIn();
-					$('.modal').stop(true, true).fadeIn();
+					$('.modal_psend').stop(true, true).fadeIn();
 					$('.modal_content').html('<p class="loading-img">'+
 												'<img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" /></p>'+
 												'<p><?php _e('Please wait while the system gets the required information.','cftp_admin'); ?></p>'
@@ -324,16 +324,16 @@ include('header.php');
 	?>
 		<div class="form_actions_left">
 			<div class="form_actions_limit_results">
-				<form action="<?php echo $form_action_url; ?>" name="files_search" method="post" class="inline_form">
+				<form action="<?php echo $form_action_url; ?>" name="files_search" method="post" class="form-inline">
 					<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
-					<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
+					<button type="submit" id="btn_proceed_search" class="btn btn-small"><?php _e('Search','cftp_admin'); ?></button>
 				</form>
 
 				<?php
 					/** Filters are not available for clients */
 					if($current_level != '0') {
 				?>
-						<form action="<?php echo $form_action_url; ?>" name="files_filters" method="post" class="inline_form">
+						<form action="<?php echo $form_action_url; ?>" name="files_filters" method="post" class="form-inline">
 							<select name="status" id="status" class="txtfield">
 								<option value="all"><?php _e('All statuses','cftp_admin'); ?></option>
 								<option value="1"><?php _e('Hidden','cftp_admin'); ?></option>
@@ -345,7 +345,7 @@ include('header.php');
 								<option value="0"><?php _e('0 times','cftp_admin'); ?></option>
 								<option value="1"><?php _e('1 or more times','cftp_admin'); ?></option>
 							</select>
-							<input type="submit" id="btn_proceed_filter_clients" value="<?php _e('Filter','cftp_admin'); ?>" class="button_form" />
+							<button type="submit" id="btn_proceed_filter_clients" class="btn btn-small"><?php _e('Filter','cftp_admin'); ?></button>
 						</form>
 				<?php
 					}
@@ -354,7 +354,7 @@ include('header.php');
 		</div>
 
 
-		<form action="<?php echo $form_action_url; ?>" name="files_list" method="post">
+		<form action="<?php echo $form_action_url; ?>" name="files_list" method="post" class="form-inline">
 			<?php
 				/** Actions are not available for clients */
 				if($current_level != '0') {
@@ -376,7 +376,7 @@ include('header.php');
 									?>
 									<option value="delete"><?php _e('Delete','cftp_admin'); ?></option>
 								</select>
-								<input type="submit" name="do_action" id="do_action" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+								<button type="submit" name="do_action" id="do_action" class="btn btn-small"><?php _e('Proceed','cftp_admin'); ?></button>
 							</div>
 						</div>
 					</div>

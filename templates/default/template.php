@@ -26,14 +26,14 @@ $count = count($my_files);
 	
 			<div class="form_actions_left">
 				<div class="form_actions_limit_results">
-					<form action="" name="files_search" method="post" class="inline_form">
+					<form action="" name="files_search" method="post" class="form-inline">
 						<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
-						<input type="submit" id="btn_proceed_search" value="<?php _e('Search','cftp_admin'); ?>" class="button_form" />
+						<button type="submit" id="btn_proceed_search" class="btn btn-small"><?php _e('Search','cftp_admin'); ?></button>
 					</form>
 				</div>
 			</div>
 		
-			<form action="" name="files_list" method="post">
+			<form action="" name="files_list" method="post" class="form-inline">
 				<div class="form_actions_right">
 					<div class="form_actions">
 						<div class="form_actions_submit">
@@ -41,13 +41,13 @@ $count = count($my_files);
 							<select name="files_actions" id="files_actions" class="txtfield">
 								<option value="zip"><?php _e('Download zipped','cftp_admin'); ?></option>
 							</select>
-							<input type="submit" id="do_action" value="<?php _e('Proceed','cftp_admin'); ?>" class="button_form" />
+							<button type="submit" id="do_action" name="proceed" class="btn btn-small"><?php _e('Proceed','cftp_admin'); ?></button>
 						</div>
 					</div>
 				</div>
 		
-				<div class="right_clear"></div>
-	
+				<div class="right_clear"></div><br />
+
 				<div class="form_actions_count">
 					<p class="form_count_total"><?php _e('Showing','cftp_admin'); ?>: <span><?php echo $count; ?> <?php _e('files','cftp_admin'); ?></span></p>
 					<ul id="table_view_modes">
@@ -106,7 +106,11 @@ $count = count($my_files);
 						?>
 									<tr>
 										<td><input type="checkbox" name="files[]" value="<?php echo $file["id"]; ?>" /></td>
-										<td><strong><?php echo htmlentities($file['name']); ?></strong></td>
+										<td class="file_name">
+											<a href="<?php echo $download_link; ?>" target="_blank">
+												<strong><?php echo htmlentities($file['name']); ?></strong>
+											</a>
+										</td>
 										<td class="description"><?php echo htmlentities($file['description']); ?></td>
 										<td><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file); ?></td>
 										<td class="extra"><?php echo $date; ?></td>
@@ -122,7 +126,7 @@ $count = count($my_files);
 													$extension == "png"
 												) {
 											?>
-												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>" class="thumbnail" alt="" />
+												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="" />
 											<?php } ?>
 										</td>
 										<td>
@@ -217,7 +221,7 @@ $count = count($my_files);
 						
 						$(document).psendmodal();
 						$('.modal_overlay').stop(true, true).fadeIn();
-						$('.modal').stop(true, true).fadeIn();
+						$('.modal_psend').stop(true, true).fadeIn();
 						$('.modal_content').html('<p class="loading-img">'+
 													'<img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" /></p>'+
 													'<p><?php _e('Please wait while your download is prepared.','cftp_admin'); ?></p>'+

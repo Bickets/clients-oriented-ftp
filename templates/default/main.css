@@ -21,6 +21,7 @@ a:hover { text-decoration:underline; }
 
 #right_column {
 	padding-left: 310px;
+	padding-right:10px;
 }
 
 #current_logo {
@@ -56,6 +57,10 @@ h2 {
 	margin-bottom:40px;
 	margin-left:20px;
 	font-weight:normal;
+}
+
+form {
+	margin-bottom:0px !important;
 }
 
 .right_clear {

@@ -64,7 +64,7 @@ $database->MySQLDB();
 								<div class="widget_int">
 									<ul class="activities_log">
 										<?php
-											$sql_log = $database->query("SELECT * FROM tbl_actions_log ORDER BY id DESC LIMIT 15");
+											$sql_log = $database->query("SELECT * FROM tbl_actions_log ORDER BY id DESC LIMIT 13");
 											$log_count = mysql_num_rows($sql_log);
 											if ($log_count > 0) {
 												while($log = mysql_fetch_array($sql_log)) {
@@ -85,15 +85,17 @@ $database->MySQLDB();
 														<div class="log_ico">
 															<img src="img/log_icons/<?php echo $rendered['icon']; ?>.png" alt="Action icon">
 														</div>
-														<div class="date"><?php echo $rendered['timestamp']; ?></div>
-														<div class="action">
-															<?php
-																if (!empty($rendered['1'])) { echo '<span>'.$rendered['1'].'</span> '; }
-																echo $rendered['text'].' ';
-																if (!empty($rendered['2'])) { echo '<span>'.$rendered['2'].'</span> '; }
-																if (!empty($rendered['3'])) { echo ' '.$rendered['3'].' '; }
-																if (!empty($rendered['4'])) { echo '<span>'.$rendered['4'].'</span> '; }
-															?>
+														<div class="home_log_text">
+															<div class="date"><?php echo $rendered['timestamp']; ?></div>
+															<div class="action">
+																<?php
+																	if (!empty($rendered['1'])) { echo '<span>'.$rendered['1'].'</span> '; }
+																	echo $rendered['text'].' ';
+																	if (!empty($rendered['2'])) { echo '<span>'.$rendered['2'].'</span> '; }
+																	if (!empty($rendered['3'])) { echo ' '.$rendered['3'].' '; }
+																	if (!empty($rendered['4'])) { echo '<span>'.$rendered['4'].'</span> '; }
+																?>
+															</div>
 														</div>
 													</li>
 												<?php

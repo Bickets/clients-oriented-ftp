@@ -88,38 +88,38 @@ switch ($clients_form_type) {
 	<ul class="form_fields">
 		<li>
 			<label for="add_client_form_name"><?php _e('Name','cftp_admin'); ?></label>
-			<input type="text" name="add_client_form_name" id="add_client_form_name" class="txtfield required" value="<?php echo (isset($add_client_data_name)) ? stripslashes($add_client_data_name) : ''; ?>" />
+			<input type="text" name="add_client_form_name" id="add_client_form_name" class="required" value="<?php echo (isset($add_client_data_name)) ? stripslashes($add_client_data_name) : ''; ?>" placeholder="<?php _e("Will be visible on the client's file list",'cftp_admin'); ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_user"><?php _e('Log in username','cftp_admin'); ?></label>
-			<input type="text" name="add_client_form_user" id="add_client_form_user" class="txtfield <?php if (!$disable_user) { echo 'required'; } ?>" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($add_client_data_user)) ? stripslashes($add_client_data_user) : ''; ?>" <?php if ($disable_user) { echo 'readonly'; }?> />
+			<input type="text" name="add_client_form_user" id="add_client_form_user" class="<?php if (!$disable_user) { echo 'required'; } ?>" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($add_client_data_user)) ? stripslashes($add_client_data_user) : ''; ?>" <?php if ($disable_user) { echo 'readonly'; }?> placeholder="<?php _e("Must be alphanumeric",'cftp_admin'); ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_pass"><?php _e('Password','cftp_admin'); ?></label>
-			<input name="add_client_form_pass" id="add_client_form_pass" class="txtfield <?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+			<input name="add_client_form_pass" id="add_client_form_pass" class="<?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_pass2"><?php _e('Repeat password','cftp_admin'); ?></label>
-			<input name="add_client_form_pass2" id="add_client_form_pass2" class="txtfield <?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+			<input name="add_client_form_pass2" id="add_client_form_pass2" class="<?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_email"><?php _e('E-mail','cftp_admin'); ?></label>
-			<input type="text" name="add_client_form_email" id="add_client_form_email" class="txtfield required" value="<?php echo (isset($add_client_data_email)) ? stripslashes($add_client_data_email) : ''; ?>" />
+			<input type="text" name="add_client_form_email" id="add_client_form_email" class="required" value="<?php echo (isset($add_client_data_email)) ? stripslashes($add_client_data_email) : ''; ?>" placeholder="<?php _e("Must be valid and unique",'cftp_admin'); ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_address"><?php _e('Address','cftp_admin'); ?></label>
-			<input type="text" name="add_client_form_address" id="add_client_form_address" class="txtfield" value="<?php echo (isset($add_client_data_addr)) ? stripslashes($add_client_data_addr) : ''; ?>" />
+			<input type="text" name="add_client_form_address" id="add_client_form_address" value="<?php echo (isset($add_client_data_addr)) ? stripslashes($add_client_data_addr) : ''; ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_phone"><?php _e('Telephone','cftp_admin'); ?></label>
-			<input type="text" name="add_client_form_phone" id="add_client_form_phone" class="txtfield" value="<?php echo (isset($add_client_data_phone)) ? stripslashes($add_client_data_phone) : ''; ?>" />
+			<input type="text" name="add_client_form_phone" id="add_client_form_phone" value="<?php echo (isset($add_client_data_phone)) ? stripslashes($add_client_data_phone) : ''; ?>" />
 		</li>
 		<?php
 			if ($extra_fields == true) {
 		?>
 				<li>
 					<label for="add_client_form_intcont"><?php _e('Internal contact name','cftp_admin'); ?></label>
-					<input type="text" name="add_client_form_intcont" id="add_client_form_intcont" class="txtfield" value="<?php echo (isset($add_client_data_intcont)) ? stripslashes($add_client_data_intcont) : ''; ?>" />
+					<input type="text" name="add_client_form_intcont" id="add_client_form_intcont" value="<?php echo (isset($add_client_data_intcont)) ? stripslashes($add_client_data_intcont) : ''; ?>" />
 				</li>
 				<li>
 					<label for="add_client_form_active"><?php _e('Active (client can log in)','cftp_admin'); ?></label>

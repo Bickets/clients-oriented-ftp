@@ -38,7 +38,11 @@ function is_complete_all_options(this_form,error) {
 function add_error_to_field(field, error) {
 	error_count++;
 	$(field).addClass('field_error');
-	$(field).after('<div class="field_error_msg"><p>'+error+'</p></div>');
+	var this_field_name = $(field).attr('name');
+	if ($('#error_for_'+this_field_name).length == 0) {
+		$(field).after('<div class="field_error_msg" id="error_for_'+this_field_name+'"><ul></ul></div>');
+	}
+	$('#error_for_'+this_field_name+' ul').append('<li>'+error+'</li>');
 }
 
 function is_complete(field,error) {

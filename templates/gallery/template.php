@@ -77,7 +77,7 @@ $count = count($img_files);
 						<h5><?php echo htmlentities($file['name']); ?></h5>
 						<div class="img_prev">
 							<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
-								<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=280&amp;h=215&amp;f=2" class="thumbnail" alt="" />
+								<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=280&amp;h=215&amp;f=2&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="" />
 							</a>
 						</div>
 						<div class="img_data">
