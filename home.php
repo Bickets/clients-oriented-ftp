@@ -30,14 +30,21 @@ $database->MySQLDB();
 						<div class="row-fluid">
 							<div class="span12">
 								<div class="widget">
-									<h4><?php _e('Statistics for the last 15 days','cftp_admin'); ?></h4>
+									<h4><?php _e('Statistics','cftp_admin'); ?></h4>
 									<div class="widget_int">
-										<div id="statistics" style="height:320px;width:100%;"></div>
+										<div class="stats_change_days">
+											<a href="#" class="stats_days btn btn-small" rel="15" id="default_graph">15 <?php _e('days','cftp_admin'); ?></a>
+											<a href="#" class="stats_days btn btn-small" rel="30">30 <?php _e('days','cftp_admin'); ?></a>
+											<a href="#" class="stats_days btn btn-small" rel="60">60 <?php _e('days','cftp_admin'); ?></a>
+										</div>
 										<ul class="graph_legend">
-											<li><div class="legend_color legend_color1"></div><?php _e('Uploads','cftp_admin'); ?></li><li>
-											<div class="legend_color legend_color2"></div><?php _e('Downloads','cftp_admin'); ?></li><li>
-											<div class="legend_color legend_color3"></div><?php _e('Zip Downloads','cftp_admin'); ?></li>
+											<li><div class="legend_color legend_color1"></div><?php _e('Uploads by users','cftp_admin'); ?></li><li>
+											<div class="legend_color legend_color2"></div><?php _e('Uploads by clients','cftp_admin'); ?></li><li>
+											<div class="legend_color legend_color3"></div><?php _e('Downloads','cftp_admin'); ?></li><li>
+											<div class="legend_color legend_color4"></div><?php _e('Zip Downloads','cftp_admin'); ?></li>
 										</ul>
+
+										<div id="statistics" style="height:320px;width:100%;"></div>
 									</div>
 								</div>
 							</div>
@@ -48,9 +55,10 @@ $database->MySQLDB();
 							</div>
 							<div class="span6">
 								<div class="widget">
-									<h4><?php _e('System data (relative view)','cftp_admin'); ?></h4>
+									<h4><?php _e('System data','cftp_admin'); ?></h4>
 									<div class="widget_int">
-										<div id="sys_info" style="height:335px;width:100%; "></div>
+										<p><strong><?php _e('Note:','cftp_admin'); ?></strong> <?php _e('This graphic will help you get a relative view of the existing data, allowing you to see the relation between clients, users, groups and files.','cftp_admin'); ?>
+										<div id="sys_info" style="height:290px; width:100%;"></div>
 									</div>
 								</div>
 							</div>
@@ -62,46 +70,19 @@ $database->MySQLDB();
 							<div class="widget">
 								<h4><?php _e('Recent activites','cftp_admin'); ?></h4>
 								<div class="widget_int">
-									<ul class="activities_log">
+									<div class="log_change_action">
+										<a href="#" class="log_action btn btn-small" rel="" id="default_log"><?php _e('All activities','cftp_admin'); ?></a>
+										<a href="#" class="log_action btn btn-small" rel="1"><?php _e('Logins','cftp_admin'); ?></a>
+										<a href="#" class="log_action btn btn-small" rel="8"><?php _e('Downloads','cftp_admin'); ?></a>
 										<?php
-											$sql_log = $database->query("SELECT * FROM tbl_actions_log ORDER BY id DESC LIMIT 13");
-											$log_count = mysql_num_rows($sql_log);
-											if ($log_count > 0) {
-												while($log = mysql_fetch_array($sql_log)) {
-													$rendered = render_log_action(
-																		array(
-																			'action' => $log['action'],
-																			'timestamp' => $log['timestamp'],
-																			'owner_id' => $log['owner_id'],
-																			'owner_user' => $log['owner_user'],
-																			'affected_file' => $log['affected_file'],
-																			'affected_file_name' => $log['affected_file_name'],
-																			'affected_account' => $log['affected_account'],
-																			'affected_account_name' => $log['affected_account_name']
-																		)
-													);
-												?>
-													<li>
-														<div class="log_ico">
-															<img src="img/log_icons/<?php echo $rendered['icon']; ?>.png" alt="Action icon">
-														</div>
-														<div class="home_log_text">
-															<div class="date"><?php echo $rendered['timestamp']; ?></div>
-															<div class="action">
-																<?php
-																	if (!empty($rendered['1'])) { echo '<span>'.$rendered['1'].'</span> '; }
-																	echo $rendered['text'].' ';
-																	if (!empty($rendered['2'])) { echo '<span>'.$rendered['2'].'</span> '; }
-																	if (!empty($rendered['3'])) { echo ' '.$rendered['3'].' '; }
-																	if (!empty($rendered['4'])) { echo '<span>'.$rendered['4'].'</span> '; }
-																?>
-															</div>
-														</div>
-													</li>
-												<?php
-												}
+											if (CLIENTS_CAN_REGISTER == '1') {
+										?>
+											<a href="#" class="log_action btn btn-small" rel="4"><?php _e('Clients self-registrations','cftp_admin'); ?></a>
+										<?php
 											}
 										?>
+									</div>
+									<ul class="activities_log">
 									</ul>
 									<div class="view_full_log">
 										<a href="actions-log.php" class="button button_blue"><?php _e('View all','cftp_admin'); ?></a>
@@ -176,95 +157,53 @@ $database->MySQLDB();
 			}
 		);
 
-		// statistics
-		<?php include(ROOT_DIR.'/home-statistics.php'); ?>
+		// Generate the graphic		
+		$('.stats_days').click(function(e) {
+			if ($(this).hasClass('btn-inverse')) {
+				return false;
+			}
+			$('.stats_days').removeClass('btn-inverse');
+			$(this).addClass('btn-inverse');
+			$('.graph_legend').hide();
+			$('#statistics').html('<div class="loading-graph">'+
+										'<img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" />'+
+										'<p><?php _e('Please wait while the system generates the statistics graph.','cftp_admin'); ?></p></div>'
+									);
+			var days = $(this).attr('rel');
+			$.get('<?php echo BASE_URI; ?>home-statistics.php', { days:days },
+				function(data) {
+					$('#statistics').html(data);
+					$('.graph_legend').css('display','inline-block');
+				}
+			);					
+			return false;
+		});
 
-		function showTooltip(x, y, contents) {
-			$('<div id="stats_tooltip">' + contents + '</div>').css( {
-				top: y + 5,
-				left: x + 5,
-			}).appendTo("body").fadeIn(200);
-		}
+		$('#default_graph').click();
+
+
+		// Generate the action log
+		$('.log_action').click(function(e) {
+			if ($(this).hasClass('btn-inverse')) {
+				return false;
+			}
+			$('.log_action').removeClass('btn-inverse');
+			$(this).addClass('btn-inverse');
+			$('.activities_log').html('<li><div class="loading-graph">'+
+										'<img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" />'+
+										'<p><?php _e('Please wait while the system gets the information from the log.','cftp_admin'); ?></p></div></li>'
+									);
+			var action = $(this).attr('rel');
+			$.get('<?php echo BASE_URI; ?>home-log.php', { action:action },
+				function(data) {
+					$('.activities_log').html(data);
+				}
+			);					
+			return false;
+		});
+
+		$('#default_log').click();
 		
-		var previousPoint = null;
-		$("#statistics").bind("plothover", function (event, pos, item) {
-			$("#x").text(pos.x.toFixed(2));
-			$("#y").text(pos.y.toFixed(2));
-		
-				if (item) {
-					if (previousPoint != item.dataIndex) {
-						previousPoint = item.dataIndex;
-						
-						$("#stats_tooltip").remove();
-						var x = item.datapoint[0].toFixed(2),
-							y = item.datapoint[1].toFixed(2);
-
-						showTooltip(item.pageX, item.pageY,
-									item.series.label + ": " + y);
-					}
-				}
-				else {
-					$("#stats_tooltip").remove();
-					previousPoint = null;            
-				}
-		});	
-
-		var options = {
-			grid: {
-				hoverable: true,
-				borderWidth: 0,
-				color: "#666",
-				labelMargin: 10,
-				axisMargin: 0,
-				mouseActiveRadius: 10
-			},
-			series: {
-				lines: {
-					show: true,
-					lineWidth: 2
-				},
-				points: {
-					show: true,
-					radius: 3,
-					symbol: "circle",
-					fill: true
-				}
-			},
-			xaxis: {
-				mode: "time",
-				minTickSize: [1, "day"],
-				timeformat: "%d/%m",
-				labelWidth: "30"
-			},
-			yaxis: {
-				min: 0,
-				tickDecimals:0
-			},
-			legend: {
-				margin: 10,
-				sorted: true,
-				show: false
-			},
-			colors: ["#0094bb","#86ae00","#f2b705"]
-		};
-
-		$.plot(
-			$("#statistics"), [
-				{
-					data: d5,
-					label: '<?php _e('Uploads','cftp_admin'); ?>'
-				},
-				{
-					data: d8,
-					label: '<?php _e('Downloads','cftp_admin'); ?>'
-				},
-				{
-					data: d9,
-					label: '<?php _e('Zip Downloads','cftp_admin'); ?>'
-				}
-			], options
-		);
-
 	});
 </script>
 

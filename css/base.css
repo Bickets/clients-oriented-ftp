@@ -26,7 +26,7 @@ h2 {
 	font-size:29px;
 	line-height:29px;
 	text-shadow:1px 1px 0 #fff;
-	margin:20px auto 45px;
+	margin:10px auto 35px;
 	text-align:center;
 }
 
@@ -173,6 +173,10 @@ h4 {
 	color:#2a69a0;
 }
 
+.activities_log li span.secondary {
+	color:#86AE00;
+}
+
 .view_full_log {
 	text-align:right;
 	padding-top:5px;
@@ -193,11 +197,30 @@ h4 {
 
 /** graphs */
 
+.loading-graph {
+	text-align:center;
+	padding-top:100px;
+}
+
+.loading-graph img {
+	margin-bottom:2em;
+}
+
+.stats_change_days {
+	margin-bottom:1.5em;
+	display:inline-block;
+	zoom:1;
+}
+
 .graph_legend {
 	text-align:right;
-	margin-top:15px;
+	padding-top:5px;
+/*
 	border-top:1px solid #EFEFEF;
-	padding-top:10px;
+*/
+	display:none;
+	float:right;
+	zoom:1;
 }
 
 .graph_legend li {
@@ -217,7 +240,12 @@ h4 {
 
 .graph_legend li .legend_color1 { background:#0094bb; }
 .graph_legend li .legend_color2 { background:#86ae00; }
-.graph_legend li .legend_color3 { background:#f2b705; }
+.graph_legend li .legend_color3 { background:#C60F13; }
+.graph_legend li .legend_color4 { background:#f2b705; }
+
+.stats_change_data, .log_change_action {
+	margin-bottom:2em;
+}
 
 /** Home statistics tooltip */
 

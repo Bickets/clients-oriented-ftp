@@ -61,7 +61,6 @@ if (in_session_or_cookies($core_update_allowed)) {
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title><?php echo $page_title; ?> &raquo; <?php echo THIS_INSTALL_SET_TITLE; ?></title>
 	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
-	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/shared.css" />
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/bootstrap.min.css" />
@@ -69,6 +68,8 @@ if (in_session_or_cookies($core_update_allowed)) {
 	<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/bootstrap/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 	
+	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/shared.css" />
+
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
 
