@@ -120,8 +120,16 @@ $database->MySQLDB();
 				data: [
 					[1, <?php echo $total_files; ?>],
 					[2, <?php echo $total_clients; ?>],
-					[3, <?php echo $total_groups; ?>],
-					[4, <?php echo $total_users; ?>]
+					[3, <?php echo $total_groups; ?>]
+					<?php
+						$log_allowed = array(9);
+						if (in_session_or_cookies($log_allowed)) {
+							?>
+								,[4, <?php echo $total_users; ?>]
+							<?php
+							$show_log = true;
+						}
+					?>
 				]
 			}
 			], {
