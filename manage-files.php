@@ -107,7 +107,6 @@ include('header.php');
 							for (i = 0; i < obj.length; i++) {
 								$('.modal_content .downloaders_list').append('<li><img src="<?php echo BASE_URI; ?>/img/downloader-' + obj[i].type + '.png" alt="" /><div class="downloader_count">' +  obj[i].count + ' <?php _e('times','cftp_admin'); ?></div><p class="downloader_name">' + obj[i].name + '</p><p class="downloader_email">' +  obj[i].email + '</p></li>');
 							}
-							//$('.modal_content').append('<p class="downloaders_note"><?php _e('Please note that this is a list of downloaders only. If the total downloads count is higher than the amounts of accounts reflected on this list, it means that one or more of them downloaded the file more than once.','cftp_admin'); ?></p>');
 						}
 					);					
 					return false;
@@ -430,28 +429,28 @@ include('header.php');
 						<?php
 							}
 						?>
-						<th><?php _e('Date','cftp_template'); ?></th>
-						<th><?php _e('Ext.','cftp_template'); ?></th>
-						<th><?php _e('Name','cftp_template'); ?></th>
-						<th><?php _e('Size','cftp_template'); ?></th>
-						<th><?php _e('Uploader','cftp_template'); ?></th>
+						<th><?php _e('Date','cftp_admin'); ?></th>
+						<th><?php _e('Ext.','cftp_admin'); ?></th>
+						<th><?php _e('Name','cftp_admin'); ?></th>
+						<th><?php _e('Size','cftp_admin'); ?></th>
+						<th><?php _e('Uploader','cftp_admin'); ?></th>
 						<?php
 							/**
 							 * These columns are only available when filtering by client or group.
 							 */
 							if (isset($search_on)) {
 						?>
-								<th><?php _e('Status','cftp_template'); ?></th>
-								<th><?php _e('Download count','cftp_template'); ?></th>
+								<th><?php _e('Status','cftp_admin'); ?></th>
+								<th><?php _e('Download count','cftp_admin'); ?></th>
 						<?php
 							}
 							else {
 						?>
-								<th><?php _e('Total downloads','cftp_template'); ?></th>
+								<th><?php _e('Total downloads','cftp_admin'); ?></th>
 						<?php
 							}
 						?>
-						<th><?php _e('Actions','cftp_template'); ?></th>
+						<th><?php _e('Actions','cftp_admin'); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -557,7 +556,7 @@ include('header.php');
 									?>
 									<td>
 										<a href="edit-file.php?file_id=<?php echo $row["id"]; ?>" class="button button_blue button_small">
-											<?php _e('Edit','cftp_template'); ?>
+											<?php _e('Edit','cftp_admin'); ?>
 										</a>
 									</td>
 								</tr>
