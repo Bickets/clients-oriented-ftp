@@ -431,7 +431,7 @@ include('header.php');
 						?>
 						<th><?php _e('Date','cftp_admin'); ?></th>
 						<th><?php _e('Ext.','cftp_admin'); ?></th>
-						<th><?php _e('Name','cftp_admin'); ?></th>
+						<th><?php _e('Title','cftp_admin'); ?></th>
 						<th><?php _e('Size','cftp_admin'); ?></th>
 						<th><?php _e('Uploader','cftp_admin'); ?></th>
 						<?php

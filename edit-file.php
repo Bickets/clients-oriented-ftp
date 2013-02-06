@@ -302,10 +302,10 @@ $current_level = get_current_user_level();
 												<p class="on_disc_name">
 													<?php echo $row['url']; ?>
 												</p>
-												<label><?php _e('Name', 'cftp_admin');?></label>
-												<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $row['filename']; ?>" class="required" />
+												<label><?php _e('Title', 'cftp_admin');?></label>
+												<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $row['filename']; ?>" class="file_title" placeholder="<?php _e('Enter here the required file title.', 'cftp_admin');?>" />
 												<label><?php _e('Description', 'cftp_admin');?></label>
-												<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"><?php echo (!empty($row['description'])) ? $row['description'] : ''; ?></textarea>
+												<textarea name="file[<?php echo $i; ?>][description]" placeholder="<?php _e('Optionally, enter here a description for the file.', 'cftp_admin');?>"><?php echo (!empty($row['description'])) ? $row['description'] : ''; ?></textarea>
 
 												<?php if ($global_level != 0) { ?>
 													<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Mark as hidden (will not send notifications) for new assigned clients and groups', 'cftp_admin');?></label>
@@ -337,6 +337,7 @@ $current_level = get_current_user_level();
 															<?php
 															}
 														?>
+													</optgroup>
 													<optgroup label="<?php _e('Groups', 'cftp_admin');?>">
 														<?php
 															/**
@@ -351,6 +352,7 @@ $current_level = get_current_user_level();
 															<?php
 															}
 														?>
+													</optgroup>
 												</select>
 												<div class="list_mass_members">
 													<a href="#" class="btn add-all"><?php _e('Add all','cftp_admin'); ?></a>
@@ -396,7 +398,7 @@ $current_level = get_current_user_level();
 			clean_form(this);
 
 			$(this).find('input[name$="[name]"]').each(function() {	
-				is_complete($(this)[0],'<?php echo $validation_no_name; ?>');
+				is_complete($(this)[0],'<?php echo $validation_no_title; ?>');
 			});
 
 			// show the errors or continue if everything is ok

@@ -390,19 +390,24 @@ h4 {
 	border-radius:5px;
 	box-shadow:3px 3px 5px #dedede;
 	padding:15px;
+
 }
 
-.edit_files input[type="text"] {
-	font-size:1.2em;
-	width:96%;
-	padding:7px;
+.file_editor {
+	border-bottom:3px dotted #ccc;
+	padding-top:15px;
+	margin-bottom:15px;
+}
+
+.f_e_odd {
+}
+
+.file_title {
+	width:96%!important;
 }
 
 .edit_files textarea {
-	font-size:1.2em;
-	padding:7px;
 	width:96%!important;
-	margin:0 0 10px !important;
 	height:70px!important;
 }
 
@@ -415,13 +420,10 @@ h4 {
 
 .edit_files label {
 	margin:10px 0;
-	display:block;
-	font-weight:bold;
-	font-size:1em;
 }
 
 .edit_files .ms-optgroup-label {
-	font-size:13px !important;
+	font-size:14px !important;
 	color:#999 !important;
 	background:#f9f9f9 !important;
 	padding:7px 0 7px 24px !important;
@@ -434,7 +436,7 @@ h4 {
 	height: 0;
 	position: absolute;
 	width: 0;
-	top:12px;
+	top:14px;
 	left:8px;
 	border: 5px solid transparent;
 	border-top-color: #777;
@@ -451,7 +453,7 @@ h4 {
 	position: absolute;
 	width: 0;
 	border: 10px solid transparent;
-	border-left-color: #3473aa;
+	border-left-color: #0094BB;
 	left: 100%;
 	top: 10px;
 }
@@ -459,7 +461,7 @@ h4 {
 .file_number p {
 	padding:10px 15px;
 	margin:0;
-	background:#3473aa !important;
+	background:#0094BB !important;
 	text-align:center;
 	font-weight:bold;
 	font-size:60px;

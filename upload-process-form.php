@@ -386,7 +386,7 @@ while($row = mysql_fetch_array($sql)) {
 					clean_form(this);
 
 					$(this).find('input[name$="[name]"]').each(function() {	
-						is_complete($(this)[0],'<?php echo $validation_no_name; ?>');
+						is_complete($(this)[0],'<?php echo $validation_no_title; ?>');
 					});
 
 					// show the errors or continue if everything is ok
@@ -436,76 +436,80 @@ while($row = mysql_fetch_array($sql)) {
 									}
 								}
 					?>
-								<div class="row-fluid edit_files">
-									<div class="span1">
-										<div class="file_number">
-											<p><?php echo $i; ?></p>
+								<div class="file_editor <?php if ($i%2) { echo 'f_e_odd'; } ?>">
+									<div class="row-fluid edit_files">
+										<div class="span1">
+											<div class="file_number">
+												<p><?php echo $i; ?></p>
+											</div>
 										</div>
-									</div>
-									<div class="span11 file_data">
-										<div class="row-fluid">
-											<div class="span6">
-												<div class="row-fluid">
-													<div class="span12">
-														<p class="on_disc_name">
-															<?php echo $file; ?>
-														</p>
-														<input type="hidden" name="file[<?php echo $i; ?>][original]" value="<?php echo $file_original; ?>" />
-														<input type="hidden" name="file[<?php echo $i; ?>][file]" value="<?php echo $file; ?>" />
-
-														<label><?php _e('Name', 'cftp_admin');?></label>
-														<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="required" />
-														<label><?php _e('Description', 'cftp_admin');?></label>
-														<textarea name="file[<?php echo $i; ?>][description]" class="txtfield"><?php echo (isset($description)) ? $description : ''; ?></textarea>
-														
-														<?php if ($current_level != 0) { ?>
-															<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
-														<?php } ?>
+										<div class="span11 file_data">
+											<div class="row-fluid">
+												<div class="span6">
+													<div class="row-fluid">
+														<div class="span12">
+															<p class="on_disc_name">
+																<?php echo $file; ?>
+															</p>
+															<input type="hidden" name="file[<?php echo $i; ?>][original]" value="<?php echo $file_original; ?>" />
+															<input type="hidden" name="file[<?php echo $i; ?>][file]" value="<?php echo $file; ?>" />
+	
+															<label><?php _e('Title', 'cftp_admin');?></label>
+															<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $file_title; ?>" class="file_title" placeholder="<?php _e('Enter here the required file title.', 'cftp_admin');?>" />
+															<label><?php _e('Description', 'cftp_admin');?></label>
+															<textarea name="file[<?php echo $i; ?>][description]" placeholder="<?php _e('Optionally, enter here a description for the file.', 'cftp_admin');?>"><?php echo (isset($description)) ? $description : ''; ?></textarea>
+															
+															<?php if ($current_level != 0) { ?>
+																<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
+															<?php } ?>
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="span6">
-												<?php
-													/**
-													* Only show the CLIENTS select field if the current
-													* uploader is a system user, and not a client.
-													*/
-													if ($current_level != 0) {
-												?>
-														<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
-														<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="assign_select" >
-															<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
-																<?php
-																	/**
-																	 * The clients list is generated early on the file so the
-																	 * array doesn't need to be made once on every file.
-																	 */
-																	foreach($clients as $client => $client_name) {
-																	?>
-																		<option value="<?php echo 'c'.$client; ?>"><?php echo $client_name; ?></option>
+												<div class="span6">
+													<?php
+														/**
+														* Only show the CLIENTS select field if the current
+														* uploader is a system user, and not a client.
+														*/
+														if ($current_level != 0) {
+													?>
+															<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
+															<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="assign_select" >
+																<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
 																	<?php
-																	}
-																?>
-															<optgroup label="<?php _e('Groups', 'cftp_admin');?>">
-																<?php
-																	/**
-																	 * The groups list is generated early on the file so the
-																	 * array doesn't need to be made once on every file.
-																	 */
-																	foreach($groups as $group => $group_name) {
+																		/**
+																		 * The clients list is generated early on the file so the
+																		 * array doesn't need to be made once on every file.
+																		 */
+																		foreach($clients as $client => $client_name) {
+																		?>
+																			<option value="<?php echo 'c'.$client; ?>"><?php echo $client_name; ?></option>
+																		<?php
+																		}
 																	?>
-																		<option value="<?php echo 'g'.$group; ?>"><?php echo $group_name; ?></option>
+																</optgroup>
+																<optgroup label="<?php _e('Groups', 'cftp_admin');?>">
 																	<?php
-																	}
-																?>
-														</select>
-														<div class="list_mass_members">
-															<a href="#" class="btn add-all"><?php _e('Add all','cftp_admin'); ?></a>
-															<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
-														</div>
-												<?php
-													} /** Close $current_level check */
-												?>
+																		/**
+																		 * The groups list is generated early on the file so the
+																		 * array doesn't need to be made once on every file.
+																		 */
+																		foreach($groups as $group => $group_name) {
+																		?>
+																			<option value="<?php echo 'g'.$group; ?>"><?php echo $group_name; ?></option>
+																		<?php
+																		}
+																	?>
+																</optgroup>
+															</select>
+															<div class="list_mass_members">
+																<a href="#" class="btn add-all"><?php _e('Add all','cftp_admin'); ?></a>
+																<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
+															</div>
+													<?php
+														} /** Close $current_level check */
+													?>
+												</div>
 											</div>
 										</div>
 									</div>

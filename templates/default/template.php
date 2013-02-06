@@ -80,7 +80,7 @@ $count = count($my_files);
 							<th class="td_checkbox">
 								<input type="checkbox" name="select_all" id="select_all" value="0" />
 							</th>
-							<th><?php _e('Name','cftp_template'); ?></th>
+							<th><?php _e('Title','cftp_template'); ?></th>
 							<th class="description"><?php _e('Description','cftp_template'); ?></th>
 							<th><?php _e('Size','cftp_template'); ?></th>
 							<th class="extra"><?php _e('Date','cftp_template'); ?></th>

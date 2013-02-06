@@ -25,6 +25,7 @@ $add_user_exists = __('A system user or client with this login name already exis
 $add_user_mail_exists = __('A system user or client with this e-mail address already exists.','cftp_admin');
 $validation_valid_pass = __('Your password can only contain letters, numbers and the following characters:','cftp_admin');
 $validation_valid_chars = ('` ! " ? $ ? % ^ & * ( ) _ - + = { [ } ] : ; @ ~ # | < , > . ? \' / \ ');
+$validation_no_title = __('Title was not completed','cftp_admin');
 
 /**
  * Validation strings for the length of usernames and passwords.
