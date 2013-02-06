@@ -88,6 +88,18 @@ class FilesActions
 		}
 	}
 
+	function hide_for_everyone($file_id)
+	{
+		global $database;
+		$this->check_level = array(9,8,7);
+		if (isset($file_id)) {
+			/** Do a permissions check */
+			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
+				$this->sql = $database->query('UPDATE tbl_files_relations SET hidden="1" WHERE file_id="' . $file_id . '"');
+			}
+		}
+	}
+
 	function unassign_file($file_id)
 	{
 		global $database;

@@ -537,7 +537,7 @@ while($row = mysql_fetch_array($sql)) {
 			<input type="hidden" name="upload_failed" value="<?php echo $upload_failed_hidden; ?>" />
 			
 			<div align="right">
-				<input type="submit" name="submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" id="upload_continue" />
+				<button type="submit" name="submit" class="button button_blue button_submit" id="upload_continue"><?php _e('Continue','cftp_admin'); ?></button>
 			</div>
 		</form>
 

@@ -236,8 +236,16 @@ $current_level = get_current_user_level();
 								 * 2- Add the assignments to the database
 								 */
 								$process_assignment = $this_upload->upload_add_assignment($add_arguments);
+
 								/**
-								 * 3- Add the notifications to the database
+								 * 3- Hide for everyone if checked
+								 */
+								if (!empty($file['hideall'])) {
+									$this_file = new FilesActions();
+									$hide_file = $this_file->hide_for_everyone($this_file_id);
+								}
+								/**
+								 * 4- Add the notifications to the database
 								 */
 								if ($send_notifications == true) {
 									$process_notifications = $this_upload->upload_add_notifications($add_arguments);
@@ -308,7 +316,8 @@ $current_level = get_current_user_level();
 												<textarea name="file[<?php echo $i; ?>][description]" placeholder="<?php _e('Optionally, enter here a description for the file.', 'cftp_admin');?>"><?php echo (!empty($row['description'])) ? $row['description'] : ''; ?></textarea>
 
 												<?php if ($global_level != 0) { ?>
-													<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Mark as hidden (will not send notifications) for new assigned clients and groups', 'cftp_admin');?></label>
+													<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Mark as hidden (will not send notifications) for new assigned clients and groups.', 'cftp_admin');?></label>
+													<label><input type="checkbox" name="file[<?php echo $i; ?>][hideall]" value="1" /> <?php _e('Hide from every already assigned clients and groups.', 'cftp_admin');?></label>
 												<?php } ?>
 											</div>
 										</div>
@@ -369,7 +378,7 @@ $current_level = get_current_user_level();
 					}
 				?>
 				<div align="right">
-					<input type="submit" name="submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" id="upload_continue" />
+					<button type="submit" name="submit" class="button button_blue button_submit" id="upload_continue"><?php _e('Continue','cftp_admin'); ?></button>
 				</div>
 			</form>
 	<?php
