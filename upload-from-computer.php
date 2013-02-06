@@ -47,7 +47,7 @@ $database->MySQLDB();
 				if(SITE_LANG != 'en') {
 					$plupload_lang_file = 'includes/plupload/js/i18n/'.SITE_LANG.'.js';
 					if(file_exists($plupload_lang_file)) {
-						echo '<script type="text/javascript" src="'.$plupload_lang_file.'"></script>';
+						echo '<script type="text/javascript" src="'.BASE_URI.$plupload_lang_file.'"></script>';
 					}
 				}
 			?>
@@ -102,6 +102,8 @@ $database->MySQLDB();
 							});
 								
 							uploader.start();
+							$("#btn_submit").hide();
+							$(".message_uploading").fadeIn();
 	
 							uploader.bind('FileUploaded', function (up, file, info) {
 								var obj = JSON.parse(info.response);
@@ -117,15 +119,18 @@ $database->MySQLDB();
 						return false;
 					});
 				});
-			</script>			
-
+			</script>
+			
 			<form action="upload-process-form.php" name="upload_by_client" id="upload_by_client" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="uploaded_files" id="uploaded_files" value="" />
 				<div id="uploader">
 					<p><?php _e("Your browser doesn't have Flash, Silverlight, Google Gears, BrowserPlus or HTML5 support. Please update your browser or install Adobe Flash to continue.",'cftp_admin'); ?></p>
 				</div>
 				<div align="right">
-					<input type="submit" name="Submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" />
+					<button type="submit" name="Submit" class="button button_blue button_submit" id="btn_submit"><?php _e('Upload files','cftp_admin'); ?></button>
+				</div>
+				<div class="message message_info message_uploading">
+					<p><?php _e("Your files are being uploaded! Progress indicators may take a while to update, but work is still being done behind the scenes.",'cftp_admin'); ?></p>
 				</div>
 			</form>
 	

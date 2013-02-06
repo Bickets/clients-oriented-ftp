@@ -667,7 +667,7 @@ optgroup {
 	border-radius:5px!important;
 }
 
-#uploader {
+.plupload_wrapper {
 	-moz-box-shadow:3px 3px 5px #dedede;
 	-webkit-box-shadow:3px 3px 5px #dedede;
 	box-shadow:3px 3px 5px #dedede;
@@ -679,6 +679,10 @@ optgroup {
 
 a.plupload_start {
 	display:none!important;
+}
+
+.message_uploading {
+	display:none;
 }
 
 /* 

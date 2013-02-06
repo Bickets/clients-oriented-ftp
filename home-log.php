@@ -1,6 +1,6 @@
 <?php
 	require_once('sys.includes.php');
-	$max_show_log = 13;
+	$max_show_log = 10;
 	$log_action = $_GET['action'];
 
 	$log_query = "SELECT * FROM tbl_actions_log";
