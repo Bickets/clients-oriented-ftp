@@ -39,10 +39,12 @@ function add_error_to_field(field, error) {
 	error_count++;
 	$(field).addClass('field_error');
 	var this_field_name = $(field).attr('name');
+	this_field_msg_name = this_field_name.replace(/\[/g,'_');
+	this_field_msg_name = this_field_msg_name.replace(/\]/g,'_');
 	if ($('#error_for_'+this_field_name).length == 0) {
-		$(field).after('<div class="field_error_msg" id="error_for_'+this_field_name+'"><ul></ul></div>');
+		$(field).after('<div class="field_error_msg" id="error_for_'+this_field_msg_name+'"><ul></ul></div>');
 	}
-	$('#error_for_'+this_field_name+' ul').append('<li>'+error+'</li>');
+	$('#error_for_'+this_field_msg_name+' ul').append('<li>'+error+'</li>');
 }
 
 function is_complete(field,error) {
