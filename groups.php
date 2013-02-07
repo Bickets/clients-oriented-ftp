@@ -280,12 +280,18 @@ include('header.php');
 							if (isset($members_amount[$row['id']])) {
 								echo $members_amount[$row['id']];
 							}
+							else {
+								echo '0';
+							}
 						?>
 					</td>
 					<td>
 						<?php
 							if (isset($files_amount[$row['id']])) {
 								echo $files_amount[$row['id']];
+							}
+							else {
+								echo '0';
 							}
 						?>
 					</td>
