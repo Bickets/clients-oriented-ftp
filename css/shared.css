@@ -37,7 +37,7 @@ body, html {
 	color:#f0f0f0;
 	position:relative;
 	overflow:hidden;
-	padding:25px 20px 20px;
+	padding:25px 15px 20px;
 }
 
 #header h1 {
@@ -50,11 +50,17 @@ body, html {
 }
 
 #logout {
+	font-size:.85em;
+	line-height:1em;
+	text-align:right
+/*
 	position:absolute;
 	top:20px;
 	right:20px;
-	font-size:.85em;
-	line-height:1em;
+*/}
+
+#logout span {
+	color:#999999;
 }
 
 #logout a {
@@ -62,6 +68,7 @@ body, html {
 	display:inline-block;
 	padding:10px 20px;
 	padding-left:35px;
+	margin-left:10px;
 	background:transparent url(../img/logout.png) no-repeat 10px 7px;
 	text-decoration:none;
 	transition: all 0.8s ease-out;
