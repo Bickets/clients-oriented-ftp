@@ -6,7 +6,6 @@
  * @subpackage	Functions
  */
 
-
 /**
  * Check if ProjectSend is installed by looping over the main tables.
  * All tables must exist to verify the installation.
@@ -333,6 +332,7 @@ function in_session_or_cookies($levels)
  */
 function get_current_user_level()
 {
+	$level = 0;
 	if (isset($_SESSION['userlevel'])) {
 		$level = $_SESSION['userlevel'];
 	}

@@ -308,6 +308,7 @@ include('header.php');
 			 * If the user is an uploader, or a client is editing his files
 			 * only show files uploaded by that account.
 			*/
+			$current_level = get_current_user_level();
 			if($current_level == '7' || $current_level == '0') {
 				$fq .= " AND uploader = '$global_user'";
 				$no_results_error = 'account_level';
@@ -433,8 +434,13 @@ include('header.php');
 						<th><?php _e('Ext.','cftp_admin'); ?></th>
 						<th><?php _e('Title','cftp_admin'); ?></th>
 						<th><?php _e('Size','cftp_admin'); ?></th>
-						<th><?php _e('Uploader','cftp_admin'); ?></th>
 						<?php
+							if($current_level != '0') {
+						?>
+								<th><?php _e('Uploader','cftp_admin'); ?></th>
+						<?php
+							}
+
 							/**
 							 * These columns are only available when filtering by client or group.
 							 */
@@ -445,9 +451,11 @@ include('header.php');
 						<?php
 							}
 							else {
+								if($current_level != '0') {
 						?>
-								<th><?php _e('Total downloads','cftp_admin'); ?></th>
+									<th><?php _e('Total downloads','cftp_admin'); ?></th>
 						<?php
+								}
 							}
 						?>
 						<th><?php _e('Actions','cftp_admin'); ?></th>
@@ -523,8 +531,13 @@ include('header.php');
 										?>
 									</td>
 									<td><?php $this_file = filesize($this_file_absolute); echo format_file_size($this_file); ?></td>
-									<td><?php echo $row['uploader']; ?></td>
 									<?php
+										if($current_level != '0') {
+									?>
+											<td><?php echo $row['uploader']; ?></td>
+									<?php
+										}
+
 										/**
 										 * These columns are only available when filtering by client or group.
 										 */
@@ -543,15 +556,17 @@ include('header.php');
 									<?php
 										}
 										else {
+											if($current_level != '0') {
 									?>
-											<td>
-												<div class="icons">
-													<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders button_blue'; } else { echo 'button_gray'; } ?> button" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
-														<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
-													</a>
-												</div>
-											</td>
+												<td>
+													<div class="icons">
+														<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders button_blue'; } else { echo 'button_gray'; } ?> button" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
+															<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
+														</a>
+													</div>
+												</td>
 									<?php
+											}
 										}
 									?>
 									<td>
