@@ -270,7 +270,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									<li>
 										<h3><?php _e('Allowed file extensions','cftp_admin'); ?></h3>
 										<p><?php _e('Be careful when changing this options. They could affect not only the system but the whole server it is installed on.','cftp_admin'); ?><br />
-										<?php _e('<strong>Important</strong>: Separate allowed file types with a comma. You can navigate the box with the left/right arrows, backspace and delete keys.','cftp_admin'); ?></p>
+										<strong><?php _e('Important','cftp_admin'); ?></strong>: <?php _e('Separate allowed file types with a comma. You can navigate the box with the left/right arrows, backspace and delete keys.','cftp_admin'); ?></p>
 									</li>
 									<li>
 										<input name="allowed_file_types" id="allowed_file_types" value="<?php echo $allowed_file_types; ?>" />
