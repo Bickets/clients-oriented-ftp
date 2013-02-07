@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r315');
+define('CURRENT_VERSION', 'r325');
 
 /**
  * Turn off reporting of PHP errors, warnings and notices.
@@ -105,7 +105,7 @@ define('CLIENT_UPLOADS_TEMP_FOLDER', ROOT_DIR.'/upload/temp');
  * on the footer blocks.
  *
  */
-define('SYSTEM_URI','http://projectsend.org/');
+define('SYSTEM_URI','http://www.projectsend.org/');
 define('SYSTEM_URI_LABEL','ProjectSend on Google Code');
 /** Previously cFTP */
 define('SYSTEM_NAME','ProjectSend');
@@ -127,8 +127,10 @@ I18n::LoadDomain(ROOT_DIR."/lang/{$lang}.mo", 'cftp_admin' );
 $user_role_9_name = __('System Administrator','cftp_admin');
 $user_role_8_name = __('Account Manager','cftp_admin');
 $user_role_7_name = __('Uploader','cftp_admin');
+$user_role_0_name = __('Client','cftp_admin');
 define('USER_ROLE_LVL_9', $user_role_9_name);
 define('USER_ROLE_LVL_8', $user_role_8_name);
 define('USER_ROLE_LVL_7', $user_role_7_name);
+define('USER_ROLE_LVL_0', $user_role_0_name);
 
 ?>
