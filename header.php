@@ -134,9 +134,17 @@ if (in_session_or_cookies($core_update_allowed)) {
 
 	<header>
 		<div id="header">
-			<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
-			<div id="logout">
-				<a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self"><?php _e('Logout', 'cftp_admin'); ?></a>
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span8">
+						<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
+					</div>
+					<div class="span4">
+						<div id="logout">
+							<span>Welcome, <?php echo $global_name; ?></span> <a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self"><?php _e('Logout', 'cftp_admin'); ?></a>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	
