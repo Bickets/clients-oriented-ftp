@@ -71,7 +71,7 @@ $database->MySQLDB();
 
 				$(function() {
 					$("#uploader").pluploadQueue({
-						runtimes : 'gears,flash,silverlight,browserplus,html5,html4',
+						runtimes : 'html5,flash,silverlight,html4',
 						url : 'process-upload.php',
 						max_file_size : '<?php echo MAX_FILESIZE; ?>mb',
 						chunk_size : '1mb',
@@ -80,7 +80,12 @@ $database->MySQLDB();
 							{title : "Allowed files", extensions : "<?php echo $options_values['allowed_file_types']; ?>"}
 						],
 						flash_swf_url : 'includes/plupload/js/plupload.flash.swf',
-						silverlight_xap_url : 'includes/plupload/js/plupload.silverlight.xap'
+						silverlight_xap_url : 'includes/plupload/js/plupload.silverlight.xap',
+						preinit: {
+							Init: function (up, info) {
+								$('#uploader_container').removeAttr("title");
+							}
+						}
 						/*
 						,init : {
 							QueueChanged: function(up) {
@@ -124,7 +129,9 @@ $database->MySQLDB();
 			<form action="upload-process-form.php" name="upload_by_client" id="upload_by_client" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="uploaded_files" id="uploaded_files" value="" />
 				<div id="uploader">
-					<p><?php _e("Your browser doesn't have Flash, Silverlight, Google Gears, BrowserPlus or HTML5 support. Please update your browser or install Adobe Flash to continue.",'cftp_admin'); ?></p>
+					<div class="message message_error">
+						<p><?php _e("Your browser doesn't have Flash, Silverlight, or HTML5 support. Please update your browser or install Adobe Flash to continue.",'cftp_admin'); ?></p>
+					</div>
 				</div>
 				<div align="right">
 					<button type="submit" name="Submit" class="button button_blue button_submit" id="btn_submit"><?php _e('Upload files','cftp_admin'); ?></button>
