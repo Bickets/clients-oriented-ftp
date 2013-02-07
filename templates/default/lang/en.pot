@@ -2,112 +2,86 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.5.4\n"
 
-#. Text in echo
-#: psend/manage-files.php:454
-msgid "Actions"
+msgid ""
 msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #. Text in echo
-#: psend/templates/default/template.php:86
-#: psend/manage-files.php:433
+#: templates/default/template.php:86
 msgid "Date"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:84
+#: templates/default/template.php:84
 msgid "Description"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:88
-#: psend/templates/default/template.php:134
+#: templates/default/template.php:88
+#: templates/default/template.php:134
 msgid "Download"
 msgstr ""
 
-#. Text in echo
-#: psend/manage-files.php:445
-msgid "Download count"
-msgstr ""
-
-#. Text in echo
-#: psend/manage-files.php:560
-msgid "Edit"
-msgstr ""
-
-#. Text in echo
-#: psend/manage-files.php:434
-msgid "Ext."
-msgstr ""
-
 #. Text in function
-#: psend/templates/default/template.php:1
+#: templates/default/template.php:1
 msgid "File downloads"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:149
+#: templates/default/template.php:149
 msgid "First"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:87
+#: templates/default/template.php:87
 msgid "Image preview"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:154
+#: templates/default/template.php:154
 msgid "Last"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:83
-#: psend/manage-files.php:435
-msgid "Name"
-msgstr ""
-
-#. Text in echo
-#: psend/templates/default/template.php:153
+#: templates/default/template.php:153
 msgid "Next"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:151
+#: templates/default/template.php:151
 msgid "Page"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:150
+#: templates/default/template.php:150
 msgid "Prev."
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:155
+#: templates/default/template.php:155
 msgid "Show"
 msgstr ""
 
 #. Text in echo
-#: psend/templates/default/template.php:85
-#: psend/manage-files.php:436
+#: templates/default/template.php:85
 msgid "Size"
 msgstr ""
 
-#. Text in echo
-#: psend/manage-files.php:444
-msgid "Status"
-msgstr ""
-
 #. Text in function
-#: psend/templates/default/template.php:61
+#: templates/default/template.php:61
 msgid "There are no files available."
 msgstr ""
 
 #. Text in echo
-#: psend/manage-files.php:450
-msgid "Total downloads"
-msgstr ""
-
-#. Text in echo
-#: psend/manage-files.php:437
-msgid "Uploader"
+#: templates/default/template.php:83
+msgid "Title"
 msgstr ""

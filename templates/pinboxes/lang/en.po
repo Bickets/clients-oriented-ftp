@@ -11,46 +11,46 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #. Text in function
-#: pinboxes/template.php:1
+#: templates/pinboxes/template.php:1
 msgid "Available files"
 msgstr ""
 
 #. Text in echo
-#: pinboxes/template.php:155
+#: templates/pinboxes/template.php:155
 msgid "Download"
 msgstr ""
 
 #. Text in echo
-#: pinboxes/template.php:150
+#: templates/pinboxes/template.php:150
 msgid "File size:"
 msgstr ""
 
 #. Text in echo
-#: pinboxes/template.php:82
+#: templates/pinboxes/template.php:82
 msgid "Logout"
 msgstr ""
 
 #. Text in echo
-#: pinboxes/template.php:78
+#: templates/pinboxes/template.php:78
 msgid "Search"
 msgstr ""
 
 #. Text in echo
-#: pinboxes/template.php:41
+#: templates/pinboxes/template.php:41
 msgid "Search..."
 msgstr ""
 
 #. Text in echo
-#: pinboxes/template.php:94
+#: templates/pinboxes/template.php:94
 msgid "There are no files."
 msgstr ""
 
 #. Text in echo
-#: pinboxes/template.php:81
+#: templates/pinboxes/template.php:81
 msgid "Upload files"
 msgstr ""
 
 #. Text in echo
-#: pinboxes/template.php:72
+#: templates/pinboxes/template.php:72
 msgid "Welcome"
 msgstr ""
