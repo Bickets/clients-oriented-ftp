@@ -77,7 +77,7 @@ if ($added_files > 0) {
 	$new_record_action = $new_log_action->log_action_save($log_action_args);
 
 	if (file_exists($zip_file)) {
-		$zip_file_name = 'download_files_'.generateRandomString();
+		$zip_file_name = 'download_files_'.generateRandomString().'.zip';
 		header('Content-Type: application/zip');
 		header('Content-Length: ' . filesize($zip_file));
 		header('Content-Disposition: attachment; filename="'.$zip_file_name.'"');
