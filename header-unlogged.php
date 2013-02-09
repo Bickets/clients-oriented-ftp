@@ -5,9 +5,6 @@
  *
  * @package ProjectSend
  */
-session_start();
-ob_start();
-header("Cache-control: private");
 
 /**
  * Check if the ProjectSend is installed. Done only on the log in form

@@ -110,6 +110,7 @@ function get_client_by_id($client)
 							'phone' => $row['phone'],
 							'email' => $row['email'],
 							'notify' => $row['notify'],
+							'level' => $row['level'],
 							'contact' => $row['contact'],
 							'created_date' => $row['timestamp'],
 							'created_by' => $row['created_by']
@@ -142,6 +143,8 @@ function get_client_by_username($client)
 							'phone' => $row['phone'],
 							'email' => $row['email'],
 							'notify' => $row['notify'],
+							'level' => $row['level'],
+							'active' => $row['active'],
 							'contact' => $row['contact'],
 							'created_date' => $row['timestamp'],
 							'created_by' => $row['created_by']
@@ -211,6 +214,7 @@ function get_user_by_username($user)
 							'name' => $row['name'],
 							'email' => $row['email'],
 							'level' => $row['level'],
+							'active' => $row['active'],
 							'created_date' => $row['timestamp']
 						);
 		if(!empty($information)) {
@@ -351,6 +355,7 @@ function get_current_user_level()
  */
 function get_current_user_username()
 {
+	$user = '';
 	if (isset($_COOKIE['loggedin'])) {
 		$user = $_COOKIE['loggedin'];
 	}

@@ -29,6 +29,9 @@ require_once(ROOT_DIR.'/includes/userlevel_check.php');
 /** Template list generator */
 require_once(ROOT_DIR.'/includes/templates.php');
 
+/** Contains the current session information */
+require_once(ROOT_DIR.'/includes/active.session.php');
+
 /**
  * Always require this classes to avoid repetition of code
  * on other files.

@@ -24,7 +24,7 @@
 				/**
 				 * Password validation is optional only when editing a client.
 				 */
-				if ($clients_form_type == 'edit_client') {
+				if ($clients_form_type == 'edit_client' || $clients_form_type == 'edit_client_self') {
 			?>
 					// Only check password if any of the 2 fields is completed
 					var password_1 = $("#add_client_form_pass").val();
@@ -42,7 +42,7 @@
 
 			<?php
 				/** Close the jquery IF statement. */
-				if ($clients_form_type == 'edit_client') {
+				if ($clients_form_type == 'edit_client' || $clients_form_type == 'edit_client_self') {
 			?>
 					}
 			<?php
@@ -83,6 +83,14 @@ switch ($clients_form_type) {
 		$info_box = true;
 		$extra_fields = false;
 		$name_placeholder = __("Your full name",'cftp_admin');
+		break;
+	case 'edit_client_self':
+		$submit_value = __('Update account','cftp_admin');
+		$disable_user = true;
+		$require_pass = false;
+		$form_action = 'clients-edit.php?id='.$client_id;
+		$info_box = false;
+		$extra_fields = false;
 		break;
 }
 ?>

@@ -6,12 +6,8 @@
  @ @subpackage	Clients
  *
  */
-$allowed_levels = array(9,8);
+$allowed_levels = array(9,8,0);
 require_once('sys.includes.php');
-
-$page_title = __('Edit client','cftp_admin');
-
-include('header.php');
 
 $database->MySQLDB();
 
@@ -51,6 +47,15 @@ if ($page_status === 1) {
 	}
 }
 
+/**
+ * Compare the client editing this account to the on the db.
+ */
+if ($global_level == 0) {
+	if ($global_user != $add_client_data_user) {
+		$page_status = 3;
+	}
+}
+
 if ($_POST) {
 	/**
 	 * Clean the posted form values to be used on the user actions,
@@ -67,7 +72,9 @@ if ($_POST) {
 	$add_client_data_phone = (isset($_POST["add_client_form_phone"])) ? mysql_real_escape_string($_POST["add_client_form_phone"]) : '';
 	$add_client_data_intcont = (isset($_POST["add_client_form_intcont"])) ? mysql_real_escape_string($_POST["add_client_form_intcont"]) : '';
 	$add_client_data_notity = (isset($_POST["add_client_form_notify"])) ? 1 : 0;
-	$add_client_data_active = (isset($_POST["add_client_form_active"])) ? 1 : 0;
+	if ($global_level != 0) {
+		$add_client_data_active = (isset($_POST["add_client_form_active"])) ? 1 : 0;
+	}
 
 	/** Arguments used on validation and client creation. */
 	$edit_arguments = array(
@@ -98,6 +105,14 @@ if ($_POST) {
 		$edit_response = $edit_client->edit_client($edit_arguments);
 	}
 }
+
+$page_title = __('Edit client','cftp_admin');
+if ($global_user == $add_client_data_user) {
+	$page_title = __('My account','cftp_admin');
+}
+
+include('header.php');
+
 ?>
 
 <div id="main">
@@ -155,11 +170,20 @@ if ($_POST) {
 					echo system_message('error',$msg);
 					echo '<p>'.$direct_access_error.'</p>';
 				}
+				else if ($page_status === 3) {
+					$msg = __("Your account type doesn't allow you to edit this client.",'cftp_admin');
+					echo system_message('error',$msg);
+				}
 				else {
 					/**
 					 * Include the form.
 					 */
-					$clients_form_type = 'edit_client';
+					if ($global_level != 0) {
+						$clients_form_type = 'edit_client';
+					}
+					else {
+						$clients_form_type = 'edit_client_self';
+					}
 					include('clients-form.php');
 				}
 			}

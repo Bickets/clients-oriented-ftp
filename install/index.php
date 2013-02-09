@@ -5,10 +5,6 @@
  * @package		ProjectSend
  * @subpackage	Install
  */
-ob_start();
-session_start();
-header("Cache-control: private");
-
 require_once('../sys.includes.php');
 
 $database->MySQLDB();

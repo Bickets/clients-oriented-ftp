@@ -11,12 +11,6 @@
  * @see check_for_admin
  * @see can_see_content
  */
-/** $is_template is defined on /templates/common.php */
-if (!isset($is_template)) {
-	session_start();
-	ob_start();
-	header("Cache-control: private");
-}
 
 /** Check for an active session or cookie */
 check_for_session();
@@ -26,21 +20,6 @@ check_for_session();
 
 /** If no page title is defined, revert to a default one */
 if (!isset($page_title)) { $page_title = __('System Administration','cftp_admin'); }
-
-/**
- * Global information on the current account to use accross the system.
- */
-$global_user = get_current_user_username();
-$global_level = get_current_user_level();
-if ($global_level != 0) {
-	$global_account = get_user_by_username($global_user);
-}
-else {
-	$global_account = get_client_by_username($global_user);
-}
-//$global_id = get_logged_account_id($global_user);
-$global_id = $global_account['id'];
-$global_name = $global_account['name'];
 
 /**
  * Call the database update file to see if any change is needed,
@@ -141,7 +120,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 					</div>
 					<div class="span4">
 						<div id="logout">
-							<span>Welcome, <?php echo $global_name; ?></span> <a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self"><?php _e('Logout', 'cftp_admin'); ?></a>
+							<span><?php _e('Welcome', 'cftp_admin'); ?>, <?php echo $global_name; ?></span> <a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self"><?php _e('Logout', 'cftp_admin'); ?></a>
 						</div>
 					</div>
 				</div>
