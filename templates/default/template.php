@@ -18,7 +18,7 @@ $count = count($my_files);
 	<div id="wrapper">
 		<div id="left_column">
 			<div id="current_logo">
-				<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=250" alt="" />
+				<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=250" alt="" />
 			</div>
 		</div>
 	
@@ -126,7 +126,7 @@ $count = count($my_files);
 													$extension == "png"
 												) {
 											?>
-												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="" />
+												<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="" />
 											<?php } ?>
 										</td>
 										<td>

@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r335');
+define('CURRENT_VERSION', 'r340');
 
 /**
  * Turn off reporting of PHP errors, warnings and notices.
@@ -23,7 +23,7 @@ define('CURRENT_VERSION', 'r335');
  *
  * @link http://www.php.net/manual/en/function.error-reporting.php
  */
-error_reporting(0);
+//error_reporting(0);
 
 define('GLOBAL_TIME_LIMIT', 240*60);
 define('UPLOAD_TIME_LIMIT', 120*60);
@@ -107,6 +107,7 @@ define('CLIENT_UPLOADS_TEMP_FOLDER', ROOT_DIR.'/upload/temp');
  */
 define('SYSTEM_URI','http://www.projectsend.org/');
 define('SYSTEM_URI_LABEL','ProjectSend on Google Code');
+define('DONATIONS_URL','http://www.projectsend.org/donations/');
 /** Previously cFTP */
 define('SYSTEM_NAME','ProjectSend');
 

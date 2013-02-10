@@ -37,22 +37,6 @@ $count = count($my_files);
 					$('.button').click(function() {
 						$(this).blur();
 					});
-
-					var search_text = '<?php _e('Search...', 'pinboxes_template'); ?>';
-					$("#search_text").val(search_text);
-
-					$("#search_text").focus(function(){
-					   if($(this).val() == search_text) {
-						  $(this).val("");
-					   }
-					});
-					
-					$("#search_text").blur(function(){
-					   if($(this).val() == "") {
-						  $(this).val(search_text);
-					   }
-					});
-
 				}
 			);
 		</script>
@@ -62,7 +46,7 @@ $count = count($my_files);
 		<div id="header">
 			<?php if (file_exists(ROOT_DIR.'/img/custom/logo/'.LOGO_FILENAME)) { ?>
 				<div id="current_logo">
-					<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=300" alt="" />
+					<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=300" alt="" />
 				</div>
 			<?php } ?>
 		</div>
@@ -74,7 +58,7 @@ $count = count($my_files);
 			<ul>
 				<li id="search_box">
 					<form action="" name="files_search" method="post">
-						<input type="text" name="search" id="search_text" value="<?php echo (isset($_POST['search']) && !empty($_POST['search'])) ? $_POST['search'] : ''; ?>">
+						<input type="text" name="search" id="search_text" value="<?php echo (isset($_POST['search']) && !empty($_POST['search'])) ? $_POST['search'] : ''; ?>" placeholder="<?php _e('Search...','pinboxes_template'); ?>">
 						<input type="submit" id="search_go" value="<?php _e('Search','pinboxes_template'); ?>" />
 					</form>
 				</li><li>
@@ -127,7 +111,7 @@ $count = count($my_files);
 								?>
 										<div class="img_prev">
 											<a href="<?php echo $download_link; ?>" target="_blank">
-												<img src="<?php echo $this_template; ?>/timthumb.php?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=250&amp;q=<?php echo THUMBS_QUALITY; ?>" alt="<?php echo htmlentities($file['name']); ?>" />
+												<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=250&amp;q=<?php echo THUMBS_QUALITY; ?>" alt="<?php echo htmlentities($file['name']); ?>" />
 											</a>
 										</div>
 								<?php

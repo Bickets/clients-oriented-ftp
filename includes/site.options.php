@@ -74,4 +74,10 @@ if(!empty($options_values)) {
 	 */
 	date_default_timezone_set(TIMEZONE_USE);
 }
+
+/**
+ * Timthumb
+ */
+define('TIMTHUMB_URL',BASE_URI.'includes/timthumb/timthumb.php');
+define('TIMTHUMB_ABS',ROOT_DIR.'/includes/timthumb/timthumb.php');
 ?>
