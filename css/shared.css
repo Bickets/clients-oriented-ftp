@@ -53,11 +53,7 @@ body, html {
 	font-size:.85em;
 	line-height:1em;
 	text-align:right
-/*
-	position:absolute;
-	top:20px;
-	right:20px;
-*/}
+}
 
 #account span {
 	color:#999999;
@@ -91,7 +87,6 @@ body, html {
 
 #top_menu {
 	background: #3c404b; 
-
 	-moz-box-shadow:0 5px 5px #E1E1E1;
 	-webkit-box-shadow:0 5px 5px #E1E1E1;
 	box-shadow:0 5px 5px #E1E1E1;
@@ -273,6 +268,14 @@ nav ul ul ul {
 	color:#6c6620;
 	background:#fdfbe1;
 	border:1px solid #e7db55;
+}
+
+#donations_message a {
+	text-decoration:underline;
+}
+
+#donations_message h3 {
+	border:none;
 }
 
 /* Tabs */
