@@ -407,8 +407,6 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
-
-
 		/**
 		 * r338 updates
 		 * The Members table wasn't being created on existing installations.

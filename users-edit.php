@@ -6,12 +6,8 @@
  @ @subpackage	Users
  *
  */
-$allowed_levels = array(9);
+$allowed_levels = array(9,8,7);
 require_once('sys.includes.php');
-
-$page_title = __('Edit system user','cftp_admin');
-
-include('header.php');
 
 $database->MySQLDB();
 
@@ -48,6 +44,15 @@ if ($page_status === 1) {
 	}
 }
 
+/**
+ * Compare the client editing this account to the on the db.
+ */
+if ($global_level == 7) {
+	if ($global_user != $add_user_data_user) {
+		$page_status = 3;
+	}
+}
+
 if ($_POST) {
 	/**
 	 * Clean the posted form values to be used on the user actions,
@@ -58,8 +63,25 @@ if ($_POST) {
 	 */
 	$add_user_data_name = mysql_real_escape_string($_POST['add_user_form_name']);
 	$add_user_data_email = mysql_real_escape_string($_POST['add_user_form_email']);
-	$add_user_data_level = mysql_real_escape_string($_POST['add_user_form_level']);
-	$add_user_data_active = (isset($_POST["add_user_form_active"])) ? 1 : 0;
+
+	/**
+	 * Edit level only when user is not Uploader (level 7) or when
+	 * editing other's account (not own).
+	 */	
+	$edit_level_active = true;
+	if ($global_level == 7) {
+		$edit_level_active = false;
+	}
+	else {
+		if ($global_user == $add_user_data_user) {
+			$edit_level_active = false;
+		}
+	}
+	if ($edit_level_active === true) {
+		/** Default level to 7 just in case */
+		$add_user_data_level = (isset($_POST["add_user_form_level"])) ? mysql_real_escape_string($_POST['add_user_form_level']) : '7';
+		$add_user_data_active = (isset($_POST["add_user_form_active"])) ? 1 : 0;
+	}
 
 	/** Arguments used on validation and user creation. */
 	$edit_arguments = array(
@@ -85,8 +107,16 @@ if ($_POST) {
 	if ($edit_validate == 1) {
 		$edit_response = $edit_user->edit_user($edit_arguments);
 	}
-	
+
 }
+
+$page_title = __('Edit system user','cftp_admin');
+if ($global_user == $add_user_data_user) {
+	$page_title = __('My account','cftp_admin');
+}
+
+include('header.php');
+
 ?>
 
 <div id="main">
@@ -144,11 +174,25 @@ if ($_POST) {
 					echo system_message('error',$msg);
 					echo '<p>'.$direct_access_error.'</p>';
 				}
+				else if ($page_status === 3) {
+					$msg = __("Your account type doesn't allow you to access this feature.",'cftp_admin');
+					echo system_message('error',$msg);
+				}
 				else {
 					/**
 					 * Include the form.
 					 */
-					$user_form_type = 'edit_user';
+					if ($global_level == 7) {
+						$user_form_type = 'edit_user_self';
+					}
+					else {
+						if ($global_user == $add_user_data_user) {
+							$user_form_type = 'edit_user_self';
+						}
+						else {
+							$user_form_type = 'edit_user';
+						}
+					}
 					include('users-form.php');
 				}
 			}

@@ -72,6 +72,7 @@ if ($_POST) {
 	$add_client_data_phone = (isset($_POST["add_client_form_phone"])) ? mysql_real_escape_string($_POST["add_client_form_phone"]) : '';
 	$add_client_data_intcont = (isset($_POST["add_client_form_intcont"])) ? mysql_real_escape_string($_POST["add_client_form_intcont"]) : '';
 	$add_client_data_notity = (isset($_POST["add_client_form_notify"])) ? 1 : 0;
+
 	if ($global_level != 0) {
 		$add_client_data_active = (isset($_POST["add_client_form_active"])) ? 1 : 0;
 	}
@@ -171,7 +172,7 @@ include('header.php');
 					echo '<p>'.$direct_access_error.'</p>';
 				}
 				else if ($page_status === 3) {
-					$msg = __("Your account type doesn't allow you to edit this client.",'cftp_admin');
+					$msg = __("Your account type doesn't allow you to access this feature.",'cftp_admin');
 					echo system_message('error',$msg);
 				}
 				else {
