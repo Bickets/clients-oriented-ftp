@@ -224,20 +224,6 @@ if (in_session_or_cookies($allowed_update)) {
 				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 				';
 				$database->query($q1);
-				/** Create the MEMBERS table */
-				$q2 = '
-				CREATE TABLE IF NOT EXISTS `tbl_members` (
-				  `id` int(11) NOT NULL AUTO_INCREMENT,
-				  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-				  `added_by` varchar(32) NOT NULL,
-				  `client_id` int(11) NOT NULL,
-				  `group_id` int(11) NOT NULL,
-				  PRIMARY KEY (`id`),
-				  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-				  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-				';
-				$database->query($q2);
 				$updates_made++;
 		
 				/**
@@ -420,6 +406,34 @@ if (in_session_or_cookies($allowed_update)) {
 				unset($q);
 			}
 		}
+
+
+
+		/**
+		 * r338 updates
+		 * The Members table wasn't being created on existing installations.
+		 */
+		if ($last_update < 338) {
+			$q = $database->query("SELECT id FROM tbl_members");
+			if (!$q) {
+				/** Create the MEMBERS table */
+				$q2 = '
+				CREATE TABLE IF NOT EXISTS `tbl_members` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+				  `added_by` varchar(32) NOT NULL,
+				  `client_id` int(11) NOT NULL,
+				  `group_id` int(11) NOT NULL,
+				  PRIMARY KEY (`id`),
+				  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+				  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				';
+				$database->query($q2);
+				$updates_made++;
+			}
+		}
+
 
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");
