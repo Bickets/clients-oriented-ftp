@@ -51,7 +51,7 @@ if ($page_status === 1) {
  * Compare the client editing this account to the on the db.
  */
 if ($global_level == 0) {
-	if ($global_user != $add_client_data_user) {
+	if (isset($add_client_data_user) && $global_user != $add_client_data_user) {
 		$page_status = 3;
 	}
 }
@@ -108,7 +108,7 @@ if ($_POST) {
 }
 
 $page_title = __('Edit client','cftp_admin');
-if ($global_user == $add_client_data_user) {
+if (isset($add_client_data_user) && $global_user == $add_client_data_user) {
 	$page_title = __('My account','cftp_admin');
 }
 

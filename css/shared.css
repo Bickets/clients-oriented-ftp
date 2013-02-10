@@ -49,7 +49,7 @@ body, html {
 	line-height:32px;
 }
 
-#logout {
+#account {
 	font-size:.85em;
 	line-height:1em;
 	text-align:right
@@ -59,24 +59,31 @@ body, html {
 	right:20px;
 */}
 
-#logout span {
+#account span {
 	color:#999999;
 }
 
-#logout a {
+#account a {
 	color:white;
 	display:inline-block;
 	padding:10px 20px;
 	padding-left:35px;
-	margin-left:10px;
 	background:transparent url(../img/logout.png) no-repeat 10px 7px;
 	text-decoration:none;
 	transition: all 0.8s ease-out;
 	-moz-transition: all 0.8s ease-out;
 	-webkit-transition: all 0.8s ease-out;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
 }
 
-#logout a:hover {
+#account a.my_account {
+	background:transparent url(../img/my_account.png) no-repeat 10px 7px;
+	margin-left:15px;
+}
+
+#account a:hover {
 	background-color:#000;
 }
 

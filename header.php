@@ -115,12 +115,23 @@ if (in_session_or_cookies($core_update_allowed)) {
 		<div id="header">
 			<div class="container-fluid">
 				<div class="row-fluid">
-					<div class="span8">
+					<div class="span6">
 						<h1><?php echo THIS_INSTALL_SET_TITLE; ?></h1>
 					</div>
-					<div class="span4">
-						<div id="logout">
-							<span><?php _e('Welcome', 'cftp_admin'); ?>, <?php echo $global_name; ?></span> <a href="<?php echo BASE_URI; ?>process.php?do=logout" target="_self"><?php _e('Logout', 'cftp_admin'); ?></a>
+					<div class="span6">
+						<div id="account">
+							<span><?php _e('Welcome', 'cftp_admin'); ?>, <?php echo $global_name; ?></span>
+							<?php
+								if (CURRENT_USER_LEVEL == 0) {
+									$my_account_link = 'clients-edit.php';
+								}
+								else {
+									$my_account_link = 'users-edit.php';
+								}
+								$my_account_link .= '?id='.CURRENT_USER_ID;
+							?>
+							<a href="<?php echo BASE_URI.$my_account_link; ?>" class="my_account"><?php _e('My Account', 'cftp_admin'); ?></a>
+							<a href="<?php echo BASE_URI; ?>process.php?do=logout" ><?php _e('Logout', 'cftp_admin'); ?></a>
 						</div>
 					</div>
 				</div>
