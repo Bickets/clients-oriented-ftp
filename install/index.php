@@ -51,7 +51,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title><?php echo $page_title; ?> &raquo; <?php echo THIS_INSTALL_SET_TITLE; ?></title>
+	<title><?php echo $page_title_install; ?> &raquo; <?php echo SYSTEM_NAME; ?></title>
 	<link rel="shortcut icon" href="../favicon.ico" />
 	<link rel="stylesheet" media="all" type="text/css" href="../css/base.css" />
 	<link rel="stylesheet" media="all" type="text/css" href="../css/shared.css" />
@@ -84,6 +84,10 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 		</div>
 		<div id="login_header_low">
 		</div>
+
+		<?php
+			include('../includes/updates.messages.php');
+		?>
 	</header>
 	
 	<div id="main">
@@ -160,6 +164,9 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 								chmod($uploads_folder, 0755);
 								$uploads_folder = ROOT_DIR.'/upload/files';
 								chmod($uploads_folder, 0755);
+								
+								chmod_timthumb();
+								chmod_emails();
 	
 								$msg = __('Congratulations! Everything is up and running.','cftp_admin');
 								echo system_message('ok',$msg);

@@ -18,10 +18,13 @@ require_once(ROOT_DIR.'/includes/classes/database.php');
 require_once(ROOT_DIR.'/includes/site.options.php');
 
 /** Text strings used on various files */
-require(ROOT_DIR.'/includes/vars.php');
+require_once(ROOT_DIR.'/includes/vars.php');
 
 /** Basic functions to be accessed from anywhere */
 require_once(ROOT_DIR.'/includes/functions.php');
+
+/** Require the updates functions */
+require_once(ROOT_DIR.'/includes/updates.functions.php');
 
 /** Contains the session and cookies validation functions */
 require_once(ROOT_DIR.'/includes/userlevel_check.php');

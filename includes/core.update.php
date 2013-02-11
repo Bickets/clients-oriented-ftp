@@ -7,8 +7,8 @@
  * and rows will be created, and a message will appear under the menu
  * one time only.
  *
- * @package ProjectSend
- * @subpackage Core
+ * @package		ProjectSend
+ * @subpackage	Updates
  */
 
 $allowed_update = array(9,8,7);
@@ -18,6 +18,7 @@ if (in_session_or_cookies($allowed_update)) {
 	$current_version = substr(CURRENT_VERSION, 1);
 	$updates_made = 0;
 	$updates_errors = 0;
+	$updates_error_messages = array();
 
 	/**
 	 * r264 updates
@@ -433,32 +434,22 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
-
 		/**
 		 * r346 updates
 		 * chmod the cache folder and main files of timthumb to 775
 		 */
 		if ($last_update < 346) {
-			$chmods = 0;
-			$timthumb_file = ROOT_DIR.'/includes/timthumb/timthumb.php';
-			$cache_folder = ROOT_DIR.'/includes/timthumb/cache';
-			$index_file = ROOT_DIR.'/includes/timthumb/cache/index.html';
-			$touch_file = ROOT_DIR.'/includes/timthumb/cache/timthumb_cacheLastCleanTime.touch';
-			if (@chmod($timthumb_file, 0755)) { $chmods++; }
-			if (@chmod($cache_folder, 0755)) { $chmods++; }
-			if (@chmod($index_file, 0755)) { $chmods++; }
-			if (@chmod($touch_file, 0755)) { $chmods++; }
-
-			if ($chmods > 0) {
-				$updates_made++;
-			}
-			
-			/** This message is mandatory */
-			$updates_errors++;
-			if ($updates_errors > 0) {
-				$updates_error_str = __("If images thumbnails aren't working for you on your client's files lists (even your company logo there and on the branding page) please chmod the includes/timthumb/cache folder to 777 -try both in that order- and then do the same with the 'index.html' and 'timthumb_cacheLastCleanTime.touch' files inside that folder. Then try lowering each file to 644 and see if everything is still working.", 'cftp_admin');
-			}
+			chmod_timthumb();
 		}
+
+		/**
+		 * r348 updates
+		 * chmod the emails folder and files to 777
+		 */
+		if ($last_update < 348) {
+			chmod_emails();
+		}
+
 
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");
