@@ -143,10 +143,19 @@ if (in_session_or_cookies($core_update_allowed)) {
 				$('.button').click(function() {
 					$(this).blur();
 				});
+
+				$('#top_menu .icon').click(function() {
+					$('#top_menu ul').show();
+				});
 			});
 		</script>
 	
-		<nav id="top_menu">
+		<nav id="top_menu" class="nav">
+			<div class="icon">
+				<div class="nav_line"></div>
+				<div class="nav_line"></div>
+				<div class="nav_line"></div>
+			</div>
 			<ul>
 				<?php
 					/**
