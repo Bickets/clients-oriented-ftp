@@ -297,6 +297,18 @@ if (in_session_or_cookies($core_update_allowed)) {
 				</div>
 		<?php
 			}
+			
+			if(isset($updates_error_str) && $updates_error_str != '') {
+		?>
+				<div class="container-fluid">
+					<div class="row-fluid">
+						<div class="span12">
+							<?php echo system_message('error',$updates_error_str); ?>
+						</div>
+					</div>
+				</div>
+		<?php
+			}
 		?>
 	</header>
 

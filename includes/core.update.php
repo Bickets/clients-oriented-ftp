@@ -17,6 +17,7 @@ if (in_session_or_cookies($allowed_update)) {
 	/** Remove "r" from version */
 	$current_version = substr(CURRENT_VERSION, 1);
 	$updates_made = 0;
+	$updates_errors = 0;
 
 	/**
 	 * r264 updates
@@ -432,6 +433,27 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+
+		/**
+		 * r343 updates
+		 * chmod the cache folder and main files of timthumb to 775
+		 */
+		if ($last_update < 343) {
+			$chmods = 0;
+			$timthumb_file = ROOT_DIR.'/includes/timthumb/timthumb.php';
+			$cache_folder = ROOT_DIR.'/includes/timthumb/cache';
+			$index_file = ROOT_DIR.'/includes/timthumb/cache/index.html';
+			if (@chmod($timthumb_file, 0644)) { $chmods++; } else { $updates_errors++; }
+			if (@chmod($cache_folder, 0777)) { $chmods++; } else { $updates_errors++; }
+			if (@chmod($index_file, 0644)) { $chmods++; } else { $updates_errors++; }
+
+			if ($chmods > 0) {
+				$updates_made++;
+			}
+			if ($updates_errors > 0) {
+				$updates_error_str = __("It seems that timthumb or the cache folder permissions couldn't be set. If images aren't working for you on your client's files lists (even your company logo) please chmod the includes/timthumb/cache folder to 755 or 777 -try both in that order- and then do the same with the index.html and touch files inside that folder.", 'cftp_admin');
+			}
+		}
 
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");
