@@ -435,23 +435,28 @@ if (in_session_or_cookies($allowed_update)) {
 
 
 		/**
-		 * r343 updates
+		 * r346 updates
 		 * chmod the cache folder and main files of timthumb to 775
 		 */
-		if ($last_update < 343) {
+		if ($last_update < 346) {
 			$chmods = 0;
 			$timthumb_file = ROOT_DIR.'/includes/timthumb/timthumb.php';
 			$cache_folder = ROOT_DIR.'/includes/timthumb/cache';
 			$index_file = ROOT_DIR.'/includes/timthumb/cache/index.html';
-			if (@chmod($timthumb_file, 0644)) { $chmods++; } else { $updates_errors++; }
-			if (@chmod($cache_folder, 0777)) { $chmods++; } else { $updates_errors++; }
-			if (@chmod($index_file, 0644)) { $chmods++; } else { $updates_errors++; }
+			$touch_file = ROOT_DIR.'/includes/timthumb/cache/timthumb_cacheLastCleanTime.touch';
+			if (@chmod($timthumb_file, 0755)) { $chmods++; }
+			if (@chmod($cache_folder, 0755)) { $chmods++; }
+			if (@chmod($index_file, 0755)) { $chmods++; }
+			if (@chmod($touch_file, 0755)) { $chmods++; }
 
 			if ($chmods > 0) {
 				$updates_made++;
 			}
+			
+			/** This message is mandatory */
+			$updates_errors++;
 			if ($updates_errors > 0) {
-				$updates_error_str = __("It seems that timthumb or the cache folder permissions couldn't be set. If images aren't working for you on your client's files lists (even your company logo) please chmod the includes/timthumb/cache folder to 755 or 777 -try both in that order- and then do the same with the index.html and touch files inside that folder.", 'cftp_admin');
+				$updates_error_str = __("If images thumbnails aren't working for you on your client's files lists (even your company logo there and on the branding page) please chmod the includes/timthumb/cache folder to 777 -try both in that order- and then do the same with the 'index.html' and 'timthumb_cacheLastCleanTime.touch' files inside that folder. Then try lowering each file to 644 and see if everything is still working.", 'cftp_admin');
 			}
 		}
 
