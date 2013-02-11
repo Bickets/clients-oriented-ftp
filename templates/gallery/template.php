@@ -61,23 +61,23 @@ $count = count($img_files);
 ?>
 		<ul class="photo_list">
 			<?php
-				foreach ($img_files as $file) {
+				foreach ($img_files as $this_file) {
 					$download_link = BASE_URI.
 										'process.php?do=download
 										&amp;client='.$this_user.'
 										&amp;client_id='.$client_info['id'].'
-										&amp;url='.$file['url'].'
-										&amp;id='.$file['id'].'
-										&amp;origin='.$file['origin'];
+										&amp;url='.$this_file['url'].'
+										&amp;id='.$this_file['id'].'
+										&amp;origin='.$this_file['origin'];
 					if (!empty($file['group_id'])) {
-						$download_link .= '&amp;group_id='.$file['group_id'];
+						$download_link .= '&amp;group_id='.$this_file['group_id'];
 					}
 			?>
 					<li>
-						<h5><?php echo htmlentities($file['name']); ?></h5>
+						<h5><?php echo htmlentities($this_file['name']); ?></h5>
 						<div class="img_prev">
-							<a href="<?php echo BASE_URI; ?>process.php?do=download&amp;client=<?php echo $this_user; ?>&amp;file=<?php echo $row['url']; ?>" target="_blank">
-								<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $file['url']; ?>&amp;w=280&amp;h=215&amp;f=2&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="" />
+							<a href="<?php echo $download_link; ?>" target="_blank">
+								<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $this_file['url']; ?>&amp;w=280&amp;h=215&amp;f=2&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="" />
 							</a>
 						</div>
 						<div class="img_data">

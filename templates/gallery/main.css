@@ -53,6 +53,7 @@ body {
 	margin:0 8px 8px 0;
 	padding:10px;
 	border:1px solid #333333;
+	vertical-align:top;
 	-moz-border-radius:7px;
 	-webkit-border-radius:7px;
 	-o-border-radius:7px;
@@ -68,6 +69,7 @@ body {
 	font-weight:normal;
 	margin-bottom:10px;
 	font-family: 'Sirin Stencil', cursive;
+	word-wrap:break-word;
 }
 
 .img_prev {
