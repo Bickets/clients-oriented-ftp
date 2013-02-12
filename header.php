@@ -145,7 +145,12 @@ if (in_session_or_cookies($core_update_allowed)) {
 				});
 
 				$('#top_menu .icon').click(function() {
-					$('#top_menu ul').show();
+					if ($('#top_menu').hasClass('nav_active')) {
+						$('#top_menu').removeClass('nav_active');
+					}
+					else {
+						$('#top_menu').addClass('nav_active');
+					}
 				});
 			});
 		</script>
@@ -156,7 +161,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 				<div class="nav_line"></div>
 				<div class="nav_line"></div>
 			</div>
-			<ul>
+			<ul class="main_menu">
 				<?php
 					/**
 					 * Show the HOME menu item only to

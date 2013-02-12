@@ -934,6 +934,10 @@ div.pager input, div.pager select {
 
 
 @media screen and (max-width: 768px) {
+	#top_menu.nav_active ul.main_menu {
+		display:block;
+	}
+
 	nav {
 		position: relative;
 		min-height: 46px;
@@ -945,13 +949,13 @@ div.pager input, div.pager select {
 		top:10px;
 		left:20px;
 		padding:2px;
-		border:1px solid #444;
+		border:1px solid #777;
 		cursor:pointer;
 	}
 	
 	nav .icon .nav_line {
 		height:2px;
-		background:#f5f5f5;
+		background:#888;
 		margin:3px 0;
 		width:18px;
 		-webkit-border-radius: 2px;
@@ -959,8 +963,8 @@ div.pager input, div.pager select {
 		border-radius: 2px;
 	}
 
-	nav:hover ul {
-		display: block;
+	nav .nav_active .icon .nav_line {
+		background:#f5f5f5;
 	}
 
 	nav ul {
@@ -969,11 +973,16 @@ div.pager input, div.pager select {
 		left: 0;
 		background: #3c404b;
 		padding:5px 0;
-		margin:0 !important;
+		margin:0!important;
 		z-index:100000;
 		width:100%;
 		display:none;
 	}
+
+	nav ul.main_menu {
+		margin:35px 0 0!important;
+	}
+
 	nav li {
 		margin: 0;
 	}
@@ -991,18 +1000,15 @@ div.pager input, div.pager select {
 	}
 
 	nav ul li ul {
-		display:block;
+		display:block !important;
 		position:relative;
 	}
 
 	nav ul li ul li {
-		padding-left:2em;
+		padding-left:30px;
 	}
 
 	nav ul li ul a {
 		color:#ccc !important;
-	}
-
-	nav ul:hover li {
 	}
 }
