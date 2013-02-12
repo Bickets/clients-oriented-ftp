@@ -155,7 +155,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 			});
 		</script>
 	
-		<nav id="top_menu" class="nav">
+		<nav id="top_menu">
 			<div class="icon">
 				<div class="nav_line"></div>
 				<div class="nav_line"></div>

@@ -963,7 +963,7 @@ div.pager input, div.pager select {
 		border-radius: 2px;
 	}
 
-	nav .nav_active .icon .nav_line {
+	.nav_active .icon .nav_line {
 		background:#f5f5f5;
 	}
 
@@ -1010,5 +1010,28 @@ div.pager input, div.pager select {
 
 	nav ul li ul a {
 		color:#ccc !important;
+	}
+	
+	#header {
+		padding-top:10px !important;
+	}
+
+	#header h1 {
+		font-size:28px;
+	}
+	
+	#account {
+		text-align:left !important;
+	}
+	#account span {
+		display:block;
+		clear:both;
+		margin:10px 0 20px 0;
+	}
+	#account a {
+		padding:0;
+		background:none !important;
+		float:none !important;
+		margin:0 10px 0 0 !important;
 	}
 }
