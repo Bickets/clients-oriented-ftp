@@ -159,14 +159,27 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 					if (isset($query_state)) {
 						switch ($query_state) {
 							case 'ok':
-								/** Chmod the upload folder to 755 to avoid errors later */
-								$uploads_folder = ROOT_DIR.'/upload';
-								chmod($uploads_folder, 0755);
-								$uploads_folder = ROOT_DIR.'/upload/files';
-								chmod($uploads_folder, 0755);
+								/**
+								 * Create/Chmod the upload directories to 755 to avoid
+								 * errors later.
+								 */
+								$up_folders = array(
+														'main' => ROOT_DIR.'/upload',
+														'temp' => ROOT_DIR.'/upload/temp',
+														'files' => ROOT_DIR.'/upload/files'
+													);
+								foreach ($up_folders as $work_folder) {
+									if (!file_exists($work_folder)) {
+										mkdir($work_folder, 0755);
+									}
+									else {
+										chmod($work_folder, 0755);
+									}
+								}
 								
 								chmod_timthumb();
 								chmod_emails();
+								chmod_main_files();
 	
 								$msg = __('Congratulations! Everything is up and running.','cftp_admin');
 								echo system_message('ok',$msg);

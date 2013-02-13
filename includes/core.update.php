@@ -19,7 +19,7 @@ if (in_session_or_cookies($allowed_update)) {
 	$updates_made = 0;
 	$updates_errors = 0;
 	$updates_error_messages = array();
-
+	
 	/**
 	 * r264 updates
 	 * Save the value of the last update on the database, to prevent
@@ -439,7 +439,7 @@ if (in_session_or_cookies($allowed_update)) {
 		 * chmod the cache folder and main files of timthumb to 775
 		 */
 		if ($last_update < 346) {
-			chmod_timthumb();
+			update_chmod_timthumb();
 		}
 
 		/**
@@ -447,7 +447,15 @@ if (in_session_or_cookies($allowed_update)) {
 		 * chmod the emails folder and files to 777
 		 */
 		if ($last_update < 348) {
-			chmod_emails();
+			update_chmod_emails();
+		}
+
+		/**
+		 * r352 updates
+		 * chmod the main system files to 644
+		 */
+		if ($last_update < 352) {
+			chmod_main_files();
 		}
 
 
