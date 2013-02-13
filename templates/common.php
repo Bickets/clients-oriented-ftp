@@ -126,4 +126,7 @@ if (!empty($found_groups_files_ids)) {
 		}
 	}
 }
+
+/** Get the url for the logo from "Branding" */
+$logo_file_info = generate_logo_url();
 ?>

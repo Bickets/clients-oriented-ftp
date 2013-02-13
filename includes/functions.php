@@ -513,6 +513,25 @@ function generateRandomString($length = 10)
 
 
 /**
+ * Prepare the logo file using the database options
+ * for the file name and the thumbnails path value.
+ */
+function generate_logo_url()
+{
+	$logo_file = array();
+	$logo_file['exists'] = false;
+
+	$logo_file['url'] = '/img/custom/logo/'.LOGO_FILENAME;
+	if (file_exists(ROOT_DIR.$logo_file['url'])) {
+		$logo_file['exists'] = true;
+		if (THUMBS_USE_ABSOLUTE == '1') {
+			$logo_file['url'] = BASE_URI.$logo_file['url'];
+		}
+	}
+	return $logo_file;
+}
+
+/**
  * Renders an action recorded on the log.
  */
 function render_log_action($params)

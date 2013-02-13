@@ -39,9 +39,9 @@ $count = count($img_files);
 <body>
 
 <div id="header">
-	<?php if (file_exists(ROOT_DIR.'/img/custom/logo/'.LOGO_FILENAME)) { ?>
+	<?php if ($logo_file_info['exists'] === true) { ?>
 		<div id="current_logo">
-			<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=<?php echo LOGO_MAX_WIDTH; ?>" alt="" />
+			<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $logo_file_info['url']; ?>&amp;w=<?php echo LOGO_MAX_WIDTH; ?>" alt="<?php echo THIS_INSTALL_SET_TITLE; ?>" />
 		</div>
 	<?php } ?>
 
@@ -77,7 +77,13 @@ $count = count($img_files);
 						<h5><?php echo htmlentities($this_file['name']); ?></h5>
 						<div class="img_prev">
 							<a href="<?php echo $download_link; ?>" target="_blank">
-								<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo BASE_URI.UPLOADED_FILES_URL; echo $this_file['url']; ?>&amp;w=280&amp;h=215&amp;f=2&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="" />
+								<?php
+									$this_thumbnail_url = UPLOADED_FILES_URL.$this_file['url'];
+									if (THUMBS_USE_ABSOLUTE == '1') {
+										$this_thumbnail_url = BASE_URI.$this_thumbnail_url;
+									}
+								?>
+								<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $this_thumbnail_url; ?>&amp;w=280&amp;h=215&amp;f=2&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="<?php echo htmlentities($this_file['name']); ?>" />
 							</a>
 						</div>
 						<div class="img_data">

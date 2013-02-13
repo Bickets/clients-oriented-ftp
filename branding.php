@@ -15,6 +15,8 @@ $page_title = __('Branding','cftp_admin');
 include('header.php');
 
 $database->MySQLDB();
+
+$logo_file_info = generate_logo_url();
 ?>
 
 <div id="main">
@@ -58,6 +60,10 @@ if ($_POST) {
 			}
 			else {
 					$msg = __('The file could not be moved to the corresponding folder.','cftp_admin');
+					$msg .= __("This is a most likely a permissions issue. If that's the case, it can be solved by setting -via FTP- the chmod value of the",'cftp_admin');
+					$msg .= ' '.LOGO_FOLDER.' ';
+					$msg .= __('directory to 755, or 777 as a last resource.','cftp_admin');
+					$msg .= __("If this doesn't solve the issue, try giving the same values to the directories above that one until it works.",'cftp_admin');
 					echo system_message('error',$msg);
 			}
 		}
@@ -96,7 +102,13 @@ else {
 		</div>
 		<div id="current_logo_right">
 			<div id="current_logo_img">
-				<img src="<?php echo BASE_URI; ?>includes/timthumb/timthumb.php?src=<?php echo BASE_URI; ?>img/custom/logo/<?php echo LOGO_FILENAME; ?>&amp;w=220" alt="Logo Placeholder" />
+				<?php
+					if ($logo_file_info['exists'] === true) {
+				?>
+						<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $logo_file_info['url']; ?>&amp;w=220" alt="<?php _e('Logo Placeholder','cftp_admin'); ?>" />
+				<?php
+					}
+				?>
 			</div>
 		</div>
 	</div>

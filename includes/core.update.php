@@ -458,6 +458,30 @@ if (in_session_or_cookies($allowed_update)) {
 			chmod_main_files();
 		}
 
+		/**
+		 * r353 updates
+		 * Create a new option to let the user decide wheter to
+		 * use the relative or absolute file url when generating
+		 * thumbnails with timthumb.php
+		 */
+		if ($last_update < 353) {
+			$new_database_values = array(
+											'thumbnails_use_absolute' => '0'
+										);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");

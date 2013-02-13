@@ -238,11 +238,11 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									</li>
 									<li>
 										<label for="mail_smtp_user"><?php _e('Username','cftp_admin'); ?></label>
-										<input type="text" name="mail_smtp_user" id="mail_smtp_user" class="empty" value="<?php echo SMTP_USER; ?>" />
+										<input type="text" name="mail_smtp_user" id="mail_smtp_user" class="mail_data empty" value="<?php echo SMTP_USER; ?>" />
 									</li>					
 									<li>
 										<label for="mail_smtp_pass"><?php _e('Password','cftp_admin'); ?></label>
-										<input type="password" name="mail_smtp_pass" id="mail_smtp_pass" class="empty" value="<?php echo SMTP_PASS; ?>" />
+										<input type="password" name="mail_smtp_pass" id="mail_smtp_pass" class="mail_data empty" value="<?php echo SMTP_PASS; ?>" />
 									</li>					
 									<li class="options_divide"></li>
 
@@ -252,11 +252,11 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									</li>
 									<li>
 										<label for="mail_smtp_host"><?php _e('Host','cftp_admin'); ?></label>
-										<input type="text" name="mail_smtp_host" id="mail_smtp_host" class="empty" value="<?php echo SMTP_HOST; ?>" />
+										<input type="text" name="mail_smtp_host" id="mail_smtp_host" class="mail_data empty" value="<?php echo SMTP_HOST; ?>" />
 									</li>					
 									<li>
 										<label for="mail_smtp_port"><?php _e('Port','cftp_admin'); ?></label>
-										<input type="text" name="mail_smtp_port" id="mail_smtp_port" class="empty" value="<?php echo SMTP_PORT; ?>" />
+										<input type="text" name="mail_smtp_port" id="mail_smtp_port" class="mail_data empty" value="<?php echo SMTP_PORT; ?>" />
 									</li>					
 
 									<li class="options_divide"></li>
@@ -302,6 +302,17 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										</div>
 									</li>
 					
+									<li class="options_divide"></li>
+									<li>
+										<h3><?php _e("File's path", 'cftp_admin'); ?></h3>
+										<p><?php _e("If thumbnails are not showing (your company logo and file's preview on the branding page and client's files lists) try setting this option ON. It they still don't work, a folders permission issue might be the cause.",'cftp_admin'); ?></p>
+									</li>
+									<li>
+										<label for="thumbnails_use_absolute"><?php _e("Use file's absolute path",'cftp_admin'); ?></label>
+										<input type="hidden" value="0" name="thumbnails_use_absolute" class="thumbnails_use_absolute" <?php echo (THUMBS_USE_ABSOLUTE == 0) ? '' : 'checked="checked"'; ?> />
+										<input type="checkbox" value="1" name="thumbnails_use_absolute" class="thumbnails_use_absolute" <?php echo (THUMBS_USE_ABSOLUTE == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+
 									<li class="options_divide"></li>
 								</ul>
 							</div>
