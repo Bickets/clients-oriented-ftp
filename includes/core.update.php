@@ -482,6 +482,17 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+		/**
+		 * r354 updates
+		 * Import the files relations (up until r335 it was
+		 * only one-to-one with clients) into the new database
+		 * table. This should have been done before r335 release.
+		 * Sorry :(
+		 */
+		if ($last_update < 354) {
+			import_files_relations();
+		}
+
 
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");
@@ -495,5 +506,5 @@ if (in_session_or_cookies($allowed_update)) {
 							);
 		$new_record_action = $new_log_action->log_action_save($log_action_args);
 	}
-}
+}	
 ?>

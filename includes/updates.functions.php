@@ -96,4 +96,101 @@ function chmod_main_files() {
 		$updates_error_messages[] = __("A safe chmod value couldn't be set for one or more system files. Please make sure that at least includes/sys.config.php has a chmod of 644 for security reasons.", 'cftp_admin');
 	}
 }
+
+/** Called on r354 */
+function import_files_relations()
+{
+	global $database;
+	global $updates_made;
+	global $updates_errors;
+	global $updates_error_messages;
+
+	/**
+	 * Prepare the variables to be used on this update
+	 */
+	$files_to_import = array();
+	$get_clients_info = '';
+	$imported_ok = 0;
+	$imported_error = 0;
+	$unimported_files = array();
+	
+	/**
+	 * Get every file and it's important information from the 
+	 * tbl_files database table.
+	 */
+	$q = "SELECT id, filename, timestamp, client_user, hidden, download_count FROM tbl_files WHERE client_user != ''";
+	$sql = $database->query($q);
+	while ($row = mysql_fetch_array($sql)) {
+		$files_to_import[$row['id']] = array(
+								'file_id' => $row['id'],
+								'title' => $row['filename'],
+								'timestamp' => $row['timestamp'],
+								'client_id' => $row['client_user'],
+								'hidden' => $row['hidden'],
+								'download_count' => $row['download_count']
+							);
+		$get_clients_info .= "'".$row['client_user']."',";
+	}
+	
+	/**
+	 * Get the information of each client found on the
+	 * previous step.
+	 */
+	$get_clients_info = substr($get_clients_info, 0, -1);
+	$q2 = "SELECT id, user FROM tbl_users WHERE user IN ($get_clients_info)";
+	$sql2 = $database->query($q2);
+	while ($row = mysql_fetch_array($sql2)) {
+		$found_users[$row['user']] = $row['id'];
+	}
+	
+	/**
+	 * Create a new record on the tbl_files_relations table
+	 * using the information from the previous 2 queries, to
+	 * relate every file to existing users/clients.
+	 */
+	foreach ($files_to_import as $this_file) {
+		/**
+		 * Only continue if the client exists on the database
+		 */
+		if (array_key_exists($this_file['client_id'],$found_users)) {
+			$qn = "INSERT INTO tbl_files_relations
+						(timestamp, file_id, client_id, hidden, download_count)
+					VALUES
+						(
+							'".$this_file['timestamp']."',
+							'".$this_file['file_id']."',
+							'".$found_users[$this_file['client_id']]."',
+							'".$this_file['hidden']."',
+							'".$this_file['download_count']."'
+						)";
+			$sqln = $database->query($qn);
+			if ($sqln) {
+				$imported_ok++;
+			}
+			else {
+				$imported_error++;
+				$unimported_files[] = array(
+											'title' => $this_file['title'],
+											'client' => $found_users[$this_file['client_id']]
+										);
+			}
+		}
+	}
+	
+	/**
+	 * Did any of the files relations fail?
+	 */
+	if ($imported_error > 0) {
+		$updates_error_messages[100] = __("This version changes the way files-to-clients relations are stored on the database, making it possible to relate a file to several clients. However, when updating the system, the following files could not be imported:", 'cftp_admin');	
+		$updates_error_messages[100] .= '<ul>';
+			foreach ($unimported_files as $unimported) {
+				$updates_error_messages[100] .= '<li>File: <strong>'.$unimported['title'].'</strong> Assigned to: <strong>'.$unimported['client'].'</strong></li>';
+			}
+		$updates_error_messages[100] .= '</ul>';
+	}
+	
+	if ($imported_ok > 0) {
+		$updates_made++;
+	}
+}
 ?>
