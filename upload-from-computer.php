@@ -107,9 +107,10 @@ $database->MySQLDB();
 							});
 								
 							uploader.start();
+
 							$("#btn_submit").hide();
 							$(".message_uploading").fadeIn();
-	
+
 							uploader.bind('FileUploaded', function (up, file, info) {
 								var obj = JSON.parse(info.response);
 								var new_file_field = '<input type="hidden" name="finished_files[]" value="'+obj.NewFileName+'" />'

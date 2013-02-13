@@ -1,5 +1,4 @@
 <?php
-session_start();
 /**
  *  Call the required system files
  */
