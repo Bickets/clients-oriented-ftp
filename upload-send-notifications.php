@@ -2,6 +2,7 @@
 $get_file_info = array();
 $get_client_info = array();
 $notifications_sent = 0;
+$notifications_remove = array();
 
 /**
  * First, get the list of different files that have notifications to be sent.
@@ -16,6 +17,7 @@ while ($row = mysql_fetch_array($notifications_sql)) {
 		$get_client_info[] = $row['client_id'];
 	}
 	$found_notifications[] = array(
+									'id' => $row['id'],
 									'client_id' => $row['client_id'],
 									'file_id' => $row['file_id'],
 									'timestamp' => $row['timestamp'],
@@ -58,6 +60,7 @@ if (!empty($found_notifications)) {
 									'active' => $row['active']
 								);
 		$mail_by_user[$row['user']] = $row['email'];
+		$mail_by_name[$row['name']] = $row['email'];
 	}
 	
 	/**
@@ -67,28 +70,31 @@ if (!empty($found_notifications)) {
 	if (!empty($clients_data)) {
 		foreach ($clients_data as $client) {
 			$email_body = '';
-			if ($client['notify'] == '1' && $client['active'] == '1') {
-				/**
-				 * Only clients that are active will receive e-mails.
-				 */
-				foreach ($found_notifications as $notification) {
-					if ($notification['client_id'] == $client['id']) {
-						if ($notification['upload_type'] == '1') {
+			/**
+			 * Upload types values:
+			 * 0 - File was uploaded by a client	-> notify admin
+			 * 1 - File was uploaded by a user		-> notify client/s
+			 */
+			foreach ($found_notifications as $notification) {
+				if ($notification['client_id'] == $client['id']) {
+					if ($notification['upload_type'] == '0') {
+						/** Add the file to the account's creator email */
+						$use_id = $notification['file_id'];
+						$notes_to_admin[$client['created_by']][$client['name']][] = array(
+																		'notif_id' => $notification['id'],
+																		'file_name' => $file_data[$use_id]['filename'],
+																		'description' => make_excerpt($file_data[$use_id]['description'],200)
+																	);
+					}
+					elseif ($notification['upload_type'] == '1') {
+						if ($client['notify'] == '1' && $client['active'] == '1') {
 							/** If file is uploaded by user, add to client's email body */
 							$use_id = $notification['file_id'];
 							$notes_to_clients[$client['user']][] = array(
+																		'notif_id' => $notification['id'],
 																		'file_name' => $file_data[$use_id]['filename'],
-																		'description' => $file_data[$use_id]['description']
+																		'description' => make_excerpt($file_data[$use_id]['description'],200)
 																	);
-							//echo make_excerpt($file_data[$use_id]['description'],200)."<br /><br /><br />";
-						}
-						else {
-							/** Add the file to the account's creator email */
-							$use_id = $notification['file_id'];
-							$notes_to_admin[$client['created_by']][$client['name']][] = array(
-																			'file_name' => $file_data[$use_id]['filename'],
-																			'description' => $file_data[$use_id]['description']
-																		);
 						}
 					}
 				}
@@ -115,6 +121,7 @@ if (!empty($found_notifications)) {
 			$try_sending = $notify_client->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
 			if ($try_sending == 1) {
 				$notifications_sent++;
+				$notifications_remove[] = $mail_file['notif_id'];
 			}
 		}
 	}
@@ -124,6 +131,8 @@ if (!empty($found_notifications)) {
 		foreach ($notes_to_admin as $admin) {
 			$files_list = '';
 			foreach ($admin as $mail_username => $mail_files) {
+
+				$address = $mail_by_name[$mail_username];
 				$files_list.= '<li style="font-size:15px; font-weight:bold; margin-bottom:5px;">'.$mail_username.'</li>';
 				foreach ($mail_files as $mail_file) {
 					/** Make the list of files */
@@ -139,12 +148,13 @@ if (!empty($found_notifications)) {
 				$try_sending = $notify_admin->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
 				if ($try_sending == 1) {
 					$notifications_sent++;
+					$notifications_remove[] = $mail_file['notif_id'];
 				}
 			}
 		}
 	}
 	
-	if ($notifications_sent > 0) {
+	if ($notifications_sent > 100) {
 		/**
 		 * Remove the notifications from the database.
 		 */
