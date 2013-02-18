@@ -3,7 +3,7 @@
  * Show the form to edit an existing client.
  *
  * @package		ProjectSend
- @ @subpackage	Clients
+ * @subpackage	Clients
  *
  */
 $allowed_levels = array(9,8,0);

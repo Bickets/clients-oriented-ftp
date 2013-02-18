@@ -3,7 +3,7 @@
  * Search the database for unsent notifications and email them.
  *
  * @package		ProjectSend
- @ @subpackage	Upload
+ * @subpackage	Upload
  *
  */
 $get_file_info = array();

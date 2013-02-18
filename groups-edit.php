@@ -3,7 +3,7 @@
  * Show the form to edit an existing group.
  *
  * @package		ProjectSend
- @ @subpackage	Groups
+ * @subpackage	Groups
  *
  */
 $multiselect = 1;

@@ -3,7 +3,7 @@
  * Contains the form that is used when adding or editing groups.
  *
  * @package		ProjectSend
- @ @subpackage	Groups
+ * @subpackage	Groups
  *
  */
 ?>

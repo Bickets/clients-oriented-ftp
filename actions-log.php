@@ -3,7 +3,7 @@
  * Show the list of activities logged.
  *
  * @package		ProjectSend
- @ @subpackage	Log
+ * @subpackage	Log
  *
  */
 $tablesorter = 1;

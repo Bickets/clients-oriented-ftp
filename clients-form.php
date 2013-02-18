@@ -3,7 +3,7 @@
  * Contains the form that is used when adding or editing clients.
  *
  * @package		ProjectSend
- @ @subpackage	Clients
+ * @subpackage	Clients
  *
  */
 ?>

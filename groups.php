@@ -3,7 +3,7 @@
  * Show the list of current groups.
  *
  * @package		ProjectSend
- @ @subpackage	Groups
+ * @subpackage	Groups
  *
  */
 $tablesorter = 1;

@@ -3,7 +3,7 @@
  * Contains the form that is used when adding or editing users.
  *
  * @package		ProjectSend
- @ @subpackage	Users
+ * @subpackage	Users
  *
  */
 ?>

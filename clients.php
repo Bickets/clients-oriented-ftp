@@ -3,7 +3,7 @@
  * Show the list of current clients.
  *
  * @package		ProjectSend
- @ @subpackage	Clients
+ * @subpackage	Clients
  *
  */
 $tablesorter = 1;

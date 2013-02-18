@@ -3,7 +3,7 @@
  * Show the form to edit a system user.
  *
  * @package		ProjectSend
- @ @subpackage	Users
+ * @subpackage	Users
  *
  */
 $allowed_levels = array(9,8,7);

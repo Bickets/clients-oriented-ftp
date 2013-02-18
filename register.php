@@ -3,7 +3,7 @@
  * Show the form to register a new account for yourself.
  *
  * @package		ProjectSend
- @ @subpackage	Clients
+ * @subpackage	Clients
  *
  */
 $allowed_levels = array(9,8,7,0);

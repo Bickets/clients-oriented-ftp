@@ -3,7 +3,7 @@
  * Show the list of current users.
  *
  * @package		ProjectSend
- @ @subpackage	Users
+ * @subpackage	Users
  *
  */
 $tablesorter = 1;
