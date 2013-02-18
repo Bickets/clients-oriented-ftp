@@ -128,6 +128,8 @@ CREATE TABLE IF NOT EXISTS `tbl_notifications` (
   `file_id` int(11) NOT NULL,
   `client_id` int(11) NOT NULL,
   `upload_type` int(11) NOT NULL,
+  `sent_status` int(2) NOT NULL,
+  `times_failed` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 ';

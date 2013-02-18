@@ -494,6 +494,21 @@ if (in_session_or_cookies($allowed_update)) {
 		}
 
 
+		/**
+		 * r358 updates
+		 * New columns where added to the notifications table, to
+		 * store values about the state of it.
+		 * If the columns don't exist, create them.
+		 */
+		if ($last_update < 358) {
+			$q = $database->query("SELECT sent_status FROM tbl_notifications");
+			if (!$q) {
+				$sql1 = $database->query("ALTER TABLE tbl_notifications ADD sent_status INT(2) NOT NULL");
+				$sql2 = $database->query("ALTER TABLE tbl_notifications ADD times_failed INT(11) NOT NULL");
+				$updates_made++;
+			}
+		}
+
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");
 

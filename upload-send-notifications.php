@@ -1,21 +1,35 @@
 <?php
+/**
+ * Search the database for unsent notifications and email them.
+ *
+ * @package		ProjectSend
+ @ @subpackage	Upload
+ *
+ */
 $get_file_info = array();
 $get_client_info = array();
-$notifications_sent = 0;
-$notifications_remove = array();
+$notifications_sent = array();
+$notifications_inactive = array();
 
 /**
- * First, get the list of different files that have notifications to be sent.
+ * First, get the list of different files that have
+ * notifications to be sent. Requires that the amount
+ * of times that the system failed to send the email
+ * is lees than 3, and that the user/client was not
+ * inactive when first trying.
+ *
+ * The sent_status column stores an integer related to
+ * the status of the notification. Possible values:
+ * 0 - Notification is new and needs to be sent.
+ * 1 - E-mail sent OK.
+ * 2 - E-mail FAILED (times count stored on times_failed).
+ * 3 - Unsent, client or system user were inactive.
  */
-$notifications_query = "SELECT * FROM tbl_notifications";
+$notifications_query = "SELECT * FROM tbl_notifications WHERE sent_status = '0' AND times_failed = '0'";
 $notifications_sql = $database->query($notifications_query);
 while ($row = mysql_fetch_array($notifications_sql)) {
-	if (!in_array($row['file_id'], $get_file_info)) {
-		$get_file_info[] = $row['file_id'];
-	}
-	if (!in_array($row['client_id'], $get_client_info)) {
-		$get_client_info[] = $row['client_id'];
-	}
+	$get_file_info[] = $row['file_id'];
+	$get_client_info[] = $row['client_id'];
 	$found_notifications[] = array(
 									'id' => $row['id'],
 									'client_id' => $row['client_id'],
@@ -25,10 +39,12 @@ while ($row = mysql_fetch_array($notifications_sql)) {
 								);
 }
 
-$files_to_get = implode(',',$get_file_info);
-$clients_to_get = implode(',',$get_client_info);
+$files_to_get = implode(',',array_unique($get_file_info));
+$clients_to_get = implode(',',array_unique($get_client_info));
 
-
+/**
+ * Continue if there are notifications to be sent.
+ */
 if (!empty($found_notifications)) {
 	/**
 	 * Get the information of each file
@@ -46,6 +62,7 @@ if (!empty($found_notifications)) {
 	/**
 	 * Get the information of each client
 	 */
+	$creators = '';
 	$clients_query = "SELECT id, user, name, email, level, notify, created_by, active FROM tbl_users WHERE id IN ($clients_to_get)";
 	$clients_sql = $database->query($clients_query);
 	while ($row = mysql_fetch_array($clients_sql)) {
@@ -59,8 +76,25 @@ if (!empty($found_notifications)) {
 									'created_by' => $row['created_by'],
 									'active' => $row['active']
 								);
+		$creators .= "'".$row['created_by']."',";
 		$mail_by_user[$row['user']] = $row['email'];
-		$mail_by_name[$row['name']] = $row['email'];
+	}
+	
+	/**
+	 * Add the creatros of the previous clients to the mails array.
+	 */
+	$creators = substr($creators, 0, -1);
+	$creators_query = "SELECT id, name, user, email, active FROM tbl_users WHERE user IN ($creators)";
+	$creators_sql = $database->query($creators_query);
+	while ($row = mysql_fetch_array($creators_sql)) {
+		$creators_data[$row['user']] = array(
+									'id' => $row['id'],
+									'user' => $row['user'],
+									'name' => $row['name'],
+									'email' => $row['email'],
+									'active' => $row['active']
+								);
+		$mail_by_user[$row['user']] = $row['email'];
 	}
 	
 	/**
@@ -87,25 +121,31 @@ if (!empty($found_notifications)) {
 																	);
 					}
 					elseif ($notification['upload_type'] == '1') {
-						if ($client['notify'] == '1' && $client['active'] == '1') {
-							/** If file is uploaded by user, add to client's email body */
-							$use_id = $notification['file_id'];
-							$notes_to_clients[$client['user']][] = array(
-																		'notif_id' => $notification['id'],
-																		'file_name' => $file_data[$use_id]['filename'],
-																		'description' => make_excerpt($file_data[$use_id]['description'],200)
-																	);
+						if ($client['notify'] == '1') {
+							if ($client['active'] == '1') {
+								/** If file is uploaded by user, add to client's email body */
+								$use_id = $notification['file_id'];
+								$notes_to_clients[$client['user']][] = array(
+																			'notif_id' => $notification['id'],
+																			'file_name' => $file_data[$use_id]['filename'],
+																			'description' => make_excerpt($file_data[$use_id]['description'],200)
+																		);
+							}
+							else {
+								$notifications_inactive[] = $notification['id'];
+							}
 						}
 					}
 				}
 			}
 		}
 	}
-	
+
 	/** Prepare the emails for CLIENTS */
 	if (!empty($notes_to_clients)) {
 		foreach ($notes_to_clients as $mail_username => $mail_files) {
-			$address = $mail_by_user[$mail_username];
+
+			/** Reset the files list UL contents */
 			$files_list = '';
 			foreach ($mail_files as $mail_file) {
 				/** Make the list of files */
@@ -116,52 +156,111 @@ if (!empty($found_notifications)) {
 				}
 				$files_list.= '</li>';
 			}
+
+			$address = $mail_by_user[$mail_username];
 			/** Create the object and send the email */
 			$notify_client = new PSend_Email();
 			$try_sending = $notify_client->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
 			if ($try_sending == 1) {
-				$notifications_sent++;
-				$notifications_remove[] = $mail_file['notif_id'];
+				$notifications_sent[] = $mail_file['notif_id'];
+			}
+			else {
+				$notifications_failed[] =  $mail_file['notif_id'];
 			}
 		}
 	}
 	
 	/** Prepare the emails for ADMINS */
 	if (!empty($notes_to_admin)) {
-		foreach ($notes_to_admin as $admin) {
-			$files_list = '';
-			foreach ($admin as $mail_username => $mail_files) {
-
-				$address = $mail_by_name[$mail_username];
-				$files_list.= '<li style="font-size:15px; font-weight:bold; margin-bottom:5px;">'.$mail_username.'</li>';
-				foreach ($mail_files as $mail_file) {
-					/** Make the list of files */
-					$files_list.= '<li style="margin-bottom:11px;">';
-					$files_list.= '<p style="font-weight:bold; margin:0 0 5px 0;">'.$mail_file['file_name'].'</p>';
-					if (!empty($mail_file['description'])) {
-						$files_list.= '<p>'.$mail_file['description'].'</p>';
+		foreach ($notes_to_admin as $mail_username => $admin_files) {
+			
+			/** Check if the admin is active */
+			if ($creators_data[$mail_username]['active'] == '1') {
+				/** Reset the files list UL contents */
+				$files_list = '';
+				foreach ($admin_files as $mail_files) {
+	
+					$files_list.= '<li style="font-size:15px; font-weight:bold; margin-bottom:5px;">'.$mail_username.'</li>';
+					foreach ($mail_files as $mail_file) {
+						/** Make the list of files */
+						$files_list.= '<li style="margin-bottom:11px;">';
+						$files_list.= '<p style="font-weight:bold; margin:0 0 5px 0;">'.$mail_file['file_name'].'</p>';
+						if (!empty($mail_file['description'])) {
+							$files_list.= '<p>'.$mail_file['description'].'</p>';
+						}
+						$files_list.= '</li>';
 					}
-					$files_list.= '</li>';
+	
+					$address = $mail_by_user[$mail_username];
+					/** Create the object and send the email */
+					$notify_admin = new PSend_Email();
+					$try_sending = $notify_admin->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
+					if ($try_sending == 1) {
+						$notifications_sent[] = $mail_file['notif_id'];
+					}
+					else {
+						$notifications_failed[] =  $mail_file['notif_id'];
+					}
 				}
-				/** Create the object and send the email */
-				$notify_admin = new PSend_Email();
-				$try_sending = $notify_admin->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
-				if ($try_sending == 1) {
-					$notifications_sent++;
-					$notifications_remove[] = $mail_file['notif_id'];
+			}
+			else {
+				/** Admin is not active */
+				foreach ($admin_files as $mail_files) {
+					foreach ($mail_files as $mail_file) {
+						$notifications_inactive[] = $mail_file['notif_id'];
+					}
 				}
 			}
 		}
 	}
-	
-	if ($notifications_sent > 100) {
-		/**
-		 * Remove the notifications from the database.
-		 */
-		$notifications_del_query = "DELETE FROM tbl_notifications";
-		$notifications_del_sql = $database->query($notifications_del_query);
+
+
+	//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ CC al mail admin principal  */
+
+	/**
+	 * Mark the notifications as correctly sent.
+	 */
+	if (!empty($notifications_sent) && count($notifications_sent) > 0) {
+		$notifications_sent = implode(',',array_unique($notifications_sent));
+		$notifications_sent_query = "UPDATE tbl_notifications SET sent_status = '1' WHERE id IN ($notifications_sent)";
+		$notifications_sent_sql = $database->query($notifications_sent_query);
 		$msg = __('E-mail notifications have been sent.','cftp_admin');
 		echo system_message('ok',$msg);
+	}
+
+	/**
+	 * Mark the notifications as ERROR, and increment
+	 * the amount of times it failed by 1.
+	 */
+	if (!empty($notifications_failed) && count($notifications_failed) > 0) {
+		$notifications_failed = implode(',',array_unique($notifications_failed));
+		$notifications_errors_query = "UPDATE tbl_notifications SET sent_status = '2', times_failed = times_failed + 1 WHERE id IN ($notifications_failed)";
+		$notifications_errors_sql = $database->query($notifications_errors_query);
+		$msg = __("One or more notifications couldn't be sent.",'cftp_admin');
+		echo system_message('error',$msg);
+	}
+
+	/**
+	 * There are notifications that will not be sent because
+	 * the user for which the file is, or the admin who created
+	 * the client that just uploaded a file is marked as INACTIVE
+	 */
+	if (!empty($notifications_inactive) && count($notifications_inactive) > 0) {
+		$notifications_inactive = implode(',',array_unique($notifications_inactive));
+		$notifications_inactive_query = "UPDATE tbl_notifications SET sent_status = '3' WHERE id IN ($notifications_inactive)";
+		$notifications_inactive_sql = $database->query($notifications_inactive_query);
+		if (CURRENT_USER_LEVEL == 0) {
+			/**
+			 * Clients do not need to know about the status of the
+			 * creator's account. Show the ok message instead.
+			 */
+			$msg = __('E-mail notifications have been sent.','cftp_admin');
+			echo system_message('ok',$msg);
+		}
+		else {
+			$msg = __('E-mail notifications for inactive clients were not sent.','cftp_admin');
+			echo system_message('error',$msg);
+		}
 	}
 }
 ?>

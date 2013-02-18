@@ -237,7 +237,7 @@ class PSend_Upload_File
 				$this->members_to_notify = array();
 				
 				if ($this->add_to == 'group_id') {
-					$this->get_group_members_sql = "SELECT DISTINCT client_id from tbl_members WHERE group_id='$this->id_only'";
+					$this->get_group_members_sql = "SELECT DISTINCT client_id FROM tbl_members WHERE group_id='$this->id_only'";
 					$this->get_group_members = $database->query($this->get_group_members_sql);
 					while ($this->row = mysql_fetch_array($this->get_group_members)) {
 						$this->members_to_notify[] = $this->row['client_id'];
@@ -251,8 +251,8 @@ class PSend_Upload_File
 					foreach ($this->members_to_notify as $this->add_notify) {
 						$this->current_assignment = $this->file_id.'-'.$this->add_notify;
 						if (!in_array($this->current_assignment, $this->distinct_notifications)) {
-							$this->add_not_query = "INSERT INTO tbl_notifications (file_id, client_id, upload_type)
-												VALUES ('$this->file_id', '$this->add_notify', '$this->notif_uploader_type')";
+							$this->add_not_query = "INSERT INTO tbl_notifications (file_id, client_id, upload_type, sent_status, times_failed)
+												VALUES ('$this->file_id', '$this->add_notify', '$this->notif_uploader_type', '0', '0')";
 							$this->add_notification = $database->query($this->add_not_query);
 							$this->distinct_notifications[] = $this->current_assignment;
 						}
