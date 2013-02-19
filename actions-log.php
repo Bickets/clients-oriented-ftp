@@ -23,7 +23,7 @@ include('header.php');
 				5: { sorter: false }
 			}
 		})
-		.tablesorterPager({container: $("#pager"), size: 20})
+		.tablesorterPager({container: $("#pager"), size: 10})
 
 		$("#select_all").click(function(){
 			var status = $(this).prop("checked");
@@ -56,6 +56,18 @@ include('header.php');
 				} else {
 					return false;
 				}
+			}
+
+			if (action == 'download') {
+				$(document).psendmodal();
+				$('.modal_overlay').stop(true, true).fadeIn();
+				$('.modal_psend').stop(true, true).fadeIn();
+				$('.modal_content').html('<p class="loading-img">'+
+											'<img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" /></p>'+
+											'<p><?php _e('Please wait while your download is prepared.','cftp_admin'); ?></p>'
+										);
+				$('.modal_content').append('<iframe src="<?php echo BASE_URI; ?>/includes/actions.log.export.php?format=csv"></iframe>');
+				return false;
 			}
 		});
 
@@ -190,6 +202,7 @@ include('header.php');
 					<label><?php _e('Activities actions','cftp_admin'); ?>:</label>
 					<select name="log_actions" id="log_actions" class="txtfield">
 						<option value="none"><?php _e('Select action','cftp_admin'); ?></option>
+						<option value="download"><?php _e('Download as csv','cftp_admin'); ?></option>
 						<option value="delete"><?php _e('Delete selected','cftp_admin'); ?></option>
 						<option value="clear"><?php _e('Clear entire log','cftp_admin'); ?></option>
 					</select>
@@ -273,7 +286,7 @@ include('header.php');
 		</table>
 	</form>
 	
-	<?php if ($count > 20) { ?>
+	<?php if ($count > 10) { ?>
 		<div id="pager" class="pager">
 			<form>
 				<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
@@ -284,7 +297,8 @@ include('header.php');
 				<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
 				<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
 				<select class="pagesize">
-					<option selected="selected" value="20">20</option>
+					<option selected="selected" value="10">10</option>
+					<option value="20">20</option>
 					<option value="30">30</option>
 					<option value="40">40</option>
 				</select>
