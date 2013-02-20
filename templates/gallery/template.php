@@ -64,7 +64,7 @@ $count = count($img_files);
 				foreach ($img_files as $this_file) {
 					$download_link = BASE_URI.
 										'process.php?do=download
-										&amp;client='.$this_user.'
+										&amp;client='.CURRENT_USER_USERNAME.'
 										&amp;client_id='.$client_info['id'].'
 										&amp;url='.$this_file['url'].'
 										&amp;id='.$this_file['id'].'
