@@ -96,7 +96,7 @@ $count = count($my_files);
 								foreach ($my_files as $file) {
 									$download_link = BASE_URI.
 														'process.php?do=download
-														&amp;client='.$this_user.'
+														&amp;client='.CURRENT_USER_USERNAME.'
 														&amp;client_id='.$client_info['id'].'
 														&amp;url='.$file['url'].'
 														&amp;id='.$file['id'].'
@@ -234,9 +234,12 @@ $count = count($my_files);
 													'<p><?php _e('This operation could take a few minutes, depending on the size of the files.','cftp_admin'); ?></p>'
 												);
 
-						$.get('<?php echo BASE_URI; ?>process.php', { do:"zip_download", client:"<?php echo $this_user; ?>", files:checkboxes },
+						$.get('<?php echo BASE_URI; ?>process.php', { do:"zip_download", client:"<?php echo CURRENT_USER_USERNAME; ?>", files:checkboxes },
 							function(data) {
 								$('.modal_content').append("<iframe src='<?php echo BASE_URI; ?>process-zip-download.php?file="+data+"'></iframe>");
+								// Close the modal window
+								$('.modal_overlay').stop(true, true).fadeOut();
+								$('.modal_psend').stop(true, true).fadeOut();
 							}
 						);
 					}
