@@ -509,6 +509,33 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+
+		/**
+		 * r364 updates
+		 * Add new options to send copies of notifications emails
+		 * to the specified addresses.
+		 */
+		if ($last_update < 364) {
+			$new_database_values = array(
+											'mail_copy_user_upload' => '',
+											'mail_copy_client_upload' => '',
+											'mail_copy_main_user' => '',
+											'mail_copy_addresses' => ''
+										);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 		/** Update the database */
 		$database->query("UPDATE tbl_options SET value ='$current_version' WHERE name='last_update'");
 

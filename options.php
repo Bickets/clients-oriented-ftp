@@ -22,7 +22,7 @@ if ($_POST) {
 	 */
 	 
 	/** Temp fix, this should be done in a different way */
-	$allowed_empty_values = array('mail_smtp_host','mail_smtp_port','mail_smtp_user','mail_smtp_pass');
+	$allowed_empty_values = array('mail_copy_addresses','mail_smtp_host','mail_smtp_port','mail_smtp_user','mail_smtp_pass');
 	foreach ($allowed_empty_values as $check_field) {
 		if (empty($_POST[$check_field])) { $_POST[$check_field] = ''; }
 	}
@@ -213,6 +213,34 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									<li>
 										<label for="mail_from_name"><?php _e('Name','cftp_admin'); ?></label>
 										<input type="text" name="mail_from_name" id="mail_from_name" value="<?php echo MAIL_FROM_NAME; ?>" />
+									</li>					
+									<li class="options_divide"></li>
+
+									<li>
+										<h3><?php _e('Send copies','cftp_admin'); ?></h3>
+									</li>
+									<li>
+										<label for="mail_copy_user_upload"><?php _e('When a system user uploads files','cftp_admin'); ?></label>
+										<input type="hidden" value="0" name="mail_copy_user_upload" class="mail_copy_user_upload" <?php echo (COPY_MAIL_ON_USER_UPLOADS == 0) ? '' : 'checked="checked"'; ?> />
+										<input type="checkbox" value="1" name="mail_copy_user_upload" class="mail_copy_user_upload" <?php echo (COPY_MAIL_ON_USER_UPLOADS == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+									<li>
+										<label for="mail_copy_client_upload"><?php _e('When a client uploads files','cftp_admin'); ?></label>
+										<input type="hidden" value="0" name="mail_copy_client_upload" class="mail_copy_client_upload" <?php echo (COPY_MAIL_ON_CLIENT_UPLOADS == 0) ? '' : 'checked="checked"'; ?> />
+										<input type="checkbox" value="1" name="mail_copy_client_upload" class="mail_copy_client_upload" <?php echo (COPY_MAIL_ON_CLIENT_UPLOADS == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+									<li class="options_nested_note">
+										<p><?php _e('Define here who will receive copies of this emails. These are sent as BCC so neither recipient will see the other addresses.','cftp_admin'); ?></p>
+									</li>
+									<li>
+										<label for="mail_copy_main_user"><?php _e('Address supplied above (on "From")','cftp_admin'); ?></label>
+										<input type="hidden" value="0" name="mail_copy_main_user" class="mail_copy_main_user" <?php echo (COPY_MAIL_MAIN_USER == 0) ? '' : 'checked="checked"'; ?> />
+										<input type="checkbox" value="1" name="mail_copy_main_user" class="mail_copy_main_user" <?php echo (COPY_MAIL_MAIN_USER == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+									<li>
+										<label for="mail_copy_addresses"><?php _e('Also to this addresses','cftp_admin'); ?></label>
+										<input type="text" name="mail_copy_addresses" id="mail_copy_addresses" class="mail_data empty" value="<?php echo COPY_MAIL_ADDRESSES; ?>" />
+										<p class="field_note"><?php _e('Separate e-mail addresses with a comma.','cftp_admin'); ?></p>
 									</li>					
 									<li class="options_divide"></li>
 

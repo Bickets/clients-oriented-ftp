@@ -68,6 +68,15 @@ if(!empty($options_values)) {
 		define('SMTP_PASS',$options_values['mail_smtp_pass']);
 		define('MAIL_FROM_NAME',$options_values['mail_from_name']);
 	}
+	/**
+	 * For versions 364 and up
+	 */	
+	if (isset($options_values['mail_copy_user_upload'])) {
+		define('COPY_MAIL_ON_USER_UPLOADS',$options_values['mail_copy_user_upload']);
+		define('COPY_MAIL_ON_CLIENT_UPLOADS',$options_values['mail_copy_client_upload']);
+		define('COPY_MAIL_MAIN_USER',$options_values['mail_copy_main_user']);
+		define('COPY_MAIL_ADDRESSES',$options_values['mail_copy_addresses']);
+	}
 
 	/**
 	 * Set the default timezone based on the value of the Timezone select box

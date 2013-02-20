@@ -158,7 +158,11 @@ INSERT INTO `tbl_options` (`name`, `value`) VALUES
 (\'mail_smtp_port\', \'\'),
 (\'mail_smtp_user\', \'\'),
 (\'mail_smtp_pass\', \'\'),
-(\'mail_from_name\', \''.$this_install_title.'\')
+(\'mail_from_name\', \''.$this_install_title.'\'),
+(\'mail_copy_user_upload\', \'\'),
+(\'mail_copy_client_upload\', \'\'),
+(\'mail_copy_main_user\', \'\'),
+(\'mail_copy_addresses\', \'\')
 ';
 
 $q11 = '

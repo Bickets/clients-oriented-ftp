@@ -608,16 +608,32 @@ optgroup {
 .options_box label {
 	display:block;
 	float:left;
+	clear:left;
 	width:110px;
 	margin-right:20px;
 }
 
-.options_box input, .options_box select {
+.options_box input[type="text"],
+.options_box input[type="password"],
+.options_box select {
 	width:290px;
 }
 
 .options_box .form_fields p {
 	margin-bottom:20px;
+}
+
+.options_box .form_fields li {
+	clear:both;
+}
+
+.textboxlist li {
+	clear:none !important;
+}
+
+.options_box .form_fields li.options_nested_note {
+	margin:25px 0 0;
+	font-weight:bold;
 }
 
 .checkbox_options {
@@ -626,7 +642,8 @@ optgroup {
 
 .options_divide {
 	clear:both;
-	margin:35px 0;
+	overflow:hidden;
+	margin:25px 0;
 }
 
 .options_column {
@@ -635,7 +652,10 @@ optgroup {
 
 .options_column label { width:80px; margin-right:10px; }
 
-.options_column input, .options_column select { width:100px; }
+.options_column input[type="text"],
+.options_column select {
+	width:100px !important;
+}
 
 .options_col_left {
 	width:47%;

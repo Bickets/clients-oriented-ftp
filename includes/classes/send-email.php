@@ -248,12 +248,19 @@ class PSend_Email
 		
 		require_once(ROOT_DIR.'/includes/phpmailer/class.phpmailer.php');
 
+		$this->try_bcc = false;
 		switch($this->type) {
 			case 'new_files_for_client':
 				$this->mail_info = $this->email_new_files_for_client($this->files_list);
+				if (COPY_MAIL_ON_USER_UPLOADS == '1') {
+					$this->try_bcc = true;
+				}
 			break;
 			case 'new_file_by_client':
 				$this->mail_info = $this->email_new_files_by_client($this->files_list);
+				if (COPY_MAIL_ON_CLIENT_UPLOADS == '1') {
+					$this->try_bcc = true;
+				}
 			break;
 			case 'new_client':
 				$this->mail_info = $this->email_new_client($this->username,$this->password);
@@ -304,6 +311,39 @@ class PSend_Email
 
 		$this->send_mail->AddAddress($this->addresses);
 		
+		/**
+		 * Check if BCC is enabled and get the list of
+		 * addresses to add, based on the email type.
+		 */
+		if ($this->try_bcc === true) {
+			$this->add_bcc_to = array();
+			if (COPY_MAIL_MAIN_USER == '1') {
+				$this->add_bcc_to[] = ADMIN_EMAIL_ADDRESS;
+			}
+			$this->more_addresses = COPY_MAIL_ADDRESSES;
+			if (!empty($this->more_addresses)) {
+				$this->more_addresses = explode(',',$this->more_addresses);
+				foreach ($this->more_addresses as $this->add_bcc) {
+					$this->add_bcc_to[] = $this->add_bcc;
+				}
+			}
+			/**
+			 * Add the BCCs with the compiled array.
+			 * First, clean the array to make sure the admin
+			 * address is not written twice.
+			 */
+			if (!empty($this->add_bcc_to)) {
+				$this->add_bcc_to = array_unique($this->add_bcc_to);
+				foreach ($this->add_bcc_to as $this->set_bcc) {
+					$this->send_mail->AddBCC($this->set_bcc);
+				}
+			}
+			 
+		}
+		
+		/**
+		 * Finally, send the e-mail.
+		 */
 		if($this->send_mail->Send()) {
 			return 1;
 		}
