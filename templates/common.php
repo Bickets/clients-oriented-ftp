@@ -44,7 +44,7 @@ $database->MySQLDB();
 /**
  * Get all the client's information
  */
-$client_info = get_client_by_username(CURRENT_USER_USERNAME);
+$client_info = get_client_by_username($this_user);
 
 /**
  * Get the list of different groups the client belongs to.
