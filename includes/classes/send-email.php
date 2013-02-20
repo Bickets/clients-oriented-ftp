@@ -235,25 +235,34 @@ class PSend_Email
 	 * Returns custom values instead of a boolean value to allow more
 	 * codes in the future, on new validations and functions.
 	 */
-	function psend_send_email($type,$address,$username = '',$password = '',$client_id = '',$name = '',$files_list = '')
+	function psend_send_email($arguments)
 	{
+		/** Generate the values from the arguments */
+		$this->type = $arguments['type'];
+		$this->addresses = $arguments['address'];
+		$this->username = (!empty($arguments['username'])) ? $arguments['username'] : '';
+		$this->password = (!empty($arguments['password'])) ? $arguments['password'] : '';
+		$this->client_id = (!empty($arguments['client_id'])) ? $arguments['client_id'] : '';
+		$this->name = (!empty($arguments['name'])) ? $arguments['name'] : '';
+		$this->files_list = (!empty($arguments['files_list'])) ? $arguments['files_list'] : '';
+		
 		require_once(ROOT_DIR.'/includes/phpmailer/class.phpmailer.php');
 
-		switch($type) {
+		switch($this->type) {
 			case 'new_files_for_client':
-				$this->mail_info = $this->email_new_files_for_client($files_list);
+				$this->mail_info = $this->email_new_files_for_client($this->files_list);
 			break;
 			case 'new_file_by_client':
-				$this->mail_info = $this->email_new_files_by_client($files_list);
+				$this->mail_info = $this->email_new_files_by_client($this->files_list);
 			break;
 			case 'new_client':
-				$this->mail_info = $this->email_new_client($username,$password);
+				$this->mail_info = $this->email_new_client($this->username,$this->password);
 			break;
 			case 'new_client_self':
-				$this->mail_info = $this->email_new_client_self($username,$name);
+				$this->mail_info = $this->email_new_client_self($this->username,$this->name);
 			break;
 			case 'new_user':
-				$this->mail_info = $this->email_new_user($username,$password);
+				$this->mail_info = $this->email_new_user($this->username,$this->password);
 			break;
 		}
 		
@@ -293,7 +302,7 @@ class PSend_Email
 		$this->send_mail->SetFrom(ADMIN_EMAIL_ADDRESS, MAIL_FROM_NAME);
 		$this->send_mail->AddReplyTo(ADMIN_EMAIL_ADDRESS, MAIL_FROM_NAME);
 
-		$this->send_mail->AddAddress($address);
+		$this->send_mail->AddAddress($this->addresses);
 		
 		if($this->send_mail->Send()) {
 			return 1;

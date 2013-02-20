@@ -160,7 +160,12 @@ if (!empty($found_notifications)) {
 			$address = $mail_by_user[$mail_username];
 			/** Create the object and send the email */
 			$notify_client = new PSend_Email();
-			$try_sending = $notify_client->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
+			$email_arguments = array(
+										'type' => 'new_files_for_client',
+										'address' => $address,
+										'files_list' => $files_list
+									);
+			$try_sending = $notify_client->psend_send_email($email_arguments);
 			if ($try_sending == 1) {
 				$notifications_sent[] = $mail_file['notif_id'];
 			}
@@ -194,7 +199,12 @@ if (!empty($found_notifications)) {
 					$address = $mail_by_user[$mail_username];
 					/** Create the object and send the email */
 					$notify_admin = new PSend_Email();
-					$try_sending = $notify_admin->psend_send_email('new_files_for_client',$address,'','','','',$files_list);
+					$email_arguments = array(
+												'type' => 'new_file_by_client',
+												'address' => $address,
+												'files_list' => $files_list
+											);
+					$try_sending = $notify_admin->psend_send_email($email_arguments);
 					if ($try_sending == 1) {
 						$notifications_sent[] = $mail_file['notif_id'];
 					}

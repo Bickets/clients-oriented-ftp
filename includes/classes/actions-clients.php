@@ -127,7 +127,13 @@ class ClientActions
 
 			/** Send account data by email */
 			$this->notify_client = new PSend_Email();
-			$this->notify_send = $this->notify_client->psend_send_email('new_client',$this->email,$this->username,$this->password);
+			$this->email_arguments = array(
+											'type' => 'new_client',
+											'address' => $this->email,
+											'username' => $this->username,
+											'password' => $this->password
+										);
+			$this->notify_send = $this->notify_client->psend_send_email($this->email_arguments);
 
 			if ($this->notify_send == 1){
 				$this->state['email'] = 1;

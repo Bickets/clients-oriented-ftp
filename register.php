@@ -53,7 +53,13 @@ include('header-unlogged.php');
 		if ($new_validate == 1) {
 			$new_response = $new_client->create_client($new_arguments);
 			$notify_admin = new PSend_Email();
-			$notify_admin_status = $notify_admin->psend_send_email('new_client_self',ADMIN_EMAIL_ADDRESS,$add_client_data_user,'','',$add_client_data_name);
+			$email_arguments = array(
+											'type' => 'new_client_self',
+											'address' => ADMIN_EMAIL_ADDRESS,
+											'username' => $add_client_data_user,
+											'name' => $add_client_data_name
+										);
+			$notify_admin_status = $notify_admin->psend_send_email($email_arguments);
 		}
 	}
 	?>
