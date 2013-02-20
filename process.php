@@ -36,16 +36,11 @@ class process {
 		if (isset($_GET['url']) && isset($_GET['client'])) {
 			/** Do a permissions check for logged in user */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$current_level = get_current_user_level();
-				$sum_download = true;
-				
-				if (isset($_GET['n'])) {
-					if ($current_level != 0) {
-						$sum_download = false;
-					}
-				}
-
-				if ($sum_download == true) {
+				/**
+				 * If the file is being downloaded by a user, do not
+				 * add +1 to the download count
+				 */
+				if (CURRENT_USER_LEVEL == 0) {
 					$this->sum_sql = 'UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . $_GET['id'] .'"';
 					if ($_GET['origin'] == 'group') {
 						if (!empty($_GET['group_id'])) {
@@ -58,36 +53,34 @@ class process {
 					}
 	
 					$this->sql = $this->database->query($this->sum_sql);
-				
+
 					/**
 					 * The owner ID is generated here to prevent false results
 					 * from a modified GET url.
 					 */
-					if ($current_level == 0) {
-						$log_action = 8;
-						$log_action_owner_id = $_GET['client_id'];
-					}
-					else {
-						$log_action = 7;
-						$global_user = get_current_user_username();
-						$global_id = get_logged_account_id($global_user);
-						$log_action_owner_id = $global_id;
-					}
-	
-					/** Record the action log */
-					$new_log_action = new LogActions();
-					$log_action_args = array(
-											'action' => $log_action,
-											'owner_id' => $log_action_owner_id,
-											'affected_file' => $_GET['id'],
-											'affected_file_name' => $_GET['url'],
-											'affected_account' => $_GET['client_id'],
-											'affected_account_name' => $_GET['client'],
-											'get_user_real_name' => true,
-											'get_file_real_name' => true
-										);
-					$new_record_action = $new_log_action->log_action_save($log_action_args);
+					$log_action = 8;
+					$log_action_owner_id = $_GET['client_id'];
 				}
+				else {
+					$log_action = 7;
+					$global_user = get_current_user_username();
+					$global_id = get_logged_account_id($global_user);
+					$log_action_owner_id = $global_id;
+				}
+	
+				/** Record the action log */
+				$new_log_action = new LogActions();
+				$log_action_args = array(
+										'action' => $log_action,
+										'owner_id' => $log_action_owner_id,
+										'affected_file' => $_GET['id'],
+										'affected_file_name' => $_GET['url'],
+										'affected_account' => $_GET['client_id'],
+										'affected_account_name' => $_GET['client'],
+										'get_user_real_name' => true,
+										'get_file_real_name' => true
+									);
+				$new_record_action = $new_log_action->log_action_save($log_action_args);
 
 				$file = UPLOADED_FILES_FOLDER.$_GET['url'];
 				if (file_exists($file)) {
