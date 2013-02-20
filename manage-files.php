@@ -530,7 +530,7 @@ include('header.php');
 											}
 										?>
 									</td>
-									<td><?php $this_file = filesize($this_file_absolute); echo format_file_size($this_file); ?></td>
+									<td><?php $this_file_size = get_real_size($this_file_absolute); echo format_file_size($this_file_size); ?></td>
 									<?php
 										if($current_level != '0') {
 									?>

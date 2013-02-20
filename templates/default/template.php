@@ -114,7 +114,7 @@ $count = count($my_files);
 											</a>
 										</td>
 										<td class="description"><?php echo htmlentities($file['description']); ?></td>
-										<td><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file); ?></td>
+										<td><?php $this_file_size = get_real_size(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file_size); ?></td>
 										<td class="extra"><?php echo $date; ?></td>
 										<td class="extra">
 											<?php

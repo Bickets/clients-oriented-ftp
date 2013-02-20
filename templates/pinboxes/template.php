@@ -137,7 +137,7 @@ $count = count($my_files);
 								<div class="photo_info">
 									<?php echo $file['description']; ?>
 									<p class="file_size">
-										<?php _e('File size:','pinboxes_template'); ?> <strong><?php $this_file = filesize(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file); ?></strong>
+										<?php _e('File size:','pinboxes_template'); ?> <strong><?php $this_file_size = get_real_size(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file_size); ?></strong>
 									</p>
 								</div>
 								<div class="download_link">

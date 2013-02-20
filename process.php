@@ -91,18 +91,20 @@ class process {
 
 				$file = UPLOADED_FILES_FOLDER.$_GET['url'];
 				if (file_exists($file)) {
-					$content_length = filesize($file);
-					header('Content-Description: File Transfer');
+					ob_end_clean();
 					header('Content-Type: application/octet-stream');
 					header('Content-Disposition: attachment; filename='.basename($file));
-					//header('Content-Transfer-Encoding: binary');
 					header('Expires: 0');
 					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 					header('Pragma: public');
-					header('Content-Length: ' . $content_length);
-					ob_clean();
-					flush();
+					header('Cache-Control: private',false);
+					header('Content-Length: ' . get_real_size(UPLOADED_FILES_FOLDER.$_GET['url']));
+					header('Connection: close');
 					readfile($file);
+					exit;
+				}
+				else {
+					header("HTTP/1.1 404 Not Found");
 					exit;
 				}
 			}

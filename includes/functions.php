@@ -429,24 +429,63 @@ function get_current_url()
  * Receives the size of a file in bytes, and formats it for readability.
  * Used on files listings (templates and the files manager).
  */
-function format_file_size($size)
+function format_file_size($file)
 {
-	if ($size < 1024) {
-		$format_size = $size . " bytes";
+	if ($file < 1024) {
+		echo $file . ' Byte';
+	} elseif ($file < 1048576) {
+		echo round($file / 1024, 2) . ' KB';
+	} elseif ($file < 1073741824) {
+		echo round($file / 1048576, 2) . ' MB';
+	} elseif ($file < 1099511627776) {
+		echo round($file / 1073741824, 2) . ' GB';
+	} elseif ($file < 1125899906842624) {
+		echo round($file / 1099511627776, 2) . ' TB';
+	} elseif ($file < 1152921504606846976) {
+		echo round($file / 1125899906842624, 2) . ' PB';
+	} elseif ($file < 1180591620717411303424) {
+		echo round($file / 1152921504606846976, 2) . ' EB';
+	} elseif ($file < 1208925819614629174706176) {
+		echo round($file / 1180591620717411303424, 2) . ' ZB';
+	} else {
+		echo round($file / 1208925819614629174706176, 2) . ' YB';
 	}
-	else if ($size < 1024*1000) {
-		$divide_by = 1024;
-		$format_size = round(($size / $divide_by), 1) . " kB";
-	}
-	else if ($size < 1024*1000*1000) {
-		$divide_by = 1024*1000;
-		$format_size = round(($size / $divide_by), 1) . " MB";
-	}
+}
+
+
+/**
+ * Since filesize() was giving trouble with files larger
+ * than 2gb, I looked for a solution and found this great
+ * function by Alessandro Marinuzzi from www.alecos.it on
+ * http://stackoverflow.com/questions/5501451/php-x86-how-
+ * to-get-filesize-of-2gb-file-without-external-program
+ *
+ * I changed the name of the function and split it in 2,
+ * because I do not want to display it directly.
+ */
+function get_real_size($file)
+{
+	clearstatcache();
+    if (strtoupper(substr(PHP_OS, 0, 3)) == 'WIN') {
+		if (class_exists("COM")) {
+			$fsobj = new COM('Scripting.FileSystemObject');
+			$f = $fsobj->GetFile(realpath($file));
+			$file = $f->Size;
+		}
+		else {
+	        $file = trim(exec("for %F in (\"" . $file . "\") do @echo %~zF"));
+		}
+    }
+	elseif (PHP_OS == 'Darwin') {
+		$file = trim(shell_exec("stat -f %z " . escapeshellarg($file)));
+    }
+	elseif ((PHP_OS == 'Linux') || (PHP_OS == 'FreeBSD') || (PHP_OS == 'Unix') || (PHP_OS == 'SunOS')) {
+		$file = trim(shell_exec("stat -c%s " . escapeshellarg($file)));
+    }
 	else {
-		$divide_by = 1024*1000*1000;
-		$format_size = round(($size / $divide_by), 1) . " GB";
+		$file = filesize($file);
 	}
-	return $format_size;
+	return $file;
 }
 
 /**
