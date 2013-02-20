@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r364');
+define('CURRENT_VERSION', 'r365');
 
 /**
  * Turn off reporting of PHP errors, warnings and notices.
@@ -23,7 +23,7 @@ define('CURRENT_VERSION', 'r364');
  *
  * @link http://www.php.net/manual/en/function.error-reporting.php
  */
-//error_reporting(0);
+error_reporting(0);
 
 define('GLOBAL_TIME_LIMIT', 240*60);
 define('UPLOAD_TIME_LIMIT', 120*60);
@@ -55,7 +55,6 @@ else {
 /**
  * Define the tables names
  */
-define('TABLE_CLIENTS','tbl_clients');
 define('TABLE_FILES','tbl_files');
 define('TABLE_FILES_RELATIONS','tbl_files_relations');
 define('TABLE_NOTIFICATIONS','tbl_notifications');
@@ -96,6 +95,7 @@ define('UPLOADED_FILES_URL', '/upload/files/');
  * Also, this is the folder where files are searched for when
  * using the Import from FTP feature.
  *
+ * @ Deprecated
  */
 define('USER_UPLOADS_TEMP_FOLDER', ROOT_DIR.'/upload/temp');
 define('CLIENT_UPLOADS_TEMP_FOLDER', ROOT_DIR.'/upload/temp');

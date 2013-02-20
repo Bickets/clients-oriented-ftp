@@ -72,7 +72,7 @@ class PSend_Upload_File
 	
 	/**
 	 * Used to copy a file from the temporary folder (the default location where it's put
-	 * after uploading it) to the assigned client's personal folder.
+	 * after uploading it) to the final folder.
 	 * If succesful, the original file is then deleted.
 	 */
 	function upload_move($arguments)
