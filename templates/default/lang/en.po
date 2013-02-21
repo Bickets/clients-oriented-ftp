@@ -11,17 +11,17 @@ msgstr ""
 "X-Generator: Poedit 1.5.4\n"
 
 #. Text in echo
-#: templates/default/template.php:86
+#: templates/default/template.php:88
 msgid "Date"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:84
+#: templates/default/template.php:86
 msgid "Description"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:88 templates/default/template.php:134
+#: templates/default/template.php:90 templates/default/template.php:140
 msgid "Download"
 msgstr ""
 
@@ -31,51 +31,51 @@ msgid "File downloads"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:149
+#: templates/default/template.php:155
 msgid "First"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:87
+#: templates/default/template.php:89
 msgid "Image preview"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:154
+#: templates/default/template.php:160
 msgid "Last"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:153
+#: templates/default/template.php:159
 msgid "Next"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:151
+#: templates/default/template.php:157
 msgid "Page"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:150
+#: templates/default/template.php:156
 msgid "Prev."
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:155
+#: templates/default/template.php:161
 msgid "Show"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:85
+#: templates/default/template.php:87
 msgid "Size"
 msgstr ""
 
 #. Text in function
-#: templates/default/template.php:61
+#: templates/default/template.php:63
 msgid "There are no files available."
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:83
+#: templates/default/template.php:85
 msgid "Title"
 msgstr ""

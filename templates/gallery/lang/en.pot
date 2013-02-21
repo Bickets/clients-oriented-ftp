@@ -4,16 +4,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Text in echo
-#: templates/gallery/template.php:71
+#: templates/gallery/template.php:92
 msgid "Download original"
 msgstr ""
 
 #. Text in function
-#: templates/gallery/template.php:44
+#: templates/gallery/template.php:56
 msgid "Gallery"
 msgstr ""
 
 #. Text in echo
-#: templates/gallery/template.php:44
+#: templates/gallery/template.php:56
 msgid "There are no files."
 msgstr ""

@@ -9,142 +9,142 @@ msgid "\"From\" information"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "(client) downloaded the file"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "(client) edited the file"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "(client) uploaded the file"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "(user) downloaded the file"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "(user) edited the file"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "(user) uploaded the file"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:344
+#: manage-files.php:345
 msgid "0 times"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:345
+#: manage-files.php:346
 msgid "1 or more times"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:164
+#: actions-log.php:176
 msgid "A client account was activated"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:165
+#: actions-log.php:177
 msgid "A client account was deactivated"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:179
+#: actions-log.php:191
 msgid "A client edited a file."
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:149
+#: actions-log.php:161
 msgid "A client registers an account for himself"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:162
+#: actions-log.php:174
 msgid "A client was deleted"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:159
+#: actions-log.php:171
 msgid "A client was edited"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:157
+#: actions-log.php:169
 msgid "A file has been deleted"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:155
+#: actions-log.php:167
 msgid "A file has been unassigned from a client."
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:156
+#: actions-log.php:168
 msgid "A file has been unassigned from a group"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:171
+#: actions-log.php:183
 msgid "A file is assigned to a client"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:172
+#: actions-log.php:184
 msgid "A file is assigned to a group"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:153
+#: actions-log.php:165
 msgid "A file is downloaded by a client"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:152
+#: actions-log.php:164
 msgid "A file is downloaded by a user (on \"Client view\" mode)"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:151
+#: actions-log.php:163
 msgid "A file is uploaded by a client"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:150
+#: actions-log.php:162
 msgid "A file is uploaded by an user"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:168
+#: actions-log.php:180
 msgid "A file was marked as hidden"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:169
+#: actions-log.php:181
 msgid "A file was marked as visible"
 msgstr ""
 
 #. Text in function
-#: register.php:65
+#: register.php:71
 msgid "A folder for this account could not be created. Probably because of a server configuration."
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:163
+#: actions-log.php:175
 msgid "A group was deleted"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:160
+#: actions-log.php:172
 msgid "A group was edited"
 msgstr ""
 
@@ -168,8 +168,13 @@ msgstr ""
 msgid "A new client has registered."
 msgstr ""
 
+#. Text in function
+#: includes/updates.functions.php:1
+msgid "A safe chmod value couldn't be set for one or more system files. Please make sure that at least includes/sys.config.php has a chmod of 644 for security reasons."
+msgstr ""
+
 #. Text in echo
-#: actions-log.php:178
+#: actions-log.php:190
 msgid "A system user edited a file."
 msgstr ""
 
@@ -184,52 +189,52 @@ msgid "A system user or client with this login name already exists."
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:166
+#: actions-log.php:178
 msgid "A user account was activated"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:167
+#: actions-log.php:179
 msgid "A user account was deactivated"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:173
+#: actions-log.php:185
 msgid "A user account was marked as active"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:174
+#: actions-log.php:186
 msgid "A user account was marked as inactive"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:148
+#: actions-log.php:160
 msgid "A user creates a new client account"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:170
+#: actions-log.php:182
 msgid "A user creates a new group"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:147
+#: actions-log.php:159
 msgid "A user creates a new user account"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:161
+#: actions-log.php:173
 msgid "A user was deleted"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:158
+#: actions-log.php:170
 msgid "A user was edited"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:154
+#: actions-log.php:166
 msgid "A zip file was generated by a client"
 msgstr ""
 
@@ -244,12 +249,12 @@ msgid "Access the system panel here"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:146
+#: actions-log.php:158
 msgid "Account (user or client) logs out"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:177
+#: actions-log.php:189
 msgid "Account (user or client) logs out."
 msgstr ""
 
@@ -260,26 +265,26 @@ msgid "Account Manager"
 msgstr ""
 
 #. Text in function
-#: register.php:65
+#: register.php:71
 msgid "Account added correctly."
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:145
+#: actions-log.php:157
 msgid "Account logs in through cookies"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:144
+#: actions-log.php:156
 msgid "Account logs in through the form"
 msgstr ""
 
 #. Text in echo
-#: groups.php:261
-#: upload-process-form.php:322
+#: manage-files.php:461
 #: clients.php:247
 #: users.php:259
-#: manage-files.php:453
+#: groups.php:261
+#: upload-process-form.php:322
 msgid "Actions"
 msgstr ""
 
@@ -298,22 +303,22 @@ msgid "Active"
 msgstr ""
 
 #. Text in echo
-#: clients-form.php:128
+#: clients-form.php:136
 msgid "Active (client can log in)"
 msgstr ""
 
 #. Text in echo
-#: users-form.php:106
+#: users-form.php:118
 msgid "Active (user can log in)"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:190
+#: actions-log.php:202
 msgid "Activities actions"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:232
+#: actions-log.php:245
 msgid "Activity"
 msgstr ""
 
@@ -325,8 +330,8 @@ msgid "Add all"
 msgstr ""
 
 #. Text in function
-#: clients-add.php:133
 #: clients-form.php:58
+#: clients-add.php:133
 msgid "Add client"
 msgstr ""
 
@@ -336,9 +341,9 @@ msgid "Add clients group"
 msgstr ""
 
 #. Text in echo
-#: header.php:203
-#: header.php:220
-#: header.php:250
+#: header.php:207
+#: header.php:224
+#: header.php:254
 msgid "Add new"
 msgstr ""
 
@@ -353,26 +358,31 @@ msgid "Add user"
 msgstr ""
 
 #. Text in echo
-#: groups.php:260
 #: clients.php:243
 #: users.php:258
+#: groups.php:260
 msgid "Added on"
 msgstr ""
 
 #. Text in echo
+#: clients-form.php:121
 #: clients.php:244
-#: clients-form.php:113
 msgid "Address"
 msgstr ""
 
 #. Text in echo
-#: install/index.php:271
+#: options.php:236
+msgid "Address supplied above (on \"From\")"
+msgstr ""
+
+#. Text in echo
+#: install/index.php:287
 msgid "After installing the system, you can go to the options page to set your timezone, prefered date display format and thubmnails parameters, besides being able to change the site options provided here."
 msgstr ""
 
 #. Text in echo
+#: actions-log.php:154
 #: home.php:74
-#: actions-log.php:142
 msgid "All activities"
 msgstr ""
 
@@ -382,14 +392,14 @@ msgid "All roles"
 msgstr ""
 
 #. Text in echo
+#: manage-files.php:338
 #: clients.php:175
 #: users.php:202
-#: manage-files.php:337
 msgid "All statuses"
 msgstr ""
 
 #. Text in echo
-#: options.php:271
+#: options.php:299
 msgid "Allowed file extensions"
 msgstr ""
 
@@ -398,13 +408,18 @@ msgstr ""
 msgid "Already installed"
 msgstr ""
 
+#. Text in echo
+#: options.php:241
+msgid "Also to this addresses"
+msgstr ""
+
 #. Text in function
 #: users-add.php:73
 msgid "An e-mail notification with login information was sent to the new user."
 msgstr ""
 
 #. Text in function
-#: register.php:65
+#: register.php:71
 msgid "An e-mail notification with login information was sent to the specified address."
 msgstr ""
 
@@ -425,7 +440,7 @@ msgid "Assigned to this group"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:231
+#: actions-log.php:244
 msgid "Author"
 msgstr ""
 
@@ -442,23 +457,23 @@ msgid "Basic information to be shown around the site. The time format and zones 
 msgstr ""
 
 #. Text in echo
-#: install/index.php:227
+#: install/index.php:243
 msgid "Basic system options"
 msgstr ""
 
 #. Text in echo
-#: options.php:272
+#: options.php:300
 msgid "Be careful when changing this options. They could affect not only the system but the whole server it is installed on."
 msgstr ""
 
 #. Text in function
-#: branding.php:25
-#: header.php:268
+#: branding.php:27
+#: header.php:272
 msgid "Branding"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:194
+#: actions-log.php:207
 msgid "Clear entire log"
 msgstr ""
 
@@ -478,12 +493,12 @@ msgid "Client added correctly."
 msgstr ""
 
 #. Text in function
-#: clients-edit.php:115
+#: clients-edit.php:131
 msgid "Client edited correctly."
 msgstr ""
 
 #. Text in function
-#: register.php:65
+#: register.php:71
 msgid "Client self registration is not allowed. If you need an account, please contact a system administrator."
 msgstr ""
 
@@ -494,9 +509,9 @@ msgstr ""
 
 #. Text in echo
 #: edit-file.php:335
-#: home.php:156
 #: upload-process-form.php:478
-#: header.php:189
+#: home.php:156
+#: header.php:193
 msgid "Clients"
 msgstr ""
 
@@ -511,7 +526,7 @@ msgid "Clients can register themselves"
 msgstr ""
 
 #. Text in echo
-#: header.php:218
+#: header.php:222
 msgid "Clients groups"
 msgstr ""
 
@@ -543,7 +558,7 @@ msgid "Continue to log in"
 msgstr ""
 
 #. Text in echo
-#: includes/functions.php:283
+#: includes/functions.php:286
 msgid "Create a new one"
 msgstr ""
 
@@ -558,18 +573,18 @@ msgid "Created by"
 msgstr ""
 
 #. Text in echo
-#: branding.php:94
+#: branding.php:100
 msgid "Current logo"
 msgstr ""
 
 #. Text in echo
-#: header.php:169
+#: header.php:173
 msgid "Dashboard"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:230
-#: manage-files.php:432
+#: manage-files.php:433
+#: actions-log.php:243
 msgid "Date"
 msgstr ""
 
@@ -580,20 +595,25 @@ msgid "Deactivate"
 msgstr ""
 
 #. Text in echo
-#: install/index.php:242
+#: install/index.php:258
 msgid "Default system administrator options"
 msgstr ""
 
 #. Text in echo
-#: groups.php:210
+#: options.php:233
+msgid "Define here who will receive copies of this emails. These are sent as BCC so neither recipient will see the other addresses."
+msgstr ""
+
+#. Text in echo
+#: manage-files.php:377
 #: clients.php:192
 #: users.php:219
-#: manage-files.php:376
+#: groups.php:210
 msgid "Delete"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:193
+#: actions-log.php:206
 msgid "Delete selected"
 msgstr ""
 
@@ -612,13 +632,18 @@ msgid "Don't have an account yet?"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:342
-#: manage-files.php:444
+#: actions-log.php:205
+msgid "Download as csv"
+msgstr ""
+
+#. Text in echo
+#: manage-files.php:343
+#: manage-files.php:450
 msgid "Download count"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:42
+#: templates/default/template.php:44
 msgid "Download zipped"
 msgstr ""
 
@@ -628,23 +653,23 @@ msgid "Downloaders of file:"
 msgstr ""
 
 #. Text in echo
+#: home-statistics.php:166
 #: home.php:43
 #: home.php:76
-#: home-statistics.php:166
 msgid "Downloads"
 msgstr ""
 
 #. Text in echo
+#: clients-form.php:117
 #: clients.php:237
 #: users.php:255
-#: clients-form.php:109
-#: users-form.php:94
+#: users-form.php:103
 msgid "E-mail"
 msgstr ""
 
 #. Text in echo
+#: install/index.php:266
 #: options.php:210
-#: install/index.php:250
 msgid "E-mail address"
 msgstr ""
 
@@ -654,9 +679,9 @@ msgid "E-mail address is not valid"
 msgstr ""
 
 #. Text in function
-#: clients-add.php:81
+#: register.php:71
 #: users-add.php:73
-#: register.php:65
+#: clients-add.php:81
 msgid "E-mail notification couldn't be sent."
 msgstr ""
 
@@ -667,11 +692,16 @@ msgstr ""
 
 #. Text in function
 #: upload-send-notifications.php:1
+msgid "E-mail notifications for inactive clients were not sent."
+msgstr ""
+
+#. Text in function
+#: upload-send-notifications.php:1
 msgid "E-mail notifications have been sent."
 msgstr ""
 
 #. Text in echo
-#: options.php:220
+#: options.php:248
 msgid "E-mail sending options"
 msgstr ""
 
@@ -681,15 +711,15 @@ msgid "E-mail was not completed"
 msgstr ""
 
 #. Text in echo
-#: groups.php:302
+#: manage-files.php:574
 #: clients.php:314
 #: users.php:294
-#: manage-files.php:559
+#: groups.php:302
 msgid "Edit"
 msgstr ""
 
 #. Text in function
-#: clients-edit.php:171
+#: clients-edit.php:196
 msgid "Edit client"
 msgstr ""
 
@@ -706,7 +736,7 @@ msgid "Edit group"
 msgstr ""
 
 #. Text in function
-#: users-edit.php:160
+#: users-edit.php:204
 msgid "Edit system user"
 msgstr ""
 
@@ -717,7 +747,7 @@ msgid "Enter here the required file title."
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:433
+#: manage-files.php:434
 msgid "Ext."
 msgstr ""
 
@@ -737,9 +767,14 @@ msgid "File size"
 msgstr ""
 
 #. Text in echo
-#: home.php:155
+#: options.php:335
+msgid "File's path"
+msgstr ""
+
+#. Text in echo
 #: groups.php:258
-#: header.php:171
+#: home.php:155
+#: header.php:175
 msgid "Files"
 msgstr ""
 
@@ -769,25 +804,25 @@ msgid "Files: Own"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:181
+#: manage-files.php:348
 #: clients.php:179
 #: users.php:206
-#: manage-files.php:347
+#: actions-log.php:193
 msgid "Filter"
 msgstr ""
 
 #. Text in function
 #: upload-import-orphans.php:193
-#: header.php:175
+#: header.php:179
 msgid "Find orphan files"
 msgstr ""
 
 #. Text in echo
-#: groups.php:319
-#: actions-log.php:279
+#: manage-files.php:589
 #: clients.php:329
 #: users.php:311
-#: manage-files.php:574
+#: groups.php:319
+#: actions-log.php:292
 msgid "First"
 msgstr ""
 
@@ -802,15 +837,15 @@ msgid "For the full list of available values, visit"
 msgstr ""
 
 #. Text in echo
-#: includes/functions.php:265
+#: includes/functions.php:268
 msgid "Free software"
 msgstr ""
 
-#. Text in echo
+#. Text in function
+#: includes/classes/send-email.php:1
+#: install/index.php:262
 #: clients.php:235
 #: users.php:253
-#: includes/classes/send-email.php:1
-#: install/index.php:246
 msgid "Full name"
 msgstr ""
 
@@ -825,12 +860,12 @@ msgid "General Options"
 msgstr ""
 
 #. Text in echo
-#: header.php:267
+#: header.php:271
 msgid "General options"
 msgstr ""
 
 #. Text in echo
-#: register.php:143
+#: register.php:149
 msgid "Go back to the homepage."
 msgstr ""
 
@@ -852,8 +887,8 @@ msgstr ""
 
 #. Text in echo
 #: edit-file.php:350
-#: home.php:157
 #: upload-process-form.php:491
+#: home.php:157
 msgid "Groups"
 msgstr ""
 
@@ -873,19 +908,19 @@ msgid "Groups where"
 msgstr ""
 
 #. Text in echo
-#: options.php:221
+#: options.php:249
 msgid "Here you can select which mail system will be used when sending the notifications. If you have a valid e-mail account, SMTP is the recommended option."
 msgstr ""
 
-#. Text in function
+#. Text in echo
+#: manage-files.php:339
+#: manage-files.php:547
 #: upload-process-form.php:277
-#: manage-files.php:338
-#: manage-files.php:534
 msgid "Hidden"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:370
+#: manage-files.php:371
 msgid "Hide"
 msgstr ""
 
@@ -895,8 +930,23 @@ msgid "Hide from every already assigned clients and groups."
 msgstr ""
 
 #. Text in echo
-#: options.php:254
+#: options.php:282
 msgid "Host"
+msgstr ""
+
+#. Text in function
+#: includes/updates.functions.php:1
+msgid "If images thumbnails aren't showing on your client's files lists (even your company logo there and on the branding page) please chmod the includes/timthumb/cache folder to 777 and then do the same with the 'index.html' and 'timthumb_cacheLastCleanTime.touch' files inside that folder. Then try lowering each file to 644 and see if everything is still working."
+msgstr ""
+
+#. Text in function
+#: branding.php:27
+msgid "If this doesn't solve the issue, try giving the same values to the directories above that one until it works."
+msgstr ""
+
+#. Text in echo
+#: options.php:336
+msgid "If thumbnails are not showing (your company logo and file's preview on the branding page and client's files lists) try setting this option ON. It they still don't work, a folders permission issue might be the cause."
 msgstr ""
 
 #. Text in function
@@ -910,7 +960,7 @@ msgid "If you need an account, please contact a server administrator."
 msgstr ""
 
 #. Text in echo
-#: options.php:251
+#: options.php:279
 msgid "If you selected SMTP as your mailer, please complete these options."
 msgstr ""
 
@@ -920,8 +970,8 @@ msgid "If you want to reinstall, please delete the system tables from the databa
 msgstr ""
 
 #. Text in echo
+#: options.php:301
 #: upload-import-orphans.php:107
-#: options.php:273
 msgid "Important"
 msgstr ""
 
@@ -934,13 +984,13 @@ msgid "Inactive"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:343
+#: manage-files.php:344
 msgid "Indistinct"
 msgstr ""
 
 #. Text in function
-#: install/index.php:289
-#: install/index.php:266
+#: install/index.php:305
+#: install/index.php:282
 msgid "Install"
 msgstr ""
 
@@ -950,7 +1000,7 @@ msgid "Internal contact"
 msgstr ""
 
 #. Text in echo
-#: clients-form.php:124
+#: clients-form.php:132
 msgid "Internal contact name"
 msgstr ""
 
@@ -960,16 +1010,16 @@ msgid "It seems that ProjectSend is already installed here."
 msgstr ""
 
 #. Text in echo
-#: options.php:300
+#: options.php:328
 msgid "JPG Quality"
 msgstr ""
 
 #. Text in echo
-#: groups.php:324
-#: actions-log.php:284
+#: manage-files.php:594
 #: clients.php:334
 #: users.php:316
-#: manage-files.php:579
+#: groups.php:324
+#: actions-log.php:297
 msgid "Last"
 msgstr ""
 
@@ -979,7 +1029,7 @@ msgid "Last modified"
 msgstr ""
 
 #. Text in echo
-#: options.php:315
+#: options.php:354
 msgid "Like the thumbnails options, this ones have to be changed taking in account the client's template design, since it can be shown there. The default template uses a fixed width for the logo, however the Gallery one uses this settings to show the image on top."
 msgstr ""
 
@@ -989,11 +1039,11 @@ msgid "Log in"
 msgstr ""
 
 #. Text in echo
+#: install/index.php:270
+#: clients-form.php:105
 #: clients.php:236
 #: users.php:254
-#: clients-form.php:97
-#: install/index.php:254
-#: users-form.php:82
+#: users-form.php:91
 msgid "Log in username"
 msgstr ""
 
@@ -1003,37 +1053,42 @@ msgid "Logins"
 msgstr ""
 
 #. Text in echo
+#: branding.php:108
+msgid "Logo Placeholder"
+msgstr ""
+
+#. Text in echo
 #: templates/gallery/template.php:48
-#: header.php:144
+#: header.php:134
 msgid "Logout"
 msgstr ""
 
 #. Text in echo
-#: options.php:224
+#: options.php:252
 msgid "Mailer"
 msgstr ""
 
 #. Text in echo
-#: header.php:204
+#: header.php:208
 msgid "Manage clients"
 msgstr ""
 
-#. Text in echo
-#: groups.php:301
+#. Text in function
+#: manage-files.php:620
 #: clients.php:311
-#: header.php:174
-#: header.php:278
-#: manage-files.php:605
+#: groups.php:301
+#: header.php:178
+#: header.php:282
 msgid "Manage files"
 msgstr ""
 
 #. Text in echo
-#: header.php:221
+#: header.php:225
 msgid "Manage groups"
 msgstr ""
 
 #. Text in echo
-#: header.php:251
+#: header.php:255
 msgid "Manage system users"
 msgstr ""
 
@@ -1043,14 +1098,14 @@ msgid "Mark as hidden (will not send notifications) for new assigned clients and
 msgstr ""
 
 #. Text in echo
-#: options.php:296
-#: options.php:323
+#: options.php:324
+#: options.php:362
 msgid "Max height"
 msgstr ""
 
 #. Text in echo
-#: options.php:293
-#: options.php:319
+#: options.php:321
+#: options.php:358
 msgid "Max width"
 msgstr ""
 
@@ -1061,22 +1116,33 @@ msgid "Members"
 msgstr ""
 
 #. Text in echo
-#: clients-form.php:98
-#: users-form.php:83
+#: clients-form.php:106
+#: users-form.php:92
 msgid "Must be alphanumeric"
 msgstr ""
 
 #. Text in echo
-#: clients-form.php:110
-#: users-form.php:95
+#: clients-form.php:118
+#: users-form.php:104
 msgid "Must be valid and unique"
 msgstr ""
 
 #. Text in echo
-#: upload-process-form.php:253
+#: header.php:133
+msgid "My Account"
+msgstr ""
+
+#. Text in function
+#: users-edit.php:204
+#: clients-edit.php:196
+msgid "My account"
+msgstr ""
+
+#. Text in echo
+#: clients-form.php:101
 #: options.php:214
-#: clients-form.php:93
-#: users-form.php:78
+#: upload-process-form.php:253
+#: users-form.php:87
 msgid "Name"
 msgstr ""
 
@@ -1101,11 +1167,11 @@ msgid "New files uploaded for you"
 msgstr ""
 
 #. Text in echo
-#: groups.php:323
-#: actions-log.php:283
+#: manage-files.php:593
 #: clients.php:333
 #: users.php:315
-#: manage-files.php:578
+#: groups.php:323
+#: actions-log.php:296
 msgid "Next"
 msgstr ""
 
@@ -1120,7 +1186,7 @@ msgid "No client was selected"
 msgstr ""
 
 #. Text in function
-#: clients-edit.php:115
+#: clients-edit.php:131
 msgid "No client was selected."
 msgstr ""
 
@@ -1130,7 +1196,7 @@ msgid "No group was selected."
 msgstr ""
 
 #. Text in function
-#: users-edit.php:104
+#: users-edit.php:134
 msgid "No user was selected."
 msgstr ""
 
@@ -1150,8 +1216,13 @@ msgid "Notify"
 msgstr ""
 
 #. Text in echo
-#: clients-form.php:135
+#: clients-form.php:143
 msgid "Notify new uploads by e-mail"
+msgstr ""
+
+#. Text in function
+#: upload-send-notifications.php:1
+msgid "One or more notifications couldn't be sent."
 msgstr ""
 
 #. Text in echo
@@ -1161,7 +1232,7 @@ msgid "Optionally, enter here a description for the file."
 msgstr ""
 
 #. Text in echo
-#: header.php:265
+#: header.php:269
 msgid "Options"
 msgstr ""
 
@@ -1176,21 +1247,21 @@ msgid "Orphan files"
 msgstr ""
 
 #. Text in echo
-#: groups.php:321
-#: actions-log.php:281
+#: manage-files.php:591
 #: clients.php:331
 #: users.php:313
-#: manage-files.php:576
+#: groups.php:321
+#: actions-log.php:294
 msgid "Page"
 msgstr ""
 
-#. Text in function
+#. Text in echo
+#: install/index.php:274
+#: clients-form.php:109
 #: includes/vars.php:1
-#: options.php:244
+#: options.php:272
 #: index.php:140
-#: clients-form.php:101
-#: install/index.php:258
-#: users-form.php:86
+#: users-form.php:95
 msgid "Password"
 msgstr ""
 
@@ -1227,7 +1298,7 @@ msgid "Please complete the following information to finish the uploading procces
 msgstr ""
 
 #. Text in function
-#: register.php:65
+#: register.php:71
 msgid "Please contact a system administrator."
 msgstr ""
 
@@ -1247,7 +1318,7 @@ msgid "Please log in to activate it."
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:600
+#: manage-files.php:615
 msgid "Please note that downloading a file from here will not add to the download count."
 msgstr ""
 
@@ -1257,12 +1328,17 @@ msgid "Please note that the listed files will be renamed if they contain invalid
 msgstr ""
 
 #. Text in function
-#: register.php:65
+#: register.php:71
 msgid "Please remember that an administrator needs to approve your account before you can log in."
 msgstr ""
 
 #. Text in echo
-#: branding.php:82
+#: includes/updates.messages.php:22
+msgid "Please remember that this tool is free software. If you find the system useful"
+msgstr ""
+
+#. Text in echo
+#: branding.php:88
 msgid "Please select an image file to upload"
 msgstr ""
 
@@ -1272,7 +1348,7 @@ msgid "Please select at least one activity to proceed."
 msgstr ""
 
 #. Text in function
-#: actions-log.php:68
+#: actions-log.php:80
 msgid "Please select at least one activity."
 msgstr ""
 
@@ -1287,14 +1363,14 @@ msgid "Please select at least one client."
 msgstr ""
 
 #. Text in echo
-#: upload-import-orphans.php:163
-#: templates/default/template.php:209
 #: manage-files.php:62
+#: templates/default/template.php:215
+#: upload-import-orphans.php:163
 msgid "Please select at least one file to proceed."
 msgstr ""
 
 #. Text in function
-#: manage-files.php:605
+#: manage-files.php:620
 msgid "Please select at least one file."
 msgstr ""
 
@@ -1334,46 +1410,47 @@ msgid "Please wait while the system gets the required information."
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:227
+#: templates/default/template.php:233
+#: actions-log.php:67
 msgid "Please wait while your download is prepared."
 msgstr ""
 
 #. Text in echo
-#: options.php:258
+#: options.php:286
 msgid "Port"
 msgstr ""
 
 #. Text in echo
-#: groups.php:320
-#: actions-log.php:280
+#: manage-files.php:590
 #: clients.php:330
 #: users.php:312
-#: manage-files.php:575
+#: groups.php:320
+#: actions-log.php:293
 msgid "Prev."
 msgstr ""
 
 #. Text in echo
-#: groups.php:212
-#: actions-log.php:196
+#: manage-files.php:379
 #: clients.php:194
 #: users.php:221
-#: templates/default/template.php:44
-#: manage-files.php:378
+#: templates/default/template.php:46
+#: groups.php:212
+#: actions-log.php:209
 msgid "Proceed"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:143
+#: actions-log.php:155
 msgid "ProjecSend has been installed"
 msgstr ""
 
 #. Text in echo
-#: install/index.php:235
+#: install/index.php:251
 msgid "ProjectSend URI (address)"
 msgstr ""
 
 #. Text in function
-#: install/index.php:289
+#: install/index.php:305
 msgid "ProjectSend URI was not completed."
 msgstr ""
 
@@ -1383,17 +1460,17 @@ msgid "ProjectSend news"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "ProjectSend was installed"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:176
+#: actions-log.php:188
 msgid "ProjectSend was updated"
 msgstr ""
 
 #. Text in echo
-#: includes/functions.php:265
+#: includes/functions.php:268
 msgid "Provided by"
 msgstr ""
 
@@ -1403,7 +1480,7 @@ msgid "Recent activites"
 msgstr ""
 
 #. Text in function
-#: actions-log.php:68
+#: actions-log.php:80
 msgid "Recent activities log"
 msgstr ""
 
@@ -1418,7 +1495,7 @@ msgid "Register as a new client."
 msgstr ""
 
 #. Text in function
-#: register.php:153
+#: register.php:159
 msgid "Register new account"
 msgstr ""
 
@@ -1440,29 +1517,29 @@ msgid "Remove all"
 msgstr ""
 
 #. Text in echo
-#: install/index.php:262
+#: install/index.php:278
 msgid "Repeat"
 msgstr ""
 
 #. Text in echo
-#: clients-form.php:105
-#: users-form.php:90
+#: clients-form.php:113
+#: users-form.php:99
 msgid "Repeat password"
 msgstr ""
 
 #. Text in echo
 #: users.php:256
-#: users-form.php:98
+#: users-form.php:110
 msgid "Role"
 msgstr ""
 
 #. Text in echo
-#: options.php:236
+#: options.php:264
 msgid "SMTP & Gmail shared options"
 msgstr ""
 
 #. Text in echo
-#: options.php:250
+#: options.php:278
 msgid "SMTP options"
 msgstr ""
 
@@ -1482,12 +1559,12 @@ msgid "Save user"
 msgstr ""
 
 #. Text in echo
-#: groups.php:198
-#: actions-log.php:137
+#: manage-files.php:329
 #: clients.php:170
 #: users.php:190
-#: templates/default/template.php:31
-#: manage-files.php:328
+#: templates/default/template.php:33
+#: groups.php:198
+#: actions-log.php:149
 msgid "Search"
 msgstr ""
 
@@ -1498,12 +1575,12 @@ msgstr ""
 
 #. Text in echo
 #: groups.php:209
-#: actions-log.php:192
+#: actions-log.php:204
 msgid "Select action"
 msgstr ""
 
 #. Text in echo
-#: branding.php:109
+#: branding.php:121
 msgid "Select image to upload"
 msgstr ""
 
@@ -1519,8 +1596,8 @@ msgid "Selected clients actions"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:40
-#: manage-files.php:364
+#: manage-files.php:365
+#: templates/default/template.php:42
 msgid "Selected files actions"
 msgstr ""
 
@@ -1535,48 +1612,58 @@ msgid "Selected users actions"
 msgstr ""
 
 #. Text in echo
-#: options.php:273
+#: options.php:220
+msgid "Send copies"
+msgstr ""
+
+#. Text in echo
+#: options.php:301
 msgid "Separate allowed file types with a comma. You can navigate the box with the left/right arrows, backspace and delete keys."
 msgstr ""
 
 #. Text in echo
-#: groups.php:325
-#: actions-log.php:285
+#: options.php:243
+msgid "Separate e-mail addresses with a comma."
+msgstr ""
+
+#. Text in echo
+#: manage-files.php:372
+#: manage-files.php:595
 #: clients.php:335
 #: users.php:317
-#: manage-files.php:371
-#: manage-files.php:580
+#: groups.php:325
+#: actions-log.php:298
 msgid "Show"
 msgstr ""
 
 #. Text in echo
-#: groups.php:219
-#: actions-log.php:203
+#: manage-files.php:390
 #: clients.php:201
 #: users.php:228
-#: templates/default/template.php:52
-#: manage-files.php:389
+#: templates/default/template.php:54
+#: groups.php:219
+#: actions-log.php:216
 msgid "Showing"
 msgstr ""
 
 #. Text in echo
+#: install/index.php:247
 #: options.php:158
-#: install/index.php:231
 msgid "Site name"
 msgstr ""
 
 #. Text in function
-#: install/index.php:289
+#: install/index.php:305
 msgid "Sitename was not completed."
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:435
+#: manage-files.php:436
 msgid "Size"
 msgstr ""
 
 #. Text in echo
-#: options.php:314
+#: options.php:353
 msgid "Size settings"
 msgstr ""
 
@@ -1591,15 +1678,15 @@ msgid "Statistics"
 msgstr ""
 
 #. Text in echo
-#: upload-process-form.php:258
+#: manage-files.php:449
 #: clients.php:240
 #: users.php:257
-#: manage-files.php:443
+#: upload-process-form.php:258
 msgid "Status"
 msgstr ""
 
 #. Text in function
-#: header.php:300
+#: header.php:299
 msgid "System Administration"
 msgstr ""
 
@@ -1610,7 +1697,7 @@ msgid "System Administrator"
 msgstr ""
 
 #. Text in echo
-#: header.php:293
+#: includes/updates.messages.php:15
 msgid "System Notice:"
 msgstr ""
 
@@ -1620,7 +1707,7 @@ msgid "System URI"
 msgstr ""
 
 #. Text in echo
-#: header.php:236
+#: header.php:240
 msgid "System Users"
 msgstr ""
 
@@ -1635,13 +1722,13 @@ msgid "System location"
 msgstr ""
 
 #. Text in function
-#: options.php:348
+#: options.php:387
 msgid "System options"
 msgstr ""
 
 #. Text in echo
+#: clients-form.php:125
 #: clients.php:245
-#: clients-form.php:117
 msgid "Telephone"
 msgstr ""
 
@@ -1650,9 +1737,19 @@ msgstr ""
 msgid "Thank you for using ProjectSend."
 msgstr ""
 
+#. Text in echo
+#: includes/updates.messages.php:24
+msgid "Thank you!"
+msgstr ""
+
 #. Text in function
-#: register.php:65
+#: register.php:71
 msgid "The account could not be created. A folder with this name already exists."
+msgstr ""
+
+#. Text in function
+#: includes/updates.functions.php:1
+msgid "The chmod values of the emails folder and the html templates inside couldn't be set. If ProjectSend isn't sending notifications emails, please set them manually to 777."
 msgstr ""
 
 #. Text in function
@@ -1661,26 +1758,26 @@ msgid "The client does not exist."
 msgstr ""
 
 #. Text in echo
-#: header.php:293
+#: includes/updates.messages.php:15
 msgid "The database was updated to support this version of the software."
 msgstr ""
 
 #. Text in function
-#: branding.php:25
+#: branding.php:27
 msgid "The file could not be moved to the corresponding folder."
 msgstr ""
 
 #. Text in function
-#: branding.php:25
+#: branding.php:27
 msgid "The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture."
 msgstr ""
 
 #. Text in function
-#: groups.php:224
-#: actions-log.php:208
+#: manage-files.php:395
 #: clients.php:210
 #: users.php:233
-#: manage-files.php:394
+#: groups.php:224
+#: actions-log.php:221
 msgid "The filters you selected returned no results."
 msgstr ""
 
@@ -1695,27 +1792,27 @@ msgid "The following files are now available for you to download."
 msgstr ""
 
 #. Text in function
-#: branding.php:25
+#: branding.php:27
 msgid "The image was uploaded correctly."
 msgstr ""
 
 #. Text in function
-#: actions-log.php:68
+#: actions-log.php:80
 msgid "The log was cleared. Only data used for statistics remained. You can delete them manually if you want."
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:175
+#: actions-log.php:187
 msgid "The logo on \"Branding\" was changed"
 msgstr ""
 
 #. Text in echo
-#: branding.php:95
+#: branding.php:101
 msgid "The picture on the right is not an actual representation of what they will see. The size on this preview is fixed, but remember that you can change the display size and picture quality for your client's pages on the"
 msgstr ""
 
 #. Text in function
-#: actions-log.php:68
+#: actions-log.php:80
 msgid "The selected activities were deleted."
 msgstr ""
 
@@ -1735,22 +1832,22 @@ msgid "The selected clients were marked as inactive."
 msgstr ""
 
 #. Text in function
-#: manage-files.php:605
+#: manage-files.php:620
 msgid "The selected files were deleted."
 msgstr ""
 
 #. Text in function
-#: manage-files.php:605
+#: manage-files.php:620
 msgid "The selected files were marked as hidden."
 msgstr ""
 
 #. Text in function
-#: manage-files.php:605
+#: manage-files.php:620
 msgid "The selected files were marked as visible."
 msgstr ""
 
 #. Text in function
-#: manage-files.php:605
+#: manage-files.php:620
 msgid "The selected files were unassigned from this client."
 msgstr ""
 
@@ -1785,18 +1882,18 @@ msgid "The supplied username doesn't exist."
 msgstr ""
 
 #. Text in function
-#: actions-log.php:208
+#: actions-log.php:221
 msgid "There are no activities recorded."
 msgstr ""
 
 #. Text in function
 #: clients.php:210
-#: includes/functions.php:282
+#: includes/functions.php:285
 msgid "There are no clients at the moment"
 msgstr ""
 
 #. Text in function
-#: manage-files.php:394
+#: manage-files.php:395
 msgid "There are no files assigned to this client."
 msgstr ""
 
@@ -1806,7 +1903,7 @@ msgid "There are no files available to add right now."
 msgstr ""
 
 #. Text in function
-#: manage-files.php:394
+#: manage-files.php:395
 msgid "There are no files for this client."
 msgstr ""
 
@@ -1826,7 +1923,7 @@ msgid "There are no results"
 msgstr ""
 
 #. Text in function
-#: clients-edit.php:115
+#: clients-edit.php:131
 msgid "There is no client with that ID number."
 msgstr ""
 
@@ -1836,7 +1933,7 @@ msgid "There is no group with that ID number."
 msgstr ""
 
 #. Text in function
-#: users-edit.php:104
+#: users-edit.php:134
 msgid "There is no user with that ID number."
 msgstr ""
 
@@ -1846,24 +1943,24 @@ msgid "There is not file with that ID number."
 msgstr ""
 
 #. Text in function
-#: install/index.php:181
+#: install/index.php:197
 msgid "There seems to be an error. Please try again."
 msgstr ""
 
 #. Text in function
-#: branding.php:25
+#: branding.php:27
 msgid "There was an error uploading the file. Please try again."
 msgstr ""
 
 #. Text in function
-#: clients-add.php:81
-#: groups-edit.php:102
+#: users-edit.php:134
+#: register.php:71
+#: clients-edit.php:131
 #: users-add.php:73
 #: options.php:82
-#: users-edit.php:104
-#: clients-edit.php:115
+#: groups-edit.php:102
+#: clients-add.php:81
 #: groups-add.php:61
-#: register.php:65
 msgid "There was an error. Please try again."
 msgstr ""
 
@@ -1878,8 +1975,8 @@ msgid "These options are to be changed only if you are moving the system to anot
 msgstr ""
 
 #. Text in function
-#: clients-form.php:143
-#: users-form.php:114
+#: clients-form.php:151
+#: users-form.php:129
 msgid "This account information will be e-mailed to the address supplied above"
 msgstr ""
 
@@ -1899,8 +1996,13 @@ msgid "This graphic will help you get a relative view of the existing data, allo
 msgstr ""
 
 #. Text in echo
-#: install/index.php:243
+#: install/index.php:259
 msgid "This info will be used to create a default system user, which can't be deleted afterwards. Password should be between <strong>6 and 12 characters long</strong>."
+msgstr ""
+
+#. Text in function
+#: branding.php:27
+msgid "This is a most likely a permissions issue. If that's the case, it can be solved by setting -via FTP- the chmod value of the"
 msgstr ""
 
 #. Text in echo
@@ -1914,14 +2016,14 @@ msgid "This list only shows the files that are allowed according to your securit
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:228
+#: templates/default/template.php:234
 msgid "This operation could take a few minutes, depending on the size of the files."
 msgstr ""
 
 #. Text in function
+#: users-edit.php:134
+#: clients-edit.php:131
 #: groups-edit.php:102
-#: users-edit.php:104
-#: clients-edit.php:115
 msgid "This page is not intended to be accessed directly."
 msgstr ""
 
@@ -1930,14 +2032,19 @@ msgstr ""
 msgid "This server does not allow self registrations."
 msgstr ""
 
+#. Text in function
+#: includes/updates.functions.php:1
+msgid "This version changes the way files-to-clients relations are stored on the database, making it possible to relate a file to several clients. However, when updating the system, the following files could not be imported:"
+msgstr ""
+
 #. Text in echo
 #: options.php:134
-#: options.php:288
+#: options.php:316
 msgid "Thumbnails"
 msgstr ""
 
 #. Text in echo
-#: options.php:289
+#: options.php:317
 msgid "Thumbnails are used on files lists. It is recommended to keep them small, unless you are using the system to upload only images and change the default client's template accordingly."
 msgstr ""
 
@@ -1952,9 +2059,9 @@ msgid "Timezone"
 msgstr ""
 
 #. Text in echo
+#: manage-files.php:435
 #: edit-file.php:313
 #: upload-process-form.php:457
-#: manage-files.php:434
 msgid "Title"
 msgstr ""
 
@@ -1969,36 +2076,42 @@ msgid "To use this feature you need to upload your files via FTP to the folder"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:449
+#: manage-files.php:456
 msgid "Total downloads"
 msgstr ""
 
 #. Text in echo
-#: manage-files.php:372
+#: manage-files.php:373
 msgid "Unassign"
 msgstr ""
 
+#. Text in function
+#: clients-form.php:58
+#: users-form.php:59
+msgid "Update account"
+msgstr ""
+
 #. Text in echo
-#: options.php:335
+#: options.php:374
 msgid "Update all options"
 msgstr ""
 
 #. Text in echo
-#: branding.php:113
+#: branding.php:125
 msgid "Upload"
 msgstr ""
 
-#. Text in echo
+#. Text in function
+#: upload-from-computer.php:152
+#: upload-from-computer.php:138
 #: templates/gallery/template.php:49
 #: upload-process-form.php:644
-#: upload-from-computer.php:144
-#: upload-from-computer.php:130
 msgid "Upload files"
 msgstr ""
 
 #. Text in echo
-#: header.php:173
-#: header.php:277
+#: header.php:177
+#: header.php:281
 msgid "Upload from device"
 msgstr ""
 
@@ -2007,27 +2120,32 @@ msgstr ""
 msgid "Upload hidden (will not send notifications)"
 msgstr ""
 
-#. Text in function
+#. Text in echo
+#: manage-files.php:440
 #: sys.vars.php:1
 #: users.php:198
-#: manage-files.php:436
 msgid "Uploader"
 msgstr ""
 
 #. Text in echo
-#: home.php:42
 #: home-statistics.php:162
+#: home.php:42
 msgid "Uploads by clients"
 msgstr ""
 
 #. Text in echo
-#: home.php:41
 #: home-statistics.php:158
+#: home.php:41
 msgid "Uploads by users"
 msgstr ""
 
 #. Text in echo
-#: branding.php:90
+#: options.php:339
+msgid "Use file's absolute path"
+msgstr ""
+
+#. Text in echo
+#: branding.php:96
 msgid "Use this page to upload your company logo, or update your current uploaded one. This image will be shown to your clients when they access their file list."
 msgstr ""
 
@@ -2037,7 +2155,7 @@ msgid "User added correctly."
 msgstr ""
 
 #. Text in function
-#: users-edit.php:104
+#: users-edit.php:134
 msgid "User edited correctly."
 msgstr ""
 
@@ -2047,10 +2165,10 @@ msgid "User level was not specified"
 msgstr ""
 
 #. Text in function
-#: includes/vars.php:1
-#: options.php:240
-#: index.php:136
 #: includes/classes/send-email.php:1
+#: includes/vars.php:1
+#: options.php:268
+#: index.php:136
 msgid "Username"
 msgstr ""
 
@@ -2087,7 +2205,7 @@ msgstr ""
 
 #. Text in echo
 #: clients.php:204
-#: templates/default/template.php:55
+#: templates/default/template.php:57
 msgid "View full table"
 msgstr ""
 
@@ -2098,27 +2216,47 @@ msgstr ""
 
 #. Text in echo
 #: upload-process-form.php:344
-#: header.php:279
+#: header.php:283
 msgid "View my files"
 msgstr ""
 
 #. Text in echo
 #: clients.php:203
-#: templates/default/template.php:54
+#: templates/default/template.php:56
 msgid "View reduced table"
 msgstr ""
 
-#. Text in function
+#. Text in echo
+#: manage-files.php:340
+#: manage-files.php:547
 #: upload-process-form.php:277
-#: manage-files.php:339
-#: manage-files.php:534
 msgid "Visible"
 msgstr ""
 
+#. Text in echo
+#: includes/updates.messages.php:21
+msgid "Want to support ProjectSend?"
+msgstr ""
+
+#. Text in echo
+#: header.php:123
+msgid "Welcome"
+msgstr ""
+
 #. Text in function
-#: home.php:218
 #: includes/classes/send-email.php:1
+#: home.php:218
 msgid "Welcome to ProjectSend"
+msgstr ""
+
+#. Text in echo
+#: options.php:228
+msgid "When a client uploads files"
+msgstr ""
+
+#. Text in echo
+#: options.php:223
+msgid "When a system user uploads files"
 msgstr ""
 
 #. Text in function
@@ -2132,11 +2270,11 @@ msgid "Yes"
 msgstr ""
 
 #. Text in echo
-#: groups.php:71
-#: actions-log.php:43
+#: manage-files.php:68
 #: clients.php:51
 #: users.php:41
-#: manage-files.php:68
+#: groups.php:71
+#: actions-log.php:43
 msgid "You are about to delete"
 msgstr ""
 
@@ -2191,28 +2329,34 @@ msgid "You don't have the required permissions to view this information about th
 msgstr ""
 
 #. Text in function
-#: manage-files.php:394
+#: manage-files.php:395
 msgid "You have not uploaded any files for this account."
 msgstr ""
 
 #. Text in echo
-#: install/index.php:180
+#: install/index.php:196
 msgid "You may proceed to"
 msgstr ""
 
 #. Text in echo
-#: upload-from-computer.php:116
+#: upload-from-computer.php:122
 msgid "You must select at least one file to upload."
 msgstr ""
 
 #. Text in echo
-#: options.php:237
+#: options.php:265
 msgid "You need to include your username (usually your e-mail address) and password if you have selected either SMTP or Gmail as your mailer."
 msgstr ""
 
 #. Text in echo
-#: install/index.php:228
+#: install/index.php:244
 msgid "You need to provide this data for a correct system installation. The site name will be visible along the system panel, and the client's lists.<br />Don't forget to edit <em>/includes/sys.config.php</em> with your database settings before installing. If the file doesn't exist, you can create it by renanming the dummy file sys.config.sample.php."
+msgstr ""
+
+#. Text in function
+#: users-edit.php:134
+#: clients-edit.php:131
+msgid "Your account type doesn't allow you to access this feature."
 msgstr ""
 
 #. Text in function
@@ -2221,12 +2365,12 @@ msgid "Your account type doesn't allow you to view this page. Please contact a s
 msgstr ""
 
 #. Text in echo
-#: upload-from-computer.php:127
-msgid "Your browser doesn't have Flash, Silverlight, Google Gears, BrowserPlus or HTML5 support. Please update your browser or install Adobe Flash to continue."
+#: upload-from-computer.php:134
+msgid "Your browser doesn't have Flash, Silverlight, or HTML5 support. Please update your browser or install Adobe Flash to continue."
 msgstr ""
 
 #. Text in echo
-#: upload-from-computer.php:133
+#: upload-from-computer.php:141
 msgid "Your files are being uploaded! Progress indicators may take a while to update, but work is still being done behind the scenes."
 msgstr ""
 
@@ -2246,11 +2390,11 @@ msgid "Your password can only contain letters, numbers and the following charact
 msgstr ""
 
 #. Text in function
-#: groups.php:224
+#: manage-files.php:395
 #: clients.php:210
 #: users.php:233
-#: templates/default/template.php:61
-#: manage-files.php:394
+#: templates/default/template.php:63
+#: groups.php:224
 msgid "Your search keywords returned no results."
 msgstr ""
 
@@ -2260,23 +2404,23 @@ msgid "Your username"
 msgstr ""
 
 #. Text in echo
-#: home.php:44
 #: home-statistics.php:170
+#: home.php:44
 msgid "Zip Downloads"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "activated the client"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "activated the user"
 msgstr ""
 
 #. Text in echo
-#: actions-log.php:203
+#: actions-log.php:216
 msgid "activities"
 msgstr ""
 
@@ -2291,12 +2435,12 @@ msgid "and"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "assigned the file"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "assigned to:"
 msgstr ""
 
@@ -2321,22 +2465,22 @@ msgid "clients and all of the assigned files. Are you sure you want to continue?
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "created a client account for himself."
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "created the client account "
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "created the group"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "created the user account"
 msgstr ""
 
@@ -2348,58 +2492,63 @@ msgid "days"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "deactivated the client"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "deactivated the user"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "deleted the client"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "deleted the file"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "deleted the group"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "deleted the user"
 msgstr ""
 
+#. Text in function
+#: branding.php:27
+msgid "directory to 755, or 777 as a last resource."
+msgstr ""
+
 #. Text in echo
-#: manage-files.php:550
+#: manage-files.php:564
 msgid "downloads"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "edited the client"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "edited the group"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "edited the user"
 msgstr ""
 
 #. Text in echo
-#: templates/default/template.php:52
-#: manage-files.php:389
+#: manage-files.php:390
+#: templates/default/template.php:54
 msgid "files"
 msgstr ""
 
@@ -2414,27 +2563,27 @@ msgid "files permanently and for every client/group. Are you sure you want to co
 msgstr ""
 
 #. Text in function
-#: manage-files.php:605
+#: manage-files.php:620
 msgid "for client"
 msgstr ""
 
 #. Text in function
-#: manage-files.php:605
+#: manage-files.php:620
 msgid "for group"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "from the client:"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "from the group:"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "generated a zip file"
 msgstr ""
 
@@ -2459,42 +2608,47 @@ msgid "length should be between"
 msgstr ""
 
 #. Text in echo
-#: install/index.php:180
+#: install/index.php:196
 msgid "log in"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "logged in to the system."
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "logged out of the system."
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "marked as hidden the file"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "marked as visible the file"
 msgstr ""
 
 #. Text in echo
-#: branding.php:95
+#: branding.php:101
 msgid "options"
 msgstr ""
 
 #. Text in echo
-#: branding.php:95
+#: includes/updates.messages.php:23
+msgid "please consider making a donation to support further development."
+msgstr ""
+
+#. Text in echo
+#: branding.php:101
 msgid "section."
 msgstr ""
 
 #. Text in echo
-#: install/index.php:86
+#: install/index.php:82
 msgid "setup"
 msgstr ""
 
@@ -2505,42 +2659,42 @@ msgstr ""
 
 #. Text in echo
 #: manage-files.php:108
-#: manage-files.php:541
+#: manage-files.php:554
 msgid "times"
 msgstr ""
 
 #. Text in echo
-#: includes/functions.php:283
+#: includes/functions.php:286
 msgid "to be able to upload files for that account."
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "to the client:"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "to the group:"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "to:"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "unassigned the file"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "updated ProjectSend to version"
 msgstr ""
 
 #. Text in function
-#: includes/functions.php:285
+#: includes/functions.php:288
 msgid "uploaded a new logo on \"Branding\""
 msgstr ""
 
@@ -2555,11 +2709,11 @@ msgid "users. Are you sure you want to continue?"
 msgstr ""
 
 #. Text in echo
-#: includes/functions.php:265
+#: includes/functions.php:268
 msgid "version"
 msgstr ""
 
 #. Text in echo
-#: install/index.php:180
+#: install/index.php:196
 msgid "with your newely created username and password."
 msgstr ""

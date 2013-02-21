@@ -1,0 +1,81 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.5.5\n"
+
+#. Text in echo
+#: templates/default/template.php:86
+msgid "Date"
+msgstr "Fecha"
+
+#. Text in echo
+#: templates/default/template.php:84
+msgid "Description"
+msgstr "Descripción"
+
+#. Text in echo
+#: templates/default/template.php:88 templates/default/template.php:134
+msgid "Download"
+msgstr "Descargar"
+
+#. Text in function
+#: templates/default/template.php:1
+msgid "File downloads"
+msgstr "Descargas de archivo"
+
+#. Text in echo
+#: templates/default/template.php:149
+msgid "First"
+msgstr "Primero"
+
+#. Text in echo
+#: templates/default/template.php:87
+msgid "Image preview"
+msgstr "Imagen vista previa"
+
+#. Text in echo
+#: templates/default/template.php:154
+msgid "Last"
+msgstr "Ultimo"
+
+#. Text in echo
+#: templates/default/template.php:153
+msgid "Next"
+msgstr "Siguiente"
+
+#. Text in echo
+#: templates/default/template.php:151
+msgid "Page"
+msgstr "Página"
+
+#. Text in echo
+#: templates/default/template.php:150
+msgid "Prev."
+msgstr "Previo"
+
+#. Text in echo
+#: templates/default/template.php:155
+msgid "Show"
+msgstr "Mostrar"
+
+#. Text in echo
+#: templates/default/template.php:85
+msgid "Size"
+msgstr "Tamaño"
+
+#. Text in function
+#: templates/default/template.php:61
+msgid "There are no files available."
+msgstr "No hay archivos disponibles."
+
+#. Text in echo
+#: templates/default/template.php:83
+msgid "Title"
+msgstr "Título"

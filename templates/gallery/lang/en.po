@@ -8,19 +8,19 @@ msgstr ""
 "Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #. Text in echo
-#: templates/gallery/template.php:71
+#: templates/gallery/template.php:92
 msgid "Download original"
 msgstr ""
 
 #. Text in function
-#: templates/gallery/template.php:44
+#: templates/gallery/template.php:56
 msgid "Gallery"
 msgstr ""
 
 #. Text in echo
-#: templates/gallery/template.php:44
+#: templates/gallery/template.php:56
 msgid "There are no files."
 msgstr ""
-
