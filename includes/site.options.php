@@ -88,6 +88,8 @@ if(!empty($options_values)) {
 /**
  * Timthumb
  */
-define('TIMTHUMB_URL',BASE_URI.'includes/timthumb/timthumb.php');
-define('TIMTHUMB_ABS',ROOT_DIR.'/includes/timthumb/timthumb.php');
+if (defined(BASE_URI)) {
+	define('TIMTHUMB_URL',BASE_URI.'includes/timthumb/timthumb.php');
+	define('TIMTHUMB_ABS',ROOT_DIR.'/includes/timthumb/timthumb.php');
+}
 ?>
