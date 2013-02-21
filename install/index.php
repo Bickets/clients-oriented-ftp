@@ -53,8 +53,6 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title><?php echo $page_title_install; ?> &raquo; <?php echo SYSTEM_NAME; ?></title>
 	<link rel="shortcut icon" href="../favicon.ico" />
-	<link rel="stylesheet" media="all" type="text/css" href="../css/base.css" />
-	<link rel="stylesheet" media="all" type="text/css" href="../css/shared.css" />
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 
 	<link rel="stylesheet" media="all" type="text/css" href="../css/bootstrap.min.css" />
@@ -62,6 +60,9 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 	<script type="text/javascript" src="../includes/js/bootstrap/bootstrap.min.js"></script>
 	<script type="text/javascript" src="../includes/js/bootstrap/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 	
+	<link rel="stylesheet" media="all" type="text/css" href="../css/base.css" />
+	<link rel="stylesheet" media="all" type="text/css" href="../css/shared.css" />
+
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
 
@@ -92,7 +93,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 	
 	<div id="main">
 	
-		<div class="options_box whitebox" id="install_form">
+		<div class="whitebox whiteform" id="install_form">
 
 			<?php
 			if (is_projectsend_installed()) {
@@ -245,11 +246,11 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 								</li>
 								<li>
 									<label for="this_install_title"><?php _e('Site name','cftp_admin'); ?></label>
-									<input name="this_install_title" id="this_install_title" class="required" value="<?php echo (isset($this_install_title) ? $this_install_title : ''); ?>" />
+									<input type="text" name="this_install_title" id="this_install_title" class="required" value="<?php echo (isset($this_install_title) ? $this_install_title : ''); ?>" />
 								</li>
 								<li>
 									<label for="base_uri"><?php _e('ProjectSend URI (address)','cftp_admin'); ?></label>
-									<input name="base_uri" id="base_uri" class="required" value="<?php echo (isset($base_uri) ? $base_uri : get_current_url()); ?>" />
+									<input type="text" name="base_uri" id="base_uri" class="required" value="<?php echo (isset($base_uri) ? $base_uri : get_current_url()); ?>" />
 								</li>
 				
 								<li class="options_divide"></li>
@@ -260,15 +261,15 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 								</li>
 								<li>
 									<label for="install_user_fullname"><?php _e('Full name','cftp_admin'); ?></label>
-									<input name="install_user_fullname" id="install_user_fullname" class="required" value="<?php echo (isset($got_admin_name) ? $got_admin_name : ''); ?>" />
+									<input type="text" name="install_user_fullname" id="install_user_fullname" class="required" value="<?php echo (isset($got_admin_name) ? $got_admin_name : ''); ?>" />
 								</li>
 								<li>
 									<label for="install_user_mail"><?php _e('E-mail address','cftp_admin'); ?></label>
-									<input name="install_user_mail" id="install_user_mail" class="required" value="<?php echo (isset($got_admin_email) ? $got_admin_email : ''); ?>" />
+									<input type="text" name="install_user_mail" id="install_user_mail" class="required" value="<?php echo (isset($got_admin_email) ? $got_admin_email : ''); ?>" />
 								</li>
 								<li>
 									<label for="install_user_username"><?php _e('Log in username','cftp_admin'); ?></label>
-									<input name="install_user_username" id="install_user_username" class="required" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($got_admin_username) ? $got_admin_username : ''); ?>" />
+									<input type="text" name="install_user_username" id="install_user_username" class="required" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($got_admin_username) ? $got_admin_username : ''); ?>" />
 								</li>
 								<li>
 									<label for="install_user_pass"><?php _e('Password','cftp_admin'); ?></label>
