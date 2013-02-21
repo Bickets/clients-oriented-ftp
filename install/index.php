@@ -14,11 +14,13 @@ $database->MySQLDB();
  */
 function try_query($query)
 {
+	global $database;
+
 	if (empty($error_str)) {
 		global $error_str;
 	}
 	foreach ($query as $i => $value) {
-		$result = mysql_query($query[$i]);
+		$result = $database->query($query[$i]);
 		if (mysql_error()) {
 			$error_str .= mysql_error().'<br />';
 		}
@@ -41,7 +43,6 @@ if($_POST) {
 $page_title_install = __('Install','cftp_admin');
 $install_no_sitename = __('Sitename was not completed.','cftp_admin');
 $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
-
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -178,8 +179,8 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 									}
 								}
 								
-								chmod_timthumb();
-								chmod_emails();
+								update_chmod_timthumb();
+								update_chmod_emails();
 								chmod_main_files();
 	
 								$msg = __('Congratulations! Everything is up and running.','cftp_admin');
