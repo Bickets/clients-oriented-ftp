@@ -207,21 +207,23 @@ function get_user_by_username($user)
 {
 	global $database;
 	$get_client_info = $database->query("SELECT * FROM tbl_users WHERE user='$user'");
-	while ($row = mysql_fetch_assoc($get_client_info)) {
-		$information = array(
-							'id' => $row['id'],
-							'username' => $row['user'],
-							'name' => $row['name'],
-							'email' => $row['email'],
-							'level' => $row['level'],
-							'active' => $row['active'],
-							'created_date' => $row['timestamp']
-						);
-		if(!empty($information)) {
-			return $information;
-		}
-		else {
-			return false;
+	if (mysql_num_rows($get_client_info) > 0) {
+		while ($row = mysql_fetch_assoc($get_client_info)) {
+			$information = array(
+								'id' => $row['id'],
+								'username' => $row['user'],
+								'name' => $row['name'],
+								'email' => $row['email'],
+								'level' => $row['level'],
+								'active' => $row['active'],
+								'created_date' => $row['timestamp']
+							);
+			if(!empty($information)) {
+				return $information;
+			}
+			else {
+				return false;
+			}
 		}
 	}
 }

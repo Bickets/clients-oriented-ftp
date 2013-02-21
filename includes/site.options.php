@@ -16,10 +16,11 @@ $database->MySQLDB();
  */
 $options_values = array();
 $options = $database->query("SELECT * FROM tbl_options");
-while ($row = @mysql_fetch_array($options)) {
-	$options_values[$row['name']] = $row['value'];
+if (mysql_num_rows($options) > 0) {
+	while ($row = mysql_fetch_array($options)) {
+		$options_values[$row['name']] = $row['value'];
+	}
 }
-
 $database->Close();
 
 /**
@@ -88,7 +89,7 @@ if(!empty($options_values)) {
 /**
  * Timthumb
  */
-if (defined(BASE_URI)) {
+if (defined('BASE_URI')) {
 	define('TIMTHUMB_URL',BASE_URI.'includes/timthumb/timthumb.php');
 	define('TIMTHUMB_ABS',ROOT_DIR.'/includes/timthumb/timthumb.php');
 }
