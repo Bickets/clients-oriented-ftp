@@ -11,6 +11,8 @@ require_once('sys.includes.php');
 $page_title = __('Edit file','cftp_admin');
 include('header.php');
 
+define('CAN_INCLUDE_FILES', true);
+
 /**
  * The file's id is passed on the URI.
  */

@@ -6,6 +6,11 @@
  * @subpackage	Upload
  *
  */
+
+/** This file MUST be included by another one */
+require_once('sys.includes.php');
+prevent_direct_access();
+
 $get_file_info = array();
 $get_client_info = array();
 $notifications_sent = array();

@@ -572,6 +572,19 @@ function generate_logo_url()
 	return $logo_file;
 }
 
+
+/**
+ * This function is called when a file is loaded
+ * directly, but it shouldn't.
+ */
+function prevent_direct_access()
+{
+	if(!defined('CAN_INCLUDE_FILES')){
+		ob_end_flush();
+		exit;
+	}
+}
+
 /**
  * Renders an action recorded on the log.
  */

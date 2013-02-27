@@ -12,6 +12,8 @@ $page_title = __('Welcome to ProjectSend', 'cftp_admin');
 $flot = 1;
 include('header.php');
 $database->MySQLDB();
+
+define('CAN_INCLUDE_FILES', true);
 ?>
 
 <div id="main">
@@ -134,11 +136,11 @@ $database->MySQLDB();
 			}
 			], {
 				series:{
-					bars:{show: true},
+					bars:{show: true}
 				},
 				bars:{
 					  barWidth:.5,
-					  align: 'center',
+					  align: 'center'
 				},
 				legend: {
 					show: true
