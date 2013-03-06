@@ -21,6 +21,46 @@ if (in_session_or_cookies($allowed_update)) {
 	$updates_error_messages = array();
 	
 	/**
+	 * Check for updates only if the option exists.
+	 */
+	if (defined('VERSION_LAST_CHECK')) {
+		/**
+		 * Compare the date for the last checked with
+		 * today's. Checks are done only once per day.
+		 */
+		 $today = date('d-m-Y');
+		 $today_timestamp = strtotime($today);
+		 if (VERSION_LAST_CHECK != $today) {
+ 			/**
+			 * Si la dif es mayor a 10 dias, comprueba
+			 */
+			 //if (diferencia > 10 dias || valor_Db_encontrada == 0) {
+				/**
+				 * Compare against the online value.
+				 */
+				$feed = simplexml_load_file(UPDATES_FEED_URI);
+				$v = 0;
+				$max_items = 1;
+				foreach ($feed->channel->item as $item) {
+					while ($v < $max_items) {
+						$namespaces = $item->getNameSpaces(true);
+						$release = $item->children($namespaces['release']);
+						$diff = $item->children($namespaces['diff']);
+						$online_version = substr($release->version, 1);
+						$v++;
+					}
+				}
+
+				 if ($online_version > $current_version) {
+					 //echo 'hay nueva';
+					 $new_version_available = true;
+				 }
+
+			 //}
+		 }
+	}
+
+	/**
 	 * r264 updates
 	 * Save the value of the last update on the database, to prevent
 	 * running all this queries everytime a page is loaded.
@@ -547,6 +587,33 @@ if (in_session_or_cookies($allowed_update)) {
 								'affected_account_name' => $current_version
 							);
 		$new_record_action = $new_log_action->log_action_save($log_action_args);
+
+
+		/**
+		 * r377 updates
+		 * Add new options to store the last time the system checked
+		 * for a new version.
+		 */
+		$today = date('d-m-Y');
+		if ($last_update < 377) {
+			$new_database_values = array(
+											'version_last_check' => $today,
+											'version_new_found' => '0'
+										);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 	}
 }	
 ?>

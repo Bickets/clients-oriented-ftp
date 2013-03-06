@@ -78,6 +78,13 @@ if(!empty($options_values)) {
 		define('COPY_MAIL_MAIN_USER',$options_values['mail_copy_main_user']);
 		define('COPY_MAIL_ADDRESSES',$options_values['mail_copy_addresses']);
 	}
+	/**
+	 * For versions 377 and up
+	 */	
+	if (isset($options_values['version_last_check'])) {
+		define('VERSION_LAST_CHECK',$options_values['version_last_check']);
+		define('VERSION_NEW_FOUND',$options_values['version_new_found']);
+	}
 
 	/**
 	 * Set the default timezone based on the value of the Timezone select box

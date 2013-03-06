@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r375');
+define('CURRENT_VERSION', 'r377');
 
 /**
  * Turn off reporting of PHP errors, warnings and notices.
@@ -23,7 +23,7 @@ define('CURRENT_VERSION', 'r375');
  *
  * @link http://www.php.net/manual/en/function.error-reporting.php
  */
-error_reporting(0);
+//error_reporting(0);
 
 define('GLOBAL_TIME_LIMIT', 240*60);
 define('UPLOAD_TIME_LIMIT', 120*60);
@@ -33,6 +33,12 @@ define('UPLOAD_TIME_LIMIT', 120*60);
  * Define the RSS url to use on the home news list.
  */
 define('NEWS_FEED_URI','http://www.projectsend.org/feed/');
+
+/**
+ * Define the Feed from where to take the latest version
+ * number.
+ */
+define('UPDATES_FEED_URI','http://projectsend.org/updates/versions.xml');
 
 /**
  * Include the personal configuration file
