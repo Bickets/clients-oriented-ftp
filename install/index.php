@@ -133,6 +133,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 						/**
 						 * Call the file that creates the tables and fill it with the data we got previously
 						 */
+						define('TRY_INSTALL',true);
 						include_once(ROOT_DIR.'/install/database.php');
 						/**
 						 * Try to execute each query individually
