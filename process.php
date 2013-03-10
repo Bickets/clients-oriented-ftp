@@ -142,7 +142,7 @@ class process {
 					if ($this->uploader != $_GET['sys_user']) {
 						ob_clean();
 						flush();
-						_e("You don't have the required permissions to view this information about this file",'cftp_admin');
+						_e("You don't have the required permissions to view the requested information about this file.",'cftp_admin');
 						exit;
 					}
 				}

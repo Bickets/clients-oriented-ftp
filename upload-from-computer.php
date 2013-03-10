@@ -131,7 +131,7 @@ $database->MySQLDB();
 				<input type="hidden" name="uploaded_files" id="uploaded_files" value="" />
 				<div id="uploader">
 					<div class="message message_error">
-						<p><?php _e("Your browser doesn't have Flash, Silverlight, or HTML5 support. Please update your browser or install Adobe Flash to continue.",'cftp_admin'); ?></p>
+						<p><?php _e("Your browser doesn't support HTML5, Flash or Silverlight. Please update your browser or install Adobe Flash or Silverlight to continue.",'cftp_admin'); ?></p>
 					</div>
 				</div>
 				<div align="right">

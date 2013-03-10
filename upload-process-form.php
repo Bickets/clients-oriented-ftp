@@ -368,7 +368,7 @@ while($row = mysql_fetch_array($sql)) {
 		<?php
 			if ($current_level != 0) {
 		?>
-			<div class="message message_info"><strong><?php _e('Note','cftp_admin'); ?></strong>: <?php _e('You can skip assignations if you want. The files are kept uploaded and you can add them to clients or groups later.','cftp_admin'); ?></div>
+			<div class="message message_info"><strong><?php _e('Note','cftp_admin'); ?></strong>: <?php _e('You can skip assigning if you want. The files are retained and you may add them to clients or groups later.','cftp_admin'); ?></div>
 		<?php
 			}
 

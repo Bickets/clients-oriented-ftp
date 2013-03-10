@@ -624,7 +624,7 @@ function render_log_action($params)
 		case 4:
 			$action_ico = 'client-add';
 			$part1 = $affected_account_name;
-			$action_text = __('created a client account for himself.','cftp_admin');
+			$action_text = __('created a client account for themself.','cftp_admin');
 			break;
 		case 5:
 			$action_ico = 'file-add';

@@ -18,7 +18,7 @@
 			<div class="row-fluid">
 				<div class="span12">
 					<div class="message message_info" id="donations_message">
-							<h3><strong><?php _e('Want to support ProjectSend?', 'cftp_admin');?></strong></h3>
+							<h3><strong><?php _e('Do you want to support ProjectSend?', 'cftp_admin');?></strong></h3>
 							<p><?php _e('Please remember that this tool is free software. If you find the system useful', 'cftp_admin'); ?>
 							<a href="<?php echo DONATIONS_URL; ?>" target="_blank"><?php _e('please consider making a donation to support further development.', 'cftp_admin'); ?></a>
 							<?php _e('Thank you!', 'cftp_admin'); ?>

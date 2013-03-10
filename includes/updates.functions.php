@@ -181,7 +181,7 @@ function import_files_relations()
 	 * Did any of the files relations fail?
 	 */
 	if ($imported_error > 0) {
-		$updates_error_messages[100] = __("This version changes the way files-to-clients relations are stored on the database, making it possible to relate a file to several clients. However, when updating the system, the following files could not be imported:", 'cftp_admin');	
+		$updates_error_messages[100] = __("This version changes the way files-to-clients relationships are stored on the database making it possible to assign a file to multiple clients. However some files did not update successfully. The following files may need to be reassigned to their clients by using the \"Find orphan files\" tool:", 'cftp_admin');	
 		$updates_error_messages[100] .= '<ul>';
 			foreach ($unimported_files as $unimported) {
 				$updates_error_messages[100] .= '<li>File: <strong>'.$unimported['title'].'</strong> Assigned to: <strong>'.$unimported['client'].'</strong></li>';

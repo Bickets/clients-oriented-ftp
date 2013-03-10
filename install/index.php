@@ -244,7 +244,9 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 							<ul class="form_fields">
 								<li>
 									<h3><?php _e('Basic system options','cftp_admin'); ?></h3>
-									<p><?php _e("You need to provide this data for a correct system installation. The site name will be visible along the system panel, and the client's lists.<br />Don't forget to edit <em>/includes/sys.config.php</em> with your database settings before installing. If the file doesn't exist, you can create it by renanming the dummy file sys.config.sample.php.",'cftp_admin'); ?></p>
+									<p><?php _e("You need to provide this data for a correct system installation. The site name will be visible in the system panel, and the client's lists.",'cftp_admin'); ?><br />
+										<?php _e("Remember to edit the file",'cftp_admin'); ?> <em>/includes/sys.config.php</em> <?php _e("with your database settings before installing. If the file doesn't exist, you can create it by renaming the dummy file sys.config.sample.php.",'cftp_admin'); ?>
+									</p>
 								</li>
 								<li>
 									<label for="this_install_title"><?php _e('Site name','cftp_admin'); ?></label>
@@ -259,7 +261,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 				
 								<li>
 									<h3><?php _e('Default system administrator options','cftp_admin'); ?></h3>
-									<p><?php _e("This info will be used to create a default system user, which can't be deleted afterwards. Password should be between <strong>6 and 12 characters long</strong>.",'cftp_admin'); ?></p>
+									<p><?php _e("This info will be used to create a default system user, which can't be deleted afterwards. Password should be between",'cftp_admin'); ?> <strong><?php echo MIN_PASS_CHARS; ?> <?php _e("and",'cftp_admin'); ?> <?php echo MAX_PASS_CHARS; ?> <?php _e("characters long.",'cftp_admin'); ?></strong></p>
 								</li>
 								<li>
 									<label for="install_user_fullname"><?php _e('Full name','cftp_admin'); ?></label>
@@ -275,11 +277,11 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 								</li>
 								<li>
 									<label for="install_user_pass"><?php _e('Password','cftp_admin'); ?></label>
-									<input type="password" name="install_user_pass" id="install_user_pass" class="required" maxlength="12" />
+									<input type="password" name="install_user_pass" id="install_user_pass" class="required" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 								</li>
 								<li>
 									<label for="install_user_repeat"><?php _e('Repeat','cftp_admin'); ?></label>
-									<input type="password" name="install_user_repeat" id="install_user_repeat" class="required" maxlength="12" />
+									<input type="password" name="install_user_repeat" id="install_user_repeat" class="required" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 								</li>
 								<li class="form_submit_li">
 									<input type="submit" name="Submit" value="<?php _e('Install','cftp_admin'); ?>" class="button button_blue button_submit" />

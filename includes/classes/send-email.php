@@ -23,7 +23,7 @@ include_once(ROOT_DIR.'/includes/email-template.php');
 $email_strings_file_by_user = array(
 									'subject' => __('New files uploaded for you','cftp_admin'),
 									'body' => __('The following files are now available for you to download.','cftp_admin'),
-									'body2' => __("If you don't want to be notified about new files, please contact the uploader.",'cftp_admin'),
+									'body2' => __("If you prefer not to be notified about new files, please go to My Account and deactivate the notifications checkbox.",'cftp_admin'),
 									'body3' => __('You can access a list of all your files or upload your own','cftp_admin'),
 									'body4' => __('by logging in here','cftp_admin')
 								);
@@ -55,7 +55,7 @@ $email_strings_new_client_self = array(
 									'subject' => __('A new client has registered.','cftp_admin'),
 									'body' => __('A new account was created using the self registration form on your site. Registration information:','cftp_admin'),
 									'body2' => __('Please log in to activate it.','cftp_admin'),
-									'body3' => __('Remember, your new client will not be able to log in until an administrator has approved the account.','cftp_admin'),
+									'body3' => __('Remember, your new client will not be able to log in until an administrator has approved their account.','cftp_admin'),
 									'label_name' => __('Full name','cftp_admin'),
 									'label_user' => __('Username','cftp_admin')
 								);

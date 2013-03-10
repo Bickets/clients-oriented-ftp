@@ -141,7 +141,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 								<ul class="form_fields">
 									<li>
 										<h3><?php _e('System location','cftp_admin'); ?></h3>
-										<p class="text-warning"><?php _e('These options are to be changed only if you are moving the system to another place. Be careful when chaging them or everything will stop working.','cftp_admin'); ?></p>
+										<p class="text-warning"><?php _e('These options are to be changed only if you are moving the system to another place. Changes here can cause ProjectSend to stop working.','cftp_admin'); ?></p>
 									</li>
 									<li>
 										<label for="base_uri"><?php _e('System URI','cftp_admin'); ?></label>
@@ -314,7 +314,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 								<ul class="form_fields">		
 									<li>
 										<h3><?php _e('Thumbnails','cftp_admin'); ?></h3>
-										<p><?php _e("Thumbnails are used on files lists. It is recommended to keep them small, unless you are using the system to upload only images and change the default client's template accordingly.",'cftp_admin'); ?></p>
+										<p><?php _e("Thumbnails are used on files lists. It is recommended to keep them small, unless you are using the system to upload only images, and will change the default client's template accordingly.",'cftp_admin'); ?></p>
 									</li>
 									<li class="options_column">
 										<div class="options_col_left">
@@ -351,7 +351,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 								<ul class="form_fields">		
 									<li>		
 										<h3><?php _e('Size settings','cftp_admin'); ?></h3>
-										<p><?php _e("Like the thumbnails options, this ones have to be changed taking in account the client's template design, since it can be shown there. The default template uses a fixed width for the logo, however the Gallery one uses this settings to show the image on top.",'cftp_admin'); ?></p>
+										<p><?php _e("Like the thumbnails options, these have to be changed taking into account the client's template design, since it can be shown there. The default template uses a fixed width for the logo, however the Gallery template uses this setting to show the image on top.",'cftp_admin'); ?></p>
 									</li>
 									<li class="options_column">
 										<div class="options_col_left">

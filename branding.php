@@ -60,7 +60,7 @@ if ($_POST) {
 			}
 			else {
 					$msg = __('The file could not be moved to the corresponding folder.','cftp_admin');
-					$msg .= __("This is a most likely a permissions issue. If that's the case, it can be solved by setting -via FTP- the chmod value of the",'cftp_admin');
+					$msg .= __("This is most likely a permissions issue. If that's the case, it can be corrected via FTP by setting the chmod value of the",'cftp_admin');
 					$msg .= ' '.LOGO_FOLDER.' ';
 					$msg .= __('directory to 755, or 777 as a last resource.','cftp_admin');
 					$msg .= __("If this doesn't solve the issue, try giving the same values to the directories above that one until it works.",'cftp_admin');
@@ -68,7 +68,7 @@ if ($_POST) {
 			}
 		}
 		else {
-				$msg = __('The file you selected is not a valid image one. Please upload a jpg, gif or png formated logo picture.','cftp_admin');
+				$msg = __('The file you selected is not an allowed image format. Please upload your logo as a jpg, gif or png file.','cftp_admin');
 				echo system_message('error',$msg);
 		}
 	}
@@ -93,7 +93,7 @@ else {
 		});
 	</script>
 
-	<p><?php _e('Use this page to upload your company logo, or update your current uploaded one. This image will be shown to your clients when they access their file list.','cftp_admin'); ?></p>
+	<p><?php _e('Use this page to upload your company logo, or update the currently assigned one. This image will be shown to your clients when they access their file list.','cftp_admin'); ?></p>
 
 	<div id="current_logo">
 		<div id="current_logo_left">

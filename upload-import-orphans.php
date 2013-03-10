@@ -30,6 +30,11 @@ $work_folder = UPLOADED_FILES_FOLDER;
 
 <div id="main">
 	<h2><?php echo $page_title; ?></h2>
+
+	<?php
+		$msg = __('This list only shows the files that are allowed according to your security settings. If the file type you need to add is not listed here, add the extension to the "Allowed file extensions" box on the options page.', 'cftp_admin');
+		echo system_message('info',$msg);
+	?>
 	
 	<?php
 		/** Count clients to show an error message, or the form */
@@ -102,13 +107,7 @@ $work_folder = UPLOADED_FILES_FOLDER;
 			 * available and allowed.
 			 */
 			if(isset($files_to_add) && count($files_to_add) > 0) {
-	?>
-
-				<p><strong><?php _e('Important','cftp_admin'); ?>:</strong> <?php _e('This list only shows the files that are allowed according to your security settings. If the file you need to add is not listed here, make sure to add the extension to the "Allowed file extensions" box on the options page.','cftp_admin'); ?></p>
-				<?php
-					$msg = __('Please note that the listed files will be renamed if they contain invalid characters.','cftp_admin');
-					echo system_message('info',$msg);
-				?>
+		?>
 
 				<form action="upload-process-form.php" name="upload_by_ftp" id="upload_by_ftp" method="post" enctype="multipart/form-data">
 					<table id="add_files_from_ftp" class="tablesorter">
@@ -137,6 +136,12 @@ $work_folder = UPLOADED_FILES_FOLDER;
 							?>
 						</tbody>
 					</table>
+
+					<?php
+						$msg = __('Please note that the listed files will be renamed if they contain invalid characters.','cftp_admin');
+						echo system_message('info',$msg);
+					?>
+	
 					<ul class="form_fields">
 						<li class="form_submit_li">
 							<input type="submit" name="Submit" value="<?php _e('Continue','cftp_admin'); ?>" class="button button_blue button_submit" />
@@ -181,7 +186,7 @@ $work_folder = UPLOADED_FILES_FOLDER;
 							echo ' <strong>'.$work_folder.'</strong>.';
 						?>
 					</p>
-					<p><?php _e('This is the same folder where the files uploaded by the web interface will be located on. So if you finish uploading your files but do not assign them to any clients/groups, the files will still be there for you to use later.', 'cftp_admin'); ?></p>
+					<p><?php _e('This is the same folder where the files uploaded by the web interface will be stored. So if you finish uploading your files but do not assign them to any clients/groups, the files will still be there for later use.', 'cftp_admin'); ?></p>
 				</div>
 			<?php
 			}
