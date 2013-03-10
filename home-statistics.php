@@ -1,28 +1,25 @@
 <?php
 	require_once('sys.includes.php');
 	$max_stats_days = $_GET['days'];
-?>
 
-<script type="text/javascript">
-	<?php
-		$month = date("m");
-		$day = date("d");
-		$year = date("Y");
-		for($i=0; $i<=$max_stats_days-1; $i++){
-			$gen_30_days[] = date(TIMEFORMAT_USE,mktime(0,0,0,$month,($day-$i),$year));
-		}
-		$last_30_days = array_reverse($gen_30_days);
-	
-		/**
-		 * The graph will show only this actions
-		 */
-		$results = $database->query("SELECT action, timestamp, COUNT(*) as total
-										FROM tbl_actions_log
-										WHERE timestamp >= DATE_SUB( CURDATE(),INTERVAL $max_stats_days DAY)
-										AND action IN ('5', '6', '8', '9')
-										GROUP BY DATE(timestamp), action
-									");
-	
+	$month = date("m");
+	$day = date("d");
+	$year = date("Y");
+	for($i=0; $i<=$max_stats_days-1; $i++){
+		$gen_30_days[] = date(TIMEFORMAT_USE,mktime(0,0,0,$month,($day-$i),$year));
+	}
+	$last_30_days = array_reverse($gen_30_days);
+
+	/**
+	 * The graph will show only this actions
+	 */
+	$results = $database->query("SELECT action, timestamp, COUNT(*) as total
+									FROM tbl_actions_log
+									WHERE timestamp >= DATE_SUB( CURDATE(),INTERVAL $max_stats_days DAY)
+									AND action IN ('5', '6', '8', '9')
+									GROUP BY DATE(timestamp), action
+								");
+	if (mysql_num_rows($results) > 0) {
 		while($res = mysql_fetch_array($results)) {
 			$res['timestamp'] = strtotime($res['timestamp']);
 			switch ($res['action']) {
@@ -40,7 +37,15 @@
 					break;
 			}
 		}
-		
+		$continue = true;
+	}
+	else {
+		$continue = false;
+	}
+?>
+
+<script type="text/javascript">
+<?php	
 		$data_logs = array('d5','d6','d8','d9');
 		foreach ($data_logs as $gen_log) {
 			echo 'var '.$gen_log.' = [';
@@ -50,19 +55,21 @@
 				$day_timestamp = str_replace('/', '-',$day);
 				$final_timestamp = strtotime($day_timestamp)*1000;
 				echo "[".$final_timestamp.",";
-				foreach ($actions_to_graph as $action_number => $when) {
-					if ($action_number == $gen_log) {
-						foreach ($when as $log_day => $total) {
-							if (date(TIMEFORMAT_USE,$log_day) == $day) {
-								echo $total;
-								$wrote = true;
-							}
-							else {
+				if (!empty($actions_to_graph)) {
+					foreach ($actions_to_graph as $action_number => $when) {
+						if ($action_number == $gen_log) {
+							foreach ($when as $log_day => $total) {
+								if (date(TIMEFORMAT_USE,$log_day) == $day) {
+									echo $total;
+									$wrote = true;
+								}
+								else {
+								}
 							}
 						}
 					}
 				}
-				if (!$wrote) {
+				if (!$wrote || $continue === false) {
 					echo '0';
 					/*
 					switch ($gen_log) {
