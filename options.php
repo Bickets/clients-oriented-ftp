@@ -217,7 +217,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									<li>
 										<label for="clients_auto_group"><?php _e('Add clients to this group:','cftp_admin'); ?></label>
 										<select name="clients_auto_group" id="clients_auto_group">
-											<option value="0"><?php _e('None (does not enable this feature).','cftp_admin'); ?></option>
+											<option value="0"><?php _e('None (does not enable this feature)','cftp_admin'); ?></option>
 										<?php
 											/** Fill the groups array that will be used on the form */
 											$groups = array();

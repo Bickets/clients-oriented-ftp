@@ -42,9 +42,14 @@ include('header-unlogged.php');
 								'phone' => $add_client_data_phone,
 								'contact' => $add_client_data_intcont,
 								'notify' => $add_client_data_notity,
-								'active' => 0,
 								'type' => 'new_client'
 							);
+		if (CLIENTS_AUTO_APPROVE == 0) {
+			$new_arguments['active'] = 0;
+		}
+		else {
+			$new_arguments['active'] = 1;
+		}
 	
 		/** Validate the information from the posted form. */
 		$new_validate = $new_client->validate_client($new_arguments);
@@ -89,10 +94,16 @@ include('header-unlogged.php');
 
 					switch ($new_response['actions']) {
 						case 1:
-							$msg = __('Please remember that an administrator needs to approve your account before you can log in.','cftp_admin');
-							echo system_message('note',$msg);
 							$msg = __('Account added correctly.','cftp_admin');
 							echo system_message('ok',$msg);
+
+							if (CLIENTS_AUTO_APPROVE == 0) {
+								$msg = __('Please remember that an administrator needs to approve your account before you can log in.','cftp_admin');
+							}
+							else {
+								$msg = __('You may now log in with your new credentials.','cftp_admin');
+							}
+							echo system_message('note',$msg);
 
 							/** Record the action log */
 							$new_log_action = new LogActions();
