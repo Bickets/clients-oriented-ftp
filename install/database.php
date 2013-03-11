@@ -167,7 +167,13 @@ if (defined('TRY_INSTALL')) {
 	(\'mail_copy_main_user\', \'\'),
 	(\'mail_copy_addresses\', \'\'),
 	(\'version_last_check\', \''.$now.'\'),
-	(\'version_new_found\', \'0\')
+	(\'version_new_found\', \'0\'),
+	(\'version_new_number\', \'\'),
+	(\'version_new_url\', \'\'),
+	(\'version_new_chlog\', \'\'),
+	(\'version_new_security\', \'\'),
+	(\'version_new_features\', \'\'),
+	(\'version_new_important\', \'\')
 	';
 	
 	$q11 = '

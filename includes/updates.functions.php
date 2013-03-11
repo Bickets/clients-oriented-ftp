@@ -193,4 +193,15 @@ function import_files_relations()
 		$updates_made++;
 	}
 }
+
+function reset_update_status()
+{
+	$database->query("UPDATE tbl_options SET value ='' WHERE name='version_new_number'");
+	$database->query("UPDATE tbl_options SET value ='' WHERE name='version_new_url'");
+	$database->query("UPDATE tbl_options SET value ='' WHERE name='version_new_chlog'");
+	$database->query("UPDATE tbl_options SET value ='' WHERE name='version_new_security'");
+	$database->query("UPDATE tbl_options SET value ='' WHERE name='version_new_features'");
+	$database->query("UPDATE tbl_options SET value ='' WHERE name='version_new_important'");
+	$database->query("UPDATE tbl_options SET value ='0' WHERE name='version_new_found'");
+}
 ?>

@@ -55,6 +55,49 @@ h4 {
 	margin:0;
 }
 
+/** Update available message bar */
+
+.update_msg {
+	padding:5px !important;
+}
+
+	.update_msg p {
+		line-height:2.2em !important;
+		float:left;
+	}
+
+	.update_msg .buttons {
+		padding:0 0 0 25px;
+		display:inline-block;
+		zoom:1;
+		margin-top:3px;
+	}
+
+	.update_msg ul {
+		text-align:right;
+	}
+	
+	.update_msg ul li {
+		display:inline-block;
+		margin:0 4px;
+	}
+	
+	.update_msg ul li div {
+		margin-top:2px;
+		display:block;
+		background-image:url(../img/update-icons.png);
+		background-repeat:no-repeat;
+		height:24px;
+		width:24px;
+	}
+	
+	#update_features_0 div { background-position:0 -24px !important; }
+	#update_features_1 div { background-position:0 0 !important; }
+	#update_security_0 div { background-position:-24px -24px !important; }
+	#update_security_1 div { background-position:-24px 0 !important; }
+	#update_important_0 div { background-position:-48px -24px !important; }
+	#update_important_1 div { background-position:-48px 0 !important; }
+	
 #lonely_logo {
 	text-align:center;
 }

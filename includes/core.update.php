@@ -31,10 +31,7 @@ if (in_session_or_cookies($allowed_update)) {
 		 $today = date('d-m-Y');
 		 $today_timestamp = strtotime($today);
 		 if (VERSION_LAST_CHECK != $today) {
- 			/**
-			 * Si la dif es mayor a 10 dias, comprueba
-			 */
-			 //if (diferencia > 10 dias || valor_Db_encontrada == 0) {
+			if (VERSION_NEW_FOUND == '0') {
 				/**
 				 * Compare against the online value.
 				 */
@@ -47,16 +44,45 @@ if (in_session_or_cookies($allowed_update)) {
 						$release = $item->children($namespaces['release']);
 						$diff = $item->children($namespaces['diff']);
 						$online_version = substr($release->version, 1);
+
+						 if ($online_version > $current_version) {
+							/**
+							 * The values are set here since they didn't
+							 * come from the database.
+							 */
+							define('VERSION_NEW_NUMBER',$online_version);
+							define('VERSION_NEW_URL',$item->link);
+							define('VERSION_NEW_CHLOG',$release->changelog);
+							define('VERSION_NEW_SECURITY',$diff->security);
+							define('VERSION_NEW_FEATURES',$diff->features);
+							define('VERSION_NEW_IMPORTANT',$diff->important);
+							/**
+							 * Save the information from the new release
+							 * to the database.
+							 */
+							$database->query("UPDATE tbl_options SET value ='$release->version' WHERE name='version_new_number'");
+							$database->query("UPDATE tbl_options SET value ='$item->link' WHERE name='version_new_url'");
+							$database->query("UPDATE tbl_options SET value ='$release->changelog' WHERE name='version_new_chlog'");
+							$database->query("UPDATE tbl_options SET value ='$diff->security' WHERE name='version_new_security'");
+							$database->query("UPDATE tbl_options SET value ='$diff->features' WHERE name='version_new_features'");
+							$database->query("UPDATE tbl_options SET value ='$diff->important' WHERE name='version_new_important'");
+							$database->query("UPDATE tbl_options SET value ='1' WHERE name='version_new_found'");
+						 }
+						 else {
+							 reset_update_status();
+						 }
+
+						/**
+						 * Change the date and versions values on the
+						 * database so it's not checked again today.
+						 */
+						$database->query("UPDATE tbl_options SET value ='$today' WHERE name='version_last_check'");
+
+						/** Stop the foreach loop */
 						$v++;
 					}
 				}
-
-				 if ($online_version > $current_version) {
-					 //echo 'hay nueva';
-					 $new_version_available = true;
-				 }
-
-			 //}
+			 }
 		 }
 	}
 
@@ -597,8 +623,14 @@ if (in_session_or_cookies($allowed_update)) {
 		$today = date('d-m-Y');
 		if ($last_update < 377) {
 			$new_database_values = array(
-											'version_last_check' => $today,
-											'version_new_found' => '0'
+											'version_last_check'	=> $today,
+											'version_new_found'		=> '0',
+											'version_new_number'	=> '',
+											'version_new_url'		=> '',
+											'version_new_chlog'		=> '',
+											'version_new_security'	=> '',
+											'version_new_features'	=> '',
+											'version_new_important'	=> ''
 										);
 			
 			foreach($new_database_values as $row => $value) {

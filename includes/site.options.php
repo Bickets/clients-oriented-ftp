@@ -84,6 +84,14 @@ if(!empty($options_values)) {
 	if (isset($options_values['version_last_check'])) {
 		define('VERSION_LAST_CHECK',$options_values['version_last_check']);
 		define('VERSION_NEW_FOUND',$options_values['version_new_found']);
+		if (VERSION_NEW_FOUND == '1') {
+			define('VERSION_NEW_NUMBER',$options_values['version_new_number']);
+			define('VERSION_NEW_URL',$options_values['version_new_url']);
+			define('VERSION_NEW_CHLOG',$options_values['version_new_chlog']);
+			define('VERSION_NEW_SECURITY',$options_values['version_new_security']);
+			define('VERSION_NEW_FEATURES',$options_values['version_new_features']);
+			define('VERSION_NEW_IMPORTANT',$options_values['version_new_important']);
+		}
 	}
 
 	/**
