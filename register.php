@@ -57,6 +57,19 @@ include('header-unlogged.php');
 		/** Create the client if validation is correct. */
 		if ($new_validate == 1) {
 			$new_response = $new_client->create_client($new_arguments);
+			
+			/**
+			 * Check if the option to auto-add to a group
+			 * is active.
+			 */
+			if (CLIENTS_AUTO_GROUP != '0') {
+				$admin_name = CURRENT_USER_USERNAME;
+				$client_id = $new_response['new_id'];
+				$group_id = CLIENTS_AUTO_GROUP;
+				$database->query("INSERT INTO tbl_members (added_by,client_id,group_id)"
+												."VALUES ('$admin_name', '$client_id', '$group_id' )");
+			}
+
 			$notify_admin = new PSend_Email();
 			$email_arguments = array(
 											'type' => 'new_client_self',
