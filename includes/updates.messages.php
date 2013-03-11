@@ -41,7 +41,7 @@
 			 * if the current installation has just been
 			 * updated.
 			 */
-			if (VERSION_NEW_NUMBER != '') {
+			if (defined('VERSION_NEW_NUMBER')) {
 				if (CURRENT_USER_LEVEL != '0') {
 	?>
 					<div id="system_msg" class="update_msg">

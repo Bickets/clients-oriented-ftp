@@ -196,6 +196,7 @@ function import_files_relations()
 
 function reset_update_status()
 {
+	global $database;
 	$database->query("UPDATE tbl_options SET value ='' WHERE name='version_new_number'");
 	$database->query("UPDATE tbl_options SET value ='' WHERE name='version_new_url'");
 	$database->query("UPDATE tbl_options SET value ='' WHERE name='version_new_chlog'");
