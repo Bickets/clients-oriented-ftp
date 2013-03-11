@@ -308,8 +308,27 @@ $(document).ready(function() {
 									<td class="extra"><?php echo html_entity_decode($row["phone"]); ?></td>
 									<td class="extra"><?php echo html_entity_decode($row["contact"]); ?></td>
 									<td>
-										<a href="manage-files.php?client_id=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('Manage files','cftp_admin'); ?></a>
-										<a href="groups.php?member=<?php echo $row["id"]; ?>" class="button button_blue"><?php _e('View groups','cftp_admin'); ?></a>
+										<?php
+											if ($own_files + $groups_files > 0) {
+												$files_link = 'manage-files.php?client_id='.$row["id"];
+												$files_button = 'button_blue';
+											}
+											else {
+												$files_link = '#';
+												$files_button = 'button_gray';
+											}
+
+											if ($count_groups > 0) {
+												$groups_link = 'groups.php?member='.$row["id"];
+												$groups_button = 'button_blue';
+											}
+											else {
+												$groups_link = '#';
+												$groups_button = 'button_gray';
+											}
+										?>
+										<a href="<?php echo $files_link; ?>" class="button <?php echo $files_button; ?>"><?php _e('Manage files','cftp_admin'); ?></a>
+										<a href="<?php echo $groups_link; ?>" class="button <?php echo $groups_button; ?>"><?php _e('View groups','cftp_admin'); ?></a>
 										<a href="my_files/?client=<?php echo $row["user"]; ?>" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
 										<a href="clients-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
 									</td>
