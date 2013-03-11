@@ -175,7 +175,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 						<li>
 							<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Files', 'cftp_admin'); ?></a>
 								<ul>
-									<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from device', 'cftp_admin'); ?></a></li>
+									<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload', 'cftp_admin'); ?></a></li>
 									<li><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
 									<li><a href="<?php echo BASE_URI; ?>upload-import-orphans.php"><?php _e('Find orphan files', 'cftp_admin'); ?></a></li>
 								</ul>
@@ -276,10 +276,14 @@ if (in_session_or_cookies($core_update_allowed)) {
 			<?php
 					}
 				}
-				/** Generate the CLIENTS menu */
+				/** Generate the menu for clients */
 				else {
+					if (CLIENTS_CAN_UPLOAD == 1) {
 			?>
-					<li class="no_arrow"><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload from device', 'cftp_admin'); ?></a></li>
+						<li class="no_arrow"><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload', 'cftp_admin'); ?></a></li>
+			<?php
+					}
+			?>
 					<li class="no_arrow"><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
 					<li class="no_arrow"><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
 			<?php

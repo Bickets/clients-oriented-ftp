@@ -10,9 +10,13 @@
  * @subpackage Upload
  */
 $plupload = 1;
-$allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 $page_title = __('Upload files', 'cftp_admin');
+
+$allowed_levels = array(9,8,7);
+if (CLIENTS_CAN_UPLOAD == 1) {
+	$allowed_levels[] = 0;
+}
 include('header.php');
 
 $database->MySQLDB();
