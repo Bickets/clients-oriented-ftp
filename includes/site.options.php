@@ -93,6 +93,14 @@ if(!empty($options_values)) {
 			define('VERSION_NEW_IMPORTANT',$options_values['version_new_important']);
 		}
 	}
+	/**
+	 * For versions 386 and up
+	 */	
+	if (isset($options_values['clients_auto_approve'])) {
+		define('CLIENTS_AUTO_APPROVE',$options_values['clients_auto_approve']);
+		define('CLIENTS_AUTO_GROUP',$options_values['clients_auto_group']);
+		define('CLIENTS_CAN_UPLOAD',$options_values['clients_can_upload']);
+	}
 
 	/**
 	 * Set the default timezone based on the value of the Timezone select box

@@ -646,6 +646,32 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+
+		/**
+		 * r386 updates
+		 * Add new options to handle actions related to clients
+		 * self registrations.
+		 */
+		if ($last_update < 386) {
+			$new_database_values = array(
+											'clients_auto_approve'	=> '0',
+											'clients_auto_group'	=> '0',
+											'clients_can_upload'	=> '1'
+										);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 	}
 }	
 ?>

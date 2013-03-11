@@ -129,6 +129,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 				<div id="tab-container" class='tab-container'>
 					<ul class="etabs">
 						<li class="tab"><a href="#tab_general"><?php _e('General Options','cftp_admin'); ?></a></li>
+						<li class="tab"><a href="#tab_clients"><?php _e('Clients','cftp_admin'); ?></a></li>
 						<li class="tab"><a href="#tab_email"><?php _e('E-mail notifications','cftp_admin'); ?></a></li>
 						<li class="tab"><a href="#tab_security"><?php _e('Security','cftp_admin'); ?></a></li>
 						<li class="tab"><a href="#tab_thumbs"><?php _e('Thumbnails','cftp_admin'); ?></a></li>
@@ -189,16 +190,72 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										<p class="field_note"><?php _e('For example, d/m/Y h:i:s will result in something like','cftp_admin'); ?> <strong><?php echo date('d/m/Y h:i:s'); ?></strong>.
 										<?php _e('For the full list of available values, visit','cftp_admin'); ?> <a href="http://php.net/manual/en/function.date.php" target="_blank"><?php _e('this page','cftp_admin'); ?></a>.</p>
 									</li>
+					
+									<li class="options_divide"></li>
+								</ul>
+							</div>
+						</div>
+
+
+						<div id="tab_clients">
+							<div class="options_box whitebox">
+								<ul class="form_fields">
+									<li>
+										<h3><?php _e('New registrations','cftp_admin'); ?></h3>
+										<p><?php _e('Used only on self-registrations. These options will not apply to clients registered by system administrators.','cftp_admin'); ?></p>
+									</li>
 									<li>
 										<label for="clients_can_register"><?php _e('Clients can register themselves','cftp_admin'); ?></label>
 										<input type="hidden" value="0" name="clients_can_register" class="checkbox_options" <?php echo (CLIENTS_CAN_REGISTER == 0) ? '' : 'checked="checked"'; ?> />
 										<input type="checkbox" value="1" name="clients_can_register" class="checkbox_options" <?php echo (CLIENTS_CAN_REGISTER == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+									<li>
+										<label for="clients_auto_approve"><?php _e('Auto approve new accounts','cftp_admin'); ?></label>
+										<input type="hidden" value="0" name="clients_auto_approve" class="checkbox_options" <?php echo (CLIENTS_AUTO_APPROVE == 0) ? '' : 'checked="checked"'; ?> />
+										<input type="checkbox" value="1" name="clients_auto_approve" class="checkbox_options" <?php echo (CLIENTS_AUTO_APPROVE == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+									<li>
+										<label for="clients_auto_group"><?php _e('Add clients to this group:','cftp_admin'); ?></label>
+										<select name="clients_auto_group" id="clients_auto_group">
+											<option value="0"><?php _e('None (does not enable this feature).','cftp_admin'); ?></option>
+										<?php
+											/** Fill the groups array that will be used on the form */
+											$groups = array();
+											$cq = "SELECT id, name FROM tbl_groups ORDER BY name ASC";
+											$sql = $database->query($cq);
+											while($grow = mysql_fetch_array($sql)) {
+												?>
+													<option value="<?php echo $grow["id"]; ?>"
+														<?php
+															if (CLIENTS_AUTO_GROUP == $grow["id"]) {
+																echo 'selected="selected"';
+															}
+														?>
+														><?php echo $grow["name"]; ?>
+													</option>
+												<?php
+											}
+										?>
+										</select>
+										<p class="field_note"><?php _e('New clients will automatically be assigned to the group you have selected.','cftp_admin'); ?></p>
+									</li>
+									
+									<li class="options_divide"></li>
+									<li>
+										<h3><?php _e('Files','cftp_admin'); ?></h3>
+										<p><?php _e('Options related to the files that clients upload themselves.','cftp_admin'); ?></p>
+									</li>
+									<li>
+										<label for="clients_can_upload"><?php _e('Clients can upload files','cftp_admin'); ?></label>
+										<input type="hidden" value="0" name="clients_can_upload" class="checkbox_options" <?php echo (CLIENTS_CAN_UPLOAD == 0) ? '' : 'checked="checked"'; ?> />
+										<input type="checkbox" value="1" name="clients_can_upload" class="checkbox_options" <?php echo (CLIENTS_CAN_UPLOAD == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 					
 									<li class="options_divide"></li>
 								</ul>
 							</div>
 						</div>
+
 
 						<div id="tab_email">
 							<div class="options_box whitebox">
