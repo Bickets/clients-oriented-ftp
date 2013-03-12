@@ -17,6 +17,13 @@
 define('CURRENT_VERSION', 'r385');
 
 /**
+ * Fix for including external files when on HTTPS.
+ * Contribution on
+ * http://code.google.com/p/clients-oriented-ftp/issues/detail?id=230
+ */
+define('PROTOCOL', empty($_SERVER['HTTPS'])? 'http' : 'https');
+
+/**
  * Turn off reporting of PHP errors, warnings and notices.
  * On a development environment, it should be set to E_ALL for
  * complete debugging.

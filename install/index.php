@@ -54,7 +54,7 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title><?php echo $page_title_install; ?> &raquo; <?php echo SYSTEM_NAME; ?></title>
 	<link rel="shortcut icon" href="../favicon.ico" />
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="<?php echo PROTOCOL; ?>://code.jquery.com/jquery-1.8.3.min.js"></script>
 
 	<link rel="stylesheet" media="all" type="text/css" href="../css/bootstrap.min.css" />
 	<link rel="stylesheet" media="all" type="text/css" href="../css/bootstrap-responsive.min.css" />
@@ -64,8 +64,8 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 	<link rel="stylesheet" media="all" type="text/css" href="../css/base.css" />
 	<link rel="stylesheet" media="all" type="text/css" href="../css/shared.css" />
 
-	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+	<link href='<?php echo PROTOCOL; ?>://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+	<link href='<?php echo PROTOCOL; ?>://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
