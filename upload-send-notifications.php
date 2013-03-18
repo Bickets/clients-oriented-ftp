@@ -188,9 +188,9 @@ if (!empty($found_notifications)) {
 			if ($creators_data[$mail_username]['active'] == '1') {
 				/** Reset the files list UL contents */
 				$files_list = '';
-				foreach ($admin_files as $mail_files) {
+				foreach ($admin_files as $client_uploader => $mail_files) {
 	
-					$files_list.= '<li style="font-size:15px; font-weight:bold; margin-bottom:5px;">'.$mail_username.'</li>';
+					$files_list.= '<li style="font-size:15px; font-weight:bold; margin-bottom:5px;">'.$client_uploader.'</li>';
 					foreach ($mail_files as $mail_file) {
 						/** Make the list of files */
 						$files_list.= '<li style="margin-bottom:11px;">';
