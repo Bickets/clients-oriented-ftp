@@ -94,6 +94,7 @@ by giving support, sending code, translations, etc.
 - Raúl Elenes
 - k.flipflip
 - Diego Carreira Vidal
+- Scott Wright
 - Everyone that commented and gave suggestions on the issues and Facebook pages!
 
 - stackoverflow.com

@@ -14,11 +14,11 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r385');
+define('CURRENT_VERSION', 'r395');
 
 /**
  * Fix for including external files when on HTTPS.
- * Contribution on
+ * Contribution by Scott Wright on
  * http://code.google.com/p/clients-oriented-ftp/issues/detail?id=230
  */
 define('PROTOCOL', empty($_SERVER['HTTPS'])? 'http' : 'https');
