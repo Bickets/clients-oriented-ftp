@@ -50,6 +50,19 @@ https://www.facebook.com/pages/ProjectSend/333455190044627
 
 --------------------------------------------------------------------------------------------
 
+Thanks. Arigatō. Danke. Gracias. Grazie. Mahadsanid. Salamat po. Merci. אַ דאַנק.
+ProjectSend translators:
+
+- Raúl Elenes
+  Spanish
+
+- Vašík Greif
+  Czech
+
+- Mathieu Noe
+  French
+--------------------------------------------------------------------------------------------
+
 Many thanks to the authors of the following scripts, which are used on ProjectSend:
 
 - jQuery
@@ -91,7 +104,6 @@ Also, thank you to the following people/communities that helped during developme
 by giving support, sending code, translations, etc.
 
 - Alejandro D'Ambrosio
-- Raúl Elenes
 - k.flipflip
 - Diego Carreira Vidal
 - Scott Wright
