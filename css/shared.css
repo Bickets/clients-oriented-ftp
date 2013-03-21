@@ -104,100 +104,104 @@ body, html {
 	border-radius: 30px;
 }
 
-@media screen and (min-width: 769px) {
-	nav {
-		margin: 0 auto; 
-		text-align: left;
-		font-family:'Open Sans',Arial,sans-serif;
-		line-height:.9em;
-	}
-	
-	nav .icon {
-		display: none;
-	}
+/** Main menu */
 
-	nav ul ul {
-		display: none;
-	}
-	
-	nav ul li:hover > ul {
-		display: block;
-	}
-	
-	nav ul {
-		padding: 0 20px;
-		list-style: none;
-		position: relative;
-		margin:0;
-	}
-	
-	nav ul:after {
-		content: ""; clear: both; display: block;
-	}
-	
-	nav ul li {
-		float: left;
-		transition: all 0.5s ease-out;
-		-moz-transition: all 0.5s ease-out;
-		-webkit-transition: all 0.5s ease-out;
-	}
-	
-	nav ul li:hover {
-		background: #000;
-	}
-	
-	nav ul li:hover a {
-		color: #fff;
-		text-decoration:none;
-	}
-	
-	nav ul li a {
-		display: block; padding: 12px 18px;
-		color: #fff; text-decoration: none;
-	}
-			
-	nav ul li:not(.no_arrow) a:before {
-		color:rgba(255, 255, 255, 0.2);
-		content:"▼";
-		font-size:.8em;
-		margin-left:8px;
-		float:right;
-	}
-	
-	nav ul ul li a:before {
-		content:""!important;
-	}
-	
-	nav ul ul {
-		background: #000;
-		border-radius: 0px;
-		padding: 10px 0;
-		position: absolute;
-		top: 100%;
-		z-index:1000;
-	
-		-moz-box-shadow:0 5px 5px #ccc;
-		-webkit-box-shadow:0 5px 5px #ccc;
-		box-shadow:0 5px 5px #ccc;
-	}
-	
-	nav ul ul li {
-		float: none; 
-		position: relative;
-	}
-	
-	nav ul ul li a {
-		padding: 12px 40px;
-		color: #fff;
-	}	
-	
-	nav ul ul li a:hover {
-		background: #3c404b;
-	}
+nav {
+	margin: 0 auto; 
+	text-align: left;
+	font-family:'Open Sans',Arial,sans-serif;
+	line-height:.9em;
+}
+
+nav .icon {
+	display: none;
+}
+
+nav ul ul {
+	display: none;
+}
+
+nav ul li:hover > ul {
+	display: block;
+}
+
+nav ul {
+	padding: 0 20px;
+	list-style: none;
+	position: relative;
+	margin:0;
+}
+
+nav ul:after {
+	content: ""; clear: both; display: block;
+}
+
+nav ul li {
+	float: left;
+	transition: all 0.5s ease-out;
+	-moz-transition: all 0.5s ease-out;
+	-webkit-transition: all 0.5s ease-out;
+}
+
+nav ul li:hover {
+	background: #000;
+}
+
+nav ul li:hover a {
+	color: #fff;
+	text-decoration:none;
+}
+
+nav ul li a {
+	padding: 12px 18px;
+	color: #fff; text-decoration: none;
+	display:inline-block;
+	zoom:1;
+}
 		
-	nav ul ul ul {
-		position: absolute; left: 100%; top:0;
-	}
+nav ul li:not(.no_arrow) a:before {
+	color:rgba(255, 255, 255, 0.2);
+	content:"▼";
+	font-size:.8em;
+	margin-left:8px;
+	display:inline;
+	float:right;
+}
+
+nav ul ul li a:before {
+	content:""!important;
+}
+
+nav ul ul {
+	background: #000;
+	border-radius: 0px;
+	padding: 10px 0;
+	position: absolute;
+	top: 100%;
+	z-index:1000;
+
+	-moz-box-shadow:0 5px 5px #ccc;
+	-webkit-box-shadow:0 5px 5px #ccc;
+	box-shadow:0 5px 5px #ccc;
+}
+
+nav ul ul li {
+	float: none; 
+	position: relative;
+}
+
+nav ul ul li a {
+	padding: 12px 40px;
+	color: #fff;
+	display:block;
+}	
+
+nav ul ul li a:hover {
+	background: #3c404b;
+}
+	
+nav ul ul ul {
+	position: absolute; left: 100%; top:0;
 }
 
 
@@ -239,12 +243,15 @@ body, html {
 		position: absolute;
 		top: 0;
 		left: 0;
-		background: #3c404b;
-		padding:5px 0;
+		background: #3c404b !important;
+		padding:5px 0 !important;
 		margin:0!important;
 		z-index:100000;
 		width:100%;
 		display:none;
+		box-shadow:none !important;
+		-moz-box-shadow:none !important;
+		-webkit-box-shadow:none !important;
 	}
 
 	nav ul.main_menu {
@@ -253,18 +260,24 @@ body, html {
 
 	nav li {
 		margin: 0;
+		display:block;
+		float:none !important;
+		padding:0 !important;
+		transition:none !important;
+		-moz-transition:none !important;
+		-webkit-transition:none !important;
 	}
 
 	nav a {
 		display: block;
-		padding: 5px 20px;
+		padding: 5px 20px !important;
 		text-align: left;
 		color:#fff !important;
 		text-decoration:none !important;
 	}
 
-	nav a:hover, nav a:focus {
-		background:#000;
+	nav li a:hover, nav li a:focus {
+		background:#000 !important;
 	}
 
 	nav ul li ul {
@@ -273,7 +286,7 @@ body, html {
 	}
 
 	nav ul li ul li {
-		padding-left:30px;
+		padding-left:30px !important;
 	}
 
 	nav ul li ul a {
