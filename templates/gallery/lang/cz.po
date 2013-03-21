@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ignacio <info@subwaydesign.com.ar>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"X-Generator: Poedit 1.5.5\n"
+
+#. Text in echo
+#: templates/gallery/template.php:92
+msgid "Download original"
+msgstr "Stáhnout originál"
+
+#. Text in function
+#: templates/gallery/template.php:56
+msgid "Gallery"
+msgstr "Galerie"
+
+#. Text in echo
+#: templates/gallery/template.php:56
+msgid "There are no files."
+msgstr "Nejsou dostupné žádné soubory."
