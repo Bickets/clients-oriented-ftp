@@ -236,7 +236,7 @@ if (in_session_or_cookies($allowed_update)) {
 			$folders = glob($work_folder."*", GLOB_NOSORT);
 		
 			foreach ($folders as $folder) {
-				if(is_dir($folder) && !stristr($folder,'temp') && !stristr($folder,'files')) {
+				if(is_dir($folder) && !stristr($folder,'/temp') && !stristr($folder,'/files')) {
 					$files = glob($folder.'/*', GLOB_NOSORT);
 					foreach ($files as $file) {
 						if(is_file($file) && !stristr($file,'index.php')) {
