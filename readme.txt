@@ -63,6 +63,9 @@ ProjectSend translators:
 - Mathieu Noe
   French
 
+- Levin Germann
+  German
+
 
 If you want to translate ProjectSend in your language, join the project on
 https://www.transifex.com/projects/p/projectsend/
