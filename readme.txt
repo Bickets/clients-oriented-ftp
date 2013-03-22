@@ -1,4 +1,4 @@
-ProjectSend (previously cFTP) is a free, clients-oriented, private file
+﻿ProjectSend (previously cFTP) is a free, clients-oriented, private file
 sharing web application.
 Clients are created and assigned a username and a password. Then you can
 upload as much files as you want under each account, and optionally add
@@ -9,6 +9,7 @@ Feel free to participate!
 
 http://www.projectsend.org/
 http://code.google.com/p/clients-oriented-ftp/
+https://www.transifex.com/projects/p/projectsend/
 
 --------------------------------------------------------------------------------------------
 
@@ -61,6 +62,11 @@ ProjectSend translators:
 
 - Mathieu Noe
   French
+
+
+If you want to translate ProjectSend in your language, join the project on
+https://www.transifex.com/projects/p/projectsend/
+
 --------------------------------------------------------------------------------------------
 
 Many thanks to the authors of the following scripts, which are used on ProjectSend:
