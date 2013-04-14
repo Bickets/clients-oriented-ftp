@@ -43,6 +43,9 @@ When a system user logs in to the system version, a check for database missing d
 made, and if anything is found, it will be updated automatically and a message will appear
 under the menu one time only.
 
+Whenever a new version is available, you will be notified in the admin panel via a message
+shown under the main menu.
+
 --------------------------------------------------------------------------------------------
 
 Questions, ideas? Want to join the project?
