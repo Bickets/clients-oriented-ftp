@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r395');
+define('CURRENT_VERSION', 'r405');
 
 /**
  * Fix for including external files when on HTTPS.
@@ -30,7 +30,7 @@ define('PROTOCOL', empty($_SERVER['HTTPS'])? 'http' : 'https');
  *
  * @link http://www.php.net/manual/en/function.error-reporting.php
  */
-//error_reporting(0);
+error_reporting(0);
 
 define('GLOBAL_TIME_LIMIT', 240*60);
 define('UPLOAD_TIME_LIMIT', 120*60);
