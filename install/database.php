@@ -173,7 +173,10 @@ if (defined('TRY_INSTALL')) {
 	(\'version_new_chlog\', \'\'),
 	(\'version_new_security\', \'\'),
 	(\'version_new_features\', \'\'),
-	(\'version_new_important\', \'\')
+	(\'version_new_important\', \'\'),
+	(\'clients_auto_approve\', \'0\'),
+	(\'clients_auto_group\', \'0\'),
+	(\'clients_can_upload\', \'1\')
 	';
 	
 	$q11 = '
