@@ -84,7 +84,7 @@ class process {
 
 				$file = UPLOADED_FILES_FOLDER.$_GET['url'];
 				if (file_exists($file)) {
-					ob_end_clean();
+					while (ob_get_level()) ob_end_clean();
 					header('Content-Type: application/octet-stream');
 					header('Content-Disposition: attachment; filename='.basename($file));
 					header('Expires: 0');
