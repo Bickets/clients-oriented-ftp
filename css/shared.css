@@ -155,7 +155,7 @@ nav ul li:hover a {
 nav ul li a {
 	padding: 12px 18px;
 	color: #fff; text-decoration: none;
-	display:inline-block;
+	display:block;
 	zoom:1;
 }
 		
