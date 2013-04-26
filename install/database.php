@@ -180,8 +180,8 @@ if (defined('TRY_INSTALL')) {
 	';
 	
 	$q11 = '
-	INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `timestamp`, `active`) VALUES
-	(1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, '.$timestamp.', 1);
+	INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `active`) VALUES
+	(1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, 1);
 	';
 }
 ?>
