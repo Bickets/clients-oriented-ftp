@@ -434,7 +434,8 @@ function get_current_url()
 function format_file_size($file)
 {
 	if ($file < 1024) {
-		echo $file . ' Byte';
+		 /** No digits so put a ? much better than just seeing Byte */
+		echo (ctype_digit($file))? $file . ' Byte' :  ' ? ' ;
 	} elseif ($file < 1048576) {
 		echo round($file / 1024, 2) . ' KB';
 	} elseif ($file < 1073741824) {
@@ -472,22 +473,29 @@ function get_real_size($file)
 		if (class_exists("COM")) {
 			$fsobj = new COM('Scripting.FileSystemObject');
 			$f = $fsobj->GetFile(realpath($file));
-			$file = $f->Size;
+			$ff = $f->Size;
 		}
 		else {
-	        $file = trim(exec("for %F in (\"" . $file . "\") do @echo %~zF"));
+	        $ff = trim(exec("for %F in (\"" . $file . "\") do @echo %~zF"));
 		}
     }
 	elseif (PHP_OS == 'Darwin') {
-		$file = trim(shell_exec("stat -f %z " . escapeshellarg($file)));
+		$ff = trim(shell_exec("stat -f %z " . escapeshellarg($file)));
     }
 	elseif ((PHP_OS == 'Linux') || (PHP_OS == 'FreeBSD') || (PHP_OS == 'Unix') || (PHP_OS == 'SunOS')) {
-		$file = trim(shell_exec("stat -c%s " . escapeshellarg($file)));
+		$ff = trim(shell_exec("stat -c%s " . escapeshellarg($file)));
     }
 	else {
-		$file = filesize($file);
+		$ff = filesize($file);
 	}
-	return $file;
+
+	/** Fix for 0kb downloads by AlanReiblein */
+	if (!ctype_digit($ff)) {
+		 /* returned value not a number so try filesize() */
+		$ff=filesize($file);
+	}
+
+	return $ff;
 }
 
 /**
