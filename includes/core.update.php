@@ -648,11 +648,11 @@ if (in_session_or_cookies($allowed_update)) {
 
 
 		/**
-		 * r386 / r410 updates
+		 * r386 / r412 updates
 		 * Add new options to handle actions related to clients
 		 * self registrations.
 		 */
-		if ($last_update < 410) {
+		if ($last_update < 412) {
 			$new_database_values = array(
 											'clients_auto_approve'	=> '0',
 											'clients_auto_group'	=> '0',
