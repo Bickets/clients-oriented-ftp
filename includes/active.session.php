@@ -8,7 +8,8 @@
  */
 session_start();
 ob_start();
-header("Cache-control: private");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
 
 /**
  * Global information on the current account to use accross the system.
