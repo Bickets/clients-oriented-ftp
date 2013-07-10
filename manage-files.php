@@ -258,20 +258,27 @@ include('header.php');
 
 		/** Add the status filter */	
 		if(isset($_POST['status']) && $_POST['status'] != 'all') {
+			$set_and = true;
 			$status_filter = $_POST['status'];
-			$cq .= " AND hidden='$status_filter'";
+			$cq .= " WHERE hidden='$status_filter'";
 			$no_results_error = 'filter';
 		}
 
 		/** Add the download count filter */	
 		if(isset($_POST['download_count']) && $_POST['download_count'] != 'all') {
 			$count_filter = $_POST['download_count'];
+			if (isset($set_and)) {
+				$cq .= " AND ";
+			}
+			else {
+				$cq .= " WHERE ";
+			}
 			switch ($count_filter) {
 				case '0':
-					$cq .= " AND download_count='$count_filter'";
+					$cq .= "download_count='$count_filter'";
 					break;
 				case '1':
-					$cq .= " AND download_count >='$count_filter'";
+					$cq .= "download_count >='$count_filter'";
 					break;
 			}
 			$no_results_error = 'filter';
