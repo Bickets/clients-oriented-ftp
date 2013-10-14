@@ -63,9 +63,6 @@ $work_folder = UPLOADED_FILES_FOLDER;
 				$assigned[] = $row["file_id"];
 			}
 
-			/** This array will be compared to files on the DB */
-			$found_disc_files = array();
-
 			/** Read the temp folder and list every allowed file */
 			if ($handle = opendir($work_folder)) {
 				while (false !== ($filename = readdir($handle))) {
@@ -80,8 +77,12 @@ $work_folder = UPLOADED_FILES_FOLDER;
 								if ($file_object->is_filetype_allowed($new_filename)) {
 									/** Add it to the array of available files */
 									$new_filename_path = $work_folder.'/'.$new_filename;
-									$files_to_add[$new_filename] = $new_filename_path;
-									$found_disc_files[] = $new_filename;
+									//$files_to_add[$new_filename] = $new_filename_path;
+									$files_to_add[] = array(
+															'path'		=> $new_filename_path,
+															'name'		=> $new_filename,
+															'reason'	=> 'not_on_db',
+														);
 								}
 							}
 							else {
@@ -90,16 +91,17 @@ $work_folder = UPLOADED_FILES_FOLDER;
 								 * but not on the assigned table ($assigned)
 								 */
 								if(!in_array($db_files[$filename],$assigned)) {
-									$files_to_add[$filename] = $filename_path;
+									$files_to_add[] = array(
+															'path'		=> $filename_path,
+															'name'		=> $filename,
+															'reason'	=> 'not_assigned',
+														);
 								}
 							}
 						}
 					}
 				}
 				closedir($handle);
-			}
-			
-			foreach ($found_disc_files as $found_file) {
 			}
 			
 			/**
@@ -119,17 +121,30 @@ $work_folder = UPLOADED_FILES_FOLDER;
 								<th><?php _e('File name','cftp_admin'); ?></th>
 								<th><?php _e('File size','cftp_admin'); ?></th>
 								<th><?php _e('Last modified','cftp_admin'); ?></th>
+								<th><?php _e('Reason','cftp_admin'); ?></th>
 							</tr>
 						</thead>
 						<tbody>
 							<?php
-								foreach ($files_to_add as $add_file => $add_file_path) {
+								foreach ($files_to_add as $add_file) {
 									?>
 										<tr>
 											<td><input type="checkbox" name="add[]" value="<?php echo $add_file; ?>" /></td>
-											<td><?php echo $add_file; ?></td>
-											<td><?php echo format_file_size(filesize($add_file_path)); ?></td>
-											<td><?php echo date(TIMEFORMAT_USE, filemtime($add_file_path)); ?></td>
+											<td><?php echo $add_file['name']; ?></td>
+											<td><?php echo format_file_size(filesize($add_file['path'])); ?></td>
+											<td><?php echo date(TIMEFORMAT_USE, filemtime($add_file['path'])); ?></td>
+											<td>
+												<?php
+													switch($add_file['reason']) {
+														case 'not_on_db':
+															_e('Never assigned to any user or group','cftp_admin');
+															break;
+														case 'not_assigned':
+															_e('All assignations were removed','cftp_admin');
+															break;
+													}
+												?>
+											</td>
 										</tr>
 									<?php
 								}
