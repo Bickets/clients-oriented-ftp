@@ -264,7 +264,7 @@ $current_level = get_current_user_level();
 												);
 							$new_record_action = $new_log_action->log_action_save($log_action_args);
 
-							$msg = 'The file has been edited succesfuly.';
+							$msg = __('The file has been edited succesfuly.','cftp_admin');
 							echo system_message('ok',$msg);
 							
 							include(ROOT_DIR.'/upload-send-notifications.php');
@@ -324,7 +324,7 @@ $current_level = get_current_user_level();
 											</div>
 										</div>
 									</div>
-									<div class="span6">
+									<div class="span6 assigns">
 										<?php
 											/**
 											* Only show the CLIENTS select field if the current
@@ -333,7 +333,7 @@ $current_level = get_current_user_level();
 											if ($global_level != 0) {
 										?>
 												<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
-												<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="assign_select" >
+												<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="form-control chosen-select" data-placeholder="<?php _e('Select one or more options. Type to search.', 'cftp_admin');?>">
 													<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
 														<?php
 															/**
@@ -392,17 +392,27 @@ $current_level = get_current_user_level();
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('.assign_select').multiSelect({
-			selectableHeader: "<div class='multiselect_header'><?php _e('Available','cftp_admin'); ?></div>",
-			selectionHeader: "<div class='multiselect_header'><?php _e('Selected','cftp_admin'); ?></div>"
-		})
-		$('.add-all').click(function(){
-		  $(this).parent().parent().find('select').multiSelect('select_all');
-		  return false;
+		$('.chosen-select').chosen({
+			no_results_text: "<?php _e('No results where found.','cftp_admin'); ?>",
+			width: "98%"
 		});
+
+		$('.add-all').click(function(){
+			var selector = $(this).closest('.assigns').find('select');
+			$(selector).find('option').each(function(){
+				$(this).prop('selected', true);
+			});
+			$('select').trigger('chosen:updated');
+			return false;
+		});
+
 		$('.remove-all').click(function(){
-		  $(this).parent().parent().find('select').multiSelect('deselect_all');
-		  return false;
+			var selector = $(this).closest('.assigns').find('select');
+			$(selector).find('option').each(function(){
+				$(this).prop('selected', false);
+			});
+			$('select').trigger('chosen:updated');
+			return false;
 		});
 
 		$("form").submit(function() {

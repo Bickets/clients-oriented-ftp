@@ -365,6 +365,7 @@ h4 {
 	font-weight:bold;
 }
 
+
 /* validation */
 
 .field_error {
@@ -515,6 +516,13 @@ h4 {
 	font-size:1.7em;
 	margin:0 0 20px;
 	word-wrap:break-word;
+}
+
+.list_mass_members {
+	margin:8px 0 0;
+	padding:8px 0 0;
+	border-top:1px dotted #ccc;
+	text-align:right;
 }
 
 /****************/

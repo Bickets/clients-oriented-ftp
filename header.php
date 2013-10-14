@@ -91,8 +91,9 @@ if (in_session_or_cookies($core_update_allowed)) {
 	<?php } ?>
 	
 	<?php if (isset($multiselect)) { ?>
-		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/multi-select.css" />
-		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/jquery.multi-select.js"></script>
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/js/chosen/chosen.min.css" />
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/js/chosen/chosen.bootstrap.css" />
+		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/chosen/chosen.jquery.min.js"></script>
 	<?php } ?>
 	
 
@@ -101,6 +102,11 @@ if (in_session_or_cookies($core_update_allowed)) {
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/browserplus-min.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload/js/plupload.full.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
+
+<!--
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/plupload-2.0.0/js/jquery.plupload.queue/css/jquery.plupload.queue.css?v=2.0.0" />
+		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload-2.0.0/js/plupload.full.min.js?v=2.0.0"></script>
+-->
 	<?php } ?>
 
 	<?php if (isset($flot)) { ?>

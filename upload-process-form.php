@@ -467,7 +467,7 @@ while($row = mysql_fetch_array($sql)) {
 														</div>
 													</div>
 												</div>
-												<div class="span6">
+												<div class="span6 assigns">
 													<?php
 														/**
 														* Only show the CLIENTS select field if the current
@@ -476,7 +476,7 @@ while($row = mysql_fetch_array($sql)) {
 														if ($current_level != 0) {
 													?>
 															<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
-															<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="assign_select" >
+															<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="form-control chosen-select" data-placeholder="<?php _e('Select one or more options. Type to search.', 'cftp_admin');?>">
 																<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
 																	<?php
 																		/**
@@ -507,6 +507,7 @@ while($row = mysql_fetch_array($sql)) {
 															<div class="list_mass_members">
 																<a href="#" class="btn add-all"><?php _e('Add all','cftp_admin'); ?></a>
 																<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
+																<a href="#" class="btn copy-all"><?php _e('Copy selections to other files','cftp_admin'); ?></a>
 															</div>
 													<?php
 														} /** Close $current_level check */
@@ -588,19 +589,53 @@ while($row = mysql_fetch_array($sql)) {
 		<?php
 			if(!empty($uploaded_files)) {
 		?>
-				$('.assign_select').multiSelect({
-					selectableHeader: "<div class='multiselect_header'><?php _e('Available','cftp_admin'); ?></div>",
-					selectionHeader: "<div class='multiselect_header'><?php _e('Selected','cftp_admin'); ?></div>"
-				})
-
+				$('.chosen-select').chosen({
+					no_results_text: "<?php _e('No results where found.','cftp_admin'); ?>",
+					width: "98%"
+				});
+		
 				$('.add-all').click(function(){
-				  $(this).parent().parent().find('select').multiSelect('select_all');
-				  return false;
+					var selector = $(this).closest('.assigns').find('select');
+					$(selector).find('option').each(function(){
+						$(this).prop('selected', true);
+					});
+					$('select').trigger('chosen:updated');
+					return false;
 				});
+		
 				$('.remove-all').click(function(){
-				  $(this).parent().parent().find('select').multiSelect('deselect_all');
-				  return false;
+					var selector = $(this).closest('.assigns').find('select');
+					$(selector).find('option').each(function(){
+						$(this).prop('selected', false);
+					});
+					$('select').trigger('chosen:updated');
+					return false;
 				});
+
+				$('.copy-all').click(function() {
+					var selector = $(this).closest('.assigns').find('select');
+
+					var selected = new Array();
+					$(selector).find('option:selected').each(function() {
+						selected.push($(this).val());
+					});
+
+					alert(selected.length);
+
+					$('.chosen-select').each(function() {
+						$(this).find('option').each(function() {
+							if ($.inArray($(this).val(), selected) === -1) {
+								$(this).removeAttr('selected');
+							}
+							else {
+								$(this).attr('selected', 'selected');
+							}
+						});
+					});
+					$('select').trigger('chosen:updated');
+					return false;
+				});
+		
 				// Autoclick the continue button
 				//$('#upload_continue').click();
 		<?php

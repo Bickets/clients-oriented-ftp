@@ -43,9 +43,9 @@ switch ($groups_form_type) {
 			<label for="add_group_form_description" class="textarea_label"><?php _e('Description','cftp_admin'); ?></label>
 			<textarea name="add_group_form_description" id="add_group_form_description"><?php echo (isset($add_group_data_description)) ? stripslashes($add_group_data_description) : ''; ?></textarea>
 		</li>
-		<li>
+		<li class="assigns">
 			<label for="add_group_form_members"><?php _e('Members','cftp_admin'); ?></label>
-			<select multiple="multiple" id="members-select" name="add_group_form_members[]">
+			<select multiple="multiple" id="members-select" class="form-control chosen-select" name="add_group_form_members[]" data-placeholder="<?php _e('Select one or more options. Type to search.', 'cftp_admin');?>">
 				<?php
 					$sql = $database->query("SELECT * FROM tbl_users WHERE level = '0' ORDER BY name ASC");
 					while($row = mysql_fetch_array($sql)) {
@@ -76,17 +76,26 @@ switch ($groups_form_type) {
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#members-select').multiSelect({
-			selectableHeader: "<div class='multiselect_header'><?php _e('Available','cftp_admin'); ?></div>",
-			selectionHeader: "<div class='multiselect_header'><?php _e('Assigned to this group','cftp_admin'); ?></div>"
-		})
-		$('.add-all').click(function(){
-		  $('#members-select').multiSelect('select_all');
-		  return false;
+		$('.chosen-select').chosen({
+			no_results_text: "<?php _e('No results where found.','cftp_admin'); ?>",
 		});
+
+		$('.add-all').click(function(){
+			var selector = $(this).closest('.assigns').find('select');
+			$(selector).find('option').each(function(){
+				$(this).prop('selected', true);
+			});
+			$('select').trigger('chosen:updated');
+			return false;
+		});
+
 		$('.remove-all').click(function(){
-		  $('#members-select').multiSelect('deselect_all');
-		  return false;
+			var selector = $(this).closest('.assigns').find('select');
+			$(selector).find('option').each(function(){
+				$(this).prop('selected', false);
+			});
+			$('select').trigger('chosen:updated');
+			return false;
 		});
 	});
 </script>
