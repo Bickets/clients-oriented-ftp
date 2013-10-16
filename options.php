@@ -3,6 +3,7 @@
  * Options page and form.
  *
  * @package ProjectSend
+ * @subpackage Options
  */
 $easytabs = 1;
 $allowed_levels = array(9);

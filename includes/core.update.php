@@ -672,6 +672,46 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+
+		/**
+		 * r419 updates
+		 * Add new options to customize the emails sent by the system.
+		 */
+		if ($last_update < 419) {
+			$new_database_values = array(
+										/**
+										 * On or Off fields
+										 * Each one corresponding to a type of email
+										 */
+											'email_new_file_by_user_customize'		=> '0',
+											'email_new_file_by_client_customize'	=> '0',
+											'email_new_client_by_user_customize'	=> '0',
+											'email_new_client_by_self_customize'	=> '0',
+											'email_new_user_customize'				=> '0',
+										/**
+										 * Text fields
+										 * Each one corresponding to a type of email
+										 */
+											'email_new_file_by_user_text'			=> '',
+											'email_new_file_by_client_text'			=> '',
+											'email_new_client_by_user_text'			=> '',
+											'email_new_client_by_self_text'			=> '',
+											'email_new_user_text'					=> ''
+										);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 	}
 }	
 ?>

@@ -39,7 +39,7 @@ if (defined('TRY_INSTALL')) {
 	  `password` varchar(32) NOT NULL,
 	  `name` text NOT NULL,
 	  `email` varchar(60) NOT NULL,
-	  `level` tinyint(1) NOT NULL,
+	  `level` tinyint(1) NOT NULL DEFAULT \'0\',
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	  `address` text COLLATE latin1_general_ci NOT NULL,
 	  `phone` varchar(32) COLLATE latin1_general_ci NOT NULL,
@@ -176,7 +176,17 @@ if (defined('TRY_INSTALL')) {
 	(\'version_new_important\', \'\'),
 	(\'clients_auto_approve\', \'0\'),
 	(\'clients_auto_group\', \'0\'),
-	(\'clients_can_upload\', \'1\')
+	(\'clients_can_upload\', \'1\'),
+	(\'email_new_file_by_user_customize\', \'0\'),
+	(\'email_new_file_by_client_customize\', \'0\'),
+	(\'email_new_client_by_user_customize\', \'0\'),
+	(\'email_new_client_by_self_customize\', \'0\'),
+	(\'email_new_user_customize\', \'0\'),
+	(\'email_new_file_by_user_text\', \'\'),
+	(\'email_new_file_by_client_text\', \'\'),
+	(\'email_new_client_by_user_text\', \'\'),
+	(\'email_new_client_by_self_text\', \'\'),
+	(\'email_new_user_text\', \'\')
 	';
 	
 	$q11 = '

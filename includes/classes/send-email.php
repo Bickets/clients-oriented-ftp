@@ -19,7 +19,7 @@ include_once(ROOT_DIR.'/includes/email-template.php');
 
 /** Define the messages texts */
 
-/** Strings for the "New file uploaded" BY A SUSTEM USER e-mail */
+/** Strings for the "New file uploaded" BY A SYSTEM USER e-mail */
 $email_strings_file_by_user = array(
 									'subject' => __('New files uploaded for you','cftp_admin'),
 									'body' => __('The following files are now available for you to download.','cftp_admin'),
