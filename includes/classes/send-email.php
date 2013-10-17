@@ -79,12 +79,45 @@ class PSend_Email
 	 * The body of the e-mails is gotten from the html templates
 	 * found on the /emails folder.
 	 */
-	function email_prepare_body($filename)
+	function email_prepare_body($type)
 	{
 		global $email_template_header;
 		global $email_template_footer;
+		
+		switch ($type) {
+			case 'new_client':
+					$filename	= 'new-client.html';
+					$body_check	= EMAILS_CLIENT_BY_USER_USE_CUSTOM;
+					$body_text	= EMAILS_CLIENT_BY_USER_TEXT;
+				break;
+			case 'new_client_self':
+					$filename	= 'new-client-self.html';
+					$body_check	= EMAILS_CLIENT_BY_SELF_USE_CUSTOM;
+					$body_text	= EMAILS_CLIENT_BY_SELF_TEXT;
+				break;
+			case 'new_user':
+					$filename	= 'new-user.html';
+					$body_check	= EMAILS_NEW_USER_USE_CUSTOM;
+					$body_text	= EMAILS_NEW_USER_TEXT;
+				break;
+			case 'new_file_by_user':
+					$filename	= 'new-file-for-client.html';
+					$body_check	= EMAILS_FILE_BY_USER_USE_CUSTOM;
+					$body_text	= EMAILS_FILE_BY_USER_TEXT;
+				break;
+			case 'new_file_by_client':
+					$filename	= 'new-file-by-client.html';
+					$body_check	= EMAILS_FILE_BY_CLIENT_USE_CUSTOM;
+					$body_text	= EMAILS_FILE_BY_CLIENT_TEXT;
+				break;
+		}
 
-		$this->get_body = ROOT_DIR.'/emails/'.$filename;
+		if ($body_check == '0') {
+			$this->get_body = ROOT_DIR.'/emails/'.$filename;
+		}
+		else {
+			$this->get_body = $body_text;
+		}
 		$this->make_body = $email_template_header;
 		$this->make_body .= file_get_contents($this->get_body);
 		$this->make_body .= $email_template_footer;
@@ -98,7 +131,7 @@ class PSend_Email
 	function email_new_client($username,$password)
 	{
 		global $email_strings_new_client;
-		$this->email_body = $this->email_prepare_body('new-client.html');
+		$this->email_body = $this->email_prepare_body('new_client');
 		$this->email_body = str_replace(
 									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLUSER%','%LBLPASS%','%USERNAME%','%PASSWORD%','%URI%'),
 									array(
@@ -125,7 +158,7 @@ class PSend_Email
 	function email_new_client_self($username,$fullname)
 	{
 		global $email_strings_new_client_self;
-		$this->email_body = $this->email_prepare_body('new-client-self.html');
+		$this->email_body = $this->email_prepare_body('new_client_self');
 		$this->email_body = str_replace(
 									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLNAME%','%LBLUSER%','%FULLNAME%','%USERNAME%','%URI%'),
 									array(
@@ -152,7 +185,7 @@ class PSend_Email
 	function email_new_user($username,$password)
 	{
 		global $email_strings_new_user;
-		$this->email_body = $this->email_prepare_body('new-user.html');
+		$this->email_body = $this->email_prepare_body('new_user');
 		$this->email_body = str_replace(
 									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLUSER%','%LBLPASS%','%USERNAME%','%PASSWORD%','%URI%'),
 									array(
@@ -182,7 +215,7 @@ class PSend_Email
 	function email_new_files_for_client($files_list)
 	{
 		global $email_strings_file_by_user;
-		$this->email_body = $this->email_prepare_body('new-file-for-client.html');
+		$this->email_body = $this->email_prepare_body('new_file_by_user');
 		$this->email_body = str_replace(
 									array('%SUBJECT%','%BODY1%','%FILES%','%BODY2%','%BODY3%','%BODY4%','%LINK%'),
 									array(
@@ -210,7 +243,7 @@ class PSend_Email
 	function email_new_files_by_client($files_list)
 	{
 		global $email_strings_file_by_client;
-		$this->email_body = $this->email_prepare_body('new-file-by-client.html');
+		$this->email_body = $this->email_prepare_body('new_file_by_client');
 		$this->email_body = str_replace(
 									array('%SUBJECT%','%BODY1%','%FILES%','%BODY2%','%BODY3%','%LINK%'),
 									array(

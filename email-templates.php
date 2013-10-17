@@ -79,6 +79,10 @@ if ($_POST) {
 														'description'	=> __('This email will be sent to a client whenever a new file has been assigned to his account.','cftp_admin'),
 														'option_check'	=> EMAILS_FILE_BY_USER_USE_CUSTOM,
 														'option_text'	=> EMAILS_FILE_BY_USER_TEXT,
+														'tags'			=> array(
+																					'%FILES%'		=> __('Shows the list of files','cftp_admin'),
+																					'%LINK%'		=> __('Shows the login link','cftp_admin'),
+																				),
 													),
 										2	=> array(
 														'tab'			=> 'file_by_client',
@@ -159,7 +163,26 @@ if ($_POST) {
 												
 												<li>
 													<p class="field_note"><?php _e('You can use HTML tags here.','cftp_admin'); ?></p>
-												</li>				
+												</li>	
+												
+												<li class="email_available_tags">
+													<p><strong><?php _e("The following tags can be used on this e-mails' body.",'cftp_admin'); ?></strong></p>
+													<?php
+														if (!empty($group['tags'])) {
+													?>
+															<ul>
+																<?php
+																	foreach ($group['tags'] as $tag => $description) {
+																?>
+																		<li><i class="icon-ok"></i> <strong><?php echo $tag; ?></strong>: <?php echo $description; ?></li>
+																<?php
+																	}
+																?>
+															</ul>
+													<?php
+														}
+													?>
+												</li>			
 								
 											</ul>
 										</div>
