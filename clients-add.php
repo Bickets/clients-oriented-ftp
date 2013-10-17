@@ -44,7 +44,7 @@ if ($_POST) {
 							'id' => '',
 							'username' => $add_client_data_user,
 							'password' => $_POST['add_client_form_pass'],
-							'password_repeat' => $_POST['add_client_form_pass2'],
+							//'password_repeat' => $_POST['add_client_form_pass2'],
 							'name' => $add_client_data_name,
 							'email' => $add_client_data_email,
 							'address' => $add_client_data_addr,

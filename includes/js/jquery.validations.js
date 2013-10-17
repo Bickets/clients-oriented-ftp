@@ -102,6 +102,9 @@ function show_form_errors() {
 	}
 }
 
+/**
+ * Adapted from http://jsfiddle.net/Ngtp7/2/
+ */
 $(function () {
   $(".password_toggle").each(function (index, input) {
     var $input = $(input);

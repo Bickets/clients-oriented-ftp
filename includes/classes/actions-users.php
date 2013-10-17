@@ -26,7 +26,7 @@ class UserActions
 		$this->name = $arguments['name'];
 		$this->email = $arguments['email'];
 		$this->password = $arguments['password'];
-		$this->password_repeat = $arguments['password_repeat'];
+		//$this->password_repeat = $arguments['password_repeat'];
 		$this->role = $arguments['role'];
 		$this->type = $arguments['type'];
 
@@ -62,7 +62,7 @@ class UserActions
 			 * Changing password is optional.
 			 * Proceed only if any of the 2 fields is completed.
 			 */
-			if($arguments['password'] != '' || $arguments['password_repeat'] != '') {
+			if($arguments['password'] != '' /* || $arguments['password_repeat'] != '' */) {
 				$this->validate_password = true;
 			}
 			/**
@@ -77,7 +77,7 @@ class UserActions
 			$valid_me->validate('completed',$this->password,$validation_no_pass);
 			$valid_me->validate('password',$this->password,$validation_valid_pass.' '.$validation_valid_chars);
 			$valid_me->validate('length',$this->password,$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
-			$valid_me->validate('pass_match','',$validation_match_pass,'','',$this->password,$this->password_repeat);
+			//$valid_me->validate('pass_match','',$validation_match_pass,'','',$this->password,$this->password_repeat);
 		}
 
 		if ($valid_me->return_val) {

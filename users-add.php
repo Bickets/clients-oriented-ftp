@@ -39,7 +39,7 @@ if ($_POST) {
 							'id' => '',
 							'username' => $add_user_data_user,
 							'password' => $_POST['add_user_form_pass'],
-							'password_repeat' => $_POST['add_user_form_pass2'],
+							//'password_repeat' => $_POST['add_user_form_pass2'],
 							'name' => $add_user_data_name,
 							'email' => $add_user_data_email,
 							'role' => $add_user_data_level,

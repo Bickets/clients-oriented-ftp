@@ -98,7 +98,7 @@ if ($_POST) {
 	 * send an empty value to prevent notices.
 	 */
 	$edit_arguments['password'] = (isset($_POST['add_user_form_pass'])) ? $_POST['add_user_form_pass'] : '';
-	$edit_arguments['password_repeat'] = (isset($_POST['add_user_form_pass2'])) ? $_POST['add_user_form_pass2'] : '';
+	//$edit_arguments['password_repeat'] = (isset($_POST['add_user_form_pass2'])) ? $_POST['add_user_form_pass2'] : '';
 
 	/** Validate the information from the posted form. */
 	$edit_validate = $edit_user->validate_user($edit_arguments);
