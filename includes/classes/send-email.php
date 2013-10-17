@@ -2,9 +2,11 @@
 /**
  * Class that handles all the e-mails that the system can send.
  *
- * Currently there are e-mails defined for the following actions:
- * - A new file has been uploaded.
- * - A new client has been created.
+ * Currently there are emails defined for the following actions:
+ * - A new file has been uploaded by a system user.
+ * - A new file has been uploaded by a client.
+ * - A new client has been created by a system user.
+ * - A new client has self-registered.
  * - A new system user has been created.
  *
  * @package		ProjectSend

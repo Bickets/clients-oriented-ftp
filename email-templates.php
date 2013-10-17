@@ -155,7 +155,11 @@ if ($_POST) {
 												<li>
 													<label for="<?php echo $group['textarea']; ?>"><?php _e('Template text','cftp_admin'); ?></label>
 													<textarea name="<?php echo $group['textarea']; ?>" id="<?php echo $group['textarea']; ?>"><?php echo $group['option_text']; ?></textarea>
-												</li>					
+												</li>	
+												
+												<li>
+													<p class="field_note"><?php _e('You can use HTML tags here.','cftp_admin'); ?></p>
+												</li>				
 								
 											</ul>
 										</div>
