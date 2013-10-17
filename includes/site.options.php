@@ -103,6 +103,24 @@ if(!empty($options_values)) {
 	}
 
 	/**
+	 * For versions 419 and up
+	 */	
+	if (isset($options_values['email_new_file_by_user_customize'])) {
+		/** Checkboxes */
+		define('EMAILS_FILE_BY_USER_USE_CUSTOM',$options_values['email_new_file_by_user_customize']);
+		define('EMAILS_FILE_BY_CLIENT_USE_CUSTOM',$options_values['email_new_file_by_client_customize']);
+		define('EMAILS_CLIENT_BY_USER_USE_CUSTOM',$options_values['email_new_client_by_user_customize']);
+		define('EMAILS_CLIENT_BY_SELF_USE_CUSTOM',$options_values['email_new_client_by_self_customize']);
+		define('EMAILS_NEW_USER_USE_CUSTOM',$options_values['email_new_user_customize']);
+		/** Texts */
+		define('EMAILS_FILE_BY_USER_TEXT',$options_values['email_new_file_by_user_text']);
+		define('EMAILS_FILE_BY_CLIENT_TEXT',$options_values['email_new_file_by_client_text']);
+		define('EMAILS_CLIENT_BY_USER_TEXT',$options_values['email_new_client_by_user_text']);
+		define('EMAILS_CLIENT_BY_SELF_TEXT',$options_values['email_new_client_by_self_text']);
+		define('EMAILS_NEW_USER_TEXT',$options_values['email_new_user_text']);
+	}
+
+	/**
 	 * Set the default timezone based on the value of the Timezone select box
 	 * of the options page.
 	 */

@@ -666,8 +666,15 @@ optgroup {
 
 .options_box input[type="text"],
 .options_box input[type="password"],
+.options_box input[type="email"],
+.options_box input[type="tel"],
+.options_box textarea,
 .options_box select {
 	width:290px;
+}
+
+.options_box textarea {
+	height:250px;
 }
 
 .options_box .form_fields p {

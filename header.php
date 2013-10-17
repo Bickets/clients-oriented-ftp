@@ -277,6 +277,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 							<ul>
 								<li><a href="<?php echo BASE_URI; ?>options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
 								<li><a href="<?php echo BASE_URI; ?>branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
+								<li><a href="<?php echo BASE_URI; ?>email-templates.php"><?php _e('E-mail templates', 'cftp_admin'); ?></a></li>
 							</ul>
 						</li>
 			<?php
