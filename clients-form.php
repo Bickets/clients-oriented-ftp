@@ -106,12 +106,9 @@ switch ($clients_form_type) {
 			<input type="text" name="add_client_form_user" id="add_client_form_user" class="<?php if (!$disable_user) { echo 'required'; } ?>" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($add_client_data_user)) ? stripslashes($add_client_data_user) : ''; ?>" <?php if ($disable_user) { echo 'readonly'; }?> placeholder="<?php _e("Must be alphanumeric",'cftp_admin'); ?>" />
 		</li>
 		<li>
+			<button type="button" class="btn password_toggler pass_toggler_show"><i class="icon-eye-open"></i></button>
 			<label for="add_client_form_pass"><?php _e('Password','cftp_admin'); ?></label>
-			<input name="add_client_form_pass" id="add_client_form_pass" class="<?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
-		</li>
-		<li>
-			<label for="add_client_form_pass2"><?php _e('Repeat password','cftp_admin'); ?></label>
-			<input name="add_client_form_pass2" id="add_client_form_pass2" class="<?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+			<input name="add_client_form_pass" id="add_client_form_pass" class="<?php if ($require_pass) { echo 'required'; } ?> password_toggle" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 		</li>
 		<li>
 			<label for="add_client_form_email"><?php _e('E-mail','cftp_admin'); ?></label>

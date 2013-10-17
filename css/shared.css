@@ -501,6 +501,22 @@ nav ul ul ul {
 	background:url(../img/req-text.png) no-repeat right -2px;
 }
 
+.password_toggle {
+	width:257px !important;
+}
+
+.required.password_toggle {
+	width:214px !important;
+}
+
+
+.password_toggler {
+	float:right;
+	margin:0 5px 0 0;
+	width:40px;
+}
+
+
 #add_group_form_description {
 	width:308px;
 	height:150px;

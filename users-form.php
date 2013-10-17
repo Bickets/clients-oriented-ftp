@@ -29,17 +29,17 @@
 			?>
 					// Only check password if any of the 2 fields is completed
 					var password_1 = $("#add_user_form_pass").val();
-					var password_2 = $("#add_user_form_pass2").val();
-					if ($.trim(password_1).length > 0 || $.trim(password_2).length > 0) {
+					//var password_2 = $("#add_user_form_pass2").val();
+					if ($.trim(password_1).length > 0/* || $.trim(password_2).length > 0*/) {
 			<?php
 				}
 			?>
 
 						is_complete(this.add_user_form_pass,'<?php echo $validation_no_pass; ?>');
-						is_complete(this.add_user_form_pass2,'<?php echo $validation_no_pass2; ?>');
+						//is_complete(this.add_user_form_pass2,'<?php echo $validation_no_pass2; ?>');
 						is_length(this.add_user_form_pass,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,'<?php echo $validation_length_pass; ?>');
 						is_password(this.add_user_form_pass,'<?php $chars = addslashes($validation_valid_chars); echo $validation_valid_pass." ".$chars; ?>');
-						is_match(this.add_user_form_pass,this.add_user_form_pass2,'<?php echo $validation_match_pass; ?>');
+						//is_match(this.add_user_form_pass,this.add_user_form_pass2,'<?php echo $validation_match_pass; ?>');
 
 			<?php
 				/** Close the jquery IF statement. */
@@ -92,12 +92,9 @@ switch ($user_form_type) {
 			<input type="text" name="add_user_form_user" id="add_user_form_user" class="<?php if (!$disable_user) { echo 'required'; } ?>" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($add_user_data_user)) ? stripslashes($add_user_data_user) : ''; ?>" <?php if ($disable_user) { echo 'readonly'; } ?> placeholder="<?php _e("Must be alphanumeric",'cftp_admin'); ?>" />
 		</li>
 		<li>
+			<button type="button" class="btn password_toggler pass_toggler_show"><i class="icon-eye-open"></i></button>
 			<label for="add_user_form_pass"><?php _e('Password','cftp_admin'); ?></label>
-			<input name="add_user_form_pass" id="add_user_form_pass" class="<?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
-		</li>
-		<li>
-			<label for="add_user_form_pass2"><?php _e('Repeat password','cftp_admin'); ?></label>
-			<input name="add_user_form_pass2" id="add_user_form_pass2" class="<?php if ($require_pass) { echo 'required'; } ?>" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+			<input name="add_user_form_pass" id="add_user_form_pass" class="<?php if ($require_pass) { echo 'required'; } ?> password_toggle" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 		</li>
 		<li>
 			<label for="add_user_form_email"><?php _e('E-mail','cftp_admin'); ?></label>

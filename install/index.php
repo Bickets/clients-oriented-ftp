@@ -67,6 +67,8 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 	<link href='<?php echo PROTOCOL; ?>://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 	<link href='<?php echo PROTOCOL; ?>://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
 
+	<script src="<?php echo BASE_URI; ?>includes/js/jquery.validations.js" type="text/javascript"></script>
+
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.button').click(function() {
@@ -123,11 +125,11 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 					$valid_me->validate('alpha',$got_admin_username,$validation_alpha_user);
 					/** Password fields validation */
 					$valid_me->validate('completed',$_POST['install_user_pass'],$validation_no_pass);
-					$valid_me->validate('completed',$_POST['install_user_repeat'],$validation_no_pass2);
+					//$valid_me->validate('completed',$_POST['install_user_repeat'],$validation_no_pass2);
 					$valid_me->validate('email',$got_admin_email,$validation_invalid_mail);
 					$valid_me->validate('length',$_POST['install_user_pass'],$validation_length_pass,MIN_USER_CHARS,MAX_USER_CHARS);
 					$valid_me->validate('password',$_POST['install_user_pass'],$validation_alpha_pass);
-					$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['install_user_pass'],$_POST['install_user_repeat']);
+					//$valid_me->validate('pass_match','',$validation_match_pass,'','',$_POST['install_user_pass'],$_POST['install_user_repeat']);
 				
 					if ($valid_me->return_val) {
 						/**
@@ -227,11 +229,11 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 									is_alpha(this.install_user_username,'<?php echo $validation_alpha_user; ?>');
 									// password fields
 									is_complete(this.install_user_pass,'<?php echo $validation_no_pass; ?>');
-									is_complete(this.install_user_repeat,'<?php echo $validation_no_pass2; ?>');
+									//is_complete(this.install_user_repeat,'<?php echo $validation_no_pass2; ?>');
 									is_email(this.install_user_mail,'<?php echo $validation_invalid_mail; ?>');
 									is_length(this.install_user_pass,<?php echo MIN_USER_CHARS; ?>,<?php echo MAX_USER_CHARS; ?>,'<?php echo $validation_length_pass; ?>');
 									is_password(this.install_user_pass,'<?php $chars = addslashes($validation_valid_chars); echo $validation_valid_pass." ".$chars; ?>');
-									is_match(this.install_user_pass,this.install_user_repeat,'<?php echo $validation_match_pass; ?>');
+									//is_match(this.install_user_pass,this.install_user_repeat,'<?php echo $validation_match_pass; ?>');
 				
 									// show the errors or continue if everything is ok
 									if (show_form_errors() == false) { return false; }
@@ -276,12 +278,9 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 									<input type="text" name="install_user_username" id="install_user_username" class="required" maxlength="<?php echo MAX_USER_CHARS; ?>" value="<?php echo (isset($got_admin_username) ? $got_admin_username : ''); ?>" />
 								</li>
 								<li>
+									<button type="button" class="btn password_toggler pass_toggler_show"><i class="icon-eye-open"></i></button>
 									<label for="install_user_pass"><?php _e('Password','cftp_admin'); ?></label>
-									<input type="password" name="install_user_pass" id="install_user_pass" class="required" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
-								</li>
-								<li>
-									<label for="install_user_repeat"><?php _e('Repeat','cftp_admin'); ?></label>
-									<input type="password" name="install_user_repeat" id="install_user_repeat" class="required" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+									<input type="password" name="install_user_pass" id="install_user_pass" class="required password_toggle" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 								</li>
 								<li class="form_submit_li">
 									<input type="submit" name="Submit" value="<?php _e('Install','cftp_admin'); ?>" class="button button_blue button_submit" />
