@@ -56,11 +56,18 @@ $email_strings_new_client = array(
 $email_strings_new_client_self = array(
 									'subject'		=> __('A new client has registered.','cftp_admin'),
 									'body'			=> __('A new account was created using the self registration form on your site. Registration information:','cftp_admin'),
-									'body2'			=> __('Please log in to activate it.','cftp_admin'),
-									'body3'			=> __('Remember, your new client will not be able to log in until an administrator has approved their account.','cftp_admin'),
 									'label_name'	=> __('Full name','cftp_admin'),
 									'label_user'	=> __('Username','cftp_admin')
 								);
+if (CLIENTS_AUTO_APPROVE == '0') {
+	$email_strings_new_client_self['body2'] = __('Please log in to activate it.','cftp_admin');
+	$email_strings_new_client_self['body3'] = __('Remember, your new client will not be able to log in until an administrator has approved their account.','cftp_admin');
+}
+else {
+	$email_strings_new_client_self['body2'] = __('Auto-approvals of new accounts are currently enabled.','cftp_admin');
+	$email_strings_new_client_self['body3'] = __('You can log in to manually deactivate it.','cftp_admin');
+}
+
 
 /** Strings for the "New system user created" e-mail */
 $email_strings_new_user = array(
