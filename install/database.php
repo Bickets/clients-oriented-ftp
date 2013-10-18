@@ -11,7 +11,9 @@ if (defined('TRY_INSTALL')) {
 	$current_version = substr(CURRENT_VERSION, 1);
 	$now = date('d-m-Y');
 	
-	$q1 = '
+	$install_queries = array(
+	
+	'0' => '
 	CREATE TABLE IF NOT EXISTS `tbl_files` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `url` text NOT NULL,
@@ -21,18 +23,18 @@ if (defined('TRY_INSTALL')) {
 	  `uploader` varchar('.MAX_USER_CHARS.') NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
-	';
+	',
 	
-	$q2 = '
+	'1' => '
 	CREATE TABLE IF NOT EXISTS `tbl_options` (
 	  `id` int(10) NOT NULL AUTO_INCREMENT,
 	  `name` varchar(50) COLLATE latin1_general_ci NOT NULL,
 	  `value` text COLLATE latin1_general_ci NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-	';
+	',
 	
-	$q3 = '
+	'2' => '
 	CREATE TABLE IF NOT EXISTS `tbl_users` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `user` varchar('.MAX_USER_CHARS.') NOT NULL,
@@ -49,9 +51,9 @@ if (defined('TRY_INSTALL')) {
 	  `active` tinyint(1) NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
-	';
+	',
 	
-	$q4 = '
+	'3' => '
 	CREATE TABLE IF NOT EXISTS `tbl_groups` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -60,9 +62,9 @@ if (defined('TRY_INSTALL')) {
 	  `description` text NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-	';
+	',
 	
-	$q5 = '
+	'4' => '
 	CREATE TABLE IF NOT EXISTS `tbl_members` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -73,9 +75,9 @@ if (defined('TRY_INSTALL')) {
 	  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-	';
+	',
 	
-	$q6 = '
+	'5' => '
 	CREATE TABLE IF NOT EXISTS `tbl_folders` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `parent` int(11) DEFAULT NULL,
@@ -88,9 +90,9 @@ if (defined('TRY_INSTALL')) {
 	  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-	';
+	',
 	
-	$q7 = '
+	'6' => '
 	CREATE TABLE IF NOT EXISTS `tbl_files_relations` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -106,9 +108,9 @@ if (defined('TRY_INSTALL')) {
 	  FOREIGN KEY (`folder_id`) REFERENCES tbl_folders(`id`) ON UPDATE CASCADE,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-	';
+	',
 	
-	$q8 = '
+	'7' => '
 	CREATE TABLE IF NOT EXISTS `tbl_actions_log` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -121,9 +123,9 @@ if (defined('TRY_INSTALL')) {
 	  `affected_account_name` text DEFAULT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-	';
+	',
 	
-	$q9 = '
+	'8' => '
 	CREATE TABLE IF NOT EXISTS `tbl_notifications` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
@@ -134,9 +136,9 @@ if (defined('TRY_INSTALL')) {
 	  `times_failed` int(11) NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-	';
+	',
 	
-	$q10 = '
+	'9' => '
 	INSERT INTO `tbl_options` (`name`, `value`) VALUES
 	(\'base_uri\', \''.$base_uri.'\'),
 	(\'max_thumbnail_width\', \'100\'),
@@ -190,11 +192,25 @@ if (defined('TRY_INSTALL')) {
 	(\'email_header_footer_customize\', \'0\'),
 	(\'email_header_text\', \'\'),
 	(\'email_footer_text\', \'\')
-	';
+	',
 	
-	$q11 = '
+	'10' => '
+	CREATE TABLE IF NOT EXISTS `tbl_password_reset` (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `user_id` int(11) DEFAULT NULL,
+	  `name` varchar(32) NOT NULL,
+	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	  `used` int(0) DEFAULT \'0\',
+	  FOREIGN KEY (`user_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	  PRIMARY KEY (`id`)
+	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	',
+	
+	'11' => '
 	INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `active`) VALUES
 	(1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, 1);
-	';
+	',
+
+	);
 }
 ?>
