@@ -147,6 +147,11 @@ if ($_POST) {
 	
 					<div id="tab-container" class='tab-container'>
 						<ul class="etabs">
+							<li class="tab">
+								<a href="#tab_header_footer">
+									<?php _e('Header / Footer','cftp_admin'); ?>
+								</a>
+							</li>
 							<?php
 								foreach ($options_groups as $group) {
 							?>
@@ -158,13 +163,38 @@ if ($_POST) {
 							<?php
 								}
 							?>
-							<li class="tab">
-								<a href="#tab_header_footer">
-									<?php _e('Header / Footer','cftp_admin'); ?>
-								</a>
-							</li>
 						</ul>
 						<div class="panel-container">
+							<div id="tab_header_footer">
+								<div class="options_box whitebox">
+									<ul class="form_fields">
+										<li>
+											<h3><?php _e('Header / Footer','cftp_admin'); ?></h3>
+											<p class="text-warning"><?php _e('Here you set up the header and footer of every email, or use the default ones available with the system. Use this to customize each part and include, for example, your own logo and markup.','cftp_admin'); ?></p>
+										</li>
+										<li>
+											<label for="email_header_footer_customize"><?php _e('Use custom header / footer','cftp_admin'); ?></label>
+											<input type="hidden" value="0" name="email_header_footer_customize" class="checkbox_options" <?php echo (EMAILS_HEADER_FOOTER_CUSTOM == 0) ? '' : 'checked="checked"'; ?> />
+											<input type="checkbox" value="1" name="email_header_footer_customize" class="checkbox_options" <?php echo (EMAILS_HEADER_FOOTER_CUSTOM == 1) ? 'checked="checked"' : ''; ?> />
+										</li>
+										<li>
+											<label for="email_header_text"><?php _e('Header','cftp_admin'); ?></label>
+											<textarea name="email_header_text" id="email_header_text"><?php echo EMAILS_HEADER_TEXT; ?></textarea>
+										</li>	
+										<li>
+											<p class="field_note"><?php _e('You can use HTML tags here.','cftp_admin'); ?></p>
+										</li>	
+
+										<li>
+											<label for="email_footer_text"><?php _e('Footer','cftp_admin'); ?></label>
+											<textarea name="email_footer_text" id="email_footer_text"><?php echo EMAILS_FOOTER_TEXT; ?></textarea>
+										</li>	
+										<li>
+											<p class="field_note"><?php _e('You can use HTML tags here.','cftp_admin'); ?></p>
+										</li>	
+									</ul>
+								</div>
+							</div>
 							<?php
 								foreach ($options_groups as $group) {
 							?>
@@ -214,36 +244,6 @@ if ($_POST) {
 							<?php
 								}
 							?>
-							<div id="tab_header_footer">
-								<div class="options_box whitebox">
-									<ul class="form_fields">
-										<li>
-											<h3><?php _e('Header / Footer','cftp_admin'); ?></h3>
-											<p class="text-warning"><?php _e('Here you set up the header and footer of every email, or use the default ones available with the system. Use this to customize each part and include, for example, your own logo and markup.','cftp_admin'); ?></p>
-										</li>
-										<li>
-											<label for="email_header_footer_customize"><?php _e('Use custom header / footer','cftp_admin'); ?></label>
-											<input type="hidden" value="0" name="email_header_footer_customize" class="checkbox_options" <?php echo (EMAILS_HEADER_FOOTER_CUSTOM == 0) ? '' : 'checked="checked"'; ?> />
-											<input type="checkbox" value="1" name="email_header_footer_customize" class="checkbox_options" <?php echo (EMAILS_HEADER_FOOTER_CUSTOM == 1) ? 'checked="checked"' : ''; ?> />
-										</li>
-										<li>
-											<label for="email_header_text"><?php _e('Header','cftp_admin'); ?></label>
-											<textarea name="email_header_text" id="email_header_text"><?php echo EMAILS_HEADER_TEXT; ?></textarea>
-										</li>	
-										<li>
-											<p class="field_note"><?php _e('You can use HTML tags here.','cftp_admin'); ?></p>
-										</li>	
-
-										<li>
-											<label for="email_footer_text"><?php _e('Footer','cftp_admin'); ?></label>
-											<textarea name="email_footer_text" id="email_footer_text"><?php echo EMAILS_FOOTER_TEXT; ?></textarea>
-										</li>	
-										<li>
-											<p class="field_note"><?php _e('You can use HTML tags here.','cftp_admin'); ?></p>
-										</li>	
-									</ul>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>
