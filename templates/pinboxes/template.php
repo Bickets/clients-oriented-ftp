@@ -90,7 +90,6 @@ $count = count($my_files);
 											'process.php?do=download
 											&amp;client='.CURRENT_USER_USERNAME.'
 											&amp;client_id='.$client_info['id'].'
-											&amp;url='.$file['url'].'
 											&amp;id='.$file['id'].'
 											&amp;origin='.$file['origin'];
 						if (!empty($file['group_id'])) {

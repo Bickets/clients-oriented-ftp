@@ -66,7 +66,6 @@ $count = count($img_files);
 										'process.php?do=download
 										&amp;client='.CURRENT_USER_USERNAME.'
 										&amp;client_id='.$client_info['id'].'
-										&amp;url='.$this_file['url'].'
 										&amp;id='.$this_file['id'].'
 										&amp;origin='.$this_file['origin'];
 					if (!empty($file['group_id'])) {
