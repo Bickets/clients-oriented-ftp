@@ -186,7 +186,10 @@ if (defined('TRY_INSTALL')) {
 	(\'email_new_file_by_client_text\', \'\'),
 	(\'email_new_client_by_user_text\', \'\'),
 	(\'email_new_client_by_self_text\', \'\'),
-	(\'email_new_user_text\', \'\')
+	(\'email_new_user_text\', \'\'),
+	(\'email_header_footer_customize\', \'0\'),
+	(\'email_header_text\', \'\'),
+	(\'email_footer_text\', \'\')
 	';
 	
 	$q11 = '

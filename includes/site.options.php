@@ -121,6 +121,17 @@ if(!empty($options_values)) {
 	}
 
 	/**
+	 * For versions 426 and up
+	 */	
+	if (isset($options_values['email_header_footer_customize'])) {
+		/** Checkbox */
+		define('EMAILS_HEADER_FOOTER_CUSTOM',$options_values['email_header_footer_customize']);
+		/** Texts */
+		define('EMAILS_HEADER_TEXT',$options_values['email_header_text']);
+		define('EMAILS_FOOTER_TEXT',$options_values['email_footer_text']);
+	}
+
+	/**
 	 * Set the default timezone based on the value of the Timezone select box
 	 * of the options page.
 	 */

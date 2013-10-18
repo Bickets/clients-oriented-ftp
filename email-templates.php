@@ -81,7 +81,7 @@ if ($_POST) {
 														'option_text'	=> EMAILS_FILE_BY_USER_TEXT,
 														'tags'			=> array(
 																					'%FILES%'		=> __('Shows the list of files','cftp_admin'),
-																					'%LINK%'		=> __('Shows the login link','cftp_admin'),
+																					'%LINK%'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
 																				),
 													),
 										2	=> array(
@@ -92,33 +92,52 @@ if ($_POST) {
 														'description'	=> __('This email will be sent to the system administrator whenever a client uploads a new file.','cftp_admin'),
 														'option_check'	=> EMAILS_FILE_BY_CLIENT_USE_CUSTOM,
 														'option_text'	=> EMAILS_FILE_BY_CLIENT_TEXT,
+														'tags'			=> array(
+																					'%FILES%'		=> __('Shows the list of files','cftp_admin'),
+																					'%LINK%'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
+																				),
 													),
 										3	=> array(
 														'tab'			=> 'client_by_user',
-														'name'			=> __('New client by system user','cftp_admin'),
+														'name'			=> __('New client (welcome)','cftp_admin'),
 														'checkbox'		=> 'email_new_client_by_user_customize',
 														'textarea'		=> 'email_new_client_by_user_text',
 														'description'	=> __('This email will be sent to the new client after an administrator has created his new account. It would be best to include the log in details (username and password).','cftp_admin'),
 														'option_check'	=> EMAILS_CLIENT_BY_USER_USE_CUSTOM,
 														'option_text'	=> EMAILS_CLIENT_BY_USER_TEXT,
+														'tags'			=> array(
+																					'%USERNAME%'	=> __('The new username for this account','cftp_admin'),
+																					'%PASSWORD%'	=> __('The new password for this account','cftp_admin'),
+																					'%URI%	'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
+																				),
 													),
 										4	=> array(
 														'tab'			=> 'client_by_self',
-														'name'			=> __('New client self-registered','cftp_admin'),
+														'name'			=> __('New client (self-registered)','cftp_admin'),
 														'checkbox'		=> 'email_new_client_by_self_customize',
 														'textarea'		=> 'email_new_client_by_self_text',
 														'description'	=> __('This email will be sent to the system administrator after a new client has created a new account for himself.','cftp_admin'),
 														'option_check'	=> EMAILS_CLIENT_BY_SELF_USE_CUSTOM,
 														'option_text'	=> EMAILS_CLIENT_BY_SELF_TEXT,
+														'tags'			=> array(
+																					'%FULLNAME%'	=> __('The full name the client registered with','cftp_admin'),
+																					'%USERNAME%'	=> __('The new username for this account','cftp_admin'),
+																					'%URI%	'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
+																				),
 													),
 										5	=> array(
 														'tab'			=> 'new_user_welcome',
-														'name'			=> __('New user welcome','cftp_admin'),
+														'name'			=> __('New user (welcome)','cftp_admin'),
 														'checkbox'		=> 'email_new_user_customize',
 														'textarea'		=> 'email_new_user_text',
 														'description'	=> __('This email will be sent to the new system user after an administrator has created his new account. It would be best to include the log in details (username and password).','cftp_admin'),
 														'option_check'	=> EMAILS_NEW_USER_USE_CUSTOM,
 														'option_text'	=> EMAILS_NEW_USER_TEXT,
+														'tags'			=> array(
+																					'%USERNAME%'	=> __('The new username for this account','cftp_admin'),
+																					'%PASSWORD%'	=> __('The new password for this account','cftp_admin'),
+																					'%URI%	'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
+																				),
 													),
 									);
 			?>
@@ -139,6 +158,11 @@ if ($_POST) {
 							<?php
 								}
 							?>
+							<li class="tab">
+								<a href="#tab_header_footer">
+									<?php _e('Header / Footer','cftp_admin'); ?>
+								</a>
+							</li>
 						</ul>
 						<div class="panel-container">
 							<?php
@@ -190,6 +214,36 @@ if ($_POST) {
 							<?php
 								}
 							?>
+							<div id="tab_header_footer">
+								<div class="options_box whitebox">
+									<ul class="form_fields">
+										<li>
+											<h3><?php _e('Header / Footer','cftp_admin'); ?></h3>
+											<p class="text-warning"><?php _e('Here you set up the header and footer of every email, or use the default ones available with the system. Use this to customize each part and include, for example, your own logo and markup.','cftp_admin'); ?></p>
+										</li>
+										<li>
+											<label for="email_header_footer_customize"><?php _e('Use custom header / footer','cftp_admin'); ?></label>
+											<input type="hidden" value="0" name="email_header_footer_customize" class="checkbox_options" <?php echo (EMAILS_HEADER_FOOTER_CUSTOM == 0) ? '' : 'checked="checked"'; ?> />
+											<input type="checkbox" value="1" name="email_header_footer_customize" class="checkbox_options" <?php echo (EMAILS_HEADER_FOOTER_CUSTOM == 1) ? 'checked="checked"' : ''; ?> />
+										</li>
+										<li>
+											<label for="email_header_text"><?php _e('Header','cftp_admin'); ?></label>
+											<textarea name="email_header_text" id="email_header_text"><?php echo EMAILS_HEADER_TEXT; ?></textarea>
+										</li>	
+										<li>
+											<p class="field_note"><?php _e('You can use HTML tags here.','cftp_admin'); ?></p>
+										</li>	
+
+										<li>
+											<label for="email_footer_text"><?php _e('Footer','cftp_admin'); ?></label>
+											<textarea name="email_footer_text" id="email_footer_text"><?php echo EMAILS_FOOTER_TEXT; ?></textarea>
+										</li>	
+										<li>
+											<p class="field_note"><?php _e('You can use HTML tags here.','cftp_admin'); ?></p>
+										</li>	
+									</ul>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

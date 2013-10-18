@@ -712,6 +712,30 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+		/**
+		 * r426 updates
+		 * Add new options to customize the header and footer of emails.
+		 */
+		if ($last_update < 426) {
+			$new_database_values = array(
+										'email_header_footer_customize'		=> '0',
+										'email_header_text'					=> '',
+										'email_footer_text'					=> '',
+									);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 	}
 }	
 ?>

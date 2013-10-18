@@ -23,30 +23,30 @@ include_once(ROOT_DIR.'/includes/email-template.php');
 
 /** Strings for the "New file uploaded" BY A SYSTEM USER e-mail */
 $email_strings_file_by_user = array(
-									'subject' => __('New files uploaded for you','cftp_admin'),
-									'body' => __('The following files are now available for you to download.','cftp_admin'),
-									'body2' => __("If you prefer not to be notified about new files, please go to My Account and deactivate the notifications checkbox.",'cftp_admin'),
-									'body3' => __('You can access a list of all your files or upload your own','cftp_admin'),
-									'body4' => __('by logging in here','cftp_admin')
+									'subject'	=> __('New files uploaded for you','cftp_admin'),
+									'body'		=> __('The following files are now available for you to download.','cftp_admin'),
+									'body2'		=> __("If you prefer not to be notified about new files, please go to My Account and deactivate the notifications checkbox.",'cftp_admin'),
+									'body3'		=> __('You can access a list of all your files or upload your own','cftp_admin'),
+									'body4'		=> __('by logging in here','cftp_admin')
 								);
 
 /** Strings for the "New file uploaded" BY A CLIENT e-mail */
 $email_strings_file_by_client = array(
-									'subject' => __('New files uploaded by clients','cftp_admin'),
-									'body' => __('New files has been uploaded by the following clients','cftp_admin'),
-									'body2' => __("You can manage these files",'cftp_admin'),
-									'body3' => __('by logging in here','cftp_admin')
+									'subject'	=> __('New files uploaded by clients','cftp_admin'),
+									'body'		=> __('New files has been uploaded by the following clients','cftp_admin'),
+									'body2'		=> __("You can manage these files",'cftp_admin'),
+									'body3'		=> __('by logging in here','cftp_admin')
 								);
 
 
 /** Strings for the "New client created" e-mail */
 $email_strings_new_client = array(
-									'subject' => __('Welcome to ProjectSend','cftp_admin'),
-									'body' => __('A new account was created for you. From now on, you can access the files that have been uploaded under your account using the following credentials:','cftp_admin'),
-									'body2' => __('You can log in following this link','cftp_admin'),
-									'body3' => __('Please contact the administrator if you need further assistance.','cftp_admin'),
-									'label_user' => __('Your username','cftp_admin'),
-									'label_pass' => __('Your password','cftp_admin')
+									'subject'		=> __('Welcome to ProjectSend','cftp_admin'),
+									'body'			=> __('A new account was created for you. From now on, you can access the files that have been uploaded under your account using the following credentials:','cftp_admin'),
+									'body2'			=> __('You can log in following this link','cftp_admin'),
+									'body3'			=> __('Please contact the administrator if you need further assistance.','cftp_admin'),
+									'label_user'	=> __('Your username','cftp_admin'),
+									'label_pass'	=> __('Your password','cftp_admin')
 								);
 
 /**
@@ -54,22 +54,22 @@ $email_strings_new_client = array(
  * on self registration.
  */
 $email_strings_new_client_self = array(
-									'subject' => __('A new client has registered.','cftp_admin'),
-									'body' => __('A new account was created using the self registration form on your site. Registration information:','cftp_admin'),
-									'body2' => __('Please log in to activate it.','cftp_admin'),
-									'body3' => __('Remember, your new client will not be able to log in until an administrator has approved their account.','cftp_admin'),
-									'label_name' => __('Full name','cftp_admin'),
-									'label_user' => __('Username','cftp_admin')
+									'subject'		=> __('A new client has registered.','cftp_admin'),
+									'body'			=> __('A new account was created using the self registration form on your site. Registration information:','cftp_admin'),
+									'body2'			=> __('Please log in to activate it.','cftp_admin'),
+									'body3'			=> __('Remember, your new client will not be able to log in until an administrator has approved their account.','cftp_admin'),
+									'label_name'	=> __('Full name','cftp_admin'),
+									'label_user'	=> __('Username','cftp_admin')
 								);
 
 /** Strings for the "New system user created" e-mail */
 $email_strings_new_user = array(
-									'subject' => __('Welcome to ProjectSend','cftp_admin'),
-									'body' => __('A new account was created for you. From now on, you can access the system administrator using the following credentials:','cftp_admin'),
-									'body2' => __('Access the system panel here','cftp_admin'),
-									'body3' => __('Thank you for using ProjectSend.','cftp_admin'),
-									'label_user' => __('Your username','cftp_admin'),
-									'label_pass' => __('Your password','cftp_admin')
+									'subject'		=> __('Welcome to ProjectSend','cftp_admin'),
+									'body'			=> __('A new account was created for you. From now on, you can access the system administrator using the following credentials:','cftp_admin'),
+									'body2'			=> __('Access the system panel here','cftp_admin'),
+									'body3'			=> __('Thank you for using ProjectSend.','cftp_admin'),
+									'label_user'	=> __('Your username','cftp_admin'),
+									'label_pass'	=> __('Your password','cftp_admin')
 								);
 
 
@@ -113,14 +113,38 @@ class PSend_Email
 		}
 
 		if ($body_check == '0') {
-			$this->get_body = ROOT_DIR.'/emails/'.$filename;
+			$this->get_body = file_get_contents(ROOT_DIR.'/emails/'.$filename);
 		}
 		else {
 			$this->get_body = $body_text;
 		}
-		$this->make_body = $email_template_header;
-		$this->make_body .= file_get_contents($this->get_body);
-		$this->make_body .= $email_template_footer;
+		
+		/**
+		 * Header
+		 */
+		if (EMAILS_HEADER_FOOTER_CUSTOM == '0') {
+			$this->make_body = $email_template_header;
+		}
+		else {
+			$this->make_body = EMAILS_HEADER_TEXT;
+		}
+
+		/**
+		 * Body
+		 */
+		$this->make_body .= $this->get_body;
+
+		/**
+		 * Footer
+		 */
+		if (EMAILS_HEADER_FOOTER_CUSTOM == '0') {
+			$this->make_body .= $email_template_footer;
+		}
+		else {
+			$this->make_body .= EMAILS_FOOTER_TEXT;
+		}
+
+
 		return $this->make_body;
 	}
 
