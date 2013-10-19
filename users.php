@@ -170,10 +170,17 @@ include('header.php');
 		$no_results_error = 'search';
 	}
 
-	/** Add the status filter */	
+	/** Add the role filter */	
 	if(isset($_POST['role']) && $_POST['role'] != 'all') {
 		$role_filter = $_POST['role'];
 		$cq .= " AND level='$role_filter'";
+		$no_results_error = 'filter';
+	}
+	
+	/** Add the status filter */	
+	if(isset($_POST['status']) && $_POST['status'] != 'all') {
+		$status_filter = $_POST['status'];
+		$cq .= " AND active='$status_filter'";
 		$no_results_error = 'filter';
 	}
 
