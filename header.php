@@ -41,7 +41,7 @@ if (in_session_or_cookies($core_update_allowed)) {
 	<title><?php echo $page_title; ?> &raquo; <?php echo THIS_INSTALL_SET_TITLE; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
-	<script type="text/javascript" src="<?php echo PROTOCOL; ?>://code.jquery.com/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/jquery-1.8.3.min.js"></script>
 
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/bootstrap.min.css" />
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/bootstrap-responsive.min.css" />

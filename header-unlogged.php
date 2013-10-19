@@ -38,7 +38,7 @@ $database->MySQLDB();
 	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/base.css" />
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/shared.css" />
-	<script type="text/javascript" src="<?php echo PROTOCOL; ?>://code.jquery.com/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/jquery-1.8.3.min.js"></script>
 
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/bootstrap.min.css" />
 	<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>css/bootstrap-responsive.min.css" />
