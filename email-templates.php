@@ -12,6 +12,7 @@ require_once('sys.includes.php');
 
 $page_title = __('E-mail templates','cftp_admin');
 
+$active_nav = 'options';
 include('header.php');
 
 $database->MySQLDB();

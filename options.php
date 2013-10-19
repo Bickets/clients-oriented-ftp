@@ -14,6 +14,8 @@ $database->MySQLDB();
 
 /** Uses TextBoxList for the allowed file types box. */
 $textboxlist = 1;
+
+$active_nav = 'options';
 include('header.php');
 
 if ($_POST) {

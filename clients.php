@@ -9,6 +9,9 @@
 $tablesorter = 1;
 $allowed_levels = array(9,8);
 require_once('sys.includes.php');
+
+$active_nav = 'clients';
+
 $page_title = __('Clients Administration','cftp_admin');
 include('header.php');
 ?>

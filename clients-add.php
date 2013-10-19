@@ -9,6 +9,8 @@
 $allowed_levels = array(9,8);
 require_once('sys.includes.php');
 
+$active_nav = 'clients';
+
 $page_title = __('Add client','cftp_admin');
 
 include('header.php');

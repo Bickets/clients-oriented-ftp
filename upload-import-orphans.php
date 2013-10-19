@@ -15,6 +15,9 @@
 $tablesorter = 1;
 $allowed_levels = array(9,8,7);
 require_once('sys.includes.php');
+
+$active_nav = 'files';
+
 $page_title = __('Find orphan files', 'cftp_admin');
 include('header.php');
 

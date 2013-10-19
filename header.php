@@ -150,154 +150,176 @@ if (in_session_or_cookies($core_update_allowed)) {
 				$('.button').click(function() {
 					$(this).blur();
 				});
-
-				$('#top_menu .icon').click(function() {
-					if ($('#top_menu').hasClass('nav_active')) {
-						$('#top_menu').removeClass('nav_active');
-					}
-					else {
-						$('#top_menu').addClass('nav_active');
-					}
-				});
 			});
 		</script>
-	
-		<nav id="top_menu">
-			<div class="icon">
-				<div class="nav_line"></div>
-				<div class="nav_line"></div>
-				<div class="nav_line"></div>
-			</div>
-			<ul class="main_menu">
-				<?php
-					/**
-					 * Show the HOME menu item only to
-					 * system users.
-					 */
-					$groups_allowed = array(9,8,7);
-					if (in_session_or_cookies($groups_allowed)) {
-				?>
-						<li class="no_arrow"><a href="<?php echo BASE_URI; ?>home.php"><?php _e('Dashboard', 'cftp_admin'); ?></a></li>
-						<li>
-							<a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Files', 'cftp_admin'); ?></a>
-								<ul>
-									<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload', 'cftp_admin'); ?></a></li>
-									<li><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
-									<li><a href="<?php echo BASE_URI; ?>upload-import-orphans.php"><?php _e('Find orphan files', 'cftp_admin'); ?></a></li>
-								</ul>
-						</li>
+
+    <div class="navbar navbar-inverse">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</a>
+     
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<?php
+							/**
+							 * Show the HOME menu item only to
+							 * system users.
+							 */
+							$groups_allowed = array(9,8,7);
+							if (in_session_or_cookies($groups_allowed)) {
+						?>
+								<li <?php if (!empty($active_nav) && $active_nav == 'dashboard') { ?>class="active"<?php } ?>>
+									<a href="<?php echo BASE_URI; ?>home.php"><?php _e('Dashboard', 'cftp_admin'); ?></a>
+								</li>
+
+								<li class="divider-vertical">
+
+								<li class="dropdown <?php if (!empty($active_nav) && $active_nav == 'files') { ?>active<?php } ?>">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php _e('Files', 'cftp_admin'); ?> <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload', 'cftp_admin'); ?></a></li>
+										<li class="divider"></li>
+										<li><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
+										<li><a href="<?php echo BASE_URI; ?>upload-import-orphans.php"><?php _e('Find orphan files', 'cftp_admin'); ?></a></li>
+									</ul>
+								</li>
+
+								<li class="divider-vertical">
+
+							<?php
+								/**
+								 * Show the CLIENTS menu only to
+								 * System administrators and Account managers
+								 */
+								$clients_allowed = array(9,8);
+								if (in_session_or_cookies($clients_allowed)) {
+							?>
+								<li class="dropdown <?php if (!empty($active_nav) && $active_nav == 'clients') { ?>active<?php } ?>">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<?php _e('Clients', 'cftp_admin'); ?>
+										<?php
+											$sql_inactive = $database->query("SELECT DISTINCT user FROM tbl_users WHERE active = '0' AND level = '0'");
+											$count_inactive = mysql_num_rows($sql_inactive);
+											if ($count_inactive > 0) {
+										?>
+												<span class="badge">
+													<?php echo $count_inactive; ?>
+												</span>
+										<?php
+											}
+										?>
+										<b class="caret"></b>
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="<?php echo BASE_URI; ?>clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+										<li><a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
+									</ul>
+								</li>
+
+								<li class="divider-vertical">
+
+						<?php
+								}
+						?>
 			
+						<?php
+							/**
+							 * Show the GROUPS menu only to
+							 * System administrators and Account managers
+							 */
+							$groups_allowed = array(9,8);
+							if (in_session_or_cookies($groups_allowed)) {
+						?>
+								<li class="dropdown <?php if (!empty($active_nav) && $active_nav == 'groups') { ?>active<?php } ?>">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php _e('Clients groups', 'cftp_admin'); ?> <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="<?php echo BASE_URI; ?>groups-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+										<li><a href="<?php echo BASE_URI; ?>groups.php"><?php _e('Manage groups', 'cftp_admin'); ?></a></li>
+									</ul>
+								</li>
+						<?php
+								}
+						?>
+
+								<li class="divider-vertical">
+
+						<?php
+							/**
+							 * Show the USERS menu only to
+							 * System administrators
+							 */
+							$users_allowed = array(9);
+							if (in_session_or_cookies($users_allowed)) {
+						?>
+								<li class="dropdown <?php if (!empty($active_nav) && $active_nav == 'users') { ?>active<?php } ?>">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+										<?php _e('System Users', 'cftp_admin'); ?>
+										<?php
+											$sql_inactive = $database->query("SELECT DISTINCT user FROM tbl_users WHERE active = '0' AND level != '0'");
+											$count_inactive = mysql_num_rows($sql_inactive);
+											if ($count_inactive > 0) {
+										?>
+												<span class="badge">
+													<?php echo $count_inactive; ?>
+												</span>
+										<?php
+											}
+										?>
+										<b class="caret"></b>
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="<?php echo BASE_URI; ?>users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
+										<li><a href="<?php echo BASE_URI; ?>users.php"><?php _e('Manage system users', 'cftp_admin'); ?></a></li>
+									</ul>
+								</li>
+						<?php
+								}
+						?>
+
+								<li class="divider-vertical">
+
+						<?php
+							/**
+							 * Show the OPTIONS menu only to
+							 * System administrators
+							 */
+							$options_allowed = array(9);
+							if (in_session_or_cookies($options_allowed)) {
+						?>
+								<li class="dropdown <?php if (!empty($active_nav) && $active_nav == 'options') { ?>active<?php } ?>">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php _e('Options', 'cftp_admin'); ?> <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="<?php echo BASE_URI; ?>options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
+										<li><a href="<?php echo BASE_URI; ?>branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
+										<li><a href="<?php echo BASE_URI; ?>email-templates.php"><?php _e('E-mail templates', 'cftp_admin'); ?></a></li>
+									</ul>
+								</li>
 					<?php
-						/**
-						 * Show the CLIENTS menu only to
-						 * System administrators and Account managers
-						 */
-						$clients_allowed = array(9,8);
-						if (in_session_or_cookies($clients_allowed)) {
+							}
+						}
+						/** Generate the menu for clients */
+						else {
+							if (CLIENTS_CAN_UPLOAD == 1) {
 					?>
-						<li>
-							<a href="<?php echo BASE_URI; ?>clients.php">
-								<?php _e('Clients', 'cftp_admin'); ?>
-								<?php
-									$sql_inactive = $database->query("SELECT DISTINCT user FROM tbl_users WHERE active = '0' AND level = '0'");
-									$count_inactive = mysql_num_rows($sql_inactive);
-									if ($count_inactive > 0) {
-								?>
-										<span class="mnu_inactive_msg">
-											<?php echo $count_inactive; ?>
-										</span>
-								<?php
-									}
-								?>
-							</a>
-							<ul>
-								<li><a href="<?php echo BASE_URI; ?>clients-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-								<li><a href="<?php echo BASE_URI; ?>clients.php"><?php _e('Manage clients', 'cftp_admin'); ?></a></li>
-							</ul>
-						</li>
-				<?php } ?>
-	
-				<?php
-					/**
-					 * Show the GROUPS menu only to
-					 * System administrators and Account managers
-					 */
-					$groups_allowed = array(9,8);
-					if (in_session_or_cookies($groups_allowed)) {
-				?>
-						<li>
-							<a href="<?php echo BASE_URI; ?>groups.php"><?php _e('Clients groups', 'cftp_admin'); ?></a>
-							<ul>
-								<li><a href="<?php echo BASE_URI; ?>groups-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-								<li><a href="<?php echo BASE_URI; ?>groups.php"><?php _e('Manage groups', 'cftp_admin'); ?></a></li>
-							</ul>
-						</li>
-				<?php } ?>
-		
-				<?php
-					/**
-					 * Show the USERS menu only to
-					 * System administrators
-					 */
-					$users_allowed = array(9);
-					if (in_session_or_cookies($users_allowed)) {
-				?>
-						<li>
-							<a href="<?php echo BASE_URI; ?>users.php">
-								<?php _e('System Users', 'cftp_admin'); ?>
-								<?php
-									$sql_inactive = $database->query("SELECT DISTINCT user FROM tbl_users WHERE active = '0' AND level != '0'");
-									$count_inactive = mysql_num_rows($sql_inactive);
-									if ($count_inactive > 0) {
-								?>
-										<span class="mnu_inactive_msg">
-											<?php echo $count_inactive; ?>
-										</span>
-								<?php
-									}
-								?>
-							</a>
-							<ul>
-								<li><a href="<?php echo BASE_URI; ?>users-add.php"><?php _e('Add new', 'cftp_admin'); ?></a></li>
-								<li><a href="<?php echo BASE_URI; ?>users.php"><?php _e('Manage system users', 'cftp_admin'); ?></a></li>
-							</ul>
-						</li>
-				<?php } ?>
-		
-				<?php
-					/**
-					 * Show the OPTIONS menu only to
-					 * System administrators
-					 */
-					$options_allowed = array(9);
-					if (in_session_or_cookies($options_allowed)) {
-				?>
-						<li>
-							<a href="<?php echo BASE_URI; ?>options.php"><?php _e('Options', 'cftp_admin'); ?></a>
-							<ul>
-								<li><a href="<?php echo BASE_URI; ?>options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
-								<li><a href="<?php echo BASE_URI; ?>branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
-								<li><a href="<?php echo BASE_URI; ?>email-templates.php"><?php _e('E-mail templates', 'cftp_admin'); ?></a></li>
-							</ul>
-						</li>
-			<?php
-					}
-				}
-				/** Generate the menu for clients */
-				else {
-					if (CLIENTS_CAN_UPLOAD == 1) {
-			?>
-						<li class="no_arrow"><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload', 'cftp_admin'); ?></a></li>
-			<?php
-					}
-			?>
-					<li class="no_arrow"><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
-					<li class="no_arrow"><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
-			<?php
-				}
-			?>
-			</ul>
-		</nav>
+								<li><a href="<?php echo BASE_URI; ?>upload-from-computer.php"><?php _e('Upload', 'cftp_admin'); ?></a></li>
+					<?php
+							}
+					?>
+							<li><a href="<?php echo BASE_URI; ?>manage-files.php"><?php _e('Manage files', 'cftp_admin'); ?></a></li>
+							<li><a href="<?php echo BASE_URI.'my_files/'; ?>"><?php _e('View my files', 'cftp_admin'); ?></a></li>
+					<?php
+						}
+					?>
+					</ul>
+				</div>
+     
+			</div>
+		</div>
+    </div>
 
 		<?php
 			/**

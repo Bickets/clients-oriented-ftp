@@ -9,6 +9,8 @@
 $allowed_levels = array(9);
 require_once('sys.includes.php');
 
+$active_nav = 'users';
+
 $page_title = __('Add system user','cftp_admin');
 
 include('header.php');

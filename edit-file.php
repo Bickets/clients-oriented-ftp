@@ -8,6 +8,9 @@
 $multiselect = 1;
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
+
+$active_nav = 'files';
+
 $page_title = __('Edit file','cftp_admin');
 include('header.php');
 

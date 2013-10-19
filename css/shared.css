@@ -106,216 +106,53 @@ body, html {
 
 /** Main menu */
 
-nav {
-	margin: 0 auto; 
-	text-align: left;
-	font-family:'Open Sans',Arial,sans-serif;
-	line-height:.9em;
-}
-
-nav .icon {
-	display: none;
-}
-
-nav ul ul {
-	display: none;
-}
-
-nav ul li:hover > ul {
-	display: block;
-}
-
-nav ul {
-	padding: 0 20px;
-	list-style: none;
-	position: relative;
+.navbar {
 	margin:0;
 }
-
-nav ul:after {
-	content: ""; clear: both; display: block;
-}
-
-nav ul li {
-	float: left;
-	transition: all 0.5s ease-out;
-	-moz-transition: all 0.5s ease-out;
-	-webkit-transition: all 0.5s ease-out;
-}
-
-nav ul li:hover {
-	background: #000;
-}
-
-nav ul li:hover a {
-	color: #fff;
-	text-decoration:none;
-}
-
-nav ul li a {
-	padding: 12px 18px;
-	color: #fff; text-decoration: none;
-	display:block;
-	zoom:1;
-}
-		
-nav ul li:not(.no_arrow) a:before {
-	color:rgba(255, 255, 255, 0.2);
-	content:"▼";
-	font-size:.8em;
-	margin-left:8px;
-	display:inline;
-	float:right;
-}
-
-nav ul ul li a:before {
-	content:""!important;
-}
-
-nav ul ul {
-	background: #000;
-	border-radius: 0px;
-	padding: 10px 0;
-	position: absolute;
-	top: 100%;
-	z-index:1000;
-
-	-moz-box-shadow:0 5px 5px #ccc;
-	-webkit-box-shadow:0 5px 5px #ccc;
-	box-shadow:0 5px 5px #ccc;
-}
-
-nav ul ul li {
-	float: none; 
-	position: relative;
-}
-
-nav ul ul li a {
-	padding: 12px 40px;
-	color: #fff;
-	display:block;
-}	
-
-nav ul ul li a:hover {
-	background: #3c404b;
-}
-	
-nav ul ul ul {
-	position: absolute; left: 100%; top:0;
-}
-
-
-@media screen and (max-width: 768px) {
-	#top_menu.nav_active ul.main_menu {
-		display:block;
-	}
-
-	nav {
-		position: relative;
-		min-height: 46px;
-	}
-
-	nav .icon {
-		display:block;
-		position:absolute;
-		top:10px;
-		left:20px;
-		padding:2px;
-		border:1px solid #777;
-		cursor:pointer;
+	.navbar-inner {
+		border-radius:0px;
+		-moz-border-radius:0px;
+		-webkit-border-radius:0px;
+		background:#3c404b !important;
 	}
 	
-	nav .icon .nav_line {
-		height:2px;
-		background:#888;
-		margin:3px 0;
-		width:18px;
-		-webkit-border-radius: 2px;
-		-moz-border-radius: 2px;
-		border-radius: 2px;
-	}
-
-	.nav_active .icon .nav_line {
-		background:#f5f5f5;
-	}
-
-	nav ul {
-		position: absolute;
-		top: 0;
-		left: 0;
-		background: #3c404b !important;
-		padding:5px 0 !important;
-		margin:0!important;
-		z-index:100000;
-		width:100%;
-		display:none;
-		box-shadow:none !important;
-		-moz-box-shadow:none !important;
-		-webkit-box-shadow:none !important;
-	}
-
-	nav ul.main_menu {
-		margin:35px 0 0!important;
-	}
-
-	nav li {
-		margin: 0;
-		display:block;
-		float:none !important;
-		padding:0 !important;
-		transition:none !important;
-		-moz-transition:none !important;
-		-webkit-transition:none !important;
-	}
-
-	nav a {
-		display: block;
-		padding: 5px 20px !important;
-		text-align: left;
-		color:#fff !important;
-		text-decoration:none !important;
-	}
-
-	nav li a:hover, nav li a:focus {
-		background:#000 !important;
-	}
-
-	nav ul li ul {
-		display:block !important;
-		position:relative;
-	}
-
-	nav ul li ul li {
-		padding-left:30px !important;
-	}
-
-	nav ul li ul a {
-		color:#ccc !important;
+	.navbar .divider-vertical {
+		margin:0 0px;
+		border-left-color:#3a3e4a;
+		border-right-color:#373b48;
 	}
 	
-	#header {
-		padding-top:10px !important;
+	.navbar .nav > li > a {
+		color:#f0f0f0;
 	}
 
-	#header h1 {
-		font-size:28px;
+/*
+	ul.nav li.dropdown:hover > ul.dropdown-menu {
+		display: block;    
 	}
-	
-	#account {
-		text-align:left !important;
+
+	.navbar .dropdown-menu {
+		 margin-top: 0px;
 	}
-	#account span {
-		display:block;
-		clear:both;
-		margin:10px 0 20px 0;
+*/
+
+	.navbar .badge {
+		background:#111;
+		color:#dedede;
+		margin-left:5px;
 	}
-	#account a {
-		padding:0;
-		background:none !important;
-		float:none !important;
-		margin:0 10px 0 0 !important;
+
+	.navbar .caret {
+		border-top-color:#999999;
 	}
-}
+
+	.navbar .nav .active > a,
+	.navbar .nav > a:hover,
+	.navbar .nav > a:focus,
+	.dropdown-menu > li > a:hover,
+	.dropdown-menu > li > a:focus {
+		background:#24272f !important;
+	}
 
 /** FOOTER */
 
@@ -432,7 +269,7 @@ nav ul ul ul {
 	color:#ccc;
 	display:block;
 	font-family:'Open Sans',sans-serif;
-	font-size:1.5em;
+	font-size:1.3em;
 	line-height:2em;
 	outline:none;
 	padding:0 10px;

@@ -11,6 +11,9 @@
  */
 $plupload = 1;
 require_once('sys.includes.php');
+
+$active_nav = 'files';
+
 $page_title = __('Upload files', 'cftp_admin');
 
 $allowed_levels = array(9,8,7);

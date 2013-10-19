@@ -10,6 +10,8 @@ $multiselect = 1;
 $allowed_levels = array(9,8);
 require_once('sys.includes.php');
 
+$active_nav = 'groups';
+
 $page_title = __('Edit group','cftp_admin');
 
 include('header.php');

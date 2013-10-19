@@ -9,6 +9,8 @@
 $allowed_levels = array(9,8,7);
 require_once('sys.includes.php');
 
+$active_nav = 'users';
+
 $database->MySQLDB();
 
 /** Create the object */
