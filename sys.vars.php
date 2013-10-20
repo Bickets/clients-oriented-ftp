@@ -84,9 +84,9 @@ $current_tables = array(TABLE_FILES,TABLE_OPTIONS,TABLE_USERS);
  * This values affect both validation methods (client and server side)
  * and also the maxlength value of the form fields.
  */
-define('MIN_USER_CHARS', 12);
+define('MIN_USER_CHARS', 8);
 define('MAX_USER_CHARS', 60);
-define('MIN_PASS_CHARS', 12);
+define('MIN_PASS_CHARS', 8);
 define('MAX_PASS_CHARS', 60);
 
 /*

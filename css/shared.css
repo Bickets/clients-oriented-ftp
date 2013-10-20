@@ -346,11 +346,11 @@ body, html {
 	background:url(../img/req-text.png) no-repeat right -2px;
 }
 
-.password_toggle {
+li .password_toggle {
 	width:257px !important;
 }
 
-.required.password_toggle {
+li .required.password_toggle {
 	width:214px !important;
 }
 

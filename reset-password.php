@@ -28,6 +28,7 @@ include('header-unlogged.php');
 		$count_request = mysql_num_rows($sql_request);
 		if ($count_request > 0){
 			$token_info	= mysql_fetch_array($sql_request);
+			$request_id = $token_info['id'];
 
 			/** Check if the token has been used already */
 			if ($token_info['used'] == '1') {
@@ -108,29 +109,46 @@ include('header-unlogged.php');
 			case 'new_password':
 				$reset_password_new = encode_html($_POST['reset_password_new']);
 
-				$enc_password = $hasher->HashPassword($reset_password_new);
+				/** Password checks */
+				$valid_me->validate('completed',$reset_password_new,$validation_no_pass);
+				$valid_me->validate('password',$reset_password_new,$validation_valid_pass.' '.$validation_valid_chars);
+				$valid_me->validate('length',$reset_password_new,$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
 		
-				if (strlen($enc_password) >= 20) {
-		
-					$state['hash'] = 1;
-		
-					/** SQL query */
-					$edit_pass_query = "UPDATE tbl_users SET 
-										password = '$enc_password' 
-										WHERE id = $got_user_id";
+				if ($valid_me->return_val) {
+
+					$enc_password = $hasher->HashPassword($reset_password_new);
 			
-					$sql_query = $database->query($edit_pass_query);
+					if (strlen($enc_password) >= 20) {
 			
-					if ($sql_query) {
-						$state['reset'] = 1;
-						$show_form = 'none';
+						$state['hash'] = 1;
+			
+						/** SQL queries */
+						$edit_pass_query = "UPDATE tbl_users SET 
+											password = '$enc_password' 
+											WHERE id = $got_user_id";
+				
+						$sql_query = $database->query($edit_pass_query);
+						
+						
+				
+						if ($sql_query) {
+							$state['reset'] = 1;
+	
+							$set_used_query = "UPDATE tbl_password_reset SET 
+												used = '1' 
+												WHERE id = $request_id";
+					
+							$sql_query = $database->query($set_used_query);
+		
+							$show_form = 'none';
+						}
+						else {
+							$state['reset'] = 0;
+						}
 					}
 					else {
-						$state['reset'] = 0;
+						$state['hash'] = 0;
 					}
-				}
-				else {
-					$state['hash'] = 0;
 				}
 				
 			break;
@@ -144,6 +162,13 @@ include('header-unlogged.php');
 			<div class="row">
 				<div class="span4 offset4 white-box">
 					<div class="white-box-interior">
+						<?php
+							/**
+							 * If the form was submited with errors, show them here.
+							 */
+							$valid_me->list_errors();
+						?>
+				
 						<?php
 							/**
 							 * Show status message
@@ -210,7 +235,8 @@ include('header-unlogged.php');
 											$("form").submit(function() {
 												clean_form(this);
 									
-													is_complete(this.add_client_form_name,'<?php echo $validation_no_name; ?>');
+												is_complete(this.reset_password_email,'<?php echo $validation_no_email; ?>');
+												is_email(this.reset_password_email,'<?php echo $validation_invalid_mail; ?>');
 									
 												// show the errors or continue if everything is ok
 												if (show_form_errors() == false) { return false; }
@@ -241,7 +267,9 @@ include('header-unlogged.php');
 											$("form").submit(function() {
 												clean_form(this);
 									
-												is_complete(this.add_client_form_name,'<?php echo $validation_no_name; ?>');
+												is_complete(this.reset_password_new,'<?php echo $validation_no_pass; ?>');
+												is_length(this.reset_password_new,<?php echo MIN_PASS_CHARS; ?>,<?php echo MAX_PASS_CHARS; ?>,'<?php echo $validation_length_pass; ?>');
+												is_password(this.reset_password_new,'<?php $chars = addslashes($validation_valid_chars); echo $validation_valid_pass." ".$chars; ?>');
 									
 												// show the errors or continue if everything is ok
 												if (show_form_errors() == false) { return false; }
@@ -254,7 +282,9 @@ include('header-unlogged.php');
 											<input type="hidden" name="form_type" id="form_type" value="new_password" />
 
 											<label class="control-label" for="reset_password_new"><?php _e('New password','cftp_admin'); ?></label>
-											<input type="text" name="reset_password_new" id="reset_password_new" class="span4" />
+
+											<input type="password" name="reset_password_new" id="reset_password_new" class="span3 password_toggle" />
+											<button type="button" class="btn password_toggler pass_toggler_show"><i class="icon-eye-open"></i></button>
 											
 											<p><?php _e("Please enter your desired new password. After that, you will be able to log in normally.",'cftp_admin'); ?></p>
 

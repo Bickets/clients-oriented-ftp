@@ -361,13 +361,14 @@ h4 {
 		padding:15px;
 	}
 
+
 		.white-box-interior input[type="text"],
 		.white-box-interior input[type="email"],
 		.white-box-interior input[type="password"],
 		.white-box-interior input[type="tel"],
 		.white-box-interior select,
 		.white-box-interior textarea {
-			width:96%;
+			/*max-width:96% !important;*/
 		}
 
 		.white-box-interior label {
