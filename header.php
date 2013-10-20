@@ -29,6 +29,11 @@ $core_update_allowed = array(9,8,7);
 if (in_session_or_cookies($core_update_allowed)) {
 	require_once(ROOT_DIR.'/includes/core.update.php');
 }
+
+/**
+ * Silent updates that are needed even if no user is logged in.
+ */
+require_once(ROOT_DIR.'/includes/core.update.silent.php');
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
