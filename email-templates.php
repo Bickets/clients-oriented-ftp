@@ -71,6 +71,8 @@ if ($_POST) {
 			</script>
 			
 			<?php
+				$href_string = ' ' . __('(to be used as href on a link tag)','cftp_admin');
+
 				$options_groups = array(
 										1	=> array(
 														'tab'			=> 'file_by_user',
@@ -82,7 +84,7 @@ if ($_POST) {
 														'option_text'	=> EMAILS_FILE_BY_USER_TEXT,
 														'tags'			=> array(
 																					'%FILES%'		=> __('Shows the list of files','cftp_admin'),
-																					'%LINK%'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
+																					'%URI%	'		=> __('The login link','cftp_admin') . $href_string,
 																				),
 													),
 										2	=> array(
@@ -95,7 +97,7 @@ if ($_POST) {
 														'option_text'	=> EMAILS_FILE_BY_CLIENT_TEXT,
 														'tags'			=> array(
 																					'%FILES%'		=> __('Shows the list of files','cftp_admin'),
-																					'%LINK%'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
+																					'%URI%	'		=> __('The login link','cftp_admin') . $href_string,
 																				),
 													),
 										3	=> array(
@@ -109,7 +111,7 @@ if ($_POST) {
 														'tags'			=> array(
 																					'%USERNAME%'	=> __('The new username for this account','cftp_admin'),
 																					'%PASSWORD%'	=> __('The new password for this account','cftp_admin'),
-																					'%URI%	'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
+																					'%URI%	'		=> __('The login link','cftp_admin') . $href_string,
 																				),
 													),
 										4	=> array(
@@ -123,7 +125,7 @@ if ($_POST) {
 														'tags'			=> array(
 																					'%FULLNAME%'	=> __('The full name the client registered with','cftp_admin'),
 																					'%USERNAME%'	=> __('The new username for this account','cftp_admin'),
-																					'%URI%	'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
+																					'%URI%	'		=> __('The login link','cftp_admin') . $href_string,
 																				),
 													),
 										5	=> array(
@@ -137,7 +139,21 @@ if ($_POST) {
 														'tags'			=> array(
 																					'%USERNAME%'	=> __('The new username for this account','cftp_admin'),
 																					'%PASSWORD%'	=> __('The new password for this account','cftp_admin'),
-																					'%URI%	'		=> __('The login link (to be used as href on a link tag)','cftp_admin'),
+																					'%URI%	'		=> __('The login link','cftp_admin') . $href_string,
+																				),
+													),
+										6	=> array(
+														'tab'			=> 'password_reset',
+														'name'			=> __('Password reset','cftp_admin'),
+														'checkbox'		=> 'email_pass_reset_customize',
+														'textarea'		=> 'email_pass_reset_text',
+														'description'	=> __('This email will be sent to a user or client when they try to reset their password.','cftp_admin'),
+														'option_check'	=> EMAILS_PASS_RESET_USE_CUSTOM,
+														'option_text'	=> EMAILS_PASS_RESET_TEXT,
+														'tags'			=> array(
+																					'%USERNAME%'	=> __('The username for this account','cftp_admin'),
+																					'%TOKEN%'		=> __('The text string unique to this request. Must be included somewhere.','cftp_admin'),
+																					'%URI%	'		=> __('The link to continue the process','cftp_admin') . $href_string,
 																				),
 													),
 									);

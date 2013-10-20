@@ -80,6 +80,16 @@ $email_strings_new_user = array(
 								);
 
 
+/** Strings for the "Reset password" e-mail */
+$email_strings_pass_reset = array(
+									'subject'		=> __('Password reset instructions','cftp_admin'),
+									'body'			=> __('A request has been received to reset the password for the following account:','cftp_admin'),
+									'body2'			=> __('To continue, please visit the following link','cftp_admin'),
+									'body3'			=> __('Ignoring this e-mail will cancel the request.','cftp_admin'),
+									'label_user'	=> __('Username','cftp_admin'),
+								);
+
+
 class PSend_Email
 {
 	/**
@@ -116,6 +126,11 @@ class PSend_Email
 					$filename	= 'new-file-by-client.html';
 					$body_check	= EMAILS_FILE_BY_CLIENT_USE_CUSTOM;
 					$body_text	= EMAILS_FILE_BY_CLIENT_TEXT;
+				break;
+			case 'password_reset':
+					$filename	= 'password-reset.html';
+					$body_check	= EMAILS_PASS_RESET_USE_CUSTOM;
+					$body_text	= EMAILS_PASS_RESET_TEXT;
 				break;
 		}
 
@@ -294,6 +309,34 @@ class PSend_Email
 	}
 
 	/**
+	 * Prepare the body for the "Password reset" e-mail and replace the
+	 * tags with the strings values set at the top of this file and the
+	 * link to the log in page.
+	 */
+	function email_password_reset($username, $token)
+	{
+		global $email_strings_pass_reset;
+		$this->email_body = $this->email_prepare_body('password_reset');
+		$this->email_body = str_replace(
+									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLUSER%','%USERNAME%','%URI%'),
+									array(
+										$email_strings_pass_reset['subject'],
+										$email_strings_pass_reset['body'],
+										$email_strings_pass_reset['body2'],
+										$email_strings_pass_reset['body3'],
+										$email_strings_pass_reset['label_user'],
+										$username,
+										BASE_URI
+									),
+									$this->email_body
+								);
+		return array(
+					'subject' => $email_strings_pass_reset['subject'],
+					'body' => $this->email_body
+				);
+	}
+
+	/**
 	 * Finally, try to send the e-mail and return a status, where
 	 * 1 = Message sent OK
 	 * 2 = Error sending the e-mail
@@ -304,13 +347,14 @@ class PSend_Email
 	function psend_send_email($arguments)
 	{
 		/** Generate the values from the arguments */
-		$this->type = $arguments['type'];
-		$this->addresses = $arguments['address'];
-		$this->username = (!empty($arguments['username'])) ? $arguments['username'] : '';
-		$this->password = (!empty($arguments['password'])) ? $arguments['password'] : '';
-		$this->client_id = (!empty($arguments['client_id'])) ? $arguments['client_id'] : '';
-		$this->name = (!empty($arguments['name'])) ? $arguments['name'] : '';
-		$this->files_list = (!empty($arguments['files_list'])) ? $arguments['files_list'] : '';
+		$this->type			= $arguments['type'];
+		$this->addresses	= $arguments['address'];
+		$this->username		= (!empty($arguments['username'])) ? $arguments['username'] : '';
+		$this->password		= (!empty($arguments['password'])) ? $arguments['password'] : '';
+		$this->client_id	= (!empty($arguments['client_id'])) ? $arguments['client_id'] : '';
+		$this->name			= (!empty($arguments['name'])) ? $arguments['name'] : '';
+		$this->files_list	= (!empty($arguments['files_list'])) ? $arguments['files_list'] : '';
+		$this->token		= (!empty($arguments['token'])) ? $arguments['token'] : '';
 		
 		require_once(ROOT_DIR.'/includes/phpmailer/class.phpmailer.php');
 
@@ -340,6 +384,9 @@ class PSend_Email
 			break;
 			case 'new_user':
 				$this->mail_info = $this->email_new_user($this->username,$this->password);
+			break;
+			case 'password_reset':
+				$this->mail_info = $this->email_password_reset($this->username,$this->token);
 			break;
 		}
 		

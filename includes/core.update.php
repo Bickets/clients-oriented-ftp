@@ -748,9 +748,9 @@ if (in_session_or_cookies($allowed_update)) {
 				CREATE TABLE IF NOT EXISTS `tbl_password_reset` (
 				  `id` int(11) NOT NULL AUTO_INCREMENT,
 				  `user_id` int(11) DEFAULT NULL,
-				  `name` varchar(32) NOT NULL,
+				  `token` varchar(32) NOT NULL,
 				  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-				  `used` int(0) DEFAULT \'0\',
+				  `used` int(1) DEFAULT \'0\',
 				  FOREIGN KEY (`user_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  PRIMARY KEY (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
@@ -772,6 +772,30 @@ if (in_session_or_cookies($allowed_update)) {
 				$updates_made++;
 			}
 		}
+
+		/**
+		 * r442 updates
+		 * Add new options to customize the header and footer of emails.
+		 */
+		if ($last_update < 442) {
+			$new_database_values = array(
+										'email_pass_reset_customize'		=> '0',
+										'email_pass_reset_text'				=> '',
+									);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 
 	}
 }	

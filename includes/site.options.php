@@ -132,6 +132,16 @@ if(!empty($options_values)) {
 	}
 
 	/**
+	 * For versions 442 and up
+	 */	
+	if (isset($options_values['email_pass_reset_customize'])) {
+		/** Checkbox */
+		define('EMAILS_PASS_RESET_USE_CUSTOM',$options_values['email_pass_reset_customize']);
+		/** Text */
+		define('EMAILS_PASS_RESET_TEXT',$options_values['email_pass_reset_text']);
+	}
+
+	/**
 	 * Set the default timezone based on the value of the Timezone select box
 	 * of the options page.
 	 */

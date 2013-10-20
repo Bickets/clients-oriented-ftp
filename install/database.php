@@ -198,9 +198,9 @@ if (defined('TRY_INSTALL')) {
 	CREATE TABLE IF NOT EXISTS `tbl_password_reset` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `user_id` int(11) DEFAULT NULL,
-	  `name` varchar(32) NOT NULL,
+	  `token` varchar(32) NOT NULL,
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-	  `used` int(0) DEFAULT \'0\',
+	  `used` int(1) DEFAULT \'0\',
 	  FOREIGN KEY (`user_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;

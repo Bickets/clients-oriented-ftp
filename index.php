@@ -58,10 +58,13 @@ include('header-unlogged.php');
 
 					/** If "remember me" checkbox is on, set the cookie */
 					if (!empty($_POST['login_form_remember'])) {
+						/*
 						setcookie("loggedin",$sysuser_username,time()+COOKIE_EXP_TIME);
 						setcookie("password",$sysuser_password,time()+COOKIE_EXP_TIME);
 						setcookie("access",$access_string,time()+COOKIE_EXP_TIME);
 						setcookie("userlevel",$user_level,time()+COOKIE_EXP_TIME);
+						*/
+						setcookie("rememberwho",$sysuser_username,time()+COOKIE_EXP_TIME);
 					}
 					
 					/** Record the action log */
@@ -115,7 +118,10 @@ include('header-unlogged.php');
 										$login_err_message = __("The supplied password is incorrect.",'cftp_admin');
 										break;
 									case 'inactive_client':
-										$login_err_message = __("This account is not active. If you just registered, please wait until a system administrator approves your account.",'cftp_admin');
+										$login_err_message = __("This account is not active.",'cftp_admin');
+										if (CLIENTS_AUTO_APPROVE == 0) {
+											$login_err_message .= ' '.__("If you just registered, please wait until a system administrator approves your account.",'cftp_admin');
+										}
 										break;
 								}
 				
