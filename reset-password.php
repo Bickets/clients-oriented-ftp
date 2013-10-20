@@ -70,7 +70,9 @@ include('header-unlogged.php');
 									<form action="reset-password.php" name="resetpassword" method="post" role="form">
 										<fieldset>
 											<label class="control-label" for="reset_password_email"><?php _e('E-mail','cftp_admin'); ?></label>
-											<input type="text" name="reset_password_email" id="reset_password_email" class="span4" placeholder="<?php _e("Please enter your account's e-mail",'cftp_admin'); ?>" />
+											<input type="text" name="reset_password_email" id="reset_password_email" class="span4" />
+
+											<p><?php _e("Please enter your account's e-mail address. You will receive a link to continue the process.",'cftp_admin'); ?></p>
 
 											<div class="form_submit_li">
 												<button type="submit" name="submit" id="button_login" class="button button_blue button_submit"><?php _e('Continue','cftp_admin'); ?></button>

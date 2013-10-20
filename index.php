@@ -139,13 +139,11 @@ include('header-unlogged.php');
 					
 						<form action="index.php" method="post" name="login_admin" role="form">
 							<fieldset>
-								<input type="hidden" name="sent_admin" id="sent_admin">
-
 								<label for="login_form_user"><?php _e('Username','cftp_admin'); ?></label>
-								<input type="text" name="login_form_user" id="login_form_user" value="<?php if (isset($sysuser_username)) { echo $sysuser_username; } ?>" class="field" />
+								<input type="text" name="login_form_user" id="login_form_user" value="<?php if (isset($sysuser_username)) { echo $sysuser_username; } ?>" class="span4" />
 
 								<label for="login_form_pass"><?php _e('Password','cftp_admin'); ?></label>
-								<input type="password" name="login_form_pass" id="login_form_pass" class="field" />
+								<input type="password" name="login_form_pass" id="login_form_pass" class="span4" />
 
 								<label for="login_form_remember">
 									<input type="checkbox" name="login_form_remember" id="login_form_remember" value="on" />
