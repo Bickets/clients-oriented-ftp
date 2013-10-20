@@ -75,25 +75,36 @@ include('header-unlogged.php');
 					$username	= $row['user'];
 					$email		= $row['email'];
 					$token		= substr(md5(mt_rand(0, 1000000)), 0, 32);
-		
-					$sql_pass = $database->query("INSERT INTO tbl_password_reset (user_id, token)"
-													."VALUES ('$id', '$token' )");
-		
-					/** Send email */
-					$notify_user = new PSend_Email();
-					$email_arguments = array(
-													'type' => 'password_reset',
-													'address' => $email,
-													'username' => $username,
-													'token' => $token
-												);
-					$notify_send = $notify_user->psend_send_email($email_arguments);
-		
-					if ($notify_send == 1){
-						$state['email'] = 1;
+					
+					/**
+					 * Count how many request were made by this user today.
+					 * No more than 3 unused should exist at a time.
+					 */
+					$sql_amount		= $database->query("SELECT * FROM tbl_password_reset WHERE user_id = '$id' AND used = '0' AND timestamp > NOW() - INTERVAL 1 DAY");
+					$count_requests	= mysql_num_rows($sql_amount);
+					if ($count_requests >= 3){
+						$errorstate = 'too_many_today';
 					}
 					else {
-						$state['email'] = 0;
+						$sql_pass = $database->query("INSERT INTO tbl_password_reset (user_id, token)"
+														."VALUES ('$id', '$token' )");
+			
+						/** Send email */
+						$notify_user = new PSend_Email();
+						$email_arguments = array(
+														'type' => 'password_reset',
+														'address' => $email,
+														'username' => $username,
+														'token' => $token
+													);
+						$notify_send = $notify_user->psend_send_email($email_arguments);
+			
+						if ($notify_send == 1){
+							$state['email'] = 1;
+						}
+						else {
+							$state['email'] = 0;
+						}
 					}
 					
 					$show_form = 'none';
@@ -187,6 +198,9 @@ include('header-unlogged.php');
 									case 'token_used':
 										$login_err_message = __("This request has already been completed. Please make a new one.",'cftp_admin');
 										break;
+									case 'too_many_today':
+										$login_err_message = __("There are 3 unused requests done in less than 24 hs. Please wait until one expires (1 day since made) to make a new one.",'cftp_admin');
+										break;
 								}
 				
 								echo system_message('error',$login_err_message,'login_error');
@@ -249,7 +263,7 @@ include('header-unlogged.php');
 											<input type="hidden" name="form_type" id="form_type" value="new_request" />
 
 											<label class="control-label" for="reset_password_email"><?php _e('E-mail','cftp_admin'); ?></label>
-											<input type="text" name="reset_password_email" id="reset_password_email" class="span4" />
+											<input type="text" name="reset_password_email" id="reset_password_email" class="span3" />
 
 											<p><?php _e("Please enter your account's e-mail address. You will receive a link to continue the process.",'cftp_admin'); ?></p>
 
