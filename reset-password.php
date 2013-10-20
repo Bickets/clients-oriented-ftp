@@ -13,17 +13,57 @@ $page_title = __('Lost password','cftp_admin');
 include('header-unlogged.php');
 	$show_form = 'enter_email';
 
+	if (!empty($_GET['token']) && !empty($_GET['user'])) {
+		$got_token	= mysql_real_escape_string($_GET['token']);
+		$got_user	= mysql_real_escape_string($_GET['user']);
+
+		/**
+		 * Get the user's id
+		 */
+		$query_user_id	= $database->query("SELECT id, user FROM tbl_users WHERE user = '$got_user'");
+		$result_user_id	= mysql_fetch_array($query_user_id);
+		$got_user_id	= $result_user_id['id'];
+
+		$sql_request = $database->query("SELECT * FROM tbl_password_reset WHERE token = '$got_token' AND user_id = '$got_user_id'");
+		$count_request = mysql_num_rows($sql_request);
+		if ($count_request > 0){
+			$token_info	= mysql_fetch_array($sql_request);
+
+			/** Check if the token has been used already */
+			if ($token_info['used'] == '1') {
+				$errorstate = 'token_used';
+			}
+
+			/** Check if the token has expired. */
+			elseif (time() - strtotime($token_info['timestamp']) > 60*60*24) {
+				$errorstate = 'token_expired';
+			}
+
+			else {
+				$show_form = 'enter_new_password';
+			}
+		}
+		else {
+			$errorstate = 'token_invalid';
+			$show_form = 'none';
+		}
+	}
+
 	/** The form was submitted */
 	if ($_POST) {
 		/**
 		 * Clean the posted form values.
 		 */
-		$form_type				= encode_html($_POST['form_type']);
+		$form_type = encode_html($_POST['form_type']);
 		
 		switch ($form_type) {
+
+			/**
+			 * The form submited contains a new token request
+			 */
 			case 'new_request':
 
-				$reset_password_email	= encode_html($_POST['reset_password_email']);
+				$reset_password_email = encode_html($_POST['reset_password_email']);
 
 				$sql_user = $database->query("SELECT id, user, email FROM tbl_users WHERE email='$reset_password_email'");
 				$count_user = mysql_num_rows($sql_user);
@@ -62,47 +102,40 @@ include('header-unlogged.php');
 				}
 			break;
 
+			/**
+			 * The form submited contains the new password
+			 */
 			case 'new_password':
+				$reset_password_new = encode_html($_POST['reset_password_new']);
+
+				$enc_password = $hasher->HashPassword($reset_password_new);
+		
+				if (strlen($enc_password) >= 20) {
+		
+					$state['hash'] = 1;
+		
+					/** SQL query */
+					$edit_pass_query = "UPDATE tbl_users SET 
+										password = '$enc_password' 
+										WHERE id = $got_user_id";
+			
+					$sql_query = $database->query($edit_pass_query);
+			
+					if ($sql_query) {
+						$state['reset'] = 1;
+						$show_form = 'none';
+					}
+					else {
+						$state['reset'] = 0;
+					}
+				}
+				else {
+					$state['hash'] = 0;
+				}
+				
 			break;
 		}
 	}
-	
-	if (!empty($_GET['token']) && !empty($_GET['user'])) {
-		$got_token	= mysql_real_escape_string($_GET['token']);
-		$got_user	= mysql_real_escape_string($_GET['user']);
-
-		/**
-		 * Get the user's id
-		 */
-		$query_user_id	= $database->query("SELECT id, user FROM tbl_users WHERE user = '$got_user'");
-		$result_user_id	= mysql_fetch_array($query_user_id);
-		$got_user_id	= $result_user_id['id'];
-
-		$sql_request = $database->query("SELECT * FROM tbl_password_reset WHERE token = '$got_token' AND user_id = '$got_user_id'");
-		$count_request = mysql_num_rows($sql_request);
-		if ($count_request > 0){
-			$token_info	= mysql_fetch_array($sql_request);
-
-			/** Check if the token has been used already */
-			if ($token_info['used'] == '1') {
-				$errorstate = 'token_used';
-			}
-
-			/** Check if the token has expired. */
-			elseif (time() - strtotime($token_info['timestamp']) > 60*60*24) {
-				$errorstate = 'token_expired';
-			}
-
-			else {
-				$show_form = 'enter_new_password';
-			}
-		}
-		else {
-			$errorstate = 'token_invalid';
-			$show_form = 'none';
-		}
-	}
-
 	?>
 
 		<h2><?php echo $page_title; ?></h2>
@@ -121,7 +154,7 @@ include('header-unlogged.php');
 										$login_err_message = __("The supplied email address does not correspond to any user.",'cftp_admin');
 										break;
 									case 'token_invalid':
-										$login_err_message = __("The request token is not valid.",'cftp_admin');
+										$login_err_message = __("The request is not valid.",'cftp_admin');
 										break;
 									case 'token_expired':
 										$login_err_message = __("This request has expired. Please make a new one.",'cftp_admin');
@@ -145,6 +178,23 @@ include('header-unlogged.php');
 									break;
 									case 0:
 										$msg = __("E-mail couldn't be sent.",'cftp_admin');
+										$msg .= ' ' . __("If the problem persists, please contact an administrator.",'cftp_admin');
+										echo system_message('error',$msg);
+									break;
+								}
+							}
+
+							/**
+							 * Show the ok or error message for the password reset.
+							 */
+							if (isset($state['reset'])) {
+								switch ($state['reset']) {
+									case 1:
+										$msg = __('Your new password has been set. You can now log in using it.','cftp_admin');
+										echo system_message('ok',$msg);
+									break;
+									case 0:
+										$msg = __("Your new password couldn't be set.",'cftp_admin');
 										$msg .= ' ' . __("If the problem persists, please contact an administrator.",'cftp_admin');
 										echo system_message('error',$msg);
 									break;
@@ -191,7 +241,7 @@ include('header-unlogged.php');
 											$("form").submit(function() {
 												clean_form(this);
 									
-													is_complete(this.add_client_form_name,'<?php echo $validation_no_name; ?>');
+												is_complete(this.add_client_form_name,'<?php echo $validation_no_name; ?>');
 									
 												// show the errors or continue if everything is ok
 												if (show_form_errors() == false) { return false; }
