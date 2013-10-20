@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r431');
+define('CURRENT_VERSION', 'r437');
 
 /**
  * Fix for including external files when on HTTPS.
@@ -30,7 +30,7 @@ define('PROTOCOL', empty($_SERVER['HTTPS'])? 'http' : 'https');
  *
  * @link http://www.php.net/manual/en/function.error-reporting.php
  */
-error_reporting(0);
+//error_reporting(0);
 
 define('GLOBAL_TIME_LIMIT', 240*60);
 define('UPLOAD_TIME_LIMIT', 120*60);
@@ -84,10 +84,10 @@ $current_tables = array(TABLE_FILES,TABLE_OPTIONS,TABLE_USERS);
  * This values affect both validation methods (client and server side)
  * and also the maxlength value of the form fields.
  */
-define('MIN_USER_CHARS', 5);
-define('MAX_USER_CHARS', 16);
-define('MIN_PASS_CHARS', 5);
-define('MAX_PASS_CHARS', 16);
+define('MIN_USER_CHARS', 12);
+define('MAX_USER_CHARS', 60);
+define('MIN_PASS_CHARS', 12);
+define('MAX_PASS_CHARS', 60);
 
 /*
  * Cookie expiration time (in seconds).
@@ -146,4 +146,8 @@ define('USER_ROLE_LVL_9', $user_role_9_name);
 define('USER_ROLE_LVL_8', $user_role_8_name);
 define('USER_ROLE_LVL_7', $user_role_7_name);
 define('USER_ROLE_LVL_0', $user_role_0_name);
+
+/** phpass */
+define('HASH_COST_LOG2', 8);
+define('HASH_PORTABLE', false);
 ?>

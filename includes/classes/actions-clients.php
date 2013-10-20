@@ -96,6 +96,7 @@ class ClientActions
 	 */
 	function create_client($arguments)
 	{
+		global $hasher;
 		global $database;
 		$this->state = array();
 
@@ -111,40 +112,49 @@ class ClientActions
 		$this->contact = $arguments['contact'];
 		$this->notify = $arguments['notify'];
 		$this->active = $arguments['active'];
-		$this->enc_password = md5(mysql_real_escape_string($this->password));
+		//$this->enc_password = md5(mysql_real_escape_string($this->password));
+		$this->enc_password = $hasher->HashPassword($this->password);
 
-		/** Who is creating the client? */
-		$this->this_admin = get_current_user_username();
+		if (strlen($this->enc_password) >= 20) {
 
-		/** Insert the client information into the database */
-		$this->timestamp = time();
-		$this->sql_query = $database->query("INSERT INTO tbl_users (name,user,password,address,phone,email,notify,contact,created_by,active)"
-											."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact','$this->this_admin', '$this->active')");
+			$this->state['hash'] = 1;
 
-		if ($this->sql_query) {
-			$this->state['actions'] = 1;
-			$this->state['new_id'] = mysql_insert_id();
-
-			/** Send account data by email */
-			$this->notify_client = new PSend_Email();
-			$this->email_arguments = array(
-											'type' => 'new_client',
-											'address' => $this->email,
-											'username' => $this->username,
-											'password' => $this->password
-										);
-			$this->notify_send = $this->notify_client->psend_send_email($this->email_arguments);
-
-			if ($this->notify_send == 1){
-				$this->state['email'] = 1;
+			/** Who is creating the client? */
+			$this->this_admin = get_current_user_username();
+	
+			/** Insert the client information into the database */
+			$this->timestamp = time();
+			$this->sql_query = $database->query("INSERT INTO tbl_users (name,user,password,address,phone,email,notify,contact,created_by,active)"
+												."VALUES ('$this->name', '$this->username', '$this->enc_password', '$this->address', '$this->phone', '$this->email', '$this->notify', '$this->contact','$this->this_admin', '$this->active')");
+	
+			if ($this->sql_query) {
+				$this->state['actions'] = 1;
+				$this->state['new_id'] = mysql_insert_id();
+	
+				/** Send account data by email */
+				$this->notify_client = new PSend_Email();
+				$this->email_arguments = array(
+												'type' => 'new_client',
+												'address' => $this->email,
+												'username' => $this->username,
+												'password' => $this->password
+											);
+				$this->notify_send = $this->notify_client->psend_send_email($this->email_arguments);
+	
+				if ($this->notify_send == 1){
+					$this->state['email'] = 1;
+				}
+				else {
+					$this->state['email'] = 0;
+				}
 			}
 			else {
-				$this->state['email'] = 0;
+				/** Query couldn't be executed */
+				$this->state['actions'] = 0;
 			}
 		}
 		else {
-			/** Query couldn't be executed */
-			$this->state['actions'] = 0;
+			$this->state['hash'] = 0;
 		}
 
 		return $this->state;
@@ -155,6 +165,7 @@ class ClientActions
 	 */
 	function edit_client($arguments)
 	{
+		global $hasher;
 		global $database;
 		$this->state = array();
 
@@ -168,39 +179,48 @@ class ClientActions
 		$this->contact = $arguments['contact'];
 		$this->notify = $arguments['notify'];
 		$this->active = $arguments['active'];
-		$this->enc_password = md5(mysql_real_escape_string($this->password));
+		//$this->enc_password = md5(mysql_real_escape_string($this->password));
+		$this->enc_password = $hasher->HashPassword($this->password);
 
-		/** SQL query */
-		$this->edit_client_query = "UPDATE tbl_users SET 
-									name = '$this->name',
-									address = '$this->address',
-									phone = '$this->phone',
-									email = '$this->email',
-									contact = '$this->contact',
-									notify = '";
+		if (strlen($this->enc_password) >= 20) {
 
+			$this->state['hash'] = 1;
 
-		/** Add the notify value to the query '' */
-		$this->edit_client_query .= ($this->notify == '1') ? "1'" : "0'";
-
-		/** Add the active status value to the query '' */
-		$this->edit_client_query .= ", active = '";
-		$this->edit_client_query .= ($this->active == '1') ? "1'" : "0'";
-
-		/** Add the password to the query if it's not the dummy value '' */
-		if (!empty($arguments['password'])) {
-			$this->edit_client_query .= ", password = '$this->enc_password'";
-		}
-
-
-		$this->edit_client_query .= " WHERE id = $this->id";
-		$this->sql_query = $database->query($this->edit_client_query);
-
-		if ($this->sql_query) {
-			$this->state['query'] = 1;
+			/** SQL query */
+			$this->edit_client_query = "UPDATE tbl_users SET 
+										name = '$this->name',
+										address = '$this->address',
+										phone = '$this->phone',
+										email = '$this->email',
+										contact = '$this->contact',
+										notify = '";
+	
+	
+			/** Add the notify value to the query '' */
+			$this->edit_client_query .= ($this->notify == '1') ? "1'" : "0'";
+	
+			/** Add the active status value to the query '' */
+			$this->edit_client_query .= ", active = '";
+			$this->edit_client_query .= ($this->active == '1') ? "1'" : "0'";
+	
+			/** Add the password to the query if it's not the dummy value '' */
+			if (!empty($arguments['password'])) {
+				$this->edit_client_query .= ", password = '$this->enc_password'";
+			}
+	
+	
+			$this->edit_client_query .= " WHERE id = $this->id";
+			$this->sql_query = $database->query($this->edit_client_query);
+	
+			if ($this->sql_query) {
+				$this->state['query'] = 1;
+			}
+			else {
+				$this->state['query'] = 0;
+			}
 		}
 		else {
-			$this->state['query'] = 0;
+			$this->state['hash'] = 0;
 		}
 		
 		return $this->state;

@@ -8,6 +8,9 @@
 
 define('ROOT_DIR', dirname(__FILE__));
 
+/** PhpPass */
+require_once(ROOT_DIR.'/includes/phpass/PasswordHash.php');
+
 /** Basic system constants */
 require_once(ROOT_DIR.'/sys.vars.php');
 

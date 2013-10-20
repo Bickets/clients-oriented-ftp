@@ -93,6 +93,7 @@ class UserActions
 	 */
 	function create_user($arguments)
 	{
+		global $hasher;
 		global $database;
 		$this->state = array();
 
@@ -103,35 +104,44 @@ class UserActions
 		$this->email = $arguments['email'];
 		$this->role = $arguments['role'];
 		$this->active = $arguments['active'];
-		$this->enc_password = md5(mysql_real_escape_string($this->password));
+		//$this->enc_password = md5(mysql_real_escape_string($this->password));
+		$this->enc_password = $hasher->HashPassword($this->password);
 
-		$this->timestamp = time();
-		$this->sql_query = $database->query("INSERT INTO tbl_users (user,password,name,email,level,active)"
-											."VALUES ('$this->username', '$this->enc_password', '$this->name', '$this->email','$this->role', '$this->active')");
+		if (strlen($this->enc_password) >= 20) {
 
-		if ($this->sql_query) {
-			$this->state['query'] = 1;
-			$this->state['new_id'] = mysql_insert_id();
+			$this->state['hash'] = 1;
 
-			/** Send account data by email */
-			$this->notify_user = new PSend_Email();
-			$this->email_arguments = array(
-											'type' => 'new_user',
-											'address' => $this->email,
-											'username' => $this->username,
-											'password' => $this->password
-										);
-			$this->notify_send = $this->notify_user->psend_send_email($this->email_arguments);
-
-			if ($this->notify_send == 1){
-				$this->state['email'] = 1;
+			$this->timestamp = time();
+			$this->sql_query = $database->query("INSERT INTO tbl_users (user,password,name,email,level,active)"
+												."VALUES ('$this->username', '$this->enc_password', '$this->name', '$this->email','$this->role', '$this->active')");
+	
+			if ($this->sql_query) {
+				$this->state['query'] = 1;
+				$this->state['new_id'] = mysql_insert_id();
+	
+				/** Send account data by email */
+				$this->notify_user = new PSend_Email();
+				$this->email_arguments = array(
+												'type' => 'new_user',
+												'address' => $this->email,
+												'username' => $this->username,
+												'password' => $this->password
+											);
+				$this->notify_send = $this->notify_user->psend_send_email($this->email_arguments);
+	
+				if ($this->notify_send == 1){
+					$this->state['email'] = 1;
+				}
+				else {
+					$this->state['email'] = 0;
+				}
 			}
 			else {
-				$this->state['email'] = 0;
+				$this->state['query'] = 0;
 			}
 		}
 		else {
-			$this->state['query'] = 0;
+			$this->state['hash'] = 0;
 		}
 		
 		return $this->state;
@@ -142,6 +152,7 @@ class UserActions
 	 */
 	function edit_user($arguments)
 	{
+		global $hasher;
 		global $database;
 		$this->state = array();
 
@@ -153,31 +164,40 @@ class UserActions
 		$this->active = $arguments['active'];
 
 		$this->password = $arguments['password'];
-		$this->enc_password = md5(mysql_real_escape_string($this->password));
+		//$this->enc_password = md5(mysql_real_escape_string($this->password));
+		$this->enc_password = $hasher->HashPassword($this->password);
 
-		/** SQL query */
-		$this->edit_user_query = "UPDATE tbl_users SET 
-								name = '$this->name',
-								email = '$this->email',
-								level = '$this->role',
-								active = '";
+		if (strlen($this->enc_password) >= 20) {
 
-		/** Add the active status value to the query '' */
-		$this->edit_user_query .= ($this->active == '1') ? "1'" : "0'";
+			$this->state['hash'] = 1;
 
-		/** Add the password to the query if it's not the dummy value '' */
-		if (!empty($arguments['password'])) {
-			$this->edit_user_query .= ", password = '$this->enc_password'";
-		}
-
-		$this->edit_user_query .= " WHERE id = $this->id";
-		$this->sql_query = $database->query($this->edit_user_query);
-
-		if ($this->sql_query) {
-			$this->state['query'] = 1;
+			/** SQL query */
+			$this->edit_user_query = "UPDATE tbl_users SET 
+									name = '$this->name',
+									email = '$this->email',
+									level = '$this->role',
+									active = '";
+	
+			/** Add the active status value to the query '' */
+			$this->edit_user_query .= ($this->active == '1') ? "1'" : "0'";
+	
+			/** Add the password to the query if it's not the dummy value '' */
+			if (!empty($arguments['password'])) {
+				$this->edit_user_query .= ", password = '$this->enc_password'";
+			}
+	
+			$this->edit_user_query .= " WHERE id = $this->id";
+			$this->sql_query = $database->query($this->edit_user_query);
+	
+			if ($this->sql_query) {
+				$this->state['query'] = 1;
+			}
+			else {
+				$this->state['query'] = 0;
+			}
 		}
 		else {
-			$this->state['query'] = 0;
+			$this->state['hash'] = 0;
 		}
 		
 		return $this->state;

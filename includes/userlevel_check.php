@@ -10,6 +10,11 @@
 $database->MySQLDB();
 
 /**
+ * Create the phpass hash object
+ */
+$hasher = new PasswordHash(HASH_COST_LOG2, HASH_PORTABLE);
+
+/**
  * Used when checking if there is a client or user logged in via cookie.
  *
  * @see check_for_session

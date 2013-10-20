@@ -760,6 +760,19 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+		/**
+		 * r437 updates
+		 * A new database table was added.
+		 * Password reset support is now supported.
+		 */
+		if ($last_update < 437) {
+			$q = $database->query("ALTER TABLE tbl_users MODIFY user VARCHAR(".MAX_USER_CHARS.") NOT NULL");
+			$q2 = $database->query("ALTER TABLE tbl_users MODIFY password VARCHAR(".MAX_PASS_CHARS.") NOT NULL");
+			if ($q && $q2) {
+				$updates_made++;
+			}
+		}
+
 	}
 }	
 ?>

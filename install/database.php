@@ -38,7 +38,7 @@ if (defined('TRY_INSTALL')) {
 	CREATE TABLE IF NOT EXISTS `tbl_users` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
 	  `user` varchar('.MAX_USER_CHARS.') NOT NULL,
-	  `password` varchar(32) NOT NULL,
+	  `password` varchar('.MAX_PASS_CHARS.') NOT NULL,
 	  `name` text NOT NULL,
 	  `email` varchar(60) NOT NULL,
 	  `level` tinyint(1) NOT NULL DEFAULT \'0\',
