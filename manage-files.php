@@ -90,13 +90,11 @@ include('header.php');
 		<?php
 			if (!isset($search_on)) {
 		?>
-				$(document).psendmodal();
 				$(".downloaders").click(function() {
-					$('.modal_overlay').stop(true, true).fadeIn();
-					$('.modal_psend').stop(true, true).fadeIn();
+					$(document).psendmodal();
 					$('.modal_content').html('<p class="loading-img">'+
 												'<img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" /></p>'+
-												'<p><?php _e('Please wait while the system gets the required information.','cftp_admin'); ?></p>'
+												'<p class="lead text-center text-info"><?php _e('Please wait while the system gets the required information.','cftp_admin'); ?></p>'
 											);
 					
 					var file_name = $(this).attr('title');
