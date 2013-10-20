@@ -314,6 +314,10 @@ class PSend_Email
 		
 		require_once(ROOT_DIR.'/includes/phpmailer/class.phpmailer.php');
 
+		if (!spl_autoload_functions() OR (!in_array('PHPMailerAutoload', spl_autoload_functions()))) {
+			require_once(ROOT_DIR.'/includes/phpmailer/PHPMailerAutoload.php');
+		}
+
 		$this->try_bcc = false;
 		switch($this->type) {
 			case 'new_files_for_client':

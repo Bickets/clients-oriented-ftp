@@ -60,11 +60,9 @@ include('header.php');
 
 			if (action == 'download') {
 				$(document).psendmodal();
-				$('.modal_overlay').stop(true, true).fadeIn();
-				$('.modal_psend').stop(true, true).fadeIn();
 				$('.modal_content').html('<p class="loading-img">'+
 											'<img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" /></p>'+
-											'<p><?php _e('Please wait while your download is prepared.','cftp_admin'); ?></p>'
+											'<p class="lead text-center text-info"><?php _e('Please wait while your download is prepared.','cftp_admin'); ?></p>'
 										);
 				$('.modal_content').append('<iframe src="<?php echo BASE_URI; ?>/includes/actions.log.export.php?format=csv"></iframe>');
 				return false;

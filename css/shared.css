@@ -32,6 +32,13 @@ body, html {
 	position:relative;
 }
 
+@media(max-width:767px){
+	body{
+		padding-right:0px !important;
+		padding-left:0px !important;
+	}
+}
+
 #header {
 	background:#232835;
 	color:#f0f0f0;
