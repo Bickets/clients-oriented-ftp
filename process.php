@@ -36,78 +36,122 @@ class process {
 		if (isset($_GET['id']) && isset($_GET['client'])) {
 			/** Do a permissions check for logged in user */
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				/**
-				 * Get the file name
-				 */
-				$this->get_file_uri_sql	= 'SELECT url FROM tbl_files WHERE id="' . $_GET['id'] .'"';
-				$this->get_file_uri		= $this->database->query($this->get_file_uri_sql);
-				$this->got_url			= mysql_fetch_array($this->get_file_uri);
-				$this->real_file_url	= $this->got_url['url'];
-
-				/**
-				 * If the file is being downloaded by a user, do not
-				 * add +1 to the download count
-				 */
-				if (CURRENT_USER_LEVEL == 0) {
-					$this->sum_sql = 'UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . $_GET['id'] .'"';
-					if ($_GET['origin'] == 'group') {
-						if (!empty($_GET['group_id'])) {
-							$this->group_id = $_GET['group_id'];
-							$this->sum_sql .= " AND group_id = '$this->group_id'";
-						}
-					} else {
-						$this->client_id = $_GET['client_id'];
-						$this->sum_sql .= " AND client_id = '$this->client_id'";
-					}
-	
-					$this->sql = $this->database->query($this->sum_sql);
-
+				
 					/**
-					 * The owner ID is generated here to prevent false results
-					 * from a modified GET url.
+					 * Get the file name
 					 */
-					$log_action = 8;
-					$log_action_owner_id = $_GET['client_id'];
-				}
-				else {
-					$log_action = 7;
-					$global_user = get_current_user_username();
-					$global_id = get_logged_account_id($global_user);
-					$log_action_owner_id = $global_id;
-				}
-	
-				/** Record the action log */
-				$new_log_action = new LogActions();
-				$log_action_args = array(
-										'action' => $log_action,
-										'owner_id' => $log_action_owner_id,
-										'affected_file' => $_GET['id'],
-										'affected_file_name' => $_GET['url'],
-										'affected_account' => $_GET['client_id'],
-										'affected_account_name' => $_GET['client'],
-										'get_user_real_name' => true,
-										'get_file_real_name' => true
-									);
-				$new_record_action = $new_log_action->log_action_save($log_action_args);
+					$this->get_file_uri_sql	= 'SELECT url FROM tbl_files WHERE id="' . $_GET['id'] .'"';
+					$this->get_file_uri		= $this->database->query($this->get_file_uri_sql);
+					$this->got_url			= mysql_fetch_array($this->get_file_uri);
+					$this->real_file_url	= $this->got_url['url'];
+					
+					$this->can_download = false;
 
-				$this->real_file = UPLOADED_FILES_FOLDER.$this->real_file_url;
-				if (file_exists($this->real_file)) {
-					while (ob_get_level()) ob_end_clean();
-					header('Content-Type: application/octet-stream');
-					header('Content-Disposition: attachment; filename='.basename($this->real_file));
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-					header('Pragma: public');
-					header('Cache-Control: private',false);
-					header('Content-Length: ' . get_real_size($this->real_file));
-					header('Connection: close');
-					readfile($this->real_file);
-					exit;
-				}
-				else {
-					header("HTTP/1.1 404 Not Found");
-					exit;
-				}
+					if (CURRENT_USER_LEVEL == 0) {
+						/**
+						 * Does the client have permission to download the file?
+						 * First, get the list of different groups the client belongs to.
+						 */
+						$sql_groups = $this->database->query("SELECT DISTINCT group_id FROM tbl_members WHERE client_id='".CURRENT_USER_ID."'");
+						$count_groups = mysql_num_rows($sql_groups);
+						if ($count_groups > 0) {
+							while($row_groups = mysql_fetch_array($sql_groups)) {
+								$groups_ids[] = $row_groups["group_id"];
+							}
+							$found_groups = implode(',',$groups_ids);
+						}
+						/**
+						 * Then, check to see if the file is assigned to any group
+						 * where the client is member.
+						 */
+						if (!empty($found_groups)) {
+							$files_groups_query = "SELECT id, file_id, group_id, hidden FROM tbl_files_relations WHERE group_id IN ($found_groups) AND file_id = '".$_GET['id']."' AND hidden = '0'";
+							echo $files_groups_query.'<br /><br />';
+							$files_groups = $this->database->query($files_groups_query);
+							$count_files = mysql_num_rows($files_groups);
+							if ($count_files > 0) {
+								$this->can_download = true;
+							}
+						}
+						/** Then, check on the client's own files */
+						$files_own_query = "SELECT id, client_id, file_id, hidden FROM tbl_files_relations WHERE client_id = '".CURRENT_USER_ID."' AND file_id = '".$_GET['id']."' AND hidden = '0'";
+						echo $files_own_query.'<br /><br />';
+						$files_own = $this->database->query($files_own_query);
+						$count_files = mysql_num_rows($files_own);
+						if ($count_files > 0) {
+							$this->can_download = true;
+						}
+						
+						/** Continue */
+						if ($this->can_download == true) {
+							/**
+							 * If the file is being downloaded by a client, add +1 to
+							 * the download count
+							 */
+							$this->sum_sql = 'UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . $_GET['id'] .'"';
+							if ($_GET['origin'] == 'group') {
+								if (!empty($_GET['group_id'])) {
+									$this->group_id = $_GET['group_id'];
+									$this->sum_sql .= " AND group_id = '$this->group_id'";
+								}
+							} else {
+								$this->client_id = $_GET['client_id'];
+								$this->sum_sql .= " AND client_id = '$this->client_id'";
+							}
+			
+							$this->sql = $this->database->query($this->sum_sql);
+		
+							/**
+							 * The owner ID is generated here to prevent false results
+							 * from a modified GET url.
+							 */
+							$log_action = 8;
+							$log_action_owner_id = CURRENT_USER_ID;
+						}
+						else {
+						}
+					}
+					else {
+						$this->can_download = true;
+						$log_action = 7;
+						$global_user = get_current_user_username();
+						$global_id = get_logged_account_id($global_user);
+						$log_action_owner_id = $global_id;
+					}
+
+					if ($this->can_download == true) {
+						/** Record the action log */
+						$new_log_action = new LogActions();
+						$log_action_args = array(
+												'action' => $log_action,
+												'owner_id' => $log_action_owner_id,
+												'affected_file' => $_GET['id'],
+												'affected_file_name' => $this->real_file_url,
+												'affected_account' => $_GET['client_id'],
+												'affected_account_name' => $_GET['client'],
+												'get_user_real_name' => true,
+												'get_file_real_name' => true
+											);
+						$new_record_action = $new_log_action->log_action_save($log_action_args);
+						$this->real_file = UPLOADED_FILES_FOLDER.$this->real_file_url;
+						if (file_exists($this->real_file)) {
+							while (ob_get_level()) ob_end_clean();
+							header('Content-Type: application/octet-stream');
+							header('Content-Disposition: attachment; filename='.basename($this->real_file));
+							header('Expires: 0');
+							header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+							header('Pragma: public');
+							header('Cache-Control: private',false);
+							header('Content-Length: ' . get_real_size($this->real_file));
+							header('Connection: close');
+							readfile($this->real_file);
+							exit;
+						}
+						else {
+							header("HTTP/1.1 404 Not Found");
+							exit;
+						}
+					}
 			}
 		}
 	}
