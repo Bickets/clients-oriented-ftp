@@ -85,7 +85,8 @@ $email_strings_pass_reset = array(
 									'subject'		=> __('Password reset instructions','cftp_admin'),
 									'body'			=> __('A request has been received to reset the password for the following account:','cftp_admin'),
 									'body2'			=> __('To continue, please visit the following link','cftp_admin'),
-									'body3'			=> __('Ignoring this e-mail will cancel the request.','cftp_admin'),
+									'body3'			=> __('The request is valid only for 24 hours.','cftp_admin'),
+									'body4'			=> __('If you did not make this request, simply ignore this email.','cftp_admin'),
 									'label_user'	=> __('Username','cftp_admin'),
 								);
 
@@ -318,12 +319,13 @@ class PSend_Email
 		global $email_strings_pass_reset;
 		$this->email_body = $this->email_prepare_body('password_reset');
 		$this->email_body = str_replace(
-									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%LBLUSER%','%USERNAME%','%URI%'),
+									array('%SUBJECT%','%BODY1%','%BODY2%','%BODY3%','%BODY4%','%LBLUSER%','%USERNAME%','%URI%'),
 									array(
 										$email_strings_pass_reset['subject'],
 										$email_strings_pass_reset['body'],
 										$email_strings_pass_reset['body2'],
 										$email_strings_pass_reset['body3'],
+										$email_strings_pass_reset['body4'],
 										$email_strings_pass_reset['label_user'],
 										$username,
 										BASE_URI.'/reset-password.php?token=' . $token . '&user=' . $username,
