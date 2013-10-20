@@ -262,12 +262,12 @@ function get_user_by_id($user)
  * Used on the default template, log in page, install page and the back-end
  * footer file.
  */
-function default_footer_info()
+function default_footer_info($logged = true)
 {
 ?>
 	<footer>
 		<div id="footer">
-			<?php _e('Provided by', 'cftp_admin'); ?> <a href="<?php echo SYSTEM_URI; ?>" target="_blank"><?php echo SYSTEM_NAME; ?></a> <?php echo _e('version', 'cftp_admin'); ?> <?php echo CURRENT_VERSION; ?> - <?php _e('Free software', 'cftp_admin'); ?>
+			<?php _e('Provided by', 'cftp_admin'); ?> <a href="<?php echo SYSTEM_URI; ?>" target="_blank"><?php echo SYSTEM_NAME; ?></a> <?php if ($logged == true) { _e('version', 'cftp_admin'); echo ' ' . CURRENT_VERSION; } ?> - <?php _e('Free software', 'cftp_admin'); ?>
 		</div>
 	</footer>
 <?php
@@ -321,9 +321,15 @@ function in_session_or_cookies($levels)
 	if (isset($_SESSION['userlevel']) && (in_array($_SESSION['userlevel'],$levels))) {
 		return true;
 	}
+	/**
+	 * Cookies are no longer used this way.
+	 * userlevel_check.php has the answer.
+	 */
+	/*
 	else if (isset($_COOKIE['userlevel']) && (in_array($_COOKIE['userlevel'],$levels))) {
 		return true;
 	}
+	*/
 	else {
 		return false;
 	}

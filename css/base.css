@@ -325,9 +325,12 @@ h4 {
 	border-top:1px dotted #ccc;
 }
 
-.login_form_links p {
-	margin:0;
-}
+	.login_form_links p {
+		margin:10px 0 0;
+	}
+
+	#register_link {
+	}
 
 .whitebox {
 	background-color:white;
@@ -339,6 +342,37 @@ h4 {
 	border-radius:5px;
 	box-shadow:3px 3px 5px #dedede;
 }
+
+.white-box {
+	margin-top:35px;
+	background-color:white;
+	border:1px solid #ccc;
+
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	border-radius:5px;
+
+	-moz-box-shadow:3px 3px 5px #dedede;
+	-webkit-box-shadow:3px 3px 5px #dedede;
+	box-shadow:3px 3px 5px #dedede;
+}
+
+	.white-box-interior {
+		padding:15px;
+	}
+
+		.white-box-interior input[type="text"],
+		.white-box-interior input[type="email"],
+		.white-box-interior input[type="password"],
+		.white-box-interior input[type="tel"],
+		.white-box-interior select,
+		.white-box-interior textarea {
+			width:96%;
+		}
+
+		.white-box-interior label {
+		}
+	
 
 .whiteform {
 	margin:0 auto 0 auto;

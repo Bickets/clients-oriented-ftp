@@ -331,8 +331,9 @@ body, html {
 	margin:0 5px 3px 0!important;
 }
 
-.form_fields .form_submit_li {
-	text-align:right;
+.form_submit_li {
+	margin-top:25px;
+	text-align:center;
 }
 
 .required {
