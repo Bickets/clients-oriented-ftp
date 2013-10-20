@@ -35,8 +35,9 @@ if($_POST) {
 	$got_admin_name = mysql_real_escape_string($_POST['install_user_fullname']);
 	$got_admin_username = mysql_real_escape_string($_POST['install_user_username']);
 	$got_admin_email = mysql_real_escape_string($_POST['install_user_mail']);
-	$got_admin_pass = mysql_real_escape_string(md5($_POST['install_user_pass']));
-	$got_admin_pass2 = mysql_real_escape_string(md5($_POST['install_user_repeat']));
+	//$got_admin_pass = mysql_real_escape_string(md5($_POST['install_user_pass']));
+	$got_admin_pass = $hasher->HashPassword($_POST['install_user_pass']);
+	//$got_admin_pass2 = mysql_real_escape_string(md5($_POST['install_user_repeat']));
 }
 
 /** Define the installation text stirngs */
