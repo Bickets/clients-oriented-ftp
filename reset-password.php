@@ -74,7 +74,7 @@ include('header-unlogged.php');
 					$id			= $row['id'];
 					$username	= $row['user'];
 					$email		= $row['email'];
-					$token		= substr(md5(mt_rand(0, 1000000)), 0, 32);
+					$token		= generateRandomString(32);
 					
 					/**
 					 * Count how many request were made by this user today.
