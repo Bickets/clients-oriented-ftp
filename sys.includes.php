@@ -38,6 +38,9 @@ require_once(ROOT_DIR.'/includes/templates.php');
 /** Contains the current session information */
 require_once(ROOT_DIR.'/includes/active.session.php');
 
+/** Recreate the function if it doesn't exist. By Alan Reiblein */
+require_once(ROOT_DIR.'/includes/timezone_identifiers_list.php');
+
 /**
  * Always require this classes to avoid repetition of code
  * on other files.
