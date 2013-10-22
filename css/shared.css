@@ -901,3 +901,8 @@ div.pager input, div.pager select {
 	border-radius:5px;
 }
 
+div.pager .pagedisplay,
+div.pager .pagesize,
+div.pager form {
+	margin-bottom:0px;
+}
