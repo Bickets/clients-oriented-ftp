@@ -107,12 +107,42 @@ $work_folder = UPLOADED_FILES_FOLDER;
 				closedir($handle);
 			}
 			
+			if (!empty($_POST['search'])) {
+				$search = $_POST['search'];
+
+				$files_to_add = array_filter($files_to_add, function ($item) use ($search) {
+					if (stripos($item['name'], $search) !== false) {
+						/**
+						 * Items that match the search
+						 */
+						return true;
+					}
+					else {
+						/**
+						 * Remove other items
+						 */
+						unset($item);
+					}
+					return false;
+				});
+			}
+			
+//			var_dump($result);
+			
 			/**
 			 * Generate the list of files if there is at least 1
 			 * available and allowed.
 			 */
 			if(isset($files_to_add) && count($files_to_add) > 0) {
 		?>
+
+				<div class="form_actions_limit_results">
+					<form action="" name="files_search" method="post" class="form-inline">
+						<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
+						<button type="submit" id="btn_proceed_search" class="btn btn-small"><?php _e('Search','cftp_admin'); ?></button>
+					</form>
+				</div>
+				<div class="clear"></div>
 
 				<form action="upload-process-form.php" name="upload_by_ftp" id="upload_by_ftp" method="post" enctype="multipart/form-data">
 					<table id="add_files_from_ftp" class="tablesorter">
@@ -178,7 +208,7 @@ $work_folder = UPLOADED_FILES_FOLDER;
 							$("td>input:checkbox").prop("checked",status);
 						});
 						
-						$("form").submit(function() {
+						$("#upload_by_ftp").submit(function() {
 							var checks = $("td>input:checkbox").serializeArray(); 
 							if (checks.length == 0) { 
 								alert('<?php _e('Please select at least one file to proceed.','cftp_admin'); ?>');
