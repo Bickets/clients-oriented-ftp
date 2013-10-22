@@ -194,6 +194,32 @@ $work_folder = UPLOADED_FILES_FOLDER;
 						<button type="submit" name="submit" class="btn btn-wide btn-primary" id="upload-continue"><?php _e('Continue','cftp_admin'); ?></button>
 					</div>
 				</form>
+
+				<?php if (count($files_to_add) > 10) { ?>
+					<div id="pager" class="pager">
+						<form>
+							<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
+							<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
+							<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
+							<input type="text" class="pagedisplay" disabled="disabled" />
+							<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
+							<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
+							<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
+							<select class="pagesize">
+								<option selected="selected" value="10">10</option>
+								<option value="20">20</option>
+								<option value="30">30</option>
+								<option value="40">40</option>
+							</select>
+						</form>
+					</div>
+				<?php } else { ?>
+					<div id="pager">
+						<form>
+							<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
+						</form>
+					</div>
+				<?php } ?>
 	
 				<script type="text/javascript">
 					$(document).ready(function() {
@@ -202,6 +228,7 @@ $work_folder = UPLOADED_FILES_FOLDER;
 								0: { sorter: false }
 							}
 						})
+						.tablesorterPager({container: $("#pager")})
 
 						$("#select_all").click(function(){
 							var status = $(this).prop("checked");
