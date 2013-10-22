@@ -299,6 +299,7 @@ require_once(ROOT_DIR.'/includes/core.update.silent.php');
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php _e('Options', 'cftp_admin'); ?> <b class="caret"></b></a>
 									<ul class="dropdown-menu">
 										<li><a href="<?php echo BASE_URI; ?>options.php"><?php _e('General options', 'cftp_admin'); ?></a></li>
+										<li class="divider"></li>
 										<li><a href="<?php echo BASE_URI; ?>branding.php"><?php _e('Branding', 'cftp_admin'); ?></a></li>
 										<li><a href="<?php echo BASE_URI; ?>email-templates.php"><?php _e('E-mail templates', 'cftp_admin'); ?></a></li>
 									</ul>
