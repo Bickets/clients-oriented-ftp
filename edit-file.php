@@ -382,8 +382,9 @@ $current_level = get_current_user_level();
 				<?php
 					}
 				?>
-				<div align="right">
-					<button type="submit" name="submit" class="button button_blue button_submit" id="upload_continue"><?php _e('Continue','cftp_admin'); ?></button>
+				<div class="after_form_buttons">
+					<a href="<?php echo BASE_URI; ?>manage-files.php" name="cancel" class="btn btn-wide"><?php _e('Cancel','cftp_admin'); ?></a>
+					<button type="submit" name="submit" class="btn btn-wide btn-primary"><?php _e('Continue','cftp_admin'); ?></button>
 				</div>
 			</form>
 	<?php

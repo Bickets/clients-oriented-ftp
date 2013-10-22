@@ -30,7 +30,7 @@ $notifications_inactive = array();
  * 2 - E-mail FAILED (times count stored on times_failed).
  * 3 - Unsent, client or system user were inactive.
  */
-$notifications_query = "SELECT * FROM tbl_notifications WHERE sent_status = '0' AND times_failed = '0'";
+$notifications_query = "SELECT * FROM tbl_notifications WHERE sent_status = '0' AND times_failed < '4'";
 $notifications_sql = $database->query($notifications_query);
 while ($row = mysql_fetch_array($notifications_sql)) {
 	$get_file_info[] = $row['file_id'];
@@ -89,17 +89,19 @@ if (!empty($found_notifications)) {
 	 * Add the creatros of the previous clients to the mails array.
 	 */
 	$creators = substr($creators, 0, -1);
-	$creators_query = "SELECT id, name, user, email, active FROM tbl_users WHERE user IN ($creators)";
-	$creators_sql = $database->query($creators_query);
-	while ($row = mysql_fetch_array($creators_sql)) {
-		$creators_data[$row['user']] = array(
-									'id' => $row['id'],
-									'user' => $row['user'],
-									'name' => $row['name'],
-									'email' => $row['email'],
-									'active' => $row['active']
-								);
-		$mail_by_user[$row['user']] = $row['email'];
+	if (!empty($creators)) {
+		$creators_query = "SELECT id, name, user, email, active FROM tbl_users WHERE user IN ($creators)";
+		$creators_sql = $database->query($creators_query);
+		while ($row = mysql_fetch_array($creators_sql)) {
+			$creators_data[$row['user']] = array(
+										'id' => $row['id'],
+										'user' => $row['user'],
+										'name' => $row['name'],
+										'email' => $row['email'],
+										'active' => $row['active']
+									);
+			$mail_by_user[$row['user']] = $row['email'];
+		}
 	}
 	
 	/**
@@ -277,5 +279,18 @@ if (!empty($found_notifications)) {
 			echo system_message('error',$msg);
 		}
 	}
+	
+	
+	
+	/**
+	 * DEBUG
+	 */
+	 echo '<h2>Notifications Found</h2><br />';
+	 print_r($found_notifications);
+	 echo '<br /><br />';
+
+
+	 echo '<h2>Notifications sent query</h2><br />' . $notifications_sent_query . '<br /><br />';
+	 
 }
 ?>

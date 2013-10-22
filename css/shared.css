@@ -574,14 +574,28 @@ input[type="text"], input[type="password"], textarea, select {
 	border:1px solid #002170!important;
 }
 
+.after_form_buttons {
+	margin-top:50px;
+	text-align:center;
+}
 
 /** Overwrite default bootstrap Main button colors */
 
-.btn-primary {
-	background:#004B92!important;
-	background:-moz-linear-gradient(center top , #1C6EB5, #004B92)!important;
-	background:-webkit-gradient(linear, left top, left bottom, from(#1C6EB5), to(#004B92))!important;
+.btn {
 }
+
+.btn-wide {
+	padding:4px 20px !important;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus {
+	background:#004B92;
+	background:-moz-linear-gradient(center top , #1C6EB5, #004B92);
+	background:-webkit-gradient(linear, left top, left bottom, from(#1C6EB5), to(#004B92));
+}
+
 
 /** Modal content */
 

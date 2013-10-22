@@ -542,8 +542,8 @@ while($row = mysql_fetch_array($sql)) {
 			?>
 			<input type="hidden" name="upload_failed" value="<?php echo $upload_failed_hidden; ?>" />
 			
-			<div align="right">
-				<button type="submit" name="submit" class="button button_blue button_submit" id="upload_continue"><?php _e('Continue','cftp_admin'); ?></button>
+			<div class="after_form_buttons">
+				<button type="submit" name="submit" class="btn btn-wide btn-primary" id="upload-continue"><?php _e('Continue','cftp_admin'); ?></button>
 			</div>
 		</form>
 
@@ -640,7 +640,7 @@ while($row = mysql_fetch_array($sql)) {
 				});
 		
 				// Autoclick the continue button
-				//$('#upload_continue').click();
+				//$('#upload-continue').click();
 		<?php
 			}
 			if(!empty($upload_finish)) {

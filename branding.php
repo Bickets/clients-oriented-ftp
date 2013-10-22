@@ -23,8 +23,6 @@ $logo_file_info = generate_logo_url();
 <div id="main">
 	<h2><?php echo $page_title; ?></h2>
 
-	<div class="options_box whitebox">
-
 <?php
 if ($_POST) {
 	/** Valid file extensions (images) */
@@ -94,45 +92,49 @@ else {
 		});
 	</script>
 
-	<p><?php _e('Use this page to upload your company logo, or update the currently assigned one. This image will be shown to your clients when they access their file list.','cftp_admin'); ?></p>
+	<form action="branding.php" name="logoupload" method="post" enctype="multipart/form-data">
+		<div class="options_box whitebox">
 
-	<div id="current_logo">
-		<div id="current_logo_left">
-			<p><strong><?php _e('Current logo','cftp_admin'); ?></strong></p>
-			<p class="logo_note"><?php _e("The picture on the right is not an actual representation of what they will see. The size on this preview is fixed, but remember that you can change the display size and picture quality for your client's pages on the",'cftp_admin'); ?> <a href="options.php"><?php _e("options",'cftp_admin'); ?></a> <?php _e("section.",'cftp_admin'); ?></p>
-		</div>
-		<div id="current_logo_right">
-			<div id="current_logo_img">
-				<?php
-					if ($logo_file_info['exists'] === true) {
-				?>
-						<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $logo_file_info['url']; ?>&amp;w=220" alt="<?php _e('Logo Placeholder','cftp_admin'); ?>" />
-				<?php
-					}
-				?>
+			<p><?php _e('Use this page to upload your company logo, or update the currently assigned one. This image will be shown to your clients when they access their file list.','cftp_admin'); ?></p>
+		
+			<div id="current_logo">
+				<div id="current_logo_left">
+					<p><strong><?php _e('Current logo','cftp_admin'); ?></strong></p>
+					<p class="logo_note"><?php _e("The picture on the right is not an actual representation of what they will see. The size on this preview is fixed, but remember that you can change the display size and picture quality for your client's pages on the",'cftp_admin'); ?> <a href="options.php"><?php _e("options",'cftp_admin'); ?></a> <?php _e("section.",'cftp_admin'); ?></p>
+				</div>
+				<div id="current_logo_right">
+					<div id="current_logo_img">
+						<?php
+							if ($logo_file_info['exists'] === true) {
+						?>
+								<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $logo_file_info['url']; ?>&amp;w=220" alt="<?php _e('Logo Placeholder','cftp_admin'); ?>" />
+						<?php
+							}
+						?>
+					</div>
+				</div>
 			</div>
+	
+			<div id="form_upload_logo">
+			<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
+				<ul class="form_fields">
+					<li>
+						<label><?php _e('Select image to upload','cftp_admin'); ?></label>
+						<input type="file" name="select_logo" />
+					</li>
+				</ul>
+			</div>
+		
 		</div>
-	</div>
 
-	<div id="form_upload_logo">
-		<form action="branding.php" name="logoupload" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="MAX_FILE_SIZE" value="1000000000">
-			<ul class="form_fields">
-				<li>
-					<label><?php _e('Select image to upload','cftp_admin'); ?></label>
-					<input type="file" name="select_logo" />
-				</li>
-				<li class="form_submit_li">
-					<input type="submit" name="Submit" value="<?php _e('Upload','cftp_admin'); ?>" class="button button_blue button_submit" />
-				</li>
-			</ul>
-		</form>
-	</div>
+		<div class="after_form_buttons">
+			<button type="submit" name="submit" class="btn btn-wide btn-primary empty"><?php _e('Upload','cftp_admin'); ?></button>
+		</div>
+	</form>
+	<div class="clear"></div>
 
 <?php } ?>
 
-	</div>
-	<div class="clear"></div>
 </div>
 
 <?php include('footer.php'); ?>

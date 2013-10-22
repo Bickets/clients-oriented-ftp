@@ -429,11 +429,9 @@ $allowed_file_types = implode(',',$allowed_file_types);
 					</div>
 				</div>
 	
-				<ul class="form_fields">		
-					<li class="form_submit_li">
-						<input type="submit" name="Submit" value="<?php _e('Update all options','cftp_admin'); ?>" class="button button_blue button_submit" />
-					</li>
-				</ul>
+				<div class="after_form_buttons">
+					<button type="submit" name="submit" class="btn btn-wide btn-primary empty"><?php _e('Update all options','cftp_admin'); ?></button>
+				</div>
 
 			</div>
 		</form>

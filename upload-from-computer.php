@@ -115,7 +115,7 @@ $database->MySQLDB();
 								
 							uploader.start();
 
-							$("#btn_submit").hide();
+							$("#btn-submit").hide();
 							$(".message_uploading").fadeIn();
 
 							uploader.bind('FileUploaded', function (up, file, info) {
@@ -141,8 +141,8 @@ $database->MySQLDB();
 						<p><?php _e("Your browser doesn't support HTML5, Flash or Silverlight. Please update your browser or install Adobe Flash or Silverlight to continue.",'cftp_admin'); ?></p>
 					</div>
 				</div>
-				<div align="right">
-					<button type="submit" name="Submit" class="button button_blue button_submit" id="btn_submit"><?php _e('Upload files','cftp_admin'); ?></button>
+				<div class="after_form_buttons">
+					<button type="submit" name="Submit" class="btn btn-wide btn-primary" id="btn-submit"><?php _e('Upload files','cftp_admin'); ?></button>
 				</div>
 				<div class="message message_info message_uploading">
 					<p><?php _e("Your files are being uploaded! Progress indicators may take a while to update, but work is still being done behind the scenes.",'cftp_admin'); ?></p>
