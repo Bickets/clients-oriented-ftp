@@ -88,7 +88,7 @@ define('CAN_INCLUDE_FILES', true);
 									<ul class="activities_log">
 									</ul>
 									<div class="view_full_log">
-										<a href="actions-log.php" class="button button_blue"><?php _e('View all','cftp_admin'); ?></a>
+										<a href="actions-log.php" class="btn btn-primary btn-wide"><?php _e('View all','cftp_admin'); ?></a>
 									</div>
 								</div>
 							</div>

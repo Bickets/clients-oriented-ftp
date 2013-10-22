@@ -140,10 +140,11 @@ switch ($clients_form_type) {
 			<label for="add_client_form_notify"><?php _e('Notify new uploads by e-mail','cftp_admin'); ?></label>
 			<input type="checkbox" name="add_client_form_notify" id="add_client_form_notify" <?php echo (isset($add_client_data_notity) && $add_client_data_notity == 1) ? 'checked="checked"' : ''; ?> />
 		</li>
-		<li class="form_submit_li">
-			<input type="submit" name="Submit" value="<?php echo $submit_value; ?>" class="button button_blue button_submit" />
-		</li>
 	</ul>
+
+	<div class="inside_form_buttons">
+		<button type="submit" name="submit" class="btn btn-wide btn-primary"><?php echo $submit_value; ?></button>
+	</div>
 
 	<?php
 		if ($info_box == true) {

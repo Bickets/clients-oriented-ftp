@@ -133,16 +133,6 @@ body, html {
 		color:#f0f0f0;
 	}
 
-/*
-	ul.nav li.dropdown:hover > ul.dropdown-menu {
-		display: block;    
-	}
-
-	.navbar .dropdown-menu {
-		 margin-top: 0px;
-	}
-*/
-
 	.navbar .badge {
 		background:#111;
 		color:#dedede;
@@ -337,10 +327,6 @@ body, html {
 }
 
 .required {
-/*	background-image:url(../img/req-field-off.png) !important;
-	background-position:right -6px;
-	background-repeat:no-repeat;
-*/
 	width:264px !important;
 	padding-right:50px !important;
 	background:url(../img/req-text.png) no-repeat right -2px;
@@ -367,7 +353,8 @@ li .required.password_toggle {
 	height:150px;
 }
 
-input[type="text"], input[type="password"], textarea, select {
+
+textarea, select {
 	width:308px;
 }
 
@@ -576,6 +563,11 @@ input[type="text"], input[type="password"], textarea, select {
 
 .after_form_buttons {
 	margin-top:50px;
+	text-align:center;
+}
+
+.inside_form_buttons {
+	margin-top:25px;
 	text-align:center;
 }
 

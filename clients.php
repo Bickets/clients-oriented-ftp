@@ -314,26 +314,26 @@ $(document).ready(function() {
 										<?php
 											if ($own_files + $groups_files > 0) {
 												$files_link = 'manage-files.php?client_id='.$row["id"];
-												$files_button = 'button_blue';
+												$files_button = 'btn-primary';
 											}
 											else {
 												$files_link = '#';
-												$files_button = 'button_gray';
+												$files_button = 'disabled';
 											}
 
 											if ($count_groups > 0) {
 												$groups_link = 'groups.php?member='.$row["id"];
-												$groups_button = 'button_blue';
+												$groups_button = 'btn-primary';
 											}
 											else {
 												$groups_link = '#';
-												$groups_button = 'button_gray';
+												$groups_button = 'disabled';
 											}
 										?>
-										<a href="<?php echo $files_link; ?>" class="button <?php echo $files_button; ?>"><?php _e('Manage files','cftp_admin'); ?></a>
-										<a href="<?php echo $groups_link; ?>" class="button <?php echo $groups_button; ?>"><?php _e('View groups','cftp_admin'); ?></a>
-										<a href="my_files/?client=<?php echo $row["user"]; ?>" class="button button_blue" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
-										<a href="clients-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
+										<a href="<?php echo $files_link; ?>" class="btn btn-small <?php echo $files_button; ?>"><?php _e('Manage files','cftp_admin'); ?></a>
+										<a href="<?php echo $groups_link; ?>" class="btn btn-small <?php echo $groups_button; ?>"><?php _e('View groups','cftp_admin'); ?></a>
+										<a href="my_files/?client=<?php echo $row["user"]; ?>" class="btn btn-primary btn-small" target="_blank"><?php _e('View as client','cftp_admin'); ?></a>
+										<a href="clients-edit.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-small"><?php _e('Edit','cftp_admin'); ?></a>
 									</td>
 								</tr>
 					<?php

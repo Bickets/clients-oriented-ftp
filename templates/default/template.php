@@ -135,7 +135,7 @@ $count = count($my_files);
 											<?php } ?>
 										</td>
 										<td>
-											<a href="<?php echo $download_link; ?>" target="_blank" class="button button_blue">
+											<a href="<?php echo $download_link; ?>" target="_blank" class="btn btn-primary btn-small btn-wide">
 												<?php _e('Download','cftp_template'); ?>
 											</a>
 										</td>

@@ -301,7 +301,7 @@ include('header.php');
 					</td>
 					<td><?php echo $date; ?></td>
 					<td>
-						<a href="users-edit.php?id=<?php echo $row["id"]; ?>" class="button button_small button_blue"><?php _e('Edit','cftp_admin'); ?></a>
+						<a href="users-edit.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-small"><?php _e('Edit','cftp_admin'); ?></a>
 					</td>
 				</tr>
 						

@@ -552,7 +552,7 @@ include('header.php');
 									?>
 												<td>
 													<div class="icons">
-														<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders button_blue'; } else { echo 'button_gray'; } ?> button" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
+														<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders btn-primary'; } else { echo 'disabled'; } ?> btn btn-small" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
 															<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
 														</a>
 													</div>
@@ -562,7 +562,7 @@ include('header.php');
 										}
 									?>
 									<td>
-										<a href="edit-file.php?file_id=<?php echo $row["id"]; ?>" class="button button_blue button_small">
+										<a href="edit-file.php?file_id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-small">
 											<?php _e('Edit','cftp_admin'); ?>
 										</a>
 									</td>

@@ -118,10 +118,11 @@ switch ($user_form_type) {
 		<?php
 			}
 		?>
-		<li class="form_submit_li">
-			<input type="submit" name="Submit" value="<?php echo $submit_value; ?>" class="button button_blue button_submit" />
-		</li>
 	</ul>
+
+	<div class="inside_form_buttons">
+		<button type="submit" name="submit" class="btn btn-wide btn-primary"><?php echo $submit_value; ?></button>
+	</div>
 
 	<?php
 		if ($user_form_type == 'new_user') {

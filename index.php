@@ -150,14 +150,15 @@ include('header-unlogged.php');
 
 								<label for="login_form_pass"><?php _e('Password','cftp_admin'); ?></label>
 								<input type="password" name="login_form_pass" id="login_form_pass" class="span3" />
-
+<?php
+/*
 								<label for="login_form_remember">
 									<input type="checkbox" name="login_form_remember" id="login_form_remember" value="on" />
 									<?php _e('Remember me','cftp_admin'); ?>
 								</label>
-
-								<div class="form_submit_li">
-									<button type="submit" name="submit" id="button_login" class="button button_blue button_submit"><?php _e('Continue','cftp_admin'); ?></button>
+*/?>
+								<div class="inside_form_buttons">
+									<button type="submit" name="submit" class="btn btn-wide btn-primary"><?php _e('Continue','cftp_admin'); ?></button>
 								</div>
 							</fieldset>
 						</form>

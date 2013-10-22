@@ -267,8 +267,8 @@ include('header-unlogged.php');
 
 											<p><?php _e("Please enter your account's e-mail address. You will receive a link to continue the process.",'cftp_admin'); ?></p>
 
-											<div class="form_submit_li">
-												<button type="submit" name="submit" id="button_login" class="button button_blue button_submit"><?php _e('Continue','cftp_admin'); ?></button>
+											<div class="inside_form_buttons">
+												<button type="submit" name="submit" class="btn btn-wide btn-primary"><?php _e('Continue','cftp_admin'); ?></button>
 											</div>
 										</fieldset>
 									</form>
@@ -302,8 +302,8 @@ include('header-unlogged.php');
 											
 											<p><?php _e("Please enter your desired new password. After that, you will be able to log in normally.",'cftp_admin'); ?></p>
 
-											<div class="form_submit_li">
-												<button type="submit" name="submit" id="button_login" class="button button_blue button_submit"><?php _e('Continue','cftp_admin'); ?></button>
+											<div class="inside_form_buttons">
+												<button type="submit" name="submit" class="btn btn-wide btn-primary"><?php _e('Continue','cftp_admin'); ?></button>
 											</div>
 										</fieldset>
 									</form>

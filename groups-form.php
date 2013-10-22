@@ -68,10 +68,11 @@ switch ($groups_form_type) {
 				<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
 			</div>
 		</li>
-		<li class="form_submit_li">
-			<input type="submit" name="Submit" value="<?php echo $submit_value; ?>" class="button button_blue button_submit" />
-		</li>
 	</ul>
+
+	<div class="inside_form_buttons">
+		<button type="submit" name="submit" class="btn btn-wide btn-primary"><?php echo $submit_value; ?></button>
+	</div>
 </form>
 
 <script type="text/javascript">
