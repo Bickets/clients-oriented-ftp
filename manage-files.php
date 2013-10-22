@@ -14,6 +14,15 @@ $active_nav = 'files';
 $page_title = __('Manage files','cftp_admin');
 
 $current_level = get_current_user_level();
+
+/**
+ * Used to distinguish the current page results.
+ * Global means all files.
+ * Client or group is only when looking into files
+ * assigned to any of them.
+ */
+$results_type = 'global';
+
 /**
  * The client's id is passed on the URI.
  * Then get_client_by_id() gets all the other account values.
@@ -26,6 +35,7 @@ if (isset($_GET['client_id'])) {
 		$page_title .= ' '.__('for client','cftp_admin').' '.html_entity_decode($this_client['name']);
 		$search_on = 'client_id';
 		$name_for_actions = $this_client['username'];
+		$results_type = 'client';
 	}
 }
 
@@ -44,6 +54,7 @@ if (isset($_GET['group_id'])) {
 			$page_title .= ' '.__('for group','cftp_admin').' '.html_entity_decode($group_name);
 			$search_on = 'group_id';
 			$name_for_actions = html_entity_decode($group_name);
+			$results_type = 'group';
 		}
 	}
 }
@@ -264,26 +275,6 @@ include('header.php');
 			$no_results_error = 'filter';
 		}
 
-		/** Add the download count filter */	
-		if(isset($_POST['download_count']) && $_POST['download_count'] != 'all') {
-			$count_filter = $_POST['download_count'];
-			if (isset($set_and)) {
-				$cq .= " AND ";
-			}
-			else {
-				$cq .= " WHERE ";
-			}
-			switch ($count_filter) {
-				case '0':
-					$cq .= "download_count='$count_filter'";
-					break;
-				case '1':
-					$cq .= "download_count >='$count_filter'";
-					break;
-			}
-			$no_results_error = 'filter';
-		}
-
 		/**
 		 * Count the files assigned to this client. If there is none, show
 		 * an error message.
@@ -338,19 +329,13 @@ include('header.php');
 
 				<?php
 					/** Filters are not available for clients */
-					if($current_level != '0') {
+					if($current_level != '0' && $results_type != 'global') {
 				?>
 						<form action="<?php echo $form_action_url; ?>" name="files_filters" method="post" class="form-inline">
 							<select name="status" id="status" class="txtfield">
 								<option value="all"><?php _e('All statuses','cftp_admin'); ?></option>
 								<option value="1"><?php _e('Hidden','cftp_admin'); ?></option>
 								<option value="0"><?php _e('Visible','cftp_admin'); ?></option>
-							</select>
-							<select name="download_count" id="download_count" class="txtfield">
-								<option value="all"><?php _e('Download count','cftp_admin'); ?></option>
-								<option value="all"><?php _e('Indistinct','cftp_admin'); ?></option>
-								<option value="0"><?php _e('0 times','cftp_admin'); ?></option>
-								<option value="1"><?php _e('1 or more times','cftp_admin'); ?></option>
 							</select>
 							<button type="submit" id="btn_proceed_filter_clients" class="btn btn-small"><?php _e('Filter','cftp_admin'); ?></button>
 						</form>
