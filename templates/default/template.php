@@ -225,7 +225,7 @@ $count = count($my_files);
 						});
 						
 						$(document).psendmodal();
-						$('.modal_content').html('<p class="loading-img"><img src="<?php echo BASE_URI; ?>/img/ajax-loader.gif" alt="Loading" /></p>'+
+						$('.modal_content').html('<p class="loading-img"><img src="<?php echo BASE_URI; ?>img/ajax-loader.gif" alt="Loading" /></p>'+
 													'<p class="lead text-center text-info"><?php _e('Please wait while your download is prepared.','cftp_admin'); ?></p>'+
 													'<p class="text-center text-info"><?php _e('This operation could take a few minutes, depending on the size of the files.','cftp_admin'); ?></p>'
 												);
