@@ -99,13 +99,13 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 	
 		<div class="whitebox whiteform" id="install_form">
 
-			<?php
+		<?php
 			if (is_projectsend_installed()) {
-			?>
+		?>
 				<h3><?php _e('Already installed','cftp_admin'); ?></h3>
 				<p><?php _e('It seems that ProjectSend is already installed here.','cftp_admin'); ?></p>
 				<p><?php _e('If you want to reinstall, please delete the system tables from the database and come back to the installation form.','cftp_admin'); ?></p>
-			<?php
+		<?php
 			}
 			else {
 
@@ -154,9 +154,9 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 					}
 				
 				}
-				?>
+			?>
 			
-				<?php
+			<?php
 					if(isset($valid_me)) {
 						/** If the form was submited with errors, show them here */
 						$valid_me->list_errors();
@@ -283,10 +283,11 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 									<label for="install_user_pass"><?php _e('Password','cftp_admin'); ?></label>
 									<input type="password" name="install_user_pass" id="install_user_pass" class="required password_toggle" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
 								</li>
-								<li class="form_submit_li">
-									<input type="submit" name="Submit" value="<?php _e('Install','cftp_admin'); ?>" class="button button_blue button_submit" />
-								</li>
 							</ul>
+
+							<div class="inside_form_buttons">
+								<button type="submit" name="submit" class="btn btn-wide btn-primary"><?php _e('Install','cftp_admin'); ?></button>
+							</div>
 				
 							<div id="install_extra">
 								<p><?php _e('After installing the system, you can go to the options page to set your timezone, prefered date display format and thubmnails parameters, besides being able to change the site options provided here.','cftp_admin'); ?></p>
@@ -294,10 +295,10 @@ $install_no_baseuri = __('ProjectSend URI was not completed.','cftp_admin');
 				
 						</form>
 			
-			<?php
+		<?php
 				}
 			}
-			?>
+		?>
 
 		</div>
 
