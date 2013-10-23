@@ -83,6 +83,7 @@ $count = count($my_files);
 								<input type="checkbox" name="select_all" id="select_all" value="0" />
 							</th>
 							<th><?php _e('Title','cftp_template'); ?></th>
+							<th><?php _e('Ext.','cftp_admin'); ?></th>
 							<th class="description"><?php _e('Description','cftp_template'); ?></th>
 							<th><?php _e('Size','cftp_template'); ?></th>
 							<th class="extra"><?php _e('Date','cftp_template'); ?></th>
@@ -131,6 +132,13 @@ $count = count($my_files);
 												}
 											?>
 										</td>
+										<td>										
+											<?php		
+												$pathinfo = pathinfo($file['url']);	
+												$extension = strtolower($pathinfo['extension']);					
+												echo $extension;
+											?>
+										</td>
 										<td class="description"><?php echo htmlentities($file['description']); ?></td>
 										<td><?php $this_file_size = get_real_size(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file_size); ?></td>
 										<td class="extra"><?php echo $date; ?></td>
@@ -144,8 +152,6 @@ $count = count($my_files);
 										?>
 												<td class="extra">
 													<?php
-														$pathinfo = pathinfo($file['url']);
-														$extension = strtolower($pathinfo['extension']);
 														if (
 															$extension == "gif" ||
 															$extension == "jpg" ||
