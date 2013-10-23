@@ -659,8 +659,6 @@ while($row = mysql_fetch_array($sql)) {
 						selected.push($(this).val());
 					});
 
-					alert(selected.length);
-
 					$('.chosen-select').each(function() {
 						$(this).find('option').each(function() {
 							if ($.inArray($(this).val(), selected) === -1) {

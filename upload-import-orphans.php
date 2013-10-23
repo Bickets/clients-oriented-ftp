@@ -162,7 +162,7 @@ $work_folder = UPLOADED_FILES_FOLDER;
 								foreach ($files_to_add as $add_file) {
 									?>
 										<tr>
-											<td><input type="checkbox" name="add[]" value="<?php echo $add_file; ?>" /></td>
+											<td><input type="checkbox" name="add[]" value="<?php echo $add_file['name']; ?>" /></td>
 											<td><?php echo $add_file['name']; ?></td>
 											<td><?php echo format_file_size(filesize($add_file['path'])); ?></td>
 											<td><?php echo date(TIMEFORMAT_USE, filemtime($add_file['path'])); ?></td>

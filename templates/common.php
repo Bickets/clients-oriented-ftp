@@ -91,14 +91,30 @@ if (!empty($found_own_files_ids)) {
 	
 	$q1 = $database->query($q1a);
 	while($data_own = mysql_fetch_array($q1)) {
-		$my_files[] = array(
-							'origin' => 'own',
-							'id' => $data_own['id'],
-							'url' => $data_own['url'],
-							'name' => $data_own['filename'],
-							'description' => $data_own['description'],
-							'timestamp' => $data_own['timestamp']
-						);
+
+		$add_file	= true;
+		$expired	= false;
+
+		/** Does it expire? */
+		if ($data_own['expires'] == '1') {
+			if (EXPIRED_FILES_HIDE == '1') {
+				$add_file = false;
+			}
+			$expired = true;
+		}
+
+		/** Make the list of files */
+		if ($add_file == true) {
+			$my_files[] = array(
+								'origin' => 'own',
+								'id' => $data_own['id'],
+								'url' => $data_own['url'],
+								'name' => $data_own['filename'],
+								'description' => $data_own['description'],
+								'timestamp' => $data_own['timestamp'],
+								'expired' => $expired,
+							);
+		}
 	}
 	
 }
@@ -107,22 +123,40 @@ if (!empty($found_groups_files_ids)) {
 	foreach ($found_groups_files_ids as $search_in_group) {
 		$find_this_file_id = $search_in_group['file_id'];
 		$q2a = "SELECT * FROM tbl_files WHERE id = $find_this_file_id";
+
+		/** Add the search terms */	
 		if(isset($_POST['search']) && !empty($_POST['search'])) {
 			$search_terms = $_POST['search'];
 			$q2a .= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
 			$no_results_error = 'search';
 		}
+
 		$q2 = $database->query($q2a);
 		while($data_groups = mysql_fetch_array($q2)) {
-			$my_files[] = array(
-								'origin' => 'group',
-								'group_id' => $search_in_group['group_id'],
-								'id' => $data_groups['id'],
-								'url' => $data_groups['url'],
-								'name' => $data_groups['filename'],
-								'description' => $data_groups['description'],
-								'timestamp' => $data_groups['timestamp']
-							);
+			$add_file	= true;
+			$expired	= false;
+
+			/** Does it expire? */
+			if ($data_groups['expires'] == '1') {
+				if (EXPIRED_FILES_HIDE == '1') {
+					$add_file = false;
+				}
+				$expired = true;
+			}
+
+			/** Make the list of files */
+			if ($add_file == true) {
+				$my_files[] = array(
+									'origin' => 'group',
+									'group_id' => $search_in_group['group_id'],
+									'id' => $data_groups['id'],
+									'url' => $data_groups['url'],
+									'name' => $data_groups['filename'],
+									'description' => $data_groups['description'],
+									'timestamp' => $data_groups['timestamp'],
+									'expired' => $expired,
+								);
+			}
 		}
 	}
 }
