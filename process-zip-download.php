@@ -37,16 +37,25 @@ foreach ($files_to_zip as $file_to_zip) {
 	 * that only files under his account can be added.
 	 */
 	if ($current_level == 0) {
-		$sql_url = $database->query('SELECT id FROM tbl_files WHERE url="' . $file_to_zip .'"');
+		$sql_url = $database->query('SELECT id, expires, expiry_date FROM tbl_files WHERE url="' . $file_to_zip .'"');
 		$row_url = mysql_fetch_array($sql_url);
-		$this_file_id = $row_url['id'];
+		$this_file_id			= $row_url['id'];
+		$this_file_expires		= $row_url['expires'];
+		$this_file_expiry_date	= $row_url['expiry_date'];
 
-		$fq = 'SELECT * FROM tbl_files_relations WHERE (client_id="' . $global_id . '" OR group_id IN ("' . $found_groups . '")) AND file_id="' . $this_file_id .' AND hidden = "0"';
-		//echo $fq.'<br />';
-		$sql = $database->query($fq);
-		$row = mysql_fetch_array($sql);
-		/** Add the file */
-		$allowed_to_zip[$row['file_id']] = $file_to_zip;
+		$this_file_expired		= false;
+		if ($this_file_expires == '1' && time() > strtotime($this_file_expiry_date)) {
+			$this_file_expired	= true;
+		}
+		
+		if ($this_file_expires == '0' || $this_file_expired == false) {
+			$fq = 'SELECT * FROM tbl_files_relations WHERE (client_id="' . $global_id . '" OR group_id IN ("' . $found_groups . '")) AND file_id="' . $this_file_id .' AND hidden = "0"';
+			//echo $fq.'<br />';
+			$sql = $database->query($fq);
+			$row = mysql_fetch_array($sql);
+			/** Add the file */
+			$allowed_to_zip[$row['file_id']] = $file_to_zip;
+		}
 	}
 	else {
 		$allowed_to_zip[] = $file_to_zip;
