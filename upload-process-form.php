@@ -193,15 +193,19 @@ while($row = mysql_fetch_array($sql)) {
 							$add_arguments['assign_to'] = array('c'.$client_my_id);
 							$add_arguments['hidden'] = '0';
 							$add_arguments['uploader_type'] = 'client';
+							$add_arguments['expires'] = '0';
 						}
 						else {
 							$add_arguments['uploader_type'] = 'user';
+							if (!empty($file['expires'])) {
+								$add_arguments['expires'] = '1';
+							}
 						}
 						
 						if (!in_array($new_filename,$urls_db_files)) {
 							$add_arguments['add_to_db'] = true;
 						}
-						
+
 						/**
 						 * 1- Add the file to the database
 						 */
@@ -448,11 +452,12 @@ while($row = mysql_fetch_array($sql)) {
 												<p><?php echo $i; ?></p>
 											</div>
 										</div>
-										<div class="span11 file_data">
+										<div class="span11">
 											<div class="row-fluid">
-												<div class="span6">
+												<div class="span4 file_data">
 													<div class="row-fluid">
 														<div class="span12">
+															<h3><?php _e('File information', 'cftp_admin');?></h3>
 															<p class="on_disc_name">
 																<?php echo $file; ?>
 															</p>
@@ -464,13 +469,36 @@ while($row = mysql_fetch_array($sql)) {
 															<label><?php _e('Description', 'cftp_admin');?></label>
 															<textarea name="file[<?php echo $i; ?>][description]" placeholder="<?php _e('Optionally, enter here a description for the file.', 'cftp_admin');?>"><?php echo (isset($description)) ? $description : ''; ?></textarea>
 															
-															<?php if ($current_level != 0) { ?>
-																<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
-															<?php } ?>
 														</div>
 													</div>
 												</div>
-												<div class="span6 assigns">
+												<div class="span4 file_data">
+													<?php
+														/**
+														* Only show the EXPIRY options if the current
+														* uploader is a system user, and not a client.
+														*/
+														if ($global_level != 0) {
+													?>
+															<h3><?php _e('Expiration date', 'cftp_admin');?></h3>
+															<label><input type="checkbox" name="file[<?php echo $i; ?>][expires]" value="1" <?php if ($row['expiry_set']) { ?>checked="checked"<?php } ?> /> <?php _e('File expires', 'cftp_admin');?></label>
+			
+															<label for="file[<?php echo $i; ?>][expires_date]"><?php _e('Select a date', 'cftp_admin');?></label>
+			
+															<div class="input-append date" id="dp3" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
+																<input class="span8 datepick" size="19" readonly="readonly" type="text" id="file[<?php echo $i; ?>][expires_date]" name="file[<?php echo $i; ?>][expires_date]" value="<?php echo date('d-m-Y'); ?>">
+																<span class="add-on"><i class="icon-th"></i></span>
+															</div>
+															
+															<div class="divider"></div>
+				
+															<h3><?php _e('Visibility', 'cftp_admin');?></h3>
+															<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
+													<?php
+														} /** Close $current_level check */
+													?>
+												</div>
+												<div class="span4 file_data assigns">
 													<?php
 														/**
 														* Only show the CLIENTS select field if the current
@@ -478,6 +506,7 @@ while($row = mysql_fetch_array($sql)) {
 														*/
 														if ($current_level != 0) {
 													?>
+															<h3><?php _e('Assignations', 'cftp_admin');?></h3>
 															<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
 															<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="form-control chosen-select" data-placeholder="<?php _e('Select one or more options. Type to search.', 'cftp_admin');?>">
 																<optgroup label="<?php _e('Clients', 'cftp_admin');?>">

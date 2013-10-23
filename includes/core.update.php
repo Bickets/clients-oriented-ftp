@@ -759,6 +759,38 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+		/**
+		 * r464 updates
+		 * New columns where added to the files table, to
+		 * set expiry dates and download limit.
+		 * Also, set a new option to hide or show expired
+		 * files to clients.
+		 */
+		if ($last_update < 464) {
+			$q = $database->query("SELECT expires FROM tbl_files");
+			if (!$q) {
+				$sql1 = $database->query("ALTER TABLE tbl_files ADD expires INT(1) NOT NULL default '0'");
+				$sql2 = $database->query("ALTER TABLE tbl_files ADD expiry_date TIMESTAMP NULL");
+				$updates_made++;
+			}
+
+			$new_database_values = array(
+										'expired_files_hide'		=> '1',
+									);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 
 	}
 }	

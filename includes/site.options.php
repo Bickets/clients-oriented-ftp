@@ -142,6 +142,13 @@ if(!empty($options_values)) {
 	}
 
 	/**
+	 * For versions 464 and up
+	 */	
+	if (isset($options_values['expired_files_hide'])) {
+		define('EXPIRED_FILES_HIDE',$options_values['expired_files_hide']);
+	}
+
+	/**
 	 * Set the default timezone based on the value of the Timezone select box
 	 * of the options page.
 	 */

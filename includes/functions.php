@@ -348,9 +348,11 @@ function get_current_user_level()
 	if (isset($_SESSION['userlevel'])) {
 		$level = $_SESSION['userlevel'];
 	}
+	/*
 	elseif (isset($_COOKIE['userlevel'])) {
 		$level = $_COOKIE['userlevel'];
 	}
+	*/
 	return $level;
 }
 
@@ -364,10 +366,12 @@ function get_current_user_level()
 function get_current_user_username()
 {
 	$user = '';
+	/*
 	if (isset($_COOKIE['loggedin'])) {
 		$user = $_COOKIE['loggedin'];
 	}
-	elseif (isset($_SESSION['loggedin'])) {
+	*/
+	/*else*/if (isset($_SESSION['loggedin'])) {
 		$user = $_SESSION['loggedin'];
 	}
 	return $user;
@@ -554,7 +558,7 @@ function make_excerpt($string, $length, $break = "...")
 
 /**
  * Generates a random string to be used on the automatically
- * created zip files.
+ * created zip files and tokens.
  */
 function generateRandomString($length = 10)
 {

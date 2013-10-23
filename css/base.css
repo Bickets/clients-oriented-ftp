@@ -552,6 +552,11 @@ h4 {
 	word-wrap:break-word;
 }
 
+.edit_files .divider {
+	border-bottom:1px dotted #e5e5e5;
+	margin:20px auto;
+}
+
 .list_mass_members {
 	margin:8px 0 0;
 	padding:8px 0 0;

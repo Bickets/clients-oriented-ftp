@@ -21,6 +21,8 @@ if (defined('TRY_INSTALL')) {
 	  `description` text NOT NULL,
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	  `uploader` varchar('.MAX_USER_CHARS.') NOT NULL,
+	  `expires` INT(1) NOT NULL default \'0\',
+	  `expiry_date` TIMESTAMP NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 	',
@@ -193,7 +195,8 @@ if (defined('TRY_INSTALL')) {
 	(\'email_header_text\', \'\'),
 	(\'email_footer_text\', \'\'),
 	(\'email_pass_reset_customize\', \'\'),
-	(\'email_pass_reset_text\', \'\')
+	(\'email_pass_reset_text\', \'\'),
+	(\'expired_files_hide\', \'1\')
 	',
 	
 	'10' => '

@@ -5,7 +5,9 @@
  *
  * @package ProjectSend
  */
-$multiselect = 1;
+$multiselect	= 1;
+$datepicker		= 1;
+
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 
@@ -168,6 +170,11 @@ $current_level = get_current_user_level();
 						}
 						
 						if ($current_level != 0) {
+
+							if (!empty($file['expires'])) {
+								$add_arguments['expires'] = '1';
+							}
+
 							if (!empty($file['assignments'])) {
 								/**
 								 * Remove already assigned clients/groups from the list.
@@ -307,11 +314,12 @@ $current_level = get_current_user_level();
 									<p><?php echo $i; ?></p>
 								</div>
 							</div>
-							<div class="span11 file_data">
+							<div class="span11">
 								<div class="row-fluid">
-									<div class="span6">
+									<div class="span4 file_data">
 										<div class="row-fluid">
 											<div class="span12">
+												<h3><?php _e('File information', 'cftp_admin');?></h3>
 												<p class="on_disc_name">
 													<?php echo $row['url']; ?>
 												</p>
@@ -319,15 +327,37 @@ $current_level = get_current_user_level();
 												<input type="text" name="file[<?php echo $i; ?>][name]" value="<?php echo $row['filename']; ?>" class="file_title" placeholder="<?php _e('Enter here the required file title.', 'cftp_admin');?>" />
 												<label><?php _e('Description', 'cftp_admin');?></label>
 												<textarea name="file[<?php echo $i; ?>][description]" placeholder="<?php _e('Optionally, enter here a description for the file.', 'cftp_admin');?>"><?php echo (!empty($row['description'])) ? $row['description'] : ''; ?></textarea>
-
-												<?php if ($global_level != 0) { ?>
-													<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Mark as hidden (will not send notifications) for new assigned clients and groups.', 'cftp_admin');?></label>
-													<label><input type="checkbox" name="file[<?php echo $i; ?>][hideall]" value="1" /> <?php _e('Hide from every already assigned clients and groups.', 'cftp_admin');?></label>
-												<?php } ?>
 											</div>
 										</div>
 									</div>
-									<div class="span6 assigns">
+									<div class="span4 file_data">
+										<?php
+											/**
+											* Only show the EXPIRY options if the current
+											* uploader is a system user, and not a client.
+											*/
+											if ($global_level != 0) {
+										?>
+												<h3><?php _e('Expiration date', 'cftp_admin');?></h3>
+												<label><input type="checkbox" name="file[<?php echo $i; ?>][expires]" value="1" <?php if ($row['expires']) { ?>checked="checked"<?php } ?> /> <?php _e('File expires', 'cftp_admin');?></label>
+
+												<label for="file[<?php echo $i; ?>][expires_date]"><?php _e('Select a date', 'cftp_admin');?></label>
+
+												<div class="input-append date" id="dp3" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
+													<input class="span8 datepick" size="19" readonly="readonly" type="text" id="file[<?php echo $i; ?>][expires_date]" name="file[<?php echo $i; ?>][expires_date]" value="<?php echo date('d-m-Y'); ?>">
+													<span class="add-on"><i class="icon-th"></i></span>
+												</div>
+												
+												<div class="divider"></div>
+	
+												<h3><?php _e('Visibility', 'cftp_admin');?></h3>
+												<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Mark as hidden (will not send notifications) for new assigned clients and groups.', 'cftp_admin');?></label>
+												<label><input type="checkbox" name="file[<?php echo $i; ?>][hideall]" value="1" /> <?php _e('Hide from every already assigned clients and groups.', 'cftp_admin');?></label>
+										<?php
+											} /** Close $current_level check */
+										?>
+									</div>
+									<div class="span4 assigns file_data">
 										<?php
 											/**
 											* Only show the CLIENTS select field if the current
@@ -335,6 +365,7 @@ $current_level = get_current_user_level();
 											*/
 											if ($global_level != 0) {
 										?>
+												<h3><?php _e('Assignations', 'cftp_admin');?></h3>
 												<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
 												<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="form-control chosen-select" data-placeholder="<?php _e('Select one or more options. Type to search.', 'cftp_admin');?>">
 													<optgroup label="<?php _e('Clients', 'cftp_admin');?>">
@@ -399,6 +430,10 @@ $current_level = get_current_user_level();
 		$('.chosen-select').chosen({
 			no_results_text: "<?php _e('No results where found.','cftp_admin'); ?>",
 			width: "98%"
+		});
+
+		$('.datepick').datepicker({
+			format: 'dd-mm-yyyy'
 		});
 
 		$('.add-all').click(function(){

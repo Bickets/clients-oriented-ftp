@@ -253,6 +253,14 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										<input type="hidden" value="0" name="clients_can_upload" class="checkbox_options" <?php echo (CLIENTS_CAN_UPLOAD == 0) ? '' : 'checked="checked"'; ?> />
 										<input type="checkbox" value="1" name="clients_can_upload" class="checkbox_options" <?php echo (CLIENTS_CAN_UPLOAD == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
+									<li>
+										<label for="expired_files_hide"><?php _e('When a file expires:','cftp_admin'); ?></label> 
+										<select name="expired_files_hide" id="expired_files_hide">
+											<option value="1" <?php echo (EXPIRED_FILES_HIDE == '1') ? 'selected="selected"' : ''; ?>><?php _e("Don't show it on the files list",'cftp_admin'); ?></option>
+											<option value="0" <?php echo (EXPIRED_FILES_HIDE == '0') ? 'selected="selected"' : ''; ?>><?php _e("Show it anyway, but prevent download.",'cftp_admin'); ?></option>
+										</select>
+										<p class="field_note"><?php _e('This only affects clients. On the admin side, you can still get the files.','cftp_admin'); ?></p>
+									</li>
 					
 									<li class="options_divide"></li>
 								</ul>
