@@ -106,11 +106,30 @@ $count = count($my_files);
 									$date = date(TIMEFORMAT_USE,strtotime($file['timestamp']));
 						?>
 									<tr>
-										<td><input type="checkbox" name="files[]" value="<?php echo $file["id"]; ?>" /></td>
+										<td>
+											<?php
+												if ($file['expired'] == false) {
+											?>
+													<input type="checkbox" name="files[]" value="<?php echo $file["id"]; ?>" />
+											<?php
+												}
+											?>
+										</td>
 										<td class="file_name">
-											<a href="<?php echo $download_link; ?>" target="_blank">
-												<strong><?php echo htmlentities($file['name']); ?></strong>
-											</a>
+											<?php
+												if ($file['expired'] == true) {
+											?>
+													<strong><?php echo htmlentities($file['name']); ?></strong>
+											<?php
+												}
+												else {
+											?>
+													<a href="<?php echo $download_link; ?>" target="_blank">
+														<strong><?php echo htmlentities($file['name']); ?></strong>
+													</a>
+											<?php
+												}
+											?>
 										</td>
 										<td class="description"><?php echo htmlentities($file['description']); ?></td>
 										<td><?php $this_file_size = get_real_size(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file_size); ?></td>

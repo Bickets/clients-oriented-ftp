@@ -770,7 +770,7 @@ if (in_session_or_cookies($allowed_update)) {
 			$q = $database->query("SELECT expires FROM tbl_files");
 			if (!$q) {
 				$sql1 = $database->query("ALTER TABLE tbl_files ADD expires INT(1) NOT NULL default '0'");
-				$sql2 = $database->query("ALTER TABLE tbl_files ADD expiry_date TIMESTAMP NULL");
+				$sql2 = $database->query("ALTER TABLE tbl_files ADD expiry_date TIMESTAMP NOT NULL");
 				$updates_made++;
 			}
 

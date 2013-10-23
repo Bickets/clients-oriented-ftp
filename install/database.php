@@ -22,7 +22,7 @@ if (defined('TRY_INSTALL')) {
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	  `uploader` varchar('.MAX_USER_CHARS.') NOT NULL,
 	  `expires` INT(1) NOT NULL default \'0\',
-	  `expiry_date` TIMESTAMP NULL,
+	  `expiry_date` TIMESTAMP NOT NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 	',
