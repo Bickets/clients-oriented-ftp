@@ -210,8 +210,20 @@ if (defined('TRY_INSTALL')) {
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 	',
-	
+
 	'11' => '
+	CREATE TABLE IF NOT EXISTS `tbl_downloads` (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `user_id` int(11) DEFAULT NULL,
+	  `file_id` int(11) NOT NULL,
+	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	  FOREIGN KEY (`user_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	  PRIMARY KEY (`id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	',
+	
+	'12' => '
 	INSERT INTO `tbl_users` (`id`, `user`, `password`, `name`, `email`, `level`, `active`) VALUES
 	(1, \''.$got_admin_username.'\', \''.$got_admin_pass.'\', \''.$got_admin_name.'\', \''.$got_admin_email.'\', 9, 1);
 	',

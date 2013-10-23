@@ -792,6 +792,31 @@ if (in_session_or_cookies($allowed_update)) {
 		}
 
 
+		/**
+		 * r474 updates
+		 * A new database table was added.
+		 * Each download will now be saved here, to distinguish
+		 * individual downloads even if the origin is a group.
+		 */
+		if ($last_update < 474) {
+			$q = $database->query("SELECT id FROM tbl_downloads");
+			if (!$q) {
+				$q1 = '
+				CREATE TABLE IF NOT EXISTS `tbl_downloads` (
+				  `id` int(11) NOT NULL AUTO_INCREMENT,
+				  `user_id` int(11) DEFAULT NULL,
+				  `file_id` int(11) NOT NULL,
+				  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+				  FOREIGN KEY (`user_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+				  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+				  PRIMARY KEY (`id`)
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				';
+				$database->query($q1);
+				$updates_made++;
+			}
+		}
+
 	}
 }	
 ?>

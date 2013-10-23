@@ -55,6 +55,9 @@ foreach ($files_to_zip as $file_to_zip) {
 			$row = mysql_fetch_array($sql);
 			/** Add the file */
 			$allowed_to_zip[$row['file_id']] = $file_to_zip;
+
+			/** Add the download row */
+			$sql_sum = $database->query('INSERT INTO tbl_downloads (user_id , file_id) VALUES ("' . CURRENT_USER_ID .'", "' . $this_file_id .'")');
 		}
 	}
 	else {
@@ -63,9 +66,9 @@ foreach ($files_to_zip as $file_to_zip) {
 }
 
 $allowed_to_zip = array_unique($allowed_to_zip);
+
 /** Start adding the files to the zip */
 foreach ($allowed_to_zip as $allowed_file_id => $this_allowed_file) {
-	$sql_sum = $database->query('UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . $allowed_file_id .'" AND client_id="' . $global_id . '"');
 	$zip->addFile(UPLOADED_FILES_FOLDER.$this_allowed_file,$this_allowed_file);
 	$added_files++;
 }

@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r464');
+define('CURRENT_VERSION', 'r474');
 
 /**
  * Fix for including external files when on HTTPS.

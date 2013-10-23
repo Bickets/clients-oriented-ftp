@@ -99,7 +99,7 @@ include('header.php');
 		});
 		
 		<?php
-			if (!isset($search_on)) {
+			if ($results_type != 'client') {
 		?>
 				$(".downloaders").click(function() {
 					$(document).psendmodal();
@@ -470,10 +470,29 @@ include('header.php');
 								$query_this_file = "SELECT * FROM tbl_files_relations WHERE file_id='".$row['id']."'";
 								if (isset($search_on)) {
 									$query_this_file .= " AND $search_on = $this_id";
+									/**
+									 * Count how many times this file has been downloaded
+									 * Here, the download count is specific per user.
+									 */
+									switch ($results_type) {
+										case 'client':
+												$download_count_sql	= $database->query("SELECT user_id, file_id FROM tbl_downloads WHERE file_id = '".$row['id']."' AND user_id = '".$this_id."'");
+												$download_count		= mysql_num_rows($download_count_sql);
+											break;
+
+										case 'group':
+												$download_count_sql	= $database->query("SELECT file_id FROM tbl_downloads WHERE file_id = '".$row['id']."'");
+												$download_count		= mysql_num_rows($download_count_sql);
+											break;
+									}
 								}
 								else {
-									$sql_this_file = $database->query("SELECT SUM(download_count) as count FROM tbl_files_relations WHERE file_id='".$row['id']."'");
-									$download_count = mysql_result($sql_this_file, 0);
+									/**
+									 * Count how many times this file has been downloaded
+									 * Here, the download count is general.
+									 */
+									$download_count_sql	= $database->query("SELECT file_id FROM tbl_downloads WHERE file_id = '".$row['id']."'");
+									$download_count		= mysql_num_rows($download_count_sql);
 								}
 
 								$sql_this_file = $database->query($query_this_file);
@@ -481,9 +500,6 @@ include('header.php');
 								while($data_file = mysql_fetch_array($sql_this_file)) {
 									$file_id = $data_file['id'];
 									$hidden = $data_file['hidden'];
-									if (isset($search_on)) {
-										$download_count = $data_file['download_count'];
-									}
 								}
 								$date = date(TIMEFORMAT_USE,strtotime($row['timestamp']));
 					?>
@@ -543,7 +559,21 @@ include('header.php');
 												?>
 											</td>
 											<td>
-												<?php echo $download_count; ?> <?php _e('times','cftp_admin'); ?>
+												<?php
+													switch ($results_type) {
+														case 'client':
+															echo $download_count; ?> <?php _e('times','cftp_admin');
+															break;
+				
+														case 'group':
+												?>
+															<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders btn-primary'; } else { echo 'disabled'; } ?> btn btn-small" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
+																<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
+															</a>
+												<?php
+														break;
+													}
+												?>
 											</td>
 									<?php
 										}

@@ -88,19 +88,9 @@ class process {
 								 * If the file is being downloaded by a client, add +1 to
 								 * the download count
 								 */
-								$this->sum_sql = 'UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . (int)$_GET['id'] .'"';
-								if ($_GET['origin'] == 'group') {
-									if (!empty($_GET['group_id'])) {
-										$this->group_id = (int)$_GET['group_id'];
-										$this->sum_sql .= " AND group_id = '$this->group_id'";
-									}
-								} else {
-									$this->client_id = (int)$_GET['client_id'];
-									$this->sum_sql .= " AND client_id = '$this->client_id'";
-								}
-				
-								$this->sql = $this->database->query($this->sum_sql);
-			
+								$this->add_download_sql = 'INSERT INTO tbl_downloads (user_id , file_id) VALUES ("' . CURRENT_USER_ID .'", "' . (int)$_GET['id'] .'")';
+								$this->sql = $this->database->query($this->add_download_sql);
+
 								/**
 								 * The owner ID is generated here to prevent false results
 								 * from a modified GET url.
@@ -200,10 +190,12 @@ class process {
 
 				$this->filename = $this->row['filename'];
 
-				$this->sql_who = $this->database->query('SELECT DISTINCT client_id, download_count FROM tbl_files_relations WHERE file_id="' . $file_id .'" AND download_count != "0"');
+				
+				$this->sql_who = $this->database->query('SELECT user_id, COUNT(*) AS downloads FROM tbl_downloads WHERE file_id="' . $file_id .'" GROUP BY user_id');
+				
 				while ($this->wrow = mysql_fetch_array($this->sql_who)) {
-					$this->downloaders_ids[] = $this->wrow['client_id'];
-					$this->downloaders_count[$this->wrow['client_id']] = $this->wrow['download_count'];
+					$this->downloaders_ids[] = $this->wrow['user_id'];
+					$this->downloaders_count[$this->wrow['user_id']] = $this->wrow['downloads'];
 				}
 				$this->users_ids = implode(',',array_unique(array_filter($this->downloaders_ids)));
 
