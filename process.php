@@ -68,22 +68,14 @@ class process {
 								}
 								$found_groups = implode(',',$groups_ids);
 							}
-							/**
-							 * Then, check to see if the file is assigned to any group
-							 * where the client is member.
-							 */
+
+							/** Then, check on the client's own or gruops files */
+							$files_own_query = 'SELECT * FROM tbl_files_relations WHERE (client_id="' . CURRENT_USER_ID . '"';
 							if (!empty($found_groups)) {
-								$files_groups_query = "SELECT id, file_id, group_id, hidden FROM tbl_files_relations WHERE group_id IN ($found_groups) AND file_id = '".(int)$_GET['id']."' AND hidden = '0'";
-								echo $files_groups_query.'<br /><br />';
-								$files_groups = $this->database->query($files_groups_query);
-								$count_files = mysql_num_rows($files_groups);
-								if ($count_files > 0) {
-									$this->can_download = true;
-								}
+								$files_own_query .= ' OR group_id IN ("' . $found_groups . '")';
 							}
-							/** Then, check on the client's own files */
-							$files_own_query = "SELECT id, client_id, file_id, hidden FROM tbl_files_relations WHERE client_id = '".CURRENT_USER_ID."' AND file_id = '".(int)$_GET['id']."' AND hidden = '0'";
-							echo $files_own_query.'<br /><br />';
+							$files_own_query .= ') AND file_id="' . (int)$_GET['id'] .'" AND hidden = "0"';
+
 							$files_own = $this->database->query($files_own_query);
 							$count_files = mysql_num_rows($files_own);
 							if ($count_files > 0) {

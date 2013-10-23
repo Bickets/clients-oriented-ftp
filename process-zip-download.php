@@ -41,14 +41,12 @@ foreach ($files_to_zip as $file_to_zip) {
 		$row_url = mysql_fetch_array($sql_url);
 		$this_file_id = $row_url['id'];
 
-		$fq = 'SELECT * FROM tbl_files_relations WHERE (client_id="' . $global_id . '" OR group_id IN ("' . $found_groups . '")) AND file_id="' . $this_file_id .'"';
-		echo $fq.'<br />';
+		$fq = 'SELECT * FROM tbl_files_relations WHERE (client_id="' . $global_id . '" OR group_id IN ("' . $found_groups . '")) AND file_id="' . $this_file_id .' AND hidden = "0"';
+		//echo $fq.'<br />';
 		$sql = $database->query($fq);
 		$row = mysql_fetch_array($sql);
-		/** Do not add hidden files */
-		if ($row['hidden'] == '0') {
-			$allowed_to_zip[$row['file_id']] = $file_to_zip;
-		}
+		/** Add the file */
+		$allowed_to_zip[$row['file_id']] = $file_to_zip;
 	}
 	else {
 		$allowed_to_zip[] = $file_to_zip;
