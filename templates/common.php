@@ -97,10 +97,12 @@ if (!empty($found_own_files_ids)) {
 
 		/** Does it expire? */
 		if ($data_own['expires'] == '1') {
-			if (EXPIRED_FILES_HIDE == '1') {
-				$add_file = false;
+			if (time() > strtotime($data_own['expiry_date'])) {
+				if (EXPIRED_FILES_HIDE == '1') {
+					$add_file = false;
+				}
+				$expired = true;
 			}
-			$expired = true;
 		}
 
 		/** Make the list of files */
@@ -138,10 +140,12 @@ if (!empty($found_groups_files_ids)) {
 
 			/** Does it expire? */
 			if ($data_groups['expires'] == '1') {
-				if (EXPIRED_FILES_HIDE == '1') {
-					$add_file = false;
+				if (time() > strtotime($data_groups['expiry_date'])) {
+					if (EXPIRED_FILES_HIDE == '1') {
+						$add_file = false;
+					}
+					$expired = true;
 				}
-				$expired = true;
 			}
 
 			/** Make the list of files */

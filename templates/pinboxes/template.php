@@ -109,24 +109,36 @@ $count = count($my_files);
 									if (in_array($extension,$img_formats)) {
 								?>
 										<div class="img_prev">
-											<a href="<?php echo $download_link; ?>" target="_blank">
-												<?php
-													$this_thumbnail_url = UPLOADED_FILES_URL.$file['url'];
-													if (THUMBS_USE_ABSOLUTE == '1') {
-														$this_thumbnail_url = BASE_URI.$this_thumbnail_url;
-													}
-												?>
-												<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $this_thumbnail_url; ?>&amp;w=250&amp;q=<?php echo THUMBS_QUALITY; ?>" alt="<?php echo htmlentities($file['name']); ?>" />
-											</a>
+											<?php
+												if ($file['expired'] == false) {
+											?>
+													<a href="<?php echo $download_link; ?>" target="_blank">
+														<?php
+															$this_thumbnail_url = UPLOADED_FILES_URL.$file['url'];
+															if (THUMBS_USE_ABSOLUTE == '1') {
+																$this_thumbnail_url = BASE_URI.$this_thumbnail_url;
+															}
+														?>
+														<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $this_thumbnail_url; ?>&amp;w=250&amp;q=<?php echo THUMBS_QUALITY; ?>" alt="<?php echo htmlentities($file['name']); ?>" />
+													</a>
+											<?php
+												}
+											?>
 										</div>
 								<?php
 								} else {
 								?>
-										<div class="ext_prev">
-											<a href="<?php echo $download_link; ?>" target="_blank">
-												<h6><?php echo $extension; ?></h6>
-											</a>
-										</div>
+										<?php
+											if ($file['expired'] == false) {
+										?>
+											<div class="ext_prev">
+												<a href="<?php echo $download_link; ?>" target="_blank">
+													<h6><?php echo $extension; ?></h6>
+												</a>
+											</div>
+										<?php
+											}
+										?>
 								<?php
 								}
 								?>
@@ -140,9 +152,20 @@ $count = count($my_files);
 									</p>
 								</div>
 								<div class="download_link">
-									<a href="<?php echo $download_link; ?>" target="_blank" class="button button_gray">
-										<?php _e('Download','pinboxes_template'); ?>
-									</a>
+									<?php
+										if ($file['expired'] == false) {
+									?>
+											<a href="<?php echo $download_link; ?>" target="_blank" class="button button_gray">
+												<?php _e('Download','pinboxes_template'); ?>
+											</a>
+									<?php
+										}
+										else {
+									?>
+											<?php _e('File expired','pinboxes_template'); ?>
+									<?php
+										}
+									?>
 								</div>
 							</div>
 						</div>

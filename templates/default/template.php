@@ -115,30 +115,41 @@ $count = count($my_files);
 										<td class="description"><?php echo htmlentities($file['description']); ?></td>
 										<td><?php $this_file_size = get_real_size(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file_size); ?></td>
 										<td class="extra"><?php echo $date; ?></td>
-										<td class="extra">
-											<?php
-												$pathinfo = pathinfo($file['url']);
-												$extension = strtolower($pathinfo['extension']);
-												if (
-													$extension == "gif" ||
-													$extension == "jpg" ||
-													$extension == "pjpeg" ||
-													$extension == "jpeg" ||
-													$extension == "png"
-												) {
-													$this_thumbnail_url = UPLOADED_FILES_URL.$file['url'];
-													if (THUMBS_USE_ABSOLUTE == '1') {
-														$this_thumbnail_url = BASE_URI.$this_thumbnail_url;
-													}
-												?>
-														<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $this_thumbnail_url; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="<?php echo htmlentities($this_file['name']); ?>" />
-											<?php } ?>
-										</td>
-										<td>
-											<a href="<?php echo $download_link; ?>" target="_blank" class="btn btn-primary btn-small btn-wide">
-												<?php _e('Download','cftp_template'); ?>
-											</a>
-										</td>
+										<?php
+											if ($file['expired'] == true) {
+										?>
+											<td colspan="2" class="text-center"><?php _e('File expired','cftp_template'); ?></td>
+										<?php
+											}
+											else {
+										?>
+												<td class="extra">
+													<?php
+														$pathinfo = pathinfo($file['url']);
+														$extension = strtolower($pathinfo['extension']);
+														if (
+															$extension == "gif" ||
+															$extension == "jpg" ||
+															$extension == "pjpeg" ||
+															$extension == "jpeg" ||
+															$extension == "png"
+														) {
+															$this_thumbnail_url = UPLOADED_FILES_URL.$file['url'];
+															if (THUMBS_USE_ABSOLUTE == '1') {
+																$this_thumbnail_url = BASE_URI.$this_thumbnail_url;
+															}
+														?>
+																<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $this_thumbnail_url; ?>&amp;w=<?php echo THUMBS_MAX_WIDTH; ?>&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="<?php echo htmlentities($this_file['name']); ?>" />
+													<?php } ?>
+												</td>
+												<td>
+													<a href="<?php echo $download_link; ?>" target="_blank" class="btn btn-primary btn-small btn-wide">
+														<?php _e('Download','cftp_template'); ?>
+													</a>
+												</td>
+										<?php
+											}
+										?>
 									</tr>
 						<?php
 								}

@@ -74,24 +74,35 @@ $count = count($img_files);
 			?>
 					<li>
 						<h5><?php echo htmlentities($this_file['name']); ?></h5>
-						<div class="img_prev">
-							<a href="<?php echo $download_link; ?>" target="_blank">
-								<?php
-									$this_thumbnail_url = UPLOADED_FILES_URL.$this_file['url'];
-									if (THUMBS_USE_ABSOLUTE == '1') {
-										$this_thumbnail_url = BASE_URI.$this_thumbnail_url;
-									}
-								?>
-								<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $this_thumbnail_url; ?>&amp;w=280&amp;h=215&amp;f=2&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="<?php echo htmlentities($this_file['name']); ?>" />
-							</a>
-						</div>
-						<div class="img_data">
-							<div class="download_link">
+						<?php
+							if ($this_file['expired'] == true) {
+						?>
+								<?php _e('File expired','cftp_template_gallery'); ?>
+						<?php
+							}
+							else {
+						?>
+							<div class="img_prev">
 								<a href="<?php echo $download_link; ?>" target="_blank">
-									<?php _e('Download original','cftp_template_gallery'); ?>
+									<?php
+										$this_thumbnail_url = UPLOADED_FILES_URL.$this_file['url'];
+										if (THUMBS_USE_ABSOLUTE == '1') {
+											$this_thumbnail_url = BASE_URI.$this_thumbnail_url;
+										}
+									?>
+									<img src="<?php echo TIMTHUMB_URL; ?>?src=<?php echo $this_thumbnail_url; ?>&amp;w=280&amp;h=215&amp;f=2&amp;q=<?php echo THUMBS_QUALITY; ?>" class="thumbnail" alt="<?php echo htmlentities($this_file['name']); ?>" />
 								</a>
 							</div>
-						</div>
+							<div class="img_data">
+								<div class="download_link">
+									<a href="<?php echo $download_link; ?>" target="_blank">
+										<?php _e('Download original','cftp_template_gallery'); ?>
+									</a>
+								</div>
+							</div>
+						<?php
+							}
+						?>
 					</li>
 			<?php
 				}

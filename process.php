@@ -40,75 +40,82 @@ class process {
 					/**
 					 * Get the file name
 					 */
-					$this->get_file_uri_sql	= 'SELECT url FROM tbl_files WHERE id="' . $_GET['id'] .'"';
+					$this->get_file_uri_sql	= 'SELECT url, expires, expiry_date FROM tbl_files WHERE id="' . (int)$_GET['id'] .'"';
 					$this->get_file_uri		= $this->database->query($this->get_file_uri_sql);
 					$this->got_url			= mysql_fetch_array($this->get_file_uri);
 					$this->real_file_url	= $this->got_url['url'];
+					$this->expires			= $this->got_url['expires'];
+					$this->expiry_date		= $this->got_url['expiry_date'];
+					
+					$this->expired			= false;
+					if ($this->expires == '1' && time() > strtotime($this->expiry_date)) {
+						$this->expired		= true;
+					}
 					
 					$this->can_download = false;
 
 					if (CURRENT_USER_LEVEL == 0) {
-						/**
-						 * Does the client have permission to download the file?
-						 * First, get the list of different groups the client belongs to.
-						 */
-						$sql_groups = $this->database->query("SELECT DISTINCT group_id FROM tbl_members WHERE client_id='".CURRENT_USER_ID."'");
-						$count_groups = mysql_num_rows($sql_groups);
-						if ($count_groups > 0) {
-							while($row_groups = mysql_fetch_array($sql_groups)) {
-								$groups_ids[] = $row_groups["group_id"];
+						if ($this->expires == '0' || $this->expired == false) {
+							/**
+							 * Does the client have permission to download the file?
+							 * First, get the list of different groups the client belongs to.
+							 */
+							$sql_groups = $this->database->query("SELECT DISTINCT group_id FROM tbl_members WHERE client_id='".CURRENT_USER_ID."'");
+							$count_groups = mysql_num_rows($sql_groups);
+							if ($count_groups > 0) {
+								while($row_groups = mysql_fetch_array($sql_groups)) {
+									$groups_ids[] = $row_groups["group_id"];
+								}
+								$found_groups = implode(',',$groups_ids);
 							}
-							$found_groups = implode(',',$groups_ids);
-						}
-						/**
-						 * Then, check to see if the file is assigned to any group
-						 * where the client is member.
-						 */
-						if (!empty($found_groups)) {
-							$files_groups_query = "SELECT id, file_id, group_id, hidden FROM tbl_files_relations WHERE group_id IN ($found_groups) AND file_id = '".$_GET['id']."' AND hidden = '0'";
-							echo $files_groups_query.'<br /><br />';
-							$files_groups = $this->database->query($files_groups_query);
-							$count_files = mysql_num_rows($files_groups);
+							/**
+							 * Then, check to see if the file is assigned to any group
+							 * where the client is member.
+							 */
+							if (!empty($found_groups)) {
+								$files_groups_query = "SELECT id, file_id, group_id, hidden FROM tbl_files_relations WHERE group_id IN ($found_groups) AND file_id = '".(int)$_GET['id']."' AND hidden = '0'";
+								echo $files_groups_query.'<br /><br />';
+								$files_groups = $this->database->query($files_groups_query);
+								$count_files = mysql_num_rows($files_groups);
+								if ($count_files > 0) {
+									$this->can_download = true;
+								}
+							}
+							/** Then, check on the client's own files */
+							$files_own_query = "SELECT id, client_id, file_id, hidden FROM tbl_files_relations WHERE client_id = '".CURRENT_USER_ID."' AND file_id = '".(int)$_GET['id']."' AND hidden = '0'";
+							echo $files_own_query.'<br /><br />';
+							$files_own = $this->database->query($files_own_query);
+							$count_files = mysql_num_rows($files_own);
 							if ($count_files > 0) {
 								$this->can_download = true;
 							}
-						}
-						/** Then, check on the client's own files */
-						$files_own_query = "SELECT id, client_id, file_id, hidden FROM tbl_files_relations WHERE client_id = '".CURRENT_USER_ID."' AND file_id = '".$_GET['id']."' AND hidden = '0'";
-						echo $files_own_query.'<br /><br />';
-						$files_own = $this->database->query($files_own_query);
-						$count_files = mysql_num_rows($files_own);
-						if ($count_files > 0) {
-							$this->can_download = true;
-						}
-						
-						/** Continue */
-						if ($this->can_download == true) {
-							/**
-							 * If the file is being downloaded by a client, add +1 to
-							 * the download count
-							 */
-							$this->sum_sql = 'UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . $_GET['id'] .'"';
-							if ($_GET['origin'] == 'group') {
-								if (!empty($_GET['group_id'])) {
-									$this->group_id = $_GET['group_id'];
-									$this->sum_sql .= " AND group_id = '$this->group_id'";
+							
+							/** Continue */
+							if ($this->can_download == true) {
+								/**
+								 * If the file is being downloaded by a client, add +1 to
+								 * the download count
+								 */
+								$this->sum_sql = 'UPDATE tbl_files_relations SET download_count=download_count+1 WHERE file_id="' . (int)$_GET['id'] .'"';
+								if ($_GET['origin'] == 'group') {
+									if (!empty($_GET['group_id'])) {
+										$this->group_id = (int)$_GET['group_id'];
+										$this->sum_sql .= " AND group_id = '$this->group_id'";
+									}
+								} else {
+									$this->client_id = (int)$_GET['client_id'];
+									$this->sum_sql .= " AND client_id = '$this->client_id'";
 								}
-							} else {
-								$this->client_id = $_GET['client_id'];
-								$this->sum_sql .= " AND client_id = '$this->client_id'";
-							}
+				
+								$this->sql = $this->database->query($this->sum_sql);
 			
-							$this->sql = $this->database->query($this->sum_sql);
-		
-							/**
-							 * The owner ID is generated here to prevent false results
-							 * from a modified GET url.
-							 */
-							$log_action = 8;
-							$log_action_owner_id = CURRENT_USER_ID;
-						}
-						else {
+								/**
+								 * The owner ID is generated here to prevent false results
+								 * from a modified GET url.
+								 */
+								$log_action = 8;
+								$log_action_owner_id = CURRENT_USER_ID;
+							}
 						}
 					}
 					else {
@@ -125,10 +132,10 @@ class process {
 						$log_action_args = array(
 												'action' => $log_action,
 												'owner_id' => $log_action_owner_id,
-												'affected_file' => $_GET['id'],
+												'affected_file' => (int)$_GET['id'],
 												'affected_file_name' => $this->real_file_url,
-												'affected_account' => $_GET['client_id'],
-												'affected_account_name' => $_GET['client'],
+												'affected_account' => (int)$_GET['client_id'],
+												'affected_account_name' => mysql_real_escape_string($_GET['client']),
 												'get_user_real_name' => true,
 												'get_file_real_name' => true
 											);
@@ -162,7 +169,7 @@ class process {
 			// do a permissions check for logged in user
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
 				foreach($_GET['files'] as $file_id) {
-					$this->sql = $this->database->query('SELECT * FROM tbl_files WHERE id="' . $file_id .'"');
+					$this->sql = $this->database->query('SELECT * FROM tbl_files WHERE id="' . (int)$file_id .'"');
 					$this->row = mysql_fetch_array($this->sql);
 					$this->url = $this->row['url'];
 					$file = UPLOADED_FILES_FOLDER.$this->url;
@@ -182,7 +189,7 @@ class process {
 		if (isset($_GET['sys_user']) && isset($_GET['file_id'])) {
 			// do a permissions check for logged in user
 			if (isset($this->check_level) && in_session_or_cookies($this->check_level)) {
-				$file_id = $_GET['file_id'];
+				$file_id = (int)$_GET['file_id'];
 				$current_level = get_current_user_level();
 				
 				$this->sql = $this->database->query('SELECT id, uploader, filename FROM tbl_files WHERE id="' . $file_id .'"');
