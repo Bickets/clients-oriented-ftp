@@ -106,10 +106,11 @@ class PSend_Upload_File
 		$this->uploader_type = $arguments['uploader_type'];
 		$this->hidden = (!empty($arguments['hidden'])) ? '1' : '0';
 		$this->expires = (!empty($arguments['expires'])) ? '1' : '0';
+		$this->expiry_date = (!empty($arguments['expiry_date'])) ? date("Y-m-d", strtotime($arguments['expiry_date'])) : date("Y-m-d");
 		
 		if(isset($arguments['add_to_db'])) {
-			$result = $database->query("INSERT INTO tbl_files (url, filename, description, uploader, expires)"
-										."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->uploader', '$this->expires')");
+			$result = $database->query("INSERT INTO tbl_files (url, filename, description, uploader, expires, expiry_date)"
+										."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->uploader', '$this->expires', '$this->expiry_date')");
 			$this->file_id = mysql_insert_id();
 			$this->state['new_file_id'] = $this->file_id;
 
@@ -139,7 +140,8 @@ class PSend_Upload_File
 			$result = $database->query("UPDATE tbl_files SET
 											filename = '$this->name',
 											description = '$this->description',
-											expires = '$this->expires'
+											expires = '$this->expires',
+											expiry_date = '$this->expiry_date'
 											WHERE id = '$this->file_id'
 										");
 		}

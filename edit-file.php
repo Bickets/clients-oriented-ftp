@@ -5,6 +5,7 @@
  *
  * @package ProjectSend
  */
+ 
 $multiselect	= 1;
 $datepicker		= 1;
 
@@ -48,6 +49,10 @@ $sql = $database->query($cq);
  * system user or a client.
  */
 $current_level = get_current_user_level();
+
+
+
+//echo '<pre>'; print_r($_POST); echo '</pre>'; // DEBUG
 
 ?>
 
@@ -158,7 +163,8 @@ $current_level = get_current_user_level();
 												'name' => $file['name'],
 												'description' => $file['description'],
 												'uploader' => $global_user,
-												'uploader_id' => $global_id
+												'uploader_id' => $global_id,
+												'expiry_date' => $file['expiry_date']
 											);
 					
 						/** Set notifications to YES by default */
@@ -337,14 +343,17 @@ $current_level = get_current_user_level();
 											* uploader is a system user, and not a client.
 											*/
 											if ($global_level != 0) {
+												if (!empty($row['expiry_date'])) {
+													$expiry_date = date('d-m-Y', strtotime($row['expiry_date']));
+												}
 										?>
 												<h3><?php _e('Expiration date', 'cftp_admin');?></h3>
 												<label><input type="checkbox" name="file[<?php echo $i; ?>][expires]" value="1" <?php if ($row['expires']) { ?>checked="checked"<?php } ?> /> <?php _e('File expires', 'cftp_admin');?></label>
 
 												<label for="file[<?php echo $i; ?>][expires_date]"><?php _e('Select a date', 'cftp_admin');?></label>
 
-												<div class="input-append date" id="dp3" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
-													<input class="span8 datepick" size="19" readonly="readonly" type="text" id="file[<?php echo $i; ?>][expires_date]" name="file[<?php echo $i; ?>][expires_date]" value="<?php echo date('d-m-Y'); ?>">
+												<div class="input-append date" id="dp3" data-date="<?php echo (!empty($expiry_date)) ? $expiry_date : date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
+													<input class="span8 datepick" size="19" readonly="readonly" type="text" id="file[<?php echo $i; ?>][expiry_date]" name="file[<?php echo $i; ?>][expiry_date]" value="<?php echo (!empty($expiry_date)) ? $expiry_date : date('d-m-Y'); ?>">
 													<span class="add-on"><i class="icon-th"></i></span>
 												</div>
 												

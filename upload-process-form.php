@@ -15,8 +15,10 @@
  * @package ProjectSend
  * @subpackage Upload
  */
-$multiselect = 1;
-$tablesorter = 1;
+$multiselect	= 1;
+$tablesorter	= 1;
+$datepicker		= 1;
+
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 
@@ -199,6 +201,7 @@ while($row = mysql_fetch_array($sql)) {
 							$add_arguments['uploader_type'] = 'user';
 							if (!empty($file['expires'])) {
 								$add_arguments['expires'] = '1';
+								$add_arguments['expiry_date'] = $file['expiry_date'];
 							}
 						}
 						
@@ -486,7 +489,7 @@ while($row = mysql_fetch_array($sql)) {
 															<label for="file[<?php echo $i; ?>][expires_date]"><?php _e('Select a date', 'cftp_admin');?></label>
 			
 															<div class="input-append date" id="dp3" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
-																<input class="span8 datepick" size="19" readonly="readonly" type="text" id="file[<?php echo $i; ?>][expires_date]" name="file[<?php echo $i; ?>][expires_date]" value="<?php echo date('d-m-Y'); ?>">
+																<input class="span8 datepick" size="19" readonly="readonly" type="text" id="file[<?php echo $i; ?>][expiry_date]" name="file[<?php echo $i; ?>][expiry_date]" value="<?php echo date('d-m-Y'); ?>">
 																<span class="add-on"><i class="icon-th"></i></span>
 															</div>
 															
@@ -625,7 +628,11 @@ while($row = mysql_fetch_array($sql)) {
 					no_results_text: "<?php _e('No results where found.','cftp_admin'); ?>",
 					width: "98%"
 				});
-		
+
+				$('.datepick').datepicker({
+					format: 'dd-mm-yyyy'
+				});
+
 				$('.add-all').click(function(){
 					var selector = $(this).closest('.assigns').find('select');
 					$(selector).find('option').each(function(){
