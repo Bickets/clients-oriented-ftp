@@ -10,6 +10,8 @@ require_once('sys.includes.php');
 
 $page_title = __('Download','cftp_admin');
 
+$dont_redirect_if_logged = 1;
+
 include('header-unlogged.php');
 
 	if (!empty($_GET['token']) && !empty($_GET['id'])) {

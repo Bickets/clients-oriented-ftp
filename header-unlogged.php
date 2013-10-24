@@ -16,13 +16,19 @@ if (!is_projectsend_installed()) {
 	exit;
 }
 
-/** If logged as a system user, go directly to the back-end homepage */
-if (in_session_or_cookies($allowed_levels)) {
-	header("Location:".BASE_URI."home.php");
-}
+/**
+ * This is defined on the public download page.
+ * So even logged in users can access it.
+ */
+if (!isset($dont_redirect_if_logged)) {
+	/** If logged as a system user, go directly to the back-end homepage */
+	if (in_session_or_cookies($allowed_levels)) {
+		header("Location:".BASE_URI."home.php");
+	}
 
-/** If client is logged in, redirect to the files list. */
-check_for_client();
+	/** If client is logged in, redirect to the files list. */
+	check_for_client();
+}
 
 $database->MySQLDB();
 
