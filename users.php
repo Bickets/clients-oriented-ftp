@@ -292,12 +292,16 @@ include('header.php');
 						}
 					?>
 					</td>
-					<td class="<?php echo ($row['active'] === '0') ? 'account_status_inactive' : 'account_status_active'; ?>">
+					<td>
 						<?php
-							$status_hidden = __('Inactive','cftp_admin');
-							$status_visible = __('Active','cftp_admin');
-							echo ($row['active'] === '0') ? $status_hidden : $status_visible;
+							$status_hidden	= __('Inactive','cftp_admin');
+							$status_visible	= __('Active','cftp_admin');
+							$label			= ($row['active'] === '0') ? $status_hidden : $status_visible;
+							$class			= ($row['active'] === '0') ? 'important' : 'success';
 						?>
+						<span class="label label-<?php echo $class; ?>">
+							<?php echo $label; ?>
+						</span>
 					</td>
 					<td><?php echo $date; ?></td>
 					<td>

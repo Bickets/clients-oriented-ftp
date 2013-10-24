@@ -297,12 +297,16 @@ $(document).ready(function() {
 									</td>
 									<td><?php echo $groups_files; ?>
 									</td>
-									<td class="<?php echo ($row['active'] === '0') ? 'account_status_inactive' : 'account_status_active'; ?>">
+									<td>
 										<?php
-											$status_hidden = __('Inactive','cftp_admin');
-											$status_visible = __('Active','cftp_admin');
-											echo ($row['active'] === '0') ? $status_hidden : $status_visible;
+											$status_hidden	= __('Inactive','cftp_admin');
+											$status_visible	= __('Active','cftp_admin');
+											$label			= ($row['active'] === '0') ? $status_hidden : $status_visible;
+											$class			= ($row['active'] === '0') ? 'important' : 'success';
 										?>
+										<span class="label label-<?php echo $class; ?>">
+											<?php echo $label; ?>
+										</span>
 									</td>
 									<td><?php echo $count_groups; ?></td>
 									<td class="extra"><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
