@@ -447,6 +447,7 @@ include('header.php');
 						?>
 								<th><?php _e('Uploader','cftp_admin'); ?></th>
 								<th><?php _e('Public','cftp_admin'); ?></th>
+								<th><?php _e('Expiry','cftp_admin'); ?></th>
 						<?php
 							}
 
@@ -572,12 +573,38 @@ include('header.php');
 														<a href="#" class="disabled btn btn-small" rel="" title="">
 												<?php
 													}
-
 															$status_public	= __('Public','cftp_admin');
 															$status_private	= __('Private','cftp_admin');
 															echo ($row['public_allow'] === '1') ? $status_public : $status_private;
 												?>
 												</a>
+											</td>
+											<td>
+												<?php
+													if ($row['expires'] == '0') {
+												?>
+														<a href="#" class="btn btn-success disabled btn-small">
+															<?php _e('Does not expire','cftp_admin'); ?>
+														</a>
+												<?php
+													}
+													else {
+														if (time() > strtotime($row['expiry_date'])) {
+												?>
+															<a href="#" class="btn btn-danger disabled btn-small" rel="" title="">
+																<?php _e('Expired on','cftp_admin'); ?> <?php echo date(TIMEFORMAT_USE,strtotime($row['expiry_date'])); ?>
+															</a>
+												<?php
+														}
+														else {
+												?>
+															<a href="#" class="btn btn-info disabled btn-small" rel="" title="">
+																<?php _e('Expires on','cftp_admin'); ?> <?php echo date(TIMEFORMAT_USE,strtotime($row['expiry_date'])); ?>
+															</a>
+												<?php
+														}
+													}
+												?>
 											</td>
 									<?php
 										}
