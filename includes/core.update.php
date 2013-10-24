@@ -817,6 +817,21 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+
+		/**
+		 * r475 updates
+		 * New columns where added to the files table, to
+		 * allow public downloads via a token.
+		 */
+		if ($last_update < 475) {
+			$q = $database->query("SELECT public_allow FROM tbl_files");
+			if (!$q) {
+				$sql1 = $database->query("ALTER TABLE tbl_files ADD public_allow INT(1) NOT NULL default '0'");
+				$sql2 = $database->query("ALTER TABLE tbl_files ADD public_token varchar(32) NULL");
+				$updates_made++;
+			}
+		}
+
 	}
 }	
 ?>

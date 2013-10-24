@@ -24,7 +24,7 @@ include('header-unlogged.php');
 		$result_user_id	= mysql_fetch_array($query_user_id);
 		$got_user_id	= $result_user_id['id'];
 
-		$sql_request = $database->query("SELECT * FROM tbl_password_reset WHERE token = '$got_token' AND user_id = '$got_user_id'");
+		$sql_request = $database->query("SELECT * FROM tbl_password_reset WHERE BINARY token = '$got_token' AND user_id = '$got_user_id'");
 		$count_request = mysql_num_rows($sql_request);
 		if ($count_request > 0){
 			$token_info	= mysql_fetch_array($sql_request);

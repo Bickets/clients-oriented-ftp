@@ -107,10 +107,12 @@ class PSend_Upload_File
 		$this->hidden = (!empty($arguments['hidden'])) ? '1' : '0';
 		$this->expires = (!empty($arguments['expires'])) ? '1' : '0';
 		$this->expiry_date = (!empty($arguments['expiry_date'])) ? date("Y-m-d", strtotime($arguments['expiry_date'])) : date("Y-m-d");
+		$this->is_public = (!empty($arguments['public'])) ? '1' : '0';
+		$this->public_token	= generateRandomString(32);
 		
 		if(isset($arguments['add_to_db'])) {
-			$result = $database->query("INSERT INTO tbl_files (url, filename, description, uploader, expires, expiry_date)"
-										."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->uploader', '$this->expires', '$this->expiry_date')");
+			$result = $database->query("INSERT INTO tbl_files (url, filename, description, uploader, expires, expiry_date, public_allow, public_token)"
+										."VALUES ('$this->post_file', '$this->name', '$this->description', '$this->uploader', '$this->expires', '$this->expiry_date', '$this->is_public', '$this->public_token')");
 			$this->file_id = mysql_insert_id();
 			$this->state['new_file_id'] = $this->file_id;
 
@@ -132,16 +134,21 @@ class PSend_Upload_File
 			$new_record_action = $new_log_action->log_action_save($log_action_args);
 		}
 		else {
-			$id_sql = $database->query("SELECT id FROM tbl_files WHERE url = '$this->post_file'");
+			$id_sql = $database->query("SELECT id, public_token FROM tbl_files WHERE url = '$this->post_file'");
 			while($row = mysql_fetch_array($id_sql)) {
 				$this->file_id = $row["id"];
 				$this->state['new_file_id'] = $this->file_id;
+				if (!empty($row["public_token"])) {
+					$this->public_token	= $row["public_token"];
+				}				
 			}
 			$result = $database->query("UPDATE tbl_files SET
 											filename = '$this->name',
 											description = '$this->description',
 											expires = '$this->expires',
-											expiry_date = '$this->expiry_date'
+											expiry_date = '$this->expiry_date',
+											public_allow = '$this->is_public',
+											public_token = '$this->public_token'
 											WHERE id = '$this->file_id'
 										");
 		}

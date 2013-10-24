@@ -196,12 +196,16 @@ while($row = mysql_fetch_array($sql)) {
 							$add_arguments['hidden'] = '0';
 							$add_arguments['uploader_type'] = 'client';
 							$add_arguments['expires'] = '0';
+							$add_arguments['public'] = '0';
 						}
 						else {
 							$add_arguments['uploader_type'] = 'user';
 							if (!empty($file['expires'])) {
 								$add_arguments['expires'] = '1';
 								$add_arguments['expiry_date'] = $file['expiry_date'];
+							}
+							if (!empty($file['public'])) {
+								$add_arguments['public'] = '1';
 							}
 						}
 						
@@ -492,11 +496,11 @@ while($row = mysql_fetch_array($sql)) {
 																<input class="span8 datepick" size="19" readonly="readonly" type="text" id="file[<?php echo $i; ?>][expiry_date]" name="file[<?php echo $i; ?>][expiry_date]" value="<?php echo date('d-m-Y'); ?>">
 																<span class="add-on"><i class="icon-th"></i></span>
 															</div>
-															
+
 															<div class="divider"></div>
-				
-															<h3><?php _e('Visibility', 'cftp_admin');?></h3>
-															<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
+			
+															<h3><?php _e('Public downloading', 'cftp_admin');?></h3>
+															<label><input type="checkbox" name="file[<?php echo $i; ?>][public]" value="1" /> <?php _e('Allow public downloading of this file.', 'cftp_admin');?></label>
 													<?php
 														} /** Close $current_level check */
 													?>
@@ -544,6 +548,10 @@ while($row = mysql_fetch_array($sql)) {
 																<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
 																<a href="#" class="btn copy-all"><?php _e('Copy selections to other files','cftp_admin'); ?></a>
 															</div>
+
+															<div class="divider"></div>
+				
+															<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
 													<?php
 														} /** Close $current_level check */
 													?>

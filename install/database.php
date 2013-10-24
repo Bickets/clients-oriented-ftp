@@ -23,10 +23,12 @@ if (defined('TRY_INSTALL')) {
 	  `uploader` varchar('.MAX_USER_CHARS.') NOT NULL,
 	  `expires` INT(1) NOT NULL default \'0\',
 	  `expiry_date` TIMESTAMP NOT NULL,
+	  `public_allow` INT(1) NOT NULL default \'0\',
+	  `public_token` varchar(32) NULL,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 	',
-	
+
 	'1' => '
 	CREATE TABLE IF NOT EXISTS `tbl_options` (
 	  `id` int(10) NOT NULL AUTO_INCREMENT,

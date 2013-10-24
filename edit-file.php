@@ -181,6 +181,10 @@ $current_level = get_current_user_level();
 								$add_arguments['expires'] = '1';
 							}
 
+							if (!empty($file['public'])) {
+								$add_arguments['public'] = '1';
+							}
+
 							if (!empty($file['assignments'])) {
 								/**
 								 * Remove already assigned clients/groups from the list.
@@ -358,10 +362,10 @@ $current_level = get_current_user_level();
 												</div>
 												
 												<div class="divider"></div>
+
+												<h3><?php _e('Public downloading', 'cftp_admin');?></h3>
+												<label><input type="checkbox" name="file[<?php echo $i; ?>][public]" value="1" <?php if ($row['public_allow']) { ?>checked="checked"<?php } ?> /> <?php _e('Allow public downloading of this file.', 'cftp_admin');?></label>
 	
-												<h3><?php _e('Visibility', 'cftp_admin');?></h3>
-												<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Mark as hidden (will not send notifications) for new assigned clients and groups.', 'cftp_admin');?></label>
-												<label><input type="checkbox" name="file[<?php echo $i; ?>][hideall]" value="1" /> <?php _e('Hide from every already assigned clients and groups.', 'cftp_admin');?></label>
 										<?php
 											} /** Close $current_level check */
 										?>
@@ -412,6 +416,11 @@ $current_level = get_current_user_level();
 													<a href="#" class="btn add-all"><?php _e('Add all','cftp_admin'); ?></a>
 													<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
 												</div>
+
+												<div class="divider"></div>
+	
+												<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Mark as hidden (will not send notifications) for new assigned clients and groups.', 'cftp_admin');?></label>
+												<label><input type="checkbox" name="file[<?php echo $i; ?>][hideall]" value="1" /> <?php _e('Hide from every already assigned clients and groups.', 'cftp_admin');?></label>
 										<?php
 											} /** Close $current_level check */
 										?>
