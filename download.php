@@ -16,6 +16,8 @@ include('header-unlogged.php');
 		$got_token		= mysql_real_escape_string($_GET['token']);
 		$got_file_id	= $_GET['id'];
 
+		$can_download = true;
+
 		/**
 		 * Get the user's id
 		 */
@@ -24,6 +26,19 @@ include('header-unlogged.php');
 
 		if ($count_request > 0){
 			$got_url		= mysql_fetch_array($query_file);
+
+			$expires		= $got_url['expires'];
+			$expiry_date	= $got_url['expiry_date'];
+			
+			if ($expires == '1' && time() > strtotime($expiry_date)) {
+				$can_download = false;
+			}
+		}
+		else {
+			$can_download = false;
+		}
+		
+		if ($can_download == true) {
 			$real_file_url	= $got_url['url'];
 
 			if (!isset($_GET['download'])) {
