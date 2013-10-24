@@ -136,6 +136,22 @@ include('header.php');
 		})
 		.tablesorterPager({container: $("#pager")})
 
+	    $('.public_link').popover({ 
+			html : true,
+			content: function() {
+				var id		= $(this).data('id');
+				var token	= $(this).data('token');
+				return '<strong><?php _e('Click to select','cftp_admin'); ?></strong><textarea class="input-large public_link_copy" rows="4"><?php echo BASE_URI; ?>download.php?id=' + id + '&token=' + token + '</textarea><small><?php _e('Send this URL to someone to download the file without registering or logging in.','cftp_admin'); ?></small>';
+			}
+		});
+
+		$(".public_link_copy").live('click', function(e) {
+			$(this).select();
+			$(this).mouseup(function() {
+				$(this).unbind("mouseup");
+				return false;
+			});
+		});
 	});
 </script>
 
@@ -430,6 +446,7 @@ include('header.php');
 							if($current_level != '0') {
 						?>
 								<th><?php _e('Uploader','cftp_admin'); ?></th>
+								<th><?php _e('Public','cftp_admin'); ?></th>
 						<?php
 							}
 
@@ -543,6 +560,25 @@ include('header.php');
 										if($current_level != '0') {
 									?>
 											<td><?php echo $row['uploader']; ?></td>
+											<td>
+												<?php
+													if ($row['public_allow'] == '1') {
+												?>
+														<a href="#" class="btn-primary btn btn-small public_link" data-id="<?php echo $row['id']; ?>" data-token="<?php echo $row['public_token']; ?>" data-placement="top" data-toggle="popover" data-original-title="<?php _e('Public URL','cftp_admin'); ?>">
+												<?php
+													}
+													else {
+												?>
+														<a href="#" class="disabled btn btn-small" rel="" title="">
+												<?php
+													}
+
+															$status_public	= __('Public','cftp_admin');
+															$status_private	= __('Private','cftp_admin');
+															echo ($row['public_allow'] === '1') ? $status_public : $status_private;
+												?>
+												</a>
+											</td>
 									<?php
 										}
 

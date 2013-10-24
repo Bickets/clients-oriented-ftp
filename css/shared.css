@@ -732,6 +732,15 @@ p.downloaders_note {
 	text-decoration:underline;
 }
 
+.public_link_copy {
+	background:#E5F1FC;
+	color:#2E8EB4;
+	font-size:12px;
+	width:95%;
+	border:1px solid #BCD8F3;
+	margin:7px auto !important;
+}
+
 /* Table sorter for jquery */
 
 .extra_columns_table .extra {
