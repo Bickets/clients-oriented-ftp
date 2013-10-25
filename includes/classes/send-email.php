@@ -328,7 +328,7 @@ class PSend_Email
 										$email_strings_pass_reset['body4'],
 										$email_strings_pass_reset['label_user'],
 										$username,
-										BASE_URI.'/reset-password.php?token=' . $token . '&user=' . $username,
+										BASE_URI.'reset-password.php?token=' . $token . '&user=' . $username,
 									),
 									$this->email_body
 								);
