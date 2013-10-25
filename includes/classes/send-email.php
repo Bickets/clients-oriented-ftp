@@ -105,32 +105,32 @@ class PSend_Email
 		switch ($type) {
 			case 'new_client':
 					$filename	= 'new-client.html';
-					$body_check	= EMAILS_CLIENT_BY_USER_USE_CUSTOM;
+					$body_check	= (!defined('EMAILS_HEADER_FOOTER_CUSTOM') || EMAILS_HEADER_FOOTER_CUSTOM == '0') ? '0' : EMAILS_CLIENT_BY_USER_USE_CUSTOM;
 					$body_text	= EMAILS_CLIENT_BY_USER_TEXT;
 				break;
 			case 'new_client_self':
 					$filename	= 'new-client-self.html';
-					$body_check	= EMAILS_CLIENT_BY_SELF_USE_CUSTOM;
+					$body_check	= (!defined('EMAILS_CLIENT_BY_SELF_USE_CUSTOM') || EMAILS_CLIENT_BY_SELF_USE_CUSTOM == '0') ? '0' : EMAILS_CLIENT_BY_SELF_USE_CUSTOM;
 					$body_text	= EMAILS_CLIENT_BY_SELF_TEXT;
 				break;
 			case 'new_user':
 					$filename	= 'new-user.html';
-					$body_check	= EMAILS_NEW_USER_USE_CUSTOM;
+					$body_check	= (!defined('EMAILS_NEW_USER_USE_CUSTOM') || EMAILS_NEW_USER_USE_CUSTOM == '0') ? '0' : EMAILS_NEW_USER_USE_CUSTOM;
 					$body_text	= EMAILS_NEW_USER_TEXT;
 				break;
 			case 'new_file_by_user':
 					$filename	= 'new-file-for-client.html';
-					$body_check	= EMAILS_FILE_BY_USER_USE_CUSTOM;
+					$body_check	= (!defined('EMAILS_FILE_BY_USER_USE_CUSTOM') || EMAILS_FILE_BY_USER_USE_CUSTOM == '0') ? '0' : EMAILS_FILE_BY_USER_USE_CUSTOM;
 					$body_text	= EMAILS_FILE_BY_USER_TEXT;
 				break;
 			case 'new_file_by_client':
 					$filename	= 'new-file-by-client.html';
-					$body_check	= EMAILS_FILE_BY_CLIENT_USE_CUSTOM;
+					$body_check	= (!defined('EMAILS_FILE_BY_CLIENT_USE_CUSTOM') || EMAILS_FILE_BY_CLIENT_USE_CUSTOM == '0') ? '0' : EMAILS_FILE_BY_CLIENT_USE_CUSTOM;
 					$body_text	= EMAILS_FILE_BY_CLIENT_TEXT;
 				break;
 			case 'password_reset':
 					$filename	= 'password-reset.html';
-					$body_check	= EMAILS_PASS_RESET_USE_CUSTOM;
+					$body_check	= (!defined('EMAILS_PASS_RESET_USE_CUSTOM') || EMAILS_PASS_RESET_USE_CUSTOM == '0') ? '0' : EMAILS_PASS_RESET_USE_CUSTOM;
 					$body_text	= EMAILS_PASS_RESET_TEXT;
 				break;
 		}
@@ -145,7 +145,7 @@ class PSend_Email
 		/**
 		 * Header
 		 */
-		if (EMAILS_HEADER_FOOTER_CUSTOM == '0') {
+		if (!defined('EMAILS_HEADER_FOOTER_CUSTOM') || EMAILS_HEADER_FOOTER_CUSTOM == '0') {
 			$this->make_body = $email_template_header;
 		}
 		else {
@@ -160,7 +160,7 @@ class PSend_Email
 		/**
 		 * Footer
 		 */
-		if (EMAILS_HEADER_FOOTER_CUSTOM == '0') {
+		if (!defined('EMAILS_HEADER_FOOTER_CUSTOM') || EMAILS_HEADER_FOOTER_CUSTOM == '0') {
 			$this->make_body .= $email_template_footer;
 		}
 		else {
