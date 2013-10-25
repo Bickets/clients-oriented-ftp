@@ -19,51 +19,77 @@ $active_nav = 'options';
 include('header.php');
 
 if ($_POST) {
+	unset($_POST['submit']);
 	/**
 	 * Escape all the posted values on a single function.
 	 * Defined on functions.php
 	 */
-	 
-	/** Temp fix, this should be done in a different way */
-	$allowed_empty_values = array('mail_copy_addresses','mail_smtp_host','mail_smtp_port','mail_smtp_user','mail_smtp_pass');
-	foreach ($allowed_empty_values as $check_field) {
-		if (empty($_POST[$check_field])) { $_POST[$check_field] = ''; }
+	/** Values that can be empty */
+	$allowed_empty_values	= array(
+								'mail_copy_addresses',
+								'mail_smtp_host',
+								'mail_smtp_port',
+								'mail_smtp_user',
+								'mail_smtp_pass',
+							);
+
+	/** Checkboxes */
+	$checkboxes				= array(
+								'clients_can_register',
+								'clients_auto_approve',
+								'clients_can_upload',
+								'mail_copy_user_upload',
+								'mail_copy_client_upload',
+								'mail_copy_main_user',
+								'thumbnails_use_absolute',
+							);
+	foreach ($checkboxes as $checkbox) {
+		$_POST[$checkbox] = (empty($_POST[$checkbox]) || !isset($_POST[$checkbox])) ? 0 : 1;
 	}
-	
+
 	$_POST = mysql_real_escape_array($_POST);
 	$keys = array_keys($_POST);
-
+	 
 	$options_total = count($keys);
 	$options_filled = 0;
+	$query_state = '0';
 
 	/**
 	 * Check if all the options are filled.
 	 */
 	for ($i = 0; $i < $options_total; $i++) {
-		if (!isset($_POST[$keys[$i]])) {
-			$query_state = 'err_fill';
-		}
-		else {
-			$options_filled++;
+		if (!in_array($keys[$i], $allowed_empty_values)) {
+			if (!isset($_POST[$keys[$i]])) {
+				$query_state = '3';
+			}
+			else {
+				$options_filled++;
+			}
 		}
 	}
-
+	
 	/** If every option is completed, continue */
-	if ($options_filled == $options_total) {
+	if ($query_state == '0') {
 		$updated = 0;
 		for ($j = 0; $j < $options_total; $j++) {
-			$q = 'UPDATE tbl_options SET value="'.$_POST[$keys[$j]].'" WHERE name="'.$keys[$j].'"';
-			$sql = mysql_query($q, $database->connection);
-			$updated++;
+			$sql = $database->query('UPDATE tbl_options SET value="'.$_POST[$keys[$j]].'" WHERE name="'.$keys[$j].'"');
+			if ($sql) {
+				$updated++;
+			}
 		}
 		if ($updated > 0){
-			$query_state = 'ok';
+			$query_state = '1';
 		}
 		else {
-			$query_state = 'err';
+			$query_state = '2';
 		}
 	}
 
+	/** Redirect so the options are reflected immediatly */
+	while (ob_get_level()) ob_end_clean();
+	$location = BASE_URI . 'options.php?status=' . $query_state;
+	header("Location: $location");
+	die();
 }
 
 /**
@@ -83,28 +109,23 @@ $allowed_file_types = implode(',',$allowed_file_types);
 	<h2><?php echo $page_title; ?></h2>
 
 	<?php
-		if (isset($query_state)) {
-			switch ($query_state) {
-				case 'ok':
+		if (isset($_GET['status'])) {
+			switch ($_GET['status']) {
+				case '1':
 					$msg = __('Options updated succesfuly.','cftp_admin');
 					echo system_message('ok',$msg);
 					break;
-				case 'err':
+				case '2':
 					$msg = __('There was an error. Please try again.','cftp_admin');
 					echo system_message('error',$msg);
 					break;
-				case 'err_fill':
+				case '3':
 					$msg = __('Some fields were not completed. Options could not be saved.','cftp_admin');
 					echo system_message('error',$msg);
 					$show_options_form = 1;
 					break;
 			}
 		}
-		else {
-			$show_options_form = 1;
-		}
-		
-		if(isset($show_options_form)) {
 	?>
 
 		<script type="text/javascript">
@@ -121,7 +142,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 					is_complete_all_options(this,'<?php _e('Please complete all the fields.','cftp_admin'); ?>');
 
 					// show the errors or continue if everything is ok
-					if (show_form_errors() == false) { alert('<?php _e('Please complete all the fields.','cftp_admin'); ?>'); return false; }
+					//if (show_form_errors() == false) { alert('<?php _e('Please complete all the fields.','cftp_admin'); ?>'); return false; }
 				});
 			});
 		</script>
@@ -209,12 +230,10 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									</li>
 									<li>
 										<label for="clients_can_register"><?php _e('Clients can register themselves','cftp_admin'); ?></label>
-										<input type="hidden" value="0" name="clients_can_register" class="checkbox_options" <?php echo (CLIENTS_CAN_REGISTER == 0) ? '' : 'checked="checked"'; ?> />
 										<input type="checkbox" value="1" name="clients_can_register" class="checkbox_options" <?php echo (CLIENTS_CAN_REGISTER == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 									<li>
 										<label for="clients_auto_approve"><?php _e('Auto approve new accounts','cftp_admin'); ?></label>
-										<input type="hidden" value="0" name="clients_auto_approve" class="checkbox_options" <?php echo (CLIENTS_AUTO_APPROVE == 0) ? '' : 'checked="checked"'; ?> />
 										<input type="checkbox" value="1" name="clients_auto_approve" class="checkbox_options" <?php echo (CLIENTS_AUTO_APPROVE == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 									<li>
@@ -250,7 +269,6 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									</li>
 									<li>
 										<label for="clients_can_upload"><?php _e('Clients can upload files','cftp_admin'); ?></label>
-										<input type="hidden" value="0" name="clients_can_upload" class="checkbox_options" <?php echo (CLIENTS_CAN_UPLOAD == 0) ? '' : 'checked="checked"'; ?> />
 										<input type="checkbox" value="1" name="clients_can_upload" class="checkbox_options" <?php echo (CLIENTS_CAN_UPLOAD == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 									<li>
@@ -289,12 +307,10 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									</li>
 									<li>
 										<label for="mail_copy_user_upload"><?php _e('When a system user uploads files','cftp_admin'); ?></label>
-										<input type="hidden" value="0" name="mail_copy_user_upload" class="mail_copy_user_upload" <?php echo (COPY_MAIL_ON_USER_UPLOADS == 0) ? '' : 'checked="checked"'; ?> />
 										<input type="checkbox" value="1" name="mail_copy_user_upload" class="mail_copy_user_upload" <?php echo (COPY_MAIL_ON_USER_UPLOADS == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 									<li>
 										<label for="mail_copy_client_upload"><?php _e('When a client uploads files','cftp_admin'); ?></label>
-										<input type="hidden" value="0" name="mail_copy_client_upload" class="mail_copy_client_upload" <?php echo (COPY_MAIL_ON_CLIENT_UPLOADS == 0) ? '' : 'checked="checked"'; ?> />
 										<input type="checkbox" value="1" name="mail_copy_client_upload" class="mail_copy_client_upload" <?php echo (COPY_MAIL_ON_CLIENT_UPLOADS == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 									<li class="options_nested_note">
@@ -302,7 +318,6 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									</li>
 									<li>
 										<label for="mail_copy_main_user"><?php _e('Address supplied above (on "From")','cftp_admin'); ?></label>
-										<input type="hidden" value="0" name="mail_copy_main_user" class="mail_copy_main_user" <?php echo (COPY_MAIL_MAIN_USER == 0) ? '' : 'checked="checked"'; ?> />
 										<input type="checkbox" value="1" name="mail_copy_main_user" class="mail_copy_main_user" <?php echo (COPY_MAIL_MAIN_USER == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 									<li>
@@ -405,7 +420,6 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									</li>
 									<li>
 										<label for="thumbnails_use_absolute"><?php _e("Use file's absolute path",'cftp_admin'); ?></label>
-										<input type="hidden" value="0" name="thumbnails_use_absolute" class="thumbnails_use_absolute" <?php echo (THUMBS_USE_ABSOLUTE == 0) ? '' : 'checked="checked"'; ?> />
 										<input type="checkbox" value="1" name="thumbnails_use_absolute" class="thumbnails_use_absolute" <?php echo (THUMBS_USE_ABSOLUTE == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 
@@ -443,8 +457,6 @@ $allowed_file_types = implode(',',$allowed_file_types);
 
 			</div>
 		</form>
-
-		<?php } ?>
 
 	</div>
 
