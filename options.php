@@ -5,7 +5,8 @@
  * @package ProjectSend
  * @subpackage Options
  */
-$easytabs = 1;
+$easytabs	= 1;
+$spinedit	= 1;
 $allowed_levels = array(9);
 require_once('sys.includes.php');
 $page_title = __('System options','cftp_admin');
@@ -131,6 +132,22 @@ $allowed_file_types = implode(',',$allowed_file_types);
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$('#tab-container').easytabs();
+
+				$('#notifications_max_tries').spinedit({
+					minimum: 1,
+					maximum: 100,
+					step: 1,
+					value: <?php echo NOTIFICATIONS_MAX_TRIES; ?>,
+					numberOfDecimals: 0
+				});
+
+				$('#notifications_max_days').spinedit({
+					minimum: 0,
+					maximum: 365,
+					step: 1,
+					value: <?php echo NOTIFICATIONS_MAX_DAYS; ?>,
+					numberOfDecimals: 0
+				});
 
 				$(function(){
 					var t = new $.TextboxList('#allowed_file_types', {unique: true, bitsOptions:{editable:{addKeys: 188}}});
@@ -333,13 +350,13 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									</li>
 									<li>
 										<label for="notifications_max_tries"><?php _e('Maximum sending tries','cftp_admin'); ?></label>
-										<input type="text" name="notifications_max_tries" id="notifications_max_tries" class="mail_data empty" value="<?php echo NOTIFICATIONS_MAX_TRIES; ?>" />
+										<input type="text" name="notifications_max_tries" id="notifications_max_tries" value="<?php echo NOTIFICATIONS_MAX_TRIES; ?>" />
 										<p class="field_note"><?php _e('Define how many times will the system try to send each notification.','cftp_admin'); ?></p>
 									</li>					
 									<li>
 										<label for="notifications_max_days"><?php _e('Days before expiring','cftp_admin'); ?></label>
-										<input type="text" name="notifications_max_days" id="notifications_max_days" class="mail_data empty" value="<?php echo NOTIFICATIONS_MAX_DAYS; ?>" />
-										<p class="field_note"><?php _e('Notifications older than this will not be sent.','cftp_admin'); ?></p>
+										<input type="text" name="notifications_max_days" id="notifications_max_days" value="<?php echo NOTIFICATIONS_MAX_DAYS; ?>" />
+										<p class="field_note"><?php _e('Notifications older than this will not be sent.','cftp_admin'); ?><br /><strong><?php _e('Set to 0 to disable.','cftp_admin'); ?></strong></p>
 									</li>					
 
 									<li class="options_divide"></li>

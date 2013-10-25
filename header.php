@@ -85,6 +85,11 @@ require_once(ROOT_DIR.'/includes/core.update.silent.php');
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/datepicker/bootstrap-datepicker.js"></script>
 	<?php } ?>
 
+	<?php if (isset($spinedit)) { ?>
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/js/bootstrap-spinedit/bootstrap-spinedit.css" />
+		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/bootstrap-spinedit/bootstrap-spinedit.js"></script>
+	<?php } ?>
+
 	<?php if (isset($easytabs)) { ?>
 		<script src="<?php echo BASE_URI; ?>includes/js/jquery.easytabs.min.js" type="text/javascript"></script>
 		<script src="<?php echo BASE_URI; ?>includes/js/jquery.hashchange.min.js" type="text/javascript"></script>

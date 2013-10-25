@@ -35,10 +35,10 @@ $notifications_inactive = array();
  *
  * UPDATE: 2 is now unused.
  */
-$notifications_query = "SELECT * FROM tbl_notifications WHERE sent_status = '0' AND times_failed < '" . NOTIFICATIONS_MAX_TRIES . "'";
+$notifications_query = "SELECT * FROM tbl_notifications WHERE sent_status = '0' AND times_failed < '" . (int)NOTIFICATIONS_MAX_TRIES . "'";
 /** Add the time limit */
 if (NOTIFICATIONS_MAX_DAYS != '0') {
-	$notifications_query .= " AND timestamp >= DATE_SUB(NOW(), INTERVAL " . NOTIFICATIONS_MAX_DAYS . " DAY)";
+	$notifications_query .= " AND timestamp >= DATE_SUB(NOW(), INTERVAL " . (int)NOTIFICATIONS_MAX_DAYS . " DAY)";
 }
 $notifications_sql = $database->query($notifications_query);
 while ($row = mysql_fetch_array($notifications_sql)) {
