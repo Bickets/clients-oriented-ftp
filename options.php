@@ -20,7 +20,6 @@ $active_nav = 'options';
 include('header.php');
 
 if ($_POST) {
-	unset($_POST['submit']);
 	/**
 	 * Escape all the posted values on a single function.
 	 * Defined on functions.php
@@ -60,7 +59,7 @@ if ($_POST) {
 	 */
 	for ($i = 0; $i < $options_total; $i++) {
 		if (!in_array($keys[$i], $allowed_empty_values)) {
-			if (!isset($_POST[$keys[$i]])) {
+			if (empty($_POST[$keys[$i]]) && $_POST[$keys[$i]] != '0') {
 				$query_state = '3';
 			}
 			else {
@@ -486,7 +485,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 				</div>
 	
 				<div class="after_form_buttons">
-					<button type="submit" name="submit" class="btn btn-wide btn-primary empty"><?php _e('Update all options','cftp_admin'); ?></button>
+					<button type="submit" class="btn btn-wide btn-primary empty"><?php _e('Update all options','cftp_admin'); ?></button>
 				</div>
 
 			</div>
