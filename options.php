@@ -164,16 +164,6 @@ $allowed_file_types = implode(',',$allowed_file_types);
 						<div id="tab_general">
 							<div class="options_box whitebox">
 								<ul class="form_fields">
-									<li>
-										<h3><?php _e('System location','cftp_admin'); ?></h3>
-										<p class="text-warning"><?php _e('These options are to be changed only if you are moving the system to another place. Changes here can cause ProjectSend to stop working.','cftp_admin'); ?></p>
-									</li>
-									<li>
-										<label for="base_uri"><?php _e('System URI','cftp_admin'); ?></label>
-										<input type="text" name="base_uri" id="base_uri" value="<?php echo BASE_URI; ?>" />
-									</li>
-					
-									<li class="options_divide"></li>
 					
 									<li>
 										<h3><?php _e('General','cftp_admin'); ?></h3>
@@ -213,6 +203,17 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										<input type="text" name="timeformat" id="timeformat" value="<?php echo TIMEFORMAT_USE; ?>" />
 										<p class="field_note"><?php _e('For example, d/m/Y h:i:s will result in something like','cftp_admin'); ?> <strong><?php echo date('d/m/Y h:i:s'); ?></strong>.
 										<?php _e('For the full list of available values, visit','cftp_admin'); ?> <a href="http://php.net/manual/en/function.date.php" target="_blank"><?php _e('this page','cftp_admin'); ?></a>.</p>
+									</li>
+					
+									<li class="options_divide"></li>
+
+									<li>
+										<h3><?php _e('System location','cftp_admin'); ?></h3>
+										<p class="text-warning"><?php _e('These options are to be changed only if you are moving the system to another place. Changes here can cause ProjectSend to stop working.','cftp_admin'); ?></p>
+									</li>
+									<li>
+										<label for="base_uri"><?php _e('System URI','cftp_admin'); ?></label>
+										<input type="text" name="base_uri" id="base_uri" value="<?php echo BASE_URI; ?>" />
 									</li>
 					
 									<li class="options_divide"></li>
@@ -325,6 +326,22 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										<input type="text" name="mail_copy_addresses" id="mail_copy_addresses" class="mail_data empty" value="<?php echo COPY_MAIL_ADDRESSES; ?>" />
 										<p class="field_note"><?php _e('Separate e-mail addresses with a comma.','cftp_admin'); ?></p>
 									</li>					
+									<li class="options_divide"></li>
+
+									<li>
+										<h3><?php _e('Expiration','cftp_admin'); ?></h3>
+									</li>
+									<li>
+										<label for="notifications_max_tries"><?php _e('Maximum sending tries','cftp_admin'); ?></label>
+										<input type="text" name="notifications_max_tries" id="notifications_max_tries" class="mail_data empty" value="<?php echo NOTIFICATIONS_MAX_TRIES; ?>" />
+										<p class="field_note"><?php _e('Define how many times will the system try to send each notification.','cftp_admin'); ?></p>
+									</li>					
+									<li>
+										<label for="notifications_max_days"><?php _e('Days before expiring','cftp_admin'); ?></label>
+										<input type="text" name="notifications_max_days" id="notifications_max_days" class="mail_data empty" value="<?php echo NOTIFICATIONS_MAX_DAYS; ?>" />
+										<p class="field_note"><?php _e('Notifications older than this will not be sent.','cftp_admin'); ?></p>
+									</li>					
+
 									<li class="options_divide"></li>
 
 									<li>

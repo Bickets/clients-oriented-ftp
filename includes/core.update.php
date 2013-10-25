@@ -832,6 +832,31 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+
+		/**
+		 * r487 updates
+		 * Add new options to limit the retries of notifications emails
+		 * and also set an expiry date.
+		 */
+		if ($last_update < 487) {
+			$new_database_values = array(
+											'notifications_max_tries' => '2',
+											'notifications_max_days' => '15',
+										);
+			
+			foreach($new_database_values as $row => $value) {
+				$q = "SELECT * FROM tbl_options WHERE name = '$row'";
+				$sql = $database->query($q);
+		
+				if(!mysql_num_rows($sql)) {
+					$updates_made++;
+					$qi = "INSERT INTO tbl_options (name, value) VALUES ('$row', '$value')";
+					$sqli = $database->query($qi);
+				}
+				unset($q);
+			}
+		}
+
 	}
 }	
 ?>

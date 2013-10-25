@@ -23,14 +23,23 @@ $notifications_inactive = array();
  * is lees than 3, and that the user/client was not
  * inactive when first trying.
  *
+ * UPDATE: User can now define a maximum of tries per
+ * notification, 3 is now not the limit.
+ *
  * The sent_status column stores an integer related to
  * the status of the notification. Possible values:
  * 0 - Notification is new and needs to be sent.
  * 1 - E-mail sent OK.
  * 2 - E-mail FAILED (times count stored on times_failed).
  * 3 - Unsent, client or system user were inactive.
+ *
+ * UPDATE: 2 is now unused.
  */
-$notifications_query = "SELECT * FROM tbl_notifications WHERE sent_status = '0' AND times_failed < '4'";
+$notifications_query = "SELECT * FROM tbl_notifications WHERE sent_status = '0' AND times_failed < '" . NOTIFICATIONS_MAX_TRIES . "'";
+/** Add the time limit */
+if (NOTIFICATIONS_MAX_DAYS != '0') {
+	$notifications_query .= " AND timestamp >= DATE_SUB(NOW(), INTERVAL " . NOTIFICATIONS_MAX_DAYS . " DAY)";
+}
 $notifications_sql = $database->query($notifications_query);
 while ($row = mysql_fetch_array($notifications_sql)) {
 	$get_file_info[] = $row['file_id'];
@@ -173,6 +182,7 @@ if (!empty($found_notifications)) {
 										'files_list' => $files_list
 									);
 			$try_sending = $notify_client->psend_send_email($email_arguments);
+			//$try_sending = 1;
 			if ($try_sending == 1) {
 				$notifications_sent[] = $mail_file['notif_id'];
 			}
@@ -251,7 +261,7 @@ if (!empty($found_notifications)) {
 	 */
 	if (!empty($notifications_failed) && count($notifications_failed) > 0) {
 		$notifications_failed = implode(',',array_unique($notifications_failed));
-		$notifications_errors_query = "UPDATE tbl_notifications SET sent_status = '2', times_failed = times_failed + 1 WHERE id IN ($notifications_failed)";
+		$notifications_errors_query = "UPDATE tbl_notifications SET sent_status = '0', times_failed = times_failed + 1 WHERE id IN ($notifications_failed)";
 		$notifications_errors_sql = $database->query($notifications_errors_query);
 		$msg = __("One or more notifications couldn't be sent.",'cftp_admin');
 		echo system_message('error',$msg);
@@ -285,12 +295,13 @@ if (!empty($found_notifications)) {
 	/**
 	 * DEBUG
 	 */
+/*
 	 echo '<h2>Notifications Found</h2><br />';
 	 print_r($found_notifications);
 	 echo '<br /><br />';
 
 
 	 echo '<h2>Notifications sent query</h2><br />' . $notifications_sent_query . '<br /><br />';
-	 
+*/
 }
 ?>

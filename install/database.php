@@ -198,7 +198,9 @@ if (defined('TRY_INSTALL')) {
 	(\'email_footer_text\', \'\'),
 	(\'email_pass_reset_customize\', \'\'),
 	(\'email_pass_reset_text\', \'\'),
-	(\'expired_files_hide\', \'1\')
+	(\'expired_files_hide\', \'1\'),
+	(\'notifications_max_tries\', \'2\'),
+	(\'notifications_max_days\', \'15\')
 	',
 	
 	'10' => '

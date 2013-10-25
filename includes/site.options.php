@@ -149,6 +149,18 @@ if(!empty($options_values)) {
 	}
 
 	/**
+	 * For versions 487 and up
+	 */	
+	if (isset($options_values['notifications_max_tries'])) {
+		define('NOTIFICATIONS_MAX_TRIES',$options_values['notifications_max_tries']);
+		define('NOTIFICATIONS_MAX_DAYS',$options_values['notifications_max_days']);
+	}
+	else {
+		define('NOTIFICATIONS_MAX_TRIES','2');
+		define('NOTIFICATIONS_MAX_DAYS','15');
+	}
+
+	/**
 	 * Set the default timezone based on the value of the Timezone select box
 	 * of the options page.
 	 */
