@@ -46,8 +46,8 @@ if ($_POST) {
 			if (move_uploaded_file($_FILES['select_logo']['tmp_name'],LOGO_FOLDER.$safe_filename)) {
 				$q = 'UPDATE tbl_options SET value="'.$safe_filename.'" WHERE name="logo_filename"';
 				$sql = $database->query($q, $database->connection);
-				$msg = __('The image was uploaded correctly.','cftp_admin');
-				echo system_message('ok',$msg);
+				
+				$status = '1';
 
 				/** Record the action log */
 				$new_log_action = new LogActions();
@@ -58,25 +58,23 @@ if ($_POST) {
 				$new_record_action = $new_log_action->log_action_save($log_action_args);
 			}
 			else {
-					$msg = __('The file could not be moved to the corresponding folder.','cftp_admin');
-					$msg .= __("This is most likely a permissions issue. If that's the case, it can be corrected via FTP by setting the chmod value of the",'cftp_admin');
-					$msg .= ' '.LOGO_FOLDER.' ';
-					$msg .= __('directory to 755, or 777 as a last resource.','cftp_admin');
-					$msg .= __("If this doesn't solve the issue, try giving the same values to the directories above that one until it works.",'cftp_admin');
-					echo system_message('error',$msg);
+				$status = '2';
 			}
 		}
 		else {
-				$msg = __('The file you selected is not an allowed image format. Please upload your logo as a jpg, gif or png file.','cftp_admin');
-				echo system_message('error',$msg);
+			$status = '3';
 		}
 	}
 	else {
-			$msg = __('There was an error uploading the file. Please try again.','cftp_admin');
-			echo system_message('error',$msg);
+		$status = '4';
 	}
+
+	/** Redirect so the options are reflected immediatly */
+	while (ob_get_level()) ob_end_clean();
+	$location = BASE_URI . 'branding.php?status=' . $status;
+	header("Location: $location");
+	die();
 }
-else {
 ?>
 
 	<script type="text/javascript">
@@ -94,6 +92,34 @@ else {
 
 	<form action="branding.php" name="logoupload" method="post" enctype="multipart/form-data">
 		<div class="options_box whitebox">
+
+			<?php
+				if (isset($_GET['status'])) {
+					switch ($_GET['status']) {
+						case '1':
+							$msg = __('The image was uploaded correctly.','cftp_admin');
+							echo system_message('ok',$msg);
+							break;
+						case '2':
+							$msg = __('The file could not be moved to the corresponding folder.','cftp_admin');
+							$msg .= __("This is most likely a permissions issue. If that's the case, it can be corrected via FTP by setting the chmod value of the",'cftp_admin');
+							$msg .= ' '.LOGO_FOLDER.' ';
+							$msg .= __('directory to 755, or 777 as a last resource.','cftp_admin');
+							$msg .= __("If this doesn't solve the issue, try giving the same values to the directories above that one until it works.",'cftp_admin');
+							echo system_message('error',$msg);
+							break;
+						case '3':
+							$msg = __('The file you selected is not an allowed image format. Please upload your logo as a jpg, gif or png file.','cftp_admin');
+							echo system_message('error',$msg);
+							break;
+						case '4':
+							$msg = __('There was an error uploading the file. Please try again.','cftp_admin');
+							echo system_message('error',$msg);
+							break;
+					}
+				}
+		
+			?>
 
 			<p><?php _e('Use this page to upload your company logo, or update the currently assigned one. This image will be shown to your clients when they access their file list.','cftp_admin'); ?></p>
 		
@@ -132,8 +158,6 @@ else {
 		</div>
 	</form>
 	<div class="clear"></div>
-
-<?php } ?>
 
 </div>
 
