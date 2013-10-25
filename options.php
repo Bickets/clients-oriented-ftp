@@ -142,7 +142,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 					is_complete_all_options(this,'<?php _e('Please complete all the fields.','cftp_admin'); ?>');
 
 					// show the errors or continue if everything is ok
-					//if (show_form_errors() == false) { alert('<?php _e('Please complete all the fields.','cftp_admin'); ?>'); return false; }
+					if (show_form_errors() == false) { alert('<?php _e('Please complete all the fields.','cftp_admin'); ?>'); return false; }
 				});
 			});
 		</script>
