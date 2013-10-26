@@ -327,11 +327,13 @@ function system_message($type,$message,$div_id = '')
 		$return .= ' id="'.$div_id.'"';
 	}
 
-	$return .= '>'.$message;
+	$return .= '>';
 
 	if ($close == true) {
 		$return .= '<a href="#" class="close" data-dismiss="alert">&times;</a>';
 	}
+
+	$return .= $message;
 
 	$return .= '</div>';
 	return $return;

@@ -576,6 +576,14 @@ textarea, select {
 	margin-top:25px;
 }
 
+.alert .alert-title {
+	padding-bottom:0;
+	margin-bottom:8px;
+	border:none;
+	font-weight:bold;
+	font-size:17px;
+}
+
 /** Overwrite default bootstrap Main button colors */
 
 .btn {
