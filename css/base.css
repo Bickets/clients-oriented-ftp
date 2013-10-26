@@ -458,18 +458,20 @@ h4 {
 .edit_files {
 }
 
-.edit_files .file_data {
-	background:white;
-	border:1px solid #ccc;
-	-moz-border-radius:5px;
-	-moz-box-shadow:3px 3px 5px #dedede;
-	-webkit-border-radius:5px;
-	-webkit-box-shadow:3px 3px 5px #dedede;
-	border-radius:5px;
-	box-shadow:3px 3px 5px #dedede;
-	padding:15px;
-
-}
+	.edit_files .file_data {
+		background:white;
+		border:1px solid #ccc;
+		-moz-border-radius:5px;
+		-moz-box-shadow:3px 3px 5px #dedede;
+		-webkit-border-radius:5px;
+		-webkit-box-shadow:3px 3px 5px #dedede;
+		border-radius:5px;
+		box-shadow:3px 3px 5px #dedede;
+		padding:15px;
+	}
+	
+		.edit_files .file_data .file_data_column {
+		}
 
 .file_editor {
 /*	border-bottom:3px dotted #ccc;*/

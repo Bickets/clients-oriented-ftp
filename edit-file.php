@@ -326,7 +326,7 @@ $current_level = get_current_user_level();
 							</div>
 							<div class="span11">
 								<div class="row-fluid">
-									<div class="span4 file_data">
+									<div class="<?php echo ($global_level != 0) ? 'span4' : 'span12'; ?> file_data">
 										<div class="row-fluid">
 											<div class="span12">
 												<h3><?php _e('File information', 'cftp_admin');?></h3>
@@ -340,17 +340,20 @@ $current_level = get_current_user_level();
 											</div>
 										</div>
 									</div>
-									<div class="span4 file_data">
-										<?php
-											/**
-											* Only show the EXPIRY options if the current
-											* uploader is a system user, and not a client.
-											*/
-											if ($global_level != 0) {
-												if (!empty($row['expiry_date'])) {
-													$expiry_date = date('d-m-Y', strtotime($row['expiry_date']));
-												}
-										?>
+									<?php
+										/** The following options are available to users only */
+										if ($global_level != 0) {
+									?>
+											<div class="span4 file_data">
+												<?php
+													/**
+													* Only show the EXPIRY options if the current
+													* uploader is a system user, and not a client.
+													*/
+													if (!empty($row['expiry_date'])) {
+														$expiry_date = date('d-m-Y', strtotime($row['expiry_date']));
+													}
+												?>
 												<h3><?php _e('Expiration date', 'cftp_admin');?></h3>
 												<label><input type="checkbox" name="file[<?php echo $i; ?>][expires]" value="1" <?php if ($row['expires']) { ?>checked="checked"<?php } ?> /> <?php _e('File expires', 'cftp_admin');?></label>
 
@@ -365,19 +368,14 @@ $current_level = get_current_user_level();
 
 												<h3><?php _e('Public downloading', 'cftp_admin');?></h3>
 												<label><input type="checkbox" name="file[<?php echo $i; ?>][public]" value="1" <?php if ($row['public_allow']) { ?>checked="checked"<?php } ?> /> <?php _e('Allow public downloading of this file.', 'cftp_admin');?></label>
-	
-										<?php
-											} /** Close $current_level check */
-										?>
-									</div>
-									<div class="span4 assigns file_data">
-										<?php
-											/**
-											* Only show the CLIENTS select field if the current
-											* uploader is a system user, and not a client.
-											*/
-											if ($global_level != 0) {
-										?>
+											</div>
+											<div class="span4 assigns file_data">
+												<?php
+													/**
+													* Only show the CLIENTS select field if the current
+													* uploader is a system user, and not a client.
+													*/
+												?>
 												<h3><?php _e('Assignations', 'cftp_admin');?></h3>
 												<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
 												<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="form-control chosen-select" data-placeholder="<?php _e('Select one or more options. Type to search.', 'cftp_admin');?>">
@@ -421,10 +419,10 @@ $current_level = get_current_user_level();
 	
 												<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Mark as hidden (will not send notifications) for new assigned clients and groups.', 'cftp_admin');?></label>
 												<label><input type="checkbox" name="file[<?php echo $i; ?>][hideall]" value="1" /> <?php _e('Hide from every already assigned clients and groups.', 'cftp_admin');?></label>
-										<?php
-											} /** Close $current_level check */
-										?>
-									</div>
+											</div>
+									<?php
+										} /** Close $current_level check */
+									?>
 								</div>
 							</div>
 						</div>

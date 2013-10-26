@@ -461,7 +461,7 @@ while($row = mysql_fetch_array($sql)) {
 										</div>
 										<div class="span11">
 											<div class="row-fluid">
-												<div class="span4 file_data">
+												<div class="<?php echo ($global_level != 0) ? 'span4' : 'span12'; ?> file_data">
 													<div class="row-fluid">
 														<div class="span12">
 															<h3><?php _e('File information', 'cftp_admin');?></h3>
@@ -479,14 +479,17 @@ while($row = mysql_fetch_array($sql)) {
 														</div>
 													</div>
 												</div>
-												<div class="span4 file_data">
-													<?php
-														/**
-														* Only show the EXPIRY options if the current
-														* uploader is a system user, and not a client.
-														*/
-														if ($global_level != 0) {
-													?>
+												<?php
+													/** The following options are available to users only */
+													if ($global_level != 0) {
+												?>
+														<div class="span4 file_data">
+															<?php
+																/**
+																* Only show the EXPIRY options if the current
+																* uploader is a system user, and not a client.
+																*/
+															?>
 															<h3><?php _e('Expiration date', 'cftp_admin');?></h3>
 															<label><input type="checkbox" name="file[<?php echo $i; ?>][expires]" value="1" <?php if ($row['expiry_set']) { ?>checked="checked"<?php } ?> /> <?php _e('File expires', 'cftp_admin');?></label>
 			
@@ -496,23 +499,20 @@ while($row = mysql_fetch_array($sql)) {
 																<input class="span8 datepick" size="19" readonly="readonly" type="text" id="file[<?php echo $i; ?>][expiry_date]" name="file[<?php echo $i; ?>][expiry_date]" value="<?php echo date('d-m-Y'); ?>">
 																<span class="add-on"><i class="icon-th"></i></span>
 															</div>
-
+		
 															<div class="divider"></div>
 			
 															<h3><?php _e('Public downloading', 'cftp_admin');?></h3>
 															<label><input type="checkbox" name="file[<?php echo $i; ?>][public]" value="1" /> <?php _e('Allow public downloading of this file.', 'cftp_admin');?></label>
-													<?php
-														} /** Close $current_level check */
-													?>
-												</div>
-												<div class="span4 file_data assigns">
-													<?php
-														/**
-														* Only show the CLIENTS select field if the current
-														* uploader is a system user, and not a client.
-														*/
-														if ($current_level != 0) {
-													?>
+														</div>
+
+														<div class="span4 file_data assigns">
+															<?php
+																/**
+																* Only show the CLIENTS select field if the current
+																* uploader is a system user, and not a client.
+																*/
+															?>
 															<h3><?php _e('Assignations', 'cftp_admin');?></h3>
 															<label><?php _e('Assign this file to', 'cftp_admin');?>:</label>
 															<select multiple="multiple" name="file[<?php echo $i; ?>][assignments][]" class="form-control chosen-select" data-placeholder="<?php _e('Select one or more options. Type to search.', 'cftp_admin');?>">
@@ -552,10 +552,10 @@ while($row = mysql_fetch_array($sql)) {
 															<div class="divider"></div>
 				
 															<label><input type="checkbox" name="file[<?php echo $i; ?>][hidden]" value="1" /> <?php _e('Upload hidden (will not send notifications)', 'cftp_admin');?></label>
+														</div>
 													<?php
 														} /** Close $current_level check */
 													?>
-												</div>
 											</div>
 										</div>
 									</div>

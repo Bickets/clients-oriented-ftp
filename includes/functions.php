@@ -302,11 +302,38 @@ function message_no_clients()
  */	
 function system_message($type,$message,$div_id = '')
 {
-	$return = '<div class="message message_'.$type.'"';
+	$close = false;
+
+	switch ($type) {
+		case 'ok':
+			$class = 'success';
+			$close = true;
+			break;
+		case 'error':
+			$class = 'error';
+			$close = true;
+			break;
+		case 'info':
+			$class = 'info';
+			break;
+		case 'warning':
+			$class = 'warning';
+			break;
+	}
+
+	//$return = '<div class="message message_'.$type.'"';
+	$return = '<div class="alert alert-'.$class.'"';
 	if (isset($div_id) && $div_id != '') {
 		$return .= ' id="'.$div_id.'"';
 	}
-	$return .= '>'.$message.'</div>';
+
+	$return .= '>'.$message;
+
+	if ($close == true) {
+		$return .= '<a href="#" class="close" data-dismiss="alert">&times;</a>';
+	}
+
+	$return .= '</div>';
 	return $return;
 }
 

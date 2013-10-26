@@ -206,6 +206,7 @@ body, html {
 	color:#849F4F;
 	background:#ECF5DA;
 	border:1px solid #B1C786;
+	text-shadow:1px 1px 1px white;
 }
 
 .message_error {
@@ -569,6 +570,10 @@ textarea, select {
 .inside_form_buttons {
 	margin-top:25px;
 	text-align:center;
+}
+
+.whitebox .alert-info {
+	margin-top:25px;
 }
 
 /** Overwrite default bootstrap Main button colors */

@@ -282,7 +282,10 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									<li class="options_divide"></li>
 									<li>
 										<h3><?php _e('Files','cftp_admin'); ?></h3>
-										<p><?php _e('Options related to the files that clients upload themselves.','cftp_admin'); ?></p>
+										<?php
+											/*<p><?php _e('Options related to the files that clients upload themselves.','cftp_admin'); ?></p>
+											*/
+										?>
 									</li>
 									<li>
 										<label for="clients_can_upload"><?php _e('Clients can upload files','cftp_admin'); ?></label>
