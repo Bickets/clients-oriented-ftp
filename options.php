@@ -348,9 +348,9 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										<h3><?php _e('Expiration','cftp_admin'); ?></h3>
 									</li>
 									<li>
-										<label for="notifications_max_tries"><?php _e('Maximum sending tries','cftp_admin'); ?></label>
+										<label for="notifications_max_tries"><?php _e('Maximum sending attemps','cftp_admin'); ?></label>
 										<input type="text" name="notifications_max_tries" id="notifications_max_tries" value="<?php echo NOTIFICATIONS_MAX_TRIES; ?>" />
-										<p class="field_note"><?php _e('Define how many times will the system try to send each notification.','cftp_admin'); ?></p>
+										<p class="field_note"><?php _e('Define how many times will the system attemp to send each notification.','cftp_admin'); ?></p>
 									</li>					
 									<li>
 										<label for="notifications_max_days"><?php _e('Days before expiring','cftp_admin'); ?></label>
