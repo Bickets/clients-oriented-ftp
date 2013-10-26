@@ -865,11 +865,31 @@ if (in_session_or_cookies($allowed_update)) {
 		 * before adding the keys.
 		 */
 		if ($last_update < 490) {
-			$sql1 = $database->query("DELETE FROM tbl_notifications WHERE file_id NOT IN (SELECT id FROM tbl_files)");
-			$sql1 = $database->query("DELETE FROM tbl_notifications WHERE client_id NOT IN (SELECT id FROM tbl_users)");
-			$sql1 = $database->query("ALTER TABLE tbl_notifications ADD FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE");
-			$sql1 = $database->query("ALTER TABLE tbl_notifications ADD FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE");
+			$sql = $database->query("DELETE FROM tbl_notifications WHERE file_id NOT IN (SELECT id FROM tbl_files)");
+			$sql = $database->query("DELETE FROM tbl_notifications WHERE client_id NOT IN (SELECT id FROM tbl_users)");
+			$sql = $database->query("ALTER TABLE tbl_notifications ADD FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE");
+			$sql = $database->query("ALTER TABLE tbl_notifications ADD FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE");
 			$updates_made++;
+		}
+
+
+		/**
+		 * r501 updates
+		 * Migrate the download count on each client to the new table.
+		 */
+		if ($last_update < 501) {
+			$sql = $database->query("SELECT * FROM tbl_files_relations WHERE client_id IS NOT NULL AND download_count > 0");
+			if(mysql_num_rows($sql)) {
+				while($row = mysql_fetch_array($sql)) {
+					$download_count	= $row['download_count'];
+					$client_id		= $row['client_id'];
+					$file_id		= $row['file_id'];
+					for ($i = 0; $i < $download_count; $i++) {
+						$sql_new = $database->query("INSERT INTO tbl_downloads (file_id, user_id) VALUES ('$file_id', '$client_id')");
+					}
+				}
+				$updates_made++;
+			}
 		}
 
 
