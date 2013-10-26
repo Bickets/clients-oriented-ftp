@@ -130,7 +130,9 @@ $allowed_file_types = implode(',',$allowed_file_types);
 
 		<script type="text/javascript">
 			$(document).ready(function() {
-				$('#tab-container').easytabs();
+				$('#tab-container').easytabs({
+					updateHash: false
+				});
 
 				$('#notifications_max_tries').spinedit({
 					minimum: 1,

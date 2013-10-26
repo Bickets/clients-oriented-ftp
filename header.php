@@ -92,7 +92,6 @@ require_once(ROOT_DIR.'/includes/core.update.silent.php');
 
 	<?php if (isset($easytabs)) { ?>
 		<script src="<?php echo BASE_URI; ?>includes/js/jquery.easytabs.min.js" type="text/javascript"></script>
-		<script src="<?php echo BASE_URI; ?>includes/js/jquery.hashchange.min.js" type="text/javascript"></script>
 	<?php } ?>
 
 	<?php if (isset($tablesorter)) { ?>
@@ -117,11 +116,6 @@ require_once(ROOT_DIR.'/includes/core.update.silent.php');
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/browserplus-min.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload/js/plupload.full.js"></script>
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js"></script>
-
-<!--
-		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/plupload-2.0.0/js/jquery.plupload.queue/css/jquery.plupload.queue.css?v=2.0.0" />
-		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/plupload-2.0.0/js/plupload.full.min.js?v=2.0.0"></script>
--->
 	<?php } ?>
 
 	<?php if (isset($flot)) { ?>

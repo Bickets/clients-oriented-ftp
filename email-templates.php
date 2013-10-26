@@ -82,7 +82,9 @@ if ($_POST) {
 		
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#tab-container').easytabs();
+			$('#tab-container').easytabs({
+				updateHash: false
+			});
 		});
 	</script>
 	
