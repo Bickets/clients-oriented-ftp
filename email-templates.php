@@ -180,7 +180,7 @@ if ($_POST) {
 	<form action="email-templates.php" name="templatesform" method="post">
 		<div id="outer_tabs_wrapper">
 
-			<div id="tab-container" class='tab-container'>
+			<div id="tab-container" class="tab-container">
 				<ul class="etabs">
 					<li class="tab">
 						<a href="#tab_header_footer">

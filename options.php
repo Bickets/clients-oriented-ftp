@@ -168,7 +168,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 		<form action="options.php" name="optionsform" method="post">
 			<div id="outer_tabs_wrapper">
 
-				<div id="tab-container" class='tab-container'>
+				<div id="tab-container" class="tab-container">
 					<ul class="etabs">
 						<li class="tab"><a href="#tab_general"><?php _e('General Options','cftp_admin'); ?></a></li>
 						<li class="tab"><a href="#tab_clients"><?php _e('Clients','cftp_admin'); ?></a></li>
