@@ -857,6 +857,22 @@ if (in_session_or_cookies($allowed_update)) {
 			}
 		}
 
+
+		/**
+		 * r490 updates
+		 * Set foreign keys to update the notifications table automatically.
+		 * Rows that references deleted users or files will be deleted
+		 * before adding the keys.
+		 */
+		if ($last_update < 490) {
+			$sql1 = $database->query("DELETE FROM tbl_notifications WHERE file_id NOT IN (SELECT id FROM tbl_files)");
+			$sql1 = $database->query("DELETE FROM tbl_notifications WHERE client_id NOT IN (SELECT id FROM tbl_users)");
+			$sql1 = $database->query("ALTER TABLE tbl_notifications ADD FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE");
+			$sql1 = $database->query("ALTER TABLE tbl_notifications ADD FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE");
+			$updates_made++;
+		}
+
+
 	}
 }	
 ?>

@@ -300,14 +300,14 @@ while($row = mysql_fetch_array($sql)) {
 							}
 						?>
 						<td>
-							<a href="edit-file.php?file_id=<?php echo $uploaded['new_file_id']; ?>" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
+							<a href="edit-file.php?file_id=<?php echo $uploaded['new_file_id']; ?>" class="btn-primary btn btn-small"><?php _e('Edit file','cftp_admin'); ?></a>
 							<?php
 								/*
 								 * Show the "My files" button only to clients
 								 */
 								if ($current_level == 0) {
 							?>
-									<a href="my_files/" class="button button_blue"><?php _e('View my files','cftp_admin'); ?></a>
+									<a href="my_files/" class="btn-primary btn btn-small"><?php _e('View my files','cftp_admin'); ?></a>
 							<?php
 								}
 							?>
@@ -352,12 +352,12 @@ while($row = mysql_fetch_array($sql)) {
 								 */
 								if ($current_level != 0) {
 							?>
-									<a href="edit-file.php?file_id=<?php echo $uploaded['new_file_id']; ?>" class="button button_blue"><?php _e('Edit file','cftp_admin'); ?></a>
+									<a href="edit-file.php?file_id=<?php echo $uploaded['new_file_id']; ?>" class="btn-primary btn btn-small"><?php _e('Edit file','cftp_admin'); ?></a>
 							<?php
 								}
 								else {
 							?>
-									<a href="my_files/" class="button button_blue"><?php _e('View my files','cftp_admin'); ?></a>
+									<a href="my_files/" class="btn-primary btn btn-small"><?php _e('View my files','cftp_admin'); ?></a>
 							<?php
 								}
 							?>

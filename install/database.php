@@ -138,6 +138,8 @@ if (defined('TRY_INSTALL')) {
 	  `upload_type` int(11) NOT NULL,
 	  `sent_status` int(2) NOT NULL,
 	  `times_failed` int(11) NOT NULL,
+	  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+	  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  PRIMARY KEY (`id`)
 	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 	',

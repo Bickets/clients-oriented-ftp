@@ -193,6 +193,7 @@ if (!empty($found_notifications)) {
 	}
 	
 	/** Prepare the emails for ADMINS */
+	
 	if (!empty($notes_to_admin)) {
 		foreach ($notes_to_admin as $mail_username => $admin_files) {
 			
@@ -211,6 +212,10 @@ if (!empty($found_notifications)) {
 							$files_list.= '<p>'.$mail_file['description'].'</p>';
 						}
 						$files_list.= '</li>';
+						/**
+						 * Add each notification to an array
+						 */
+						$this_admin_notifications[] = $mail_file['notif_id'];
 					}
 	
 					$address = $mail_by_user[$mail_username];
@@ -223,10 +228,10 @@ if (!empty($found_notifications)) {
 											);
 					$try_sending = $notify_admin->psend_send_email($email_arguments);
 					if ($try_sending == 1) {
-						$notifications_sent[] = $mail_file['notif_id'];
+						$notifications_sent = array_merge($notifications_sent, $this_admin_notifications);
 					}
 					else {
-						$notifications_failed[] =  $mail_file['notif_id'];
+						$notifications_failed = array_merge($notifications_failed, $this_admin_notifications);
 					}
 				}
 			}
@@ -295,13 +300,12 @@ if (!empty($found_notifications)) {
 	/**
 	 * DEBUG
 	 */
-/*
-	 echo '<h2>Notifications Found</h2><br />';
-	 print_r($found_notifications);
-	 echo '<br /><br />';
-
+	 /*
+	 echo '<h2>Notifications Found</h2><br /><pre>';
+	 print_r($notes_to_admin);
+	 echo '</pre><br /><br />';
 
 	 echo '<h2>Notifications sent query</h2><br />' . $notifications_sent_query . '<br /><br />';
-*/
+	 */
 }
 ?>
