@@ -271,6 +271,7 @@ body, html {
 	line-height:2em;
 	outline:none;
 	padding:0 10px;
+	text-decoration:none;
 }
 
 .tab a:hover {
@@ -284,6 +285,7 @@ body, html {
 	position:relative;
 	padding-top:1px;
 	top:1px;
+	text-decoration:none;
 }
 
 .tab a.active {
