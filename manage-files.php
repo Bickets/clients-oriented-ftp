@@ -141,8 +141,13 @@ include('header.php');
 			content: function() {
 				var id		= $(this).data('id');
 				var token	= $(this).data('token');
-				return '<strong><?php _e('Click to select','cftp_admin'); ?></strong><textarea class="input-large public_link_copy" rows="4"><?php echo BASE_URI; ?>download.php?id=' + id + '&token=' + token + '</textarea><small><?php _e('Send this URL to someone to download the file without registering or logging in.','cftp_admin'); ?></small>';
+				return '<strong><?php _e('Click to select','cftp_admin'); ?></strong><textarea class="input-large public_link_copy" rows="4"><?php echo BASE_URI; ?>download.php?id=' + id + '&token=' + token + '</textarea><small><?php _e('Send this URL to someone to download the file without registering or logging in.','cftp_admin'); ?></small><div class="close-popover"><button type="button" id="example" class="btn btn-inverse btn-small"><?php _e('Close','cftp_admin'); ?></button></div>';
 			}
+		});
+
+		$(".close-popover button").live('click', function(e) {
+			var popped = $(this).closest('td').find('.public_link');
+			popped.popover('hide');
 		});
 
 		$(".public_link_copy").live('click', function(e) {

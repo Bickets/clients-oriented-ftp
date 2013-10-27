@@ -453,6 +453,11 @@ textarea, select {
 
 /* Buttons */
 
+.close-popover {
+	text-align:center;
+	margin:15px auto;
+}
+
 .button_form {
 	width:80px;
 	padding:4px 0;
