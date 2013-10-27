@@ -171,6 +171,10 @@ if (!empty($found_notifications)) {
 					$files_list.= '<p>'.$mail_file['description'].'</p>';
 				}
 				$files_list.= '</li>';
+				/**
+				 * Add each notification to an array
+				 */
+				$this_client_notifications[] = $mail_file['notif_id'];
 			}
 
 			$address = $mail_by_user[$mail_username];
@@ -182,12 +186,11 @@ if (!empty($found_notifications)) {
 										'files_list' => $files_list
 									);
 			$try_sending = $notify_client->psend_send_email($email_arguments);
-			//$try_sending = 1;
 			if ($try_sending == 1) {
-				$notifications_sent[] = $mail_file['notif_id'];
+				$notifications_sent = array_merge($notifications_sent, $this_client_notifications);
 			}
 			else {
-				$notifications_failed[] =  $mail_file['notif_id'];
+				$notifications_failed = array_merge($notifications_failed, $this_client_notifications);
 			}
 		}
 	}
