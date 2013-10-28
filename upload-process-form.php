@@ -494,10 +494,9 @@ while($row = mysql_fetch_array($sql)) {
 															<label><input type="checkbox" name="file[<?php echo $i; ?>][expires]" value="1" <?php if ($row['expiry_set']) { ?>checked="checked"<?php } ?> /> <?php _e('File expires', 'cftp_admin');?></label>
 			
 															<label for="file[<?php echo $i; ?>][expires_date]"><?php _e('Select a date', 'cftp_admin');?></label>
-			
-															<div class="input-append date" id="dp3" data-date="<?php echo date('d-m-Y'); ?>" data-date-format="dd-mm-yyyy">
-																<input class="span8 datepick" size="19" readonly="readonly" type="text" id="file[<?php echo $i; ?>][expiry_date]" name="file[<?php echo $i; ?>][expiry_date]" value="<?php echo date('d-m-Y'); ?>">
-																<span class="add-on"><i class="icon-th"></i></span>
+
+															<div class="input-append date">
+																<input type="text" class="span8 datapick-field" readonly="readonly" id="file[<?php echo $i; ?>][expiry_date]" name="file[<?php echo $i; ?>][expiry_date]" value="<?php echo (!empty($expiry_date)) ? $expiry_date : date('d-m-Y'); ?>" /><span class="add-on"><i class="icon-th"></i></span>
 															</div>
 		
 															<div class="divider"></div>
@@ -637,8 +636,10 @@ while($row = mysql_fetch_array($sql)) {
 					width: "98%"
 				});
 
-				$('.datepick').datepicker({
-					format: 'dd-mm-yyyy'
+				$('.input-append.date').datepicker({
+					format			: 'dd-mm-yyyy',
+					autoclose		: true,
+					todayHighlight	: true
 				});
 
 				$('.add-all').click(function(){

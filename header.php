@@ -83,6 +83,9 @@ require_once(ROOT_DIR.'/includes/core.update.silent.php');
 	<?php if (isset($datepicker)) { ?>
 		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/js/datepicker/datepicker.css" />
 		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/datepicker/bootstrap-datepicker.js"></script>
+
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/js/bootstrap-datepicker/css/datepicker.css" />
+		<script type="text/javascript" src="<?php echo BASE_URI; ?>includes/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	<?php } ?>
 
 	<?php if (isset($spinedit)) { ?>

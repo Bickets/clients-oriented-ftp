@@ -742,6 +742,12 @@ p.downloaders_note {
 	color:#666666;
 }
 
+/** Datepicker */
+
+.datapick-field {
+	cursor:pointer !important;
+}
+
 /** Files list view (File Manager) */
 
 .file_name {
