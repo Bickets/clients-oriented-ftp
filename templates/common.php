@@ -58,46 +58,64 @@ if ($count_groups > 0) {
 	$found_groups = implode(',',$groups_ids);
 }
 
-/** Get the client's own files */
-$files_own_query = "SELECT id, file_id FROM tbl_files_relations WHERE client_id = '".$client_info['id']."' AND hidden = '0'";
-$files_own = $database->query($files_own_query);
-while($row_own_files = mysql_fetch_array($files_own)) {
-	$found_own_files_temp[] = $row_own_files['file_id'];
-	$found_own_files_ids = implode(',',array_unique($found_own_files_temp));
-}
-/** Get files from groups where client is member */
+/**
+ * Define the arrays so they can't be empty
+ */
+$found_all_files_array	= array();
+$found_own_files_temp	= array();
+$found_group_files_temp	= array();
+
+/**
+ * Get the client's own files
+ * Construct the query first.
+ */
+$files_query = "SELECT id, file_id, client_id, group_id FROM tbl_files_relations WHERE (client_id = '".$client_info['id']."'";
 if (!empty($found_groups)) {
-	$files_groups_query = "SELECT id, file_id, group_id FROM tbl_files_relations WHERE group_id IN ($found_groups) AND hidden = '0'";
-	$files_groups = $database->query($files_groups_query);
-	while($row_groups_files = mysql_fetch_array($files_groups)) {
-		$found_groups_files_ids[] = array(
-										'file_id' => $row_groups_files['file_id'],
-										'group_id' => $row_groups_files['group_id']
-									);
+	$files_query .= " OR group_id IN ($found_groups)";
+}
+$files_query .= ") AND hidden = '0'";
+
+$files_sql = $database->query($files_query);
+while ($row_files = mysql_fetch_array($files_sql)) {
+	if (!is_null($row_files['client_id'])) {
+		$found_all_files_array[]	= $row_files['file_id'];
+		$found_own_files_temp[]		= $row_files['file_id'];
+	}
+	if (!is_null($row_files['group_id'])) {
+		$found_all_files_array[]	= $row_files['file_id'];
+		$found_group_files_temp[]	= $row_files['file_id'];
 	}
 }
 
+$found_own_files_ids	= (!empty($found_own_files_temp)) ? implode(',', array_unique($found_own_files_temp)) : '';
+$found_group_files_ids	= (!empty($found_group_files_temp)) ? implode(',', array_unique($found_group_files_temp)) : '';
+
+
+
+/** Create the files list */
 $my_files = array();
 
-if (!empty($found_own_files_ids)) {
-	$q1a = "SELECT * FROM tbl_files WHERE id IN ($found_own_files_ids)";
+if (!empty($found_own_files_ids) || !empty($found_group_files_ids)) {
+	$f = 0;
+	$ids_to_search = implode(',', array_unique($found_all_files_array));
+	$files_query = "SELECT * FROM tbl_files WHERE id IN ($ids_to_search)";
 
 	/** Add the search terms */	
 	if(isset($_POST['search']) && !empty($_POST['search'])) {
-		$search_terms = $_POST['search'];
-		$q1a .= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
-		$no_results_error = 'search';
+		$search_terms		= $_POST['search'];
+		$files_query		.= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
+		$no_results_error	= 'search';
 	}
 	
-	$q1 = $database->query($q1a);
-	while($data_own = mysql_fetch_array($q1)) {
+	$sql_files = $database->query($files_query);
+	while($data = mysql_fetch_array($sql_files)) {
 
 		$add_file	= true;
 		$expired	= false;
 
 		/** Does it expire? */
-		if ($data_own['expires'] == '1') {
-			if (time() > strtotime($data_own['expiry_date'])) {
+		if ($data['expires'] == '1') {
+			if (time() > strtotime($data['expiry_date'])) {
 				if (EXPIRED_FILES_HIDE == '1') {
 					$add_file = false;
 				}
@@ -107,63 +125,32 @@ if (!empty($found_own_files_ids)) {
 
 		/** Make the list of files */
 		if ($add_file == true) {
-			$my_files[] = array(
-								'origin' => 'own',
-								'id' => $data_own['id'],
-								'url' => $data_own['url'],
-								'name' => $data_own['filename'],
-								'description' => $data_own['description'],
-								'timestamp' => $data_own['timestamp'],
-								'expired' => $expired,
+			/*
+			if (in_array($data['id'], $found_own_files_temp)) {
+				$origin = 'own';
+			}
+			if (in_array($data['id'], $found_group_files_temp)) {
+				$origin = 'group';
+			}
+			*/
+			$my_files[$f] = array(
+								//'origin'		=> $origin,
+								'id'			=> $data['id'],
+								'url'			=> $data['url'],
+								'name'			=> $data['filename'],
+								'description'	=> $data['description'],
+								'timestamp'		=> $data['timestamp'],
+								'expired'		=> $expired,
 							);
+			$f++;
 		}
 	}
 	
 }
 
-if (!empty($found_groups_files_ids)) {
-	foreach ($found_groups_files_ids as $search_in_group) {
-		$find_this_file_id = $search_in_group['file_id'];
-		$q2a = "SELECT * FROM tbl_files WHERE id = $find_this_file_id";
+// DEBUG
+//echo '<pre>'; print_r($my_files); echo '</pre>';
 
-		/** Add the search terms */	
-		if(isset($_POST['search']) && !empty($_POST['search'])) {
-			$search_terms = $_POST['search'];
-			$q2a .= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
-			$no_results_error = 'search';
-		}
-
-		$q2 = $database->query($q2a);
-		while($data_groups = mysql_fetch_array($q2)) {
-			$add_file	= true;
-			$expired	= false;
-
-			/** Does it expire? */
-			if ($data_groups['expires'] == '1') {
-				if (time() > strtotime($data_groups['expiry_date'])) {
-					if (EXPIRED_FILES_HIDE == '1') {
-						$add_file = false;
-					}
-					$expired = true;
-				}
-			}
-
-			/** Make the list of files */
-			if ($add_file == true) {
-				$my_files[] = array(
-									'origin' => 'group',
-									'group_id' => $search_in_group['group_id'],
-									'id' => $data_groups['id'],
-									'url' => $data_groups['url'],
-									'name' => $data_groups['filename'],
-									'description' => $data_groups['description'],
-									'timestamp' => $data_groups['timestamp'],
-									'expired' => $expired,
-								);
-			}
-		}
-	}
-}
 
 /** Get the url for the logo from "Branding" */
 $logo_file_info = generate_logo_url();
