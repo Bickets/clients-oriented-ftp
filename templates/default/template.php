@@ -145,7 +145,11 @@ $count = count($my_files);
 										<?php
 											if ($file['expired'] == true) {
 										?>
-											<td colspan="2" class="text-center"><?php _e('File expired','cftp_template'); ?></td>
+											<td colspan="2" class="text-center">
+												<a href="#" class="btn btn-danger disabled btn-small">
+													<?php _e('File expired','cftp_template'); ?>
+												</a>
+											</td>
 										<?php
 											}
 											else {
@@ -222,8 +226,8 @@ $count = count($my_files);
 			$("#files_list").tablesorter( {
 				sortList: [[1,1]], widgets: ['zebra'], headers: {
 					0: { sorter: false },
-					5: { sorter: false },
-					6: { sorter: false }
+					6: { sorter: false },
+					7: { sorter: false }
 				}
 			})
 			.tablesorterPager({container: $("#pager")})
