@@ -86,15 +86,7 @@ $count = count($my_files);
 				<div class="photo_list">
 				<?php
 					foreach ($my_files as $file) {
-						$download_link = BASE_URI.
-											'process.php?do=download
-											&amp;client='.CURRENT_USER_USERNAME.'
-											&amp;client_id='.$client_info['id'].'
-											&amp;id='.$file['id'].'
-											&amp;origin='.$file['origin'];
-						if (!empty($file['group_id'])) {
-							$download_link .= '&amp;group_id='.$file['group_id'];
-						}
+						$download_link = make_download_link($file);
 						$date = date(TIMEFORMAT_USE,strtotime($file['timestamp']));
 				?>
 						<div class="photo">

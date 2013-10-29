@@ -632,6 +632,29 @@ function prevent_direct_access()
 	}
 }
 
+
+/**
+ * Creates a standarized download link. Used on
+ * each template.
+ */
+function make_download_link($file_info)
+{
+	global $client_info;
+	$download_link = BASE_URI.
+						'process.php?do=download
+						&amp;client='.CURRENT_USER_USERNAME.'
+						&amp;client_id='.$client_info['id'].'
+						&amp;id='.$file_info['id'];
+	/*
+						&amp;origin='.$file_info['origin'];
+	if (!empty($file_info['group_id'])) {
+		$download_link .= '&amp;group_id='.$file_info['group_id'];
+	}
+	*/
+	return $download_link;
+}
+
+
 /**
  * Renders an action recorded on the log.
  */

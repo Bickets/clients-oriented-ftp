@@ -62,15 +62,7 @@ $count = count($img_files);
 		<ul class="photo_list">
 			<?php
 				foreach ($img_files as $this_file) {
-					$download_link = BASE_URI.
-										'process.php?do=download
-										&amp;client='.CURRENT_USER_USERNAME.'
-										&amp;client_id='.$client_info['id'].'
-										&amp;id='.$this_file['id'].'
-										&amp;origin='.$this_file['origin'];
-					if (!empty($file['group_id'])) {
-						$download_link .= '&amp;group_id='.$this_file['group_id'];
-					}
+					$download_link = make_download_link($this_file);
 			?>
 					<li>
 						<h5><?php echo htmlentities($this_file['name']); ?></h5>
