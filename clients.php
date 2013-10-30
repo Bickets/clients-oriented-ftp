@@ -19,10 +19,12 @@ include('header.php');
 <script type="text/javascript">
 $(document).ready(function() {
 	$("#clients_tbl").tablesorter( {
-		sortList: [[1,0]], widgets: ['zebra'], headers: {
+		sortList: [[1,0]],
+		widgets: ['zebra'], headers: {
 			0: { sorter: false },
 			13: { sorter: false }
-		}
+		},
+		textExtraction: dataExtraction
 	})
 	.tablesorterPager({container: $("#pager")})
 
@@ -310,7 +312,10 @@ $(document).ready(function() {
 									</td>
 									<td><?php echo $count_groups; ?></td>
 									<td class="extra"><?php if ($row["notify"] == '1') { _e('Yes','cftp_admin'); } else { _e('No','cftp_admin'); }?></td>
-									<td class="extra"><?php echo $date; ?></td>
+									<td class="extra">
+										<span class="hidden"><?php echo strtotime($row['timestamp']); ?></span>
+										<?php echo $date; ?>
+									</td>
 									<td class="extra"><?php echo html_entity_decode($row["address"]); ?></td>
 									<td class="extra"><?php echo html_entity_decode($row["phone"]); ?></td>
 									<td class="extra"><?php echo html_entity_decode($row["contact"]); ?></td>

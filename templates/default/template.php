@@ -83,10 +83,10 @@ $count = count($my_files);
 								<input type="checkbox" name="select_all" id="select_all" value="0" />
 							</th>
 							<th><?php _e('Title','cftp_template'); ?></th>
-							<th><?php _e('Ext.','cftp_admin'); ?></th>
+							<th class="extra"><?php _e('Ext.','cftp_admin'); ?></th>
 							<th class="description"><?php _e('Description','cftp_template'); ?></th>
 							<th><?php _e('Size','cftp_template'); ?></th>
-							<th class="extra"><?php _e('Date','cftp_template'); ?></th>
+							<th><?php _e('Date','cftp_template'); ?></th>
 							<th class="extra"><?php _e('Image preview','cftp_template'); ?></th>
 							<th><?php _e('Download','cftp_template'); ?></th>
 						</tr>
@@ -124,7 +124,7 @@ $count = count($my_files);
 												}
 											?>
 										</td>
-										<td>										
+										<td class="extra">										
 											<?php		
 												$pathinfo = pathinfo($file['url']);	
 												$extension = strtolower($pathinfo['extension']);					
@@ -133,7 +133,10 @@ $count = count($my_files);
 										</td>
 										<td class="description"><?php echo htmlentities($file['description']); ?></td>
 										<td><?php $this_file_size = get_real_size(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file_size); ?></td>
-										<td class="extra"><?php echo $date; ?></td>
+										<td>
+											<span class="hidden"><?php echo strtotime($file['timestamp']); ?></span>
+											<?php echo $date; ?>
+										</td>
 										<?php
 											if ($file['expired'] == true) {
 										?>
@@ -216,11 +219,13 @@ $count = count($my_files);
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#files_list").tablesorter( {
-				sortList: [[1,1]], widgets: ['zebra'], headers: {
+				sortList: [[5,1]],
+				widgets: ['zebra'], headers: {
 					0: { sorter: false },
 					6: { sorter: false },
 					7: { sorter: false }
-				}
+				},
+				textExtraction: dataExtraction
 			})
 			.tablesorterPager({container: $("#pager")})
 

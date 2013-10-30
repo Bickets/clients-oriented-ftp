@@ -52,10 +52,11 @@ include('header.php');
 	$(document).ready( function() {
 		$("#groups_tbl").tablesorter( {
 			widthFixed: true,
-			sortList: [[1,0]], widgets: ['zebra'], headers: {
-				0: { sorter: false }, 
-				6: { sorter: false }
-			}
+			sortList: [[1,0]],
+			widgets: ['zebra'], headers: {
+				0: { sorter: false }
+			},
+			textExtraction: dataExtraction
 		})
 		.tablesorterPager({container: $("#pager")})
 
@@ -299,7 +300,10 @@ include('header.php');
 						?>
 					</td>
 					<td><?php echo html_entity_decode($row["created_by"]); ?></td>
-					<td><?php echo $date; ?></td>
+					<td>
+						<span class="hidden"><?php echo strtotime($row['timestamp']); ?></span>
+						<?php echo $date; ?>
+					</td>
 					<td>
 						<a href="manage-files.php?group_id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-small"><?php _e('Manage files','cftp_admin'); ?></a>
 						<a href="groups-edit.php?id=<?php echo $row["id"]; ?>" class="btn btn-primary btn-small"><?php _e('Edit','cftp_admin'); ?></a>

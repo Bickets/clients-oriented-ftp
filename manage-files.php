@@ -129,10 +129,12 @@ include('header.php');
 		$("#files_list")
 			.tablesorter( {
 				widthFixed: true,
-				sortList: [[1,1]], widgets: ['zebra'], headers: {
+				sortList: [[1,1]],
+				widgets: ['zebra'], headers: {
 					0: { sorter: false },
 					8: { sorter: false }
-				}
+				},
+				textExtraction: dataExtraction
 		})
 		.tablesorterPager({container: $("#pager")})
 
@@ -535,7 +537,10 @@ include('header.php');
 									<?php
 										}
 									?>
-									<td><?php echo $date; ?></td>
+									<td>
+										<span class="hidden"><?php echo strtotime($row['timestamp']); ?></span>
+										<?php echo $date; ?>
+									</td>
 									<td>
 										<?php
 											$pathinfo = pathinfo($row['url']);

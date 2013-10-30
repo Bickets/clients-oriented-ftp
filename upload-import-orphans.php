@@ -165,7 +165,10 @@ $work_folder = UPLOADED_FILES_FOLDER;
 											<td><input type="checkbox" name="add[]" value="<?php echo $add_file['name']; ?>" /></td>
 											<td><?php echo $add_file['name']; ?></td>
 											<td><?php echo format_file_size(filesize($add_file['path'])); ?></td>
-											<td><?php echo date(TIMEFORMAT_USE, filemtime($add_file['path'])); ?></td>
+											<td>
+												<span class="hidden"><?php echo filemtime($add_file['path']); ?></span>
+												<?php echo date(TIMEFORMAT_USE, filemtime($add_file['path'])); ?>
+											</td>
 											<td>
 												<?php
 													switch($add_file['reason']) {
@@ -224,9 +227,12 @@ $work_folder = UPLOADED_FILES_FOLDER;
 				<script type="text/javascript">
 					$(document).ready(function() {
 						$("#add_files_from_ftp").tablesorter( {
-							sortList: [[1,1]], widgets: ['zebra'], headers: {
+							widthFixed: true,
+							sortList: [[1,1]],
+							widgets: ['zebra'], headers: {
 								0: { sorter: false }
-							}
+							},
+							textExtraction: dataExtraction
 						})
 						.tablesorterPager({container: $("#pager")})
 

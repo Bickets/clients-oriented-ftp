@@ -18,10 +18,12 @@ include('header.php');
 	$(document).ready( function() {
 		$("#activities_tbl").tablesorter( {
 			widthFixed: true,
+			sortList: [[1,1]],
 			widgets: ['zebra'], headers: {
 				0: { sorter: false }, 
 				5: { sorter: false }
-			}
+			},
+			textExtraction: dataExtraction
 		})
 		.tablesorterPager({container: $("#pager"), size: 10})
 
@@ -265,7 +267,10 @@ include('header.php');
 				?>
 				<tr>
 					<td><input type="checkbox" name="activities[]" value="<?php echo $log["id"]; ?>" /></td>
-					<td><?php echo $date; ?></td>
+					<td>
+						<span class="hidden"><?php echo strtotime($log['timestamp']); ?></span>
+						<?php echo $date; ?>
+					</td>
 					<td><?php echo (!empty($this_action["1"])) ? $this_action["1"] : ''; ?></td>
 					<td><?php echo $this_action["text"]; ?></td>
 					<td><?php echo (!empty($this_action["2"])) ? $this_action["2"] : ''; ?></td>

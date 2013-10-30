@@ -164,6 +164,14 @@ require_once(ROOT_DIR.'/includes/core.update.silent.php');
 					$(this).blur();
 				});
 			});
+
+			var dataExtraction = function(node) {
+				if (node.childNodes.length > 1) {
+					return node.childNodes[1].innerHTML;
+				} else {
+					return node.innerHTML;
+				}
+			}
 		</script>
 
     <div class="navbar navbar-inverse">
