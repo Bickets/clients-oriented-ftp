@@ -131,8 +131,7 @@ include('header.php');
 				widthFixed: true,
 				sortList: [[1,1]],
 				widgets: ['zebra'], headers: {
-					0: { sorter: false },
-					8: { sorter: false }
+					0: { sorter: false }
 				},
 				textExtraction: dataExtraction
 		})
@@ -654,11 +653,9 @@ include('header.php');
 											if($current_level != '0') {
 									?>
 												<td>
-													<div class="icons">
-														<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders btn-primary'; } else { echo 'disabled'; } ?> btn btn-small" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
-															<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
-														</a>
-													</div>
+													<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders btn-primary'; } else { echo 'disabled'; } ?> btn btn-small" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
+														<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
+													</a>
 												</td>
 									<?php
 											}
