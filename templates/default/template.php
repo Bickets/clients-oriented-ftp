@@ -140,7 +140,8 @@ $count = count($my_files);
 										<?php
 											if ($file['expired'] == true) {
 										?>
-											<td colspan="2" class="text-center">
+											<td class="extra"></td>
+											<td class="text-center">
 												<a href="#" class="btn btn-danger disabled btn-small">
 													<?php _e('File expired','cftp_template'); ?>
 												</a>
