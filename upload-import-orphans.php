@@ -109,8 +109,9 @@ $work_folder = UPLOADED_FILES_FOLDER;
 			
 			if (!empty($_POST['search'])) {
 				$search = $_POST['search'];
-
-				$files_to_add = array_filter($files_to_add, function ($item) use ($search) {
+				
+				function search_text($item) {
+					global $search;
 					if (stripos($item['name'], $search) !== false) {
 						/**
 						 * Items that match the search
@@ -124,7 +125,9 @@ $work_folder = UPLOADED_FILES_FOLDER;
 						unset($item);
 					}
 					return false;
-				});
+				}
+
+				$files_to_add = array_filter($files_to_add, 'search_text');
 			}
 			
 //			var_dump($result);
