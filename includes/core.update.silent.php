@@ -25,7 +25,7 @@
 		 * A new database table was added.
 		 * Password reset support is now supported.
 		 */
-		if ($last_update < 431) {
+		if ($last_update < 520) {
 			$q = $database->query("SELECT id FROM tbl_password_reset");
 			if (!$q) {
 				$q1 = '
@@ -49,7 +49,7 @@
 		 * A new database table was added.
 		 * Password reset support is now supported.
 		 */
-		if ($last_update < 437) {
+		if ($last_update < 520) {
 			$q = $database->query("ALTER TABLE tbl_users MODIFY user VARCHAR(".MAX_USER_CHARS.") NOT NULL");
 			$q2 = $database->query("ALTER TABLE tbl_users MODIFY password VARCHAR(".MAX_PASS_CHARS.") NOT NULL");
 			if ($q && $q2) {
