@@ -118,7 +118,7 @@ include('header-unlogged.php');
 			 * The form submited contains the new password
 			 */
 			case 'new_password':
-				$reset_password_new = encode_html($_POST['reset_password_new']);
+				$reset_password_new = mysql_real_escape_string($_POST['reset_password_new']);
 
 				/** Password checks */
 				$valid_me->validate('completed',$reset_password_new,$validation_no_pass);
