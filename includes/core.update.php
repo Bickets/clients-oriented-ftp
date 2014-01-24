@@ -264,7 +264,7 @@ if (in_session_or_cookies($allowed_update)) {
 			$q = $database->query("SELECT created_by FROM tbl_users");
 			if (!$q) {
 				/* Mark existing users as active */
-				$database->query("ALTER TABLE tbl_users ADD address TEXT NOT NULL, ADD phone varchar(32) NOT NULL, ADD notify TINYINT(1) NOT NULL, ADD contact TEXT NOT NULL, ADD created_by varchar(32) NOT NULL, ADD active TINYINT(1) NOT NULL ");
+				$database->query("ALTER TABLE tbl_users ADD address TEXT NULL, ADD phone varchar(32) NULL, ADD notify TINYINT(1) NOT NULL default='0', ADD contact TEXT NULL, ADD created_by varchar(32) NULL, ADD active TINYINT(1) NOT NULL default='1'");
 				$database->query("INSERT INTO tbl_users"
 										." (user, password, name, email, timestamp, address, phone, notify, contact, created_by, active, level)"
 										." SELECT client_user, password, name, email, timestamp, address, phone, notify, contact, created_by, active, '0' FROM tbl_clients");
@@ -352,7 +352,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  `group_id` int(11) DEFAULT NULL,
 				  `folder_id` int(11) DEFAULT NULL,
 				  `hidden` int(1) NOT NULL,
-				  `download_count` int(16) NOT NULL,
+				  `download_count` int(16) NOT NULL default "0",
 				  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
