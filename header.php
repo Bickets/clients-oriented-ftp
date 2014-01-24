@@ -22,6 +22,11 @@ check_for_session();
 if (!isset($page_title)) { $page_title = __('System Administration','cftp_admin'); }
 
 /**
+ * Silent updates that are needed even if no user is logged in.
+ */
+require_once(ROOT_DIR.'/includes/core.update.silent.php');
+
+/**
  * Call the database update file to see if any change is needed,
  * but only if logged in as a system user.
  */
@@ -29,11 +34,6 @@ $core_update_allowed = array(9,8,7);
 if (in_session_or_cookies($core_update_allowed)) {
 	require_once(ROOT_DIR.'/includes/core.update.php');
 }
-
-/**
- * Silent updates that are needed even if no user is logged in.
- */
-require_once(ROOT_DIR.'/includes/core.update.silent.php');
 ?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -42,7 +42,7 @@ require_once(ROOT_DIR.'/includes/core.update.silent.php');
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE10,chrome=1">
 	<title><?php echo $page_title; ?> &raquo; <?php echo THIS_INSTALL_SET_TITLE; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<link rel="shortcut icon" href="<?php echo BASE_URI; ?>/favicon.ico" />
