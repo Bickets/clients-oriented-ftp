@@ -25,7 +25,7 @@ include('header-unlogged.php');
 	if ($_POST) {
 		$sysuser_username = mysql_real_escape_string($_POST['login_form_user']);
 		//$sysuser_password = mysql_real_escape_string(md5($_POST['login_form_pass']));
-		$sysuser_password = mysql_real_escape_string($_POST['login_form_pass']);
+		$sysuser_password = $_POST['login_form_pass'];
 	
 		/** Look up the system users table to see if the entered username exists */
 		$sql_user = $database->query("SELECT * FROM tbl_users WHERE BINARY user='$sysuser_username'");
