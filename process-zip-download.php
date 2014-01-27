@@ -49,7 +49,7 @@ foreach ($files_to_zip as $file_to_zip) {
 		}
 		
 		if ($this_file_expires == '0' || $this_file_expired == false) {
-			$fq = 'SELECT * FROM tbl_files_relations WHERE (client_id="' . $global_id . '" OR group_id IN ("' . $found_groups . '")) AND file_id="' . $this_file_id .' AND hidden = "0"';
+			$fq = 'SELECT * FROM tbl_files_relations WHERE (client_id="' . $global_id . '" OR group_id IN ("' . $found_groups . '")) AND file_id="' . $this_file_id .'" AND hidden = "0"';
 			//echo $fq.'<br />';
 			$sql = $database->query($fq);
 			$row = mysql_fetch_array($sql);
