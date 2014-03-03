@@ -89,11 +89,13 @@ include('header-unlogged.php');
 				}
 			}
 			else {
-				$errorstate = 'wrong_password';
+				//$errorstate = 'wrong_password';
+				$errorstate = 'invalid_credentials';
 			}
 		}
 		else {
-			$errorstate = 'wrong_username';
+			//$errorstate = 'wrong_username';
+			$errorstate = 'invalid_credentials';
 		}
 	
 	}
@@ -111,6 +113,9 @@ include('header-unlogged.php');
 							 */
 							if (isset($errorstate)) {
 								switch ($errorstate) {
+									case 'invalid_credentials':
+										$login_err_message = __("The supplied credentials are not valid.",'cftp_admin');
+										break;
 									case 'wrong_username':
 										$login_err_message = __("The supplied username doesn't exist.",'cftp_admin');
 										break;

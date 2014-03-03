@@ -102,7 +102,7 @@ if (!empty($found_own_files_ids) || !empty($found_group_files_ids)) {
 
 	/** Add the search terms */	
 	if(isset($_POST['search']) && !empty($_POST['search'])) {
-		$search_terms		= $_POST['search'];
+		$search_terms		= mysql_real_escape_string($_POST['search']);
 		$files_query		.= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
 		$no_results_error	= 'search';
 	}

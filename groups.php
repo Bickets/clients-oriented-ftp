@@ -169,7 +169,7 @@ include('header.php');
 
 	/** Add the search terms */	
 	if(isset($_POST['search']) && !empty($_POST['search'])) {
-		$search_terms = $_POST['search'];
+		$search_terms = mysql_real_escape_string($_POST['search']);
 		$cq .= " WHERE (name LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
 		$next_clause = ' AND';
 		$no_results_error = 'search';

@@ -120,7 +120,7 @@ include('header.php');
 
 	/** Add the search terms */	
 	if(isset($_POST['search']) && !empty($_POST['search'])) {
-		$search_terms = $_POST['search'];
+		$search_terms = mysql_real_escape_string($_POST['search']);
 		$cq .= " WHERE (owner_user LIKE '%$search_terms%' OR affected_file_name LIKE '%$search_terms%' OR affected_account_name LIKE '%$search_terms%')";
 		$next_clause = ' AND';
 		$no_results_error = 'search';
