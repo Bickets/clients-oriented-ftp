@@ -32,11 +32,14 @@ include('header-unlogged.php');
 
 			/** Check if the token has been used already */
 			if ($token_info['used'] == '1') {
+				/** Clean the ID to fix security holes */
+				$got_user_id = '';
 				$errorstate = 'token_used';
 			}
 
 			/** Check if the token has expired. */
 			elseif (time() - strtotime($token_info['timestamp']) > 60*60*24) {
+			$got_user_id = '';
 				$errorstate = 'token_expired';
 			}
 
@@ -45,6 +48,7 @@ include('header-unlogged.php');
 			}
 		}
 		else {
+			$got_user_id = '';
 			$errorstate = 'token_invalid';
 			$show_form = 'none';
 		}
@@ -118,47 +122,49 @@ include('header-unlogged.php');
 			 * The form submited contains the new password
 			 */
 			case 'new_password':
-				$reset_password_new = mysql_real_escape_string($_POST['reset_password_new']);
-
-				/** Password checks */
-				$valid_me->validate('completed',$reset_password_new,$validation_no_pass);
-				$valid_me->validate('password',$reset_password_new,$validation_valid_pass.' '.$validation_valid_chars);
-				$valid_me->validate('length',$reset_password_new,$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
-		
-				if ($valid_me->return_val) {
-
-					$enc_password = $hasher->HashPassword($reset_password_new);
-			
-					if (strlen($enc_password) >= 20) {
-			
-						$state['hash'] = 1;
-			
-						/** SQL queries */
-						$edit_pass_query = "UPDATE tbl_users SET 
-											password = '$enc_password' 
-											WHERE id = $got_user_id";
-				
-						$sql_query = $database->query($edit_pass_query);
-						
-						
-				
-						if ($sql_query) {
-							$state['reset'] = 1;
+				if (!empty($got_user_id)) {
+					$reset_password_new = mysql_real_escape_string($_POST['reset_password_new']);
 	
-							$set_used_query = "UPDATE tbl_password_reset SET 
-												used = '1' 
-												WHERE id = $request_id";
+					/** Password checks */
+					$valid_me->validate('completed',$reset_password_new,$validation_no_pass);
+					$valid_me->validate('password',$reset_password_new,$validation_valid_pass.' '.$validation_valid_chars);
+					$valid_me->validate('length',$reset_password_new,$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
+			
+					if ($valid_me->return_val) {
+	
+						$enc_password = $hasher->HashPassword($reset_password_new);
+				
+						if (strlen($enc_password) >= 20) {
+				
+							$state['hash'] = 1;
+				
+							/** SQL queries */
+							$edit_pass_query = "UPDATE tbl_users SET 
+												password = '$enc_password' 
+												WHERE id = $got_user_id";
 					
-							$sql_query = $database->query($set_used_query);
+							$sql_query = $database->query($edit_pass_query);
+							
+							
+					
+							if ($sql_query) {
+								$state['reset'] = 1;
 		
-							$show_form = 'none';
+								$set_used_query = "UPDATE tbl_password_reset SET 
+													used = '1' 
+													WHERE id = $request_id";
+						
+								$sql_query = $database->query($set_used_query);
+			
+								$show_form = 'none';
+							}
+							else {
+								$state['reset'] = 0;
+							}
 						}
 						else {
-							$state['reset'] = 0;
+							$state['hash'] = 0;
 						}
-					}
-					else {
-						$state['hash'] = 0;
 					}
 				}
 				
