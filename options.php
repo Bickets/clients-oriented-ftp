@@ -436,7 +436,7 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									<li>
 										<label for="file_types_limit_to"><?php _e('Limit file types uploading to','cftp_admin'); ?></label>
 										<select name="file_types_limit_to" id="file_types_limit_to">
-											<option value="nobody" <?php echo (FILE_TYPES_LIMIT_TO == 'nobody') ? 'selected="selected"' : ''; ?>><?php _e('No one','cftp_admin'); ?></option>
+											<option value="noone" <?php echo (FILE_TYPES_LIMIT_TO == 'noone') ? 'selected="selected"' : ''; ?>><?php _e('No one','cftp_admin'); ?></option>
 											<option value="all" <?php echo (FILE_TYPES_LIMIT_TO == 'all') ? 'selected="selected"' : ''; ?>><?php _e('Everyone','cftp_admin'); ?></option>
 											<option value="clients" <?php echo (FILE_TYPES_LIMIT_TO == 'clients') ? 'selected="selected"' : ''; ?>><?php _e('Clients only','cftp_admin'); ?></option>
 										</select>

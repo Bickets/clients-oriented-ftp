@@ -22,6 +22,12 @@ if (CLIENTS_CAN_UPLOAD == 1) {
 }
 include('header.php');
 
+/**
+ * Get the user level to determine if the uploader is a
+ * system user or a client.
+ */
+$current_level = get_current_user_level();
+
 $database->MySQLDB();
 ?>
 
@@ -83,9 +89,32 @@ $database->MySQLDB();
 						max_file_size : '<?php echo MAX_FILESIZE; ?>mb',
 						chunk_size : '1mb',
 						multipart : true,
-						filters : [
-							{title : "Allowed files", extensions : "<?php echo $options_values['allowed_file_types']; ?>"}
-						],
+						<?php
+							$limit_files = true;
+							
+							if ( defined( 'FILE_TYPES_LIMIT_TO' ) ) {
+								switch ( FILE_TYPES_LIMIT_TO ) {
+									case 'noone':
+										$limit_files = false;
+										break;
+									case 'all':
+										break;
+									case 'clients':
+										if ( $current_level != 0 ) {
+											$limit_files = false;
+										}
+										break;
+								}
+							}
+							
+							if ( true === $limit_files ) {
+						?>
+								filters : [
+									{title : "Allowed files", extensions : "<?php echo $options_values['allowed_file_types']; ?>"}
+								],
+						<?php
+							}
+						?>
 						flash_swf_url : 'includes/plupload/js/plupload.flash.swf',
 						silverlight_xap_url : 'includes/plupload/js/plupload.silverlight.xap',
 						preinit: {
