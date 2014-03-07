@@ -452,19 +452,19 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										<p><?php _e('When setting up a password for an account, requiere at least:','cftp_admin'); ?><br />
 									</li>
 									<li>
-										<label for="pass_require_upper"><?php _e('1 uppercase character','cftp_admin'); ?></label>
+										<label for="pass_require_upper"><?php echo $validation_req_upper; ?></label>
 										<input type="checkbox" value="1" name="pass_require_upper" class="checkbox_options" <?php echo (PASS_REQ_UPPER == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 									<li>
-										<label for="pass_require_lower"><?php _e('1 lowercase character','cftp_admin'); ?></label>
+										<label for="pass_require_lower"><?php echo $validation_req_lower; ?></label>
 										<input type="checkbox" value="1" name="pass_require_lower" class="checkbox_options" <?php echo (PASS_REQ_LOWER == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 									<li>
-										<label for="pass_require_number"><?php _e('1 number','cftp_admin'); ?></label>
+										<label for="pass_require_number"><?php echo $validation_req_number; ?></label>
 										<input type="checkbox" value="1" name="pass_require_number" class="checkbox_options" <?php echo (PASS_REQ_NUMBER == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 									<li>
-										<label for="pass_require_special"><?php _e('1 special character','cftp_admin'); ?></label>
+										<label for="pass_require_special"><?php echo $validation_req_special; ?></label>
 										<input type="checkbox" value="1" name="pass_require_special" class="checkbox_options" <?php echo (PASS_REQ_SPECIAL == 1) ? 'checked="checked"' : ''; ?> />
 									</li>
 

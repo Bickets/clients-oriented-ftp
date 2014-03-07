@@ -178,7 +178,7 @@ include('header-unlogged.php');
 		<div class="container">
 			<div class="row">
 				<div class="span4 offset4 white-box">
-					<div class="white-box-interior">
+					<div class="white-box-interior box-reset-password">
 						<?php
 							/**
 							 * If the form was submited with errors, show them here.
@@ -305,6 +305,7 @@ include('header-unlogged.php');
 
 											<input type="password" name="reset_password_new" id="reset_password_new" class="span3 password_toggle" />
 											<button type="button" class="btn password_toggler pass_toggler_show"><i class="icon-eye-open"></i></button>
+											<?php password_notes(); ?>
 											
 											<p><?php _e("Please enter your desired new password. After that, you will be able to log in normally.",'cftp_admin'); ?></p>
 

@@ -38,4 +38,9 @@ $validation_length_2 = __('and','cftp_admin');
 $validation_length_3 = __('characters long','cftp_admin');
 $validation_length_user = $validation_length_usr_1.' '.$validation_length_1.' '.MIN_USER_CHARS.' '.$validation_length_2.' '.MAX_USER_CHARS.' '.$validation_length_3;
 $validation_length_pass = $validation_length_pass_1.' '.$validation_length_1.' '.MIN_PASS_CHARS.' '.$validation_length_2.' '.MAX_PASS_CHARS.' '.$validation_length_3;
+
+$validation_req_upper	= __('1 uppercase character','cftp_admin');
+$validation_req_lower	= __('1 lowercase character','cftp_admin');
+$validation_req_number	= __('1 number','cftp_admin');
+$validation_req_special	= __('1 special character','cftp_admin');
 ?>

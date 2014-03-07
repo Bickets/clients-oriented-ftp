@@ -632,6 +632,57 @@ function prevent_direct_access()
 	}
 }
 
+/**
+ * If password rules are set, show a message
+ */
+function password_notes()
+{
+	global $validation_req_upper;
+	global $validation_req_lower;
+	global $validation_req_number;
+	global $validation_req_special;
+
+	$rules_active	= array();
+	$rules			= array(
+							'lower'		=> array(
+												'value'	=> PASS_REQ_UPPER,
+												'text'	=> $validation_req_upper,
+											),
+							'upper'		=> array(
+												'value'	=> PASS_REQ_LOWER,
+												'text'	=> $validation_req_lower,
+											),
+							'number'	=> array(
+												'value'	=> PASS_REQ_NUMBER,
+												'text'	=> $validation_req_number,
+											),
+							'special'	=> array(
+												'value'	=> PASS_REQ_SPECIAL,
+												'text'	=> $validation_req_special,
+											),
+						);
+
+	foreach ( $rules as $rule => $data ) {
+		if ( $data['value'] == '1' ) {
+			$rules_active[$rule] = $data['text'];
+		}
+	}
+	
+	if ( count( $rules_active ) > 0 ) {
+?>
+		<p class="field_note"><?php _e('The password must contain, at least:','cftp_admin'); ?></strong><br />
+<?php
+			foreach ( $rules_active as $rule => $text ) {
+?>
+				- <?php echo $text; ?><br />
+<?php
+			}
+?>
+		</p>
+<?php
+	}
+}
+
 
 /**
  * Creates a standarized download link. Used on

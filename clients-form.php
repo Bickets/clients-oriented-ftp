@@ -109,6 +109,7 @@ switch ($clients_form_type) {
 			<button type="button" class="btn password_toggler pass_toggler_show"><i class="icon-eye-open"></i></button>
 			<label for="add_client_form_pass"><?php _e('Password','cftp_admin'); ?></label>
 			<input name="add_client_form_pass" id="add_client_form_pass" class="<?php if ($require_pass) { echo 'required'; } ?> password_toggle" type="password" maxlength="<?php echo MAX_PASS_CHARS; ?>" />
+			<?php password_notes(); ?>
 		</li>
 		<li>
 			<label for="add_client_form_email"><?php _e('E-mail','cftp_admin'); ?></label>
