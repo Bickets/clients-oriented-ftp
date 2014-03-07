@@ -202,7 +202,13 @@ if (defined('TRY_INSTALL')) {
 	(\'email_pass_reset_text\', \'\'),
 	(\'expired_files_hide\', \'1\'),
 	(\'notifications_max_tries\', \'2\'),
-	(\'notifications_max_days\', \'15\')
+	(\'notifications_max_days\', \'15\'),
+	(\'file_types_limit_to\', \'all\'),
+	(\'pass_require_upper\', \'0\'),
+	(\'pass_require_lower\', \'0\'),
+	(\'pass_require_number\', \'0\'),
+	(\'pass_require_special\', \'0\'),
+	(\'mail_smtp_auth\', \'none\')
 	',
 	
 	'10' => '

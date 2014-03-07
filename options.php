@@ -42,6 +42,10 @@ if ($_POST) {
 								'mail_copy_client_upload',
 								'mail_copy_main_user',
 								'thumbnails_use_absolute',
+								'pass_require_upper',
+								'pass_require_lower',
+								'pass_require_number',
+								'pass_require_special',
 							);
 	foreach ($checkboxes as $checkbox) {
 		$_POST[$checkbox] = (empty($_POST[$checkbox]) || !isset($_POST[$checkbox])) ? 0 : 1;
@@ -406,6 +410,14 @@ $allowed_file_types = implode(',',$allowed_file_types);
 									<li>
 										<label for="mail_smtp_port"><?php _e('Port','cftp_admin'); ?></label>
 										<input type="text" name="mail_smtp_port" id="mail_smtp_port" class="mail_data empty" value="<?php echo SMTP_PORT; ?>" />
+									</li>				
+									<li>
+										<label for="mail_smtp_auth"><?php _e('Authentication','cftp_admin'); ?></label>
+										<select name="mail_smtp_auth" id="mail_smtp_auth">
+											<option value="none" <?php echo (SMTP_AUTH == 'none') ? 'selected="selected"' : ''; ?>><?php _e('None','cftp_admin'); ?></option>
+											<option value="ssl" <?php echo (SMTP_AUTH == 'ssl') ? 'selected="selected"' : ''; ?>>SSL</option>
+											<option value="tls" <?php echo (SMTP_AUTH == 'tls') ? 'selected="selected"' : ''; ?>>TLS</option>
+										</select>
 									</li>					
 
 									<li class="options_divide"></li>
@@ -422,9 +434,40 @@ $allowed_file_types = implode(',',$allowed_file_types);
 										<strong><?php _e('Important','cftp_admin'); ?></strong>: <?php _e('Separate allowed file types with a comma. You can navigate the box with the left/right arrows, backspace and delete keys.','cftp_admin'); ?></p>
 									</li>
 									<li>
+										<label for="file_types_limit_to"><?php _e('Limit file types uploading to','cftp_admin'); ?></label>
+										<select name="file_types_limit_to" id="file_types_limit_to">
+											<option value="nobody" <?php echo (FILE_TYPES_LIMIT_TO == 'nobody') ? 'selected="selected"' : ''; ?>><?php _e('No one','cftp_admin'); ?></option>
+											<option value="all" <?php echo (FILE_TYPES_LIMIT_TO == 'all') ? 'selected="selected"' : ''; ?>><?php _e('Everyone','cftp_admin'); ?></option>
+											<option value="clients" <?php echo (FILE_TYPES_LIMIT_TO == 'clients') ? 'selected="selected"' : ''; ?>><?php _e('Clients only','cftp_admin'); ?></option>
+										</select>
+									</li>					
+									<li>
 										<input name="allowed_file_types" id="allowed_file_types" value="<?php echo $allowed_file_types; ?>" />
 									</li>
 					
+									<li class="options_divide"></li>
+
+									<li>
+										<h3><?php _e('Passwords','cftp_admin'); ?></h3>
+										<p><?php _e('When setting up a password for an account, requiere at least:','cftp_admin'); ?><br />
+									</li>
+									<li>
+										<label for="pass_require_upper"><?php _e('1 uppercase character','cftp_admin'); ?></label>
+										<input type="checkbox" value="1" name="pass_require_upper" class="checkbox_options" <?php echo (PASS_REQ_UPPER == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+									<li>
+										<label for="pass_require_lower"><?php _e('1 lowercase character','cftp_admin'); ?></label>
+										<input type="checkbox" value="1" name="pass_require_lower" class="checkbox_options" <?php echo (PASS_REQ_LOWER == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+									<li>
+										<label for="pass_require_number"><?php _e('1 number','cftp_admin'); ?></label>
+										<input type="checkbox" value="1" name="pass_require_number" class="checkbox_options" <?php echo (PASS_REQ_NUMBER == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+									<li>
+										<label for="pass_require_special"><?php _e('1 special character','cftp_admin'); ?></label>
+										<input type="checkbox" value="1" name="pass_require_special" class="checkbox_options" <?php echo (PASS_REQ_SPECIAL == 1) ? 'checked="checked"' : ''; ?> />
+									</li>
+
 									<li class="options_divide"></li>
 								</ul>
 							</div>

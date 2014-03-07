@@ -161,6 +161,18 @@ if(!empty($options_values)) {
 	}
 
 	/**
+	 * For versions 528 and up
+	 */	
+	if (isset($options_values['file_types_limit_to'])) {
+		define('FILE_TYPES_LIMIT_TO',$options_values['file_types_limit_to']);
+		define('PASS_REQ_UPPER',$options_values['pass_require_upper']);
+		define('PASS_REQ_LOWER',$options_values['pass_require_lower']);
+		define('PASS_REQ_NUMBER',$options_values['pass_require_number']);
+		define('PASS_REQ_SPECIAL',$options_values['pass_require_special']);
+		define('SMTP_AUTH',$options_values['mail_smtp_auth']);
+	}
+
+	/**
 	 * Set the default timezone based on the value of the Timezone select box
 	 * of the options page.
 	 */
