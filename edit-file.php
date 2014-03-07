@@ -28,7 +28,7 @@ if (!empty($_GET['file_id'])) {
 
 /** Fill the users array that will be used on the notifications process */
 $users = array();
-$cq = "SELECT id, name, level FROM tbl_users";
+$cq = "SELECT id, name, level FROM tbl_users ORDER BY name ASC";
 $sql = $database->query($cq);
 while($row = mysql_fetch_array($sql)) {
 	$users[$row["id"]] = $row["name"];
