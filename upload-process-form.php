@@ -377,7 +377,7 @@ while($row = mysql_fetch_array($sql)) {
 	if(!empty($uploaded_files)) {
 ?>
 		<h3><?php _e('Files ready to upload','cftp_admin'); ?></h3>
-		<p><?php _e('Please complete the following information to finish the uploading proccess. Remember that "Name" is a required field.','cftp_admin'); ?></p>
+		<p><?php _e('Please complete the following information to finish the uploading process. Remember that "Title" is a required field.','cftp_admin'); ?></p>
 
 		<?php
 			if ($current_level != 0) {
