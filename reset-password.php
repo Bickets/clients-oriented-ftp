@@ -128,6 +128,7 @@ include('header-unlogged.php');
 					/** Password checks */
 					$valid_me->validate('completed',$reset_password_new,$validation_no_pass);
 					$valid_me->validate('password',$reset_password_new,$validation_valid_pass.' '.$validation_valid_chars);
+					$valid_me->validate('pass_rules',$reset_password_new,$validation_rules_pass);
 					$valid_me->validate('length',$reset_password_new,$validation_length_pass,MIN_PASS_CHARS,MAX_PASS_CHARS);
 			
 					if ($valid_me->return_val) {

@@ -23,6 +23,13 @@ class Validate_Form
 	var $error_complete;
 	var $return_val = true;
 
+	public function __construct() {
+		$this->allowed_upper	= range('A','Z');
+		$this->allowed_lower	= range('a','z');
+		$this->allowed_numbers	= array('0','1','2','3','4','5','6','7','8','9');
+		$this->allowed_symbols	= array('`','!','"','?','$','%','^','&','*','(',')','_','-','+','=','{','[','}',']',':',';','@','~','#','|','<',',','>','.',"'","/",'\\');
+	}
+
 	/** Check if the field is complete */
 	private function is_complete($field, $err)
 	{
@@ -53,11 +60,7 @@ class Validate_Form
 	/** Check if the password field value contains invalid characters */
 	private function is_password($field, $err)
 	{
-		$allowed_numbers = array('0','1','2','3','4','5','6','7','8','9');
-		$allowed_lower = range('a','z');
-		$allowed_upper = range('A','Z');
-		$allowed_symbols = array('`','!','"','?','$','%','^','&','*','(',')','_','-','+','=','{','[','}',']',':',';','@','~','#','|','<',',','>','.',"'","/",'\\');
-		$allowed_characters = array_merge($allowed_numbers,$allowed_lower,$allowed_upper,$allowed_symbols);
+		$allowed_characters = array_merge($this->allowed_numbers,$this->allowed_lower,$this->allowed_upper,$this->allowed_symbols);
 
 		$passw = str_split($field);
 		$char_errors = 0;
@@ -69,6 +72,63 @@ class Validate_Form
 		if($char_errors > 0) {
 			$this->error_msg .= '<li>'.$err.'</li>';
 			$this->return_val = false;
+		}
+	}
+
+	/** Check if the password meets the characters requirements */
+	private function is_password_rules($field, $err)
+	{
+		global $validation_req_upper;
+		global $validation_req_lower;
+		global $validation_req_number;
+		global $validation_req_special;
+
+		$rules	= array(
+						'lower'		=> array(
+											'value'	=> PASS_REQ_UPPER,
+											'chars'	=> $this->allowed_lower,
+										),
+						'upper'		=> array(
+											'value'	=> PASS_REQ_LOWER,
+											'chars'	=> $this->allowed_upper,
+										),
+						'number'	=> array(
+											'value'	=> PASS_REQ_NUMBER,
+											'chars'	=> $this->allowed_numbers,
+										),
+						'special'	=> array(
+											'value'	=> PASS_REQ_SPECIAL,
+											'chars'	=> $this->allowed_symbols,
+										),
+					);
+	
+		foreach ( $rules as $rule => $data ) {
+			if ( $data['value'] == '1' ) {
+				$rules_active[$rule] = $data['chars'];
+			}
+		}
+		
+		if ( count( $rules_active ) > 0 ) {
+			$passw = str_split($field);
+			$char_errors = 0;
+
+			foreach ( $rules_active as $rule => $characters ) {
+				$found = 0;
+				foreach ( $characters as $character ) {
+					if ( strpos( $field, $character ) !== false) {
+						$found++;
+					}
+				}
+				if ( $found === 0 ) {
+					echo $rule.'<br />';
+					$char_errors++;
+				}
+			}
+
+			if($char_errors > 0) {
+				$this->error_msg .= '<li>'.$err.'</li>';
+				$this->return_val = false;
+			}
 		}
 	}
 
@@ -141,6 +201,9 @@ class Validate_Form
 			break;
 			case 'password':
 				$this->is_password($field, $err);
+			break;
+			case 'pass_rules':
+				$this->is_password_rules($field, $err);
 			break;
 			case 'length':
 				$this->is_length($field, $err, $min, $max);
