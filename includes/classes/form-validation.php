@@ -120,7 +120,6 @@ class Validate_Form
 					}
 				}
 				if ( $found === 0 ) {
-					echo $rule.'<br />';
 					$char_errors++;
 				}
 			}
