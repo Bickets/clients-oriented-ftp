@@ -60,6 +60,16 @@ if ($global_level == 0) {
 
 if ($_POST) {
 	/**
+	 * If the user is not an admin, check if the id of the client
+	 * that's being edited is the same as the current logged in one.
+	 */
+	if ($global_level == 0) {
+		if ($user_id != CURRENT_USER_ID) {
+			die();
+		}
+	}
+
+	/**
 	 * Clean the posted form values to be used on the user actions,
 	 * and again on the form if validation failed.
 	 * Also, overwrites the values gotten from the database so if
