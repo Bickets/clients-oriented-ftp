@@ -50,11 +50,21 @@
   border-left: none;
 }
 .footable.breakpoint > tbody > tr.footable-row-detail {
-  background: #eeeeee;
+  background: #fff;
+}
+.footable-row-detail-inner {
+	width:100%;
+	max-width:400px;
 }
 .footable.breakpoint > tbody > tr.footable-row-detail > .footable-row-detail-cell {
-  border-left: none;
+  padding:15px;
 }
+.footable-row-detail-name,
+.footable-row-detail-value {
+	padding:5px 0;
+	border-bottom:1px solid #dedede;
+}
+
 .footable > tbody img {
   vertical-align: middle;
 }

@@ -428,10 +428,10 @@ include('header.php');
 						<?php
 							}
 						?>
-						<th data-sort-initial="descending" data-hide="phone"><?php _e('Date','cftp_admin'); ?></th>
+						<th data-type="numeric" data-sort-initial="descending" data-hide="phone"><?php _e('Date','cftp_admin'); ?></th>
 						<th data-hide="phone,tablet"><?php _e('Ext.','cftp_admin'); ?></th>
 						<th><?php _e('Title','cftp_admin'); ?></th>
-						<th data-hide="phone,tablet"><?php _e('Size','cftp_admin'); ?></th>
+						<th><?php _e('Size','cftp_admin'); ?></th>
 						<?php
 							if($current_level != '0') {
 						?>
@@ -458,7 +458,7 @@ include('header.php');
 								}
 							}
 						?>
-						<th><?php _e('Actions','cftp_admin'); ?></th>
+						<th data-hide="phone" data-sort-ignore="true"><?php _e('Actions','cftp_admin'); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -548,7 +548,7 @@ include('header.php');
 											}
 										?>
 									</td>
-									<td><?php $this_file_size = get_real_size($this_file_absolute); echo format_file_size($this_file_size); ?></td>
+									<td data-value="<?php echo get_real_size($this_file_absolute); ?>"><?php $this_file_size = get_real_size($this_file_absolute); echo format_file_size($this_file_size); ?></td>
 									<?php
 										if($current_level != '0') {
 									?>
