@@ -194,5 +194,6 @@ if (defined('BASE_URI')) {
  */
 if (!defined('FOOTABLE_PAGING_NUMBER')) {
 	define('FOOTABLE_PAGING_NUMBER', '10');
+	define('FOOTABLE_PAGING_NUMBER_LOG', '15');
 }
 ?>

@@ -6,7 +6,7 @@
  * @subpackage	Log
  *
  */
-$tablesorter = 1;
+$footable = 1;
 $allowed_levels = array(9);
 require_once('sys.includes.php');
 $page_title = __('Recent activities log','cftp_admin');;
@@ -16,22 +16,6 @@ include('header.php');
 
 <script type="text/javascript">
 	$(document).ready( function() {
-		$("#activities_tbl").tablesorter( {
-			widthFixed: true,
-			sortList: [[1,1]],
-			widgets: ['zebra'], headers: {
-				0: { sorter: false }, 
-				5: { sorter: false }
-			},
-			textExtraction: dataExtraction
-		})
-		.tablesorterPager({container: $("#pager"), size: 10})
-
-		$("#select_all").click(function(){
-			var status = $(this).prop("checked");
-			$("td>input:checkbox").prop("checked",status);
-		});
-		
 		$("#do_action").click(function() {
 			var checks = $("td>input:checkbox").serializeArray(); 
 			var action = $('#log_actions').val();
@@ -233,18 +217,18 @@ include('header.php');
 			}
 		?>
 
-		<table id="activities_tbl" class="tablesorter vertical_middle">
+		<table id="activities_tbl" class="footable" data-page-size="<?php echo FOOTABLE_PAGING_NUMBER_LOG; ?>">
 			<thead>
 				<tr>
-					<th class="td_checkbox">
+					<th class="td_checkbox" data-sort-ignore="true">
 						<input type="checkbox" name="select_all" id="select_all" value="0" />
 					</th>
-					<th><?php _e('Date','cftp_admin'); ?></th>
+					<th data-type="numeric" data-sort-initial="descending"><?php _e('Date','cftp_admin'); ?></th>
 					<th><?php _e('Author','cftp_admin'); ?></th>
-					<th><?php _e('Activity','cftp_admin'); ?></th>
-					<th>&nbsp;</th>
-					<th>&nbsp;</th>
-					<th>&nbsp;</th>
+					<th data-hide="phone"><?php _e('Activity','cftp_admin'); ?></th>
+					<th data-hide="phone">&nbsp;</th>
+					<th data-hide="phone">&nbsp;</th>
+					<th data-hide="phone">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -267,8 +251,7 @@ include('header.php');
 				?>
 				<tr>
 					<td><input type="checkbox" name="activities[]" value="<?php echo $log["id"]; ?>" /></td>
-					<td>
-						<span class="hidden"><?php echo strtotime($log['timestamp']); ?></span>
+					<td data-value="<?php echo strtotime($log['timestamp']); ?>">
 						<?php echo $date; ?>
 					</td>
 					<td><?php echo (!empty($this_action["1"])) ? $this_action["1"] : ''; ?></td>
@@ -286,34 +269,10 @@ include('header.php');
 			
 			</tbody>
 		</table>
+
+		<div class="pagination pagination-centered hide-if-no-paging"></div>
 	</form>
 	
-	<?php if ($count > 10) { ?>
-		<div id="pager" class="pager">
-			<form>
-				<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
-				<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
-				<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
-				<input type="text" class="pagedisplay" disabled="disabled" />
-				<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
-				<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
-				<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
-				<select class="pagesize">
-					<option selected="selected" value="10">10</option>
-					<option value="20">20</option>
-					<option value="30">30</option>
-					<option value="40">40</option>
-				</select>
-			</form>
-		</div>
-	<?php } else { ?>
-		<div id="pager">
-			<form>
-				<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
-			</form>
-		</div>
-	<?php } ?>
-
 </div>
 
 <?php include('footer.php'); ?>
