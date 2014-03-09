@@ -770,10 +770,11 @@ p.downloaders_note {
 /* Table sorter for jquery */
 
 .extra_columns_table .extra {
-	display:none;
+/*	display:none;*/
 }
 
 #table_view_modes {
+	display:none; /** While changing tablesorter to footable */
 	width:144px;
 	float:right;
 	text-align:right;
@@ -816,120 +817,4 @@ p.downloaders_note {
 
 .vertical_middle td, .vertical_middle th {
 	vertical-align:middle!important
-}
-
-table.tablesorter {
-	font-family:arial;
-	background-color: #CDCDCD;
-	margin:10px auto 15px;
-	font-size: .9em;
-	width: 100%;
-	text-align: left;
-	-moz-box-shadow:3px 3px 5px #dedede;
-	-webkit-box-shadow:3px 3px 5px #dedede;
-	box-shadow:3px 3px 5px #dedede;
-}
-
-table.tablesorter thead {
-	color:#333;
-}
-
-table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-	background: #FAFBFC;
-	background-image:-moz-linear-gradient(center top , #FAFBFC, #E2E5E9);
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#FAFBFC), to(#E2E5E9));
-	border: 1px solid #FFF;
-	font-size: 11px;
-	padding: 7px 4px;
-	text-shadow:1px 1px 1px white;
-}
-table.tablesorter thead tr .header {
-	background-image: url(../img/tablesorter/bg.png), -moz-linear-gradient(center top , #FAFBFC, #E2E5E9);
-	background-image: url(../img/tablesorter/bg.png), -webkit-gradient(linear, left top, left bottom, from(#FAFBFC), to(#E2E5E9));
-	background-repeat: no-repeat!important;
-	background-position: center right!important;
-	cursor: pointer;
-}
-table.tablesorter tbody td {
-	color: #3D3D3D;
-	padding: 4px;
-	background-color: #FFF;
-	vertical-align:top;
-}
-
-table.tablesorter tbody tr:hover td {
-	background:#EEF0F2!important;
-}
-
-table.tablesorter tbody tr.odd td {
-	background-color:#F6F6F6;
-}
-table.tablesorter thead tr .headerSortUp {
-	background-image: url(../img/tablesorter/asc.png), -moz-linear-gradient(center top , #407FB6, #236299)!important;
-	background-image: url(../img/tablesorter/asc.png), -webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299));
-	color:white;
-	text-shadow:0 -1px 0 #000000!important;
-}
-table.tablesorter thead tr .headerSortDown {
-	background-image: url(../img/tablesorter/desc.png), -moz-linear-gradient(center top , #407FB6, #236299)!important;
-	background-image: url(../img/tablesorter/desc.png), -webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299));
-	color:white;
-	text-shadow:0 -1px 0 #000000!important;
-}
-table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-	background-color: #96D1FF;
-}
-
-/* tablesorter pager plugin */
-
-div.pager {
-	padding: 10px;
-	margin-top:20px;
-	background-color: white;
-	text-align: center;
-	border:1px solid #CCCCCC;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-}
-
-div.pager input.pag_btn {
-	width:50px;
-	cursor:pointer;
-	background:#407FB6!important;
-	background:-moz-linear-gradient(center top , #407FB6, #236299)!important;
-	background:-webkit-gradient(linear, left top, left bottom, from(#407FB6), to(#236299))!important;
-	border:1px solid #004380!important;
-	box-shadow:0 1px 0 rgba(255, 255, 255, 0.3) inset, 0 0 0 1px rgba(255, 255, 255, 0.1) inset, 0 1px 0 rgba(255, 255, 255, 0.5)!important;
-	text-shadow:0 -1px 0 #000000!important;
-	color:white!important;
-}
-
-div.pager span {
-	font-size:12px;
-	padding: 0 5px 0 10px;
-}
-
-div.pager input.prev {
-/*	margin-right: 10px;*/
-}
-
-div.pager input.next {
-	margin-left: 10px;
-}
-
-div.pager input, div.pager select {
-	width:100px;
-	font-size:11px;
-	padding:4px;
-	border:1px solid #CCCCCC;
-	-moz-border-radius:5px;
-	-webkit-border-radius:5px;
-	border-radius:5px;
-}
-
-div.pager .pagedisplay,
-div.pager .pagesize,
-div.pager form {
-	margin-bottom:0px;
 }

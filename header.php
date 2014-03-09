@@ -97,9 +97,10 @@ if (in_session_or_cookies($core_update_allowed)) {
 		<script src="<?php echo BASE_URI; ?>includes/js/jquery.easytabs.min.js" type="text/javascript"></script>
 	<?php } ?>
 
-	<?php if (isset($tablesorter)) { ?>
-		<script src="<?php echo BASE_URI; ?>includes/js/jquery.tablesorter.min.js" type="text/javascript"></script>
-		<script src="<?php echo BASE_URI; ?>includes/js/jquery.tablesorter.pager.js" type="text/javascript"></script>
+	<?php if (isset($footable)) { ?>
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/js/footable/css/footable.core.css" />
+		<link rel="stylesheet" media="all" type="text/css" href="<?php echo BASE_URI; ?>includes/js/footable/css/footable.projectsend.css" />
+		<script src="<?php echo BASE_URI; ?>includes/js/footable/footable.all.min.js" type="text/javascript"></script>
 	<?php } ?>
 
 	<?php if (isset($textboxlist)) { ?>
@@ -163,6 +164,17 @@ if (in_session_or_cookies($core_update_allowed)) {
 				$('.button').click(function() {
 					$(this).blur();
 				});
+
+				<?php if (isset($footable)) { ?>
+					$("#select_all").click(function(){
+						var status = $(this).prop("checked");
+						/** Uncheck all first in case you used pagination */
+						$("tr td input[type=checkbox]").prop("checked",false);
+						$("tr:visible td input[type=checkbox]").prop("checked",status);
+					});
+
+					$('.footable').footable().find('> tbody > tr:not(.footable-row-detail):nth-child(even)').addClass('odd');
+				<?php } ?>
 			});
 
 			var dataExtraction = function(node) {

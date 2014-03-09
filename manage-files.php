@@ -5,7 +5,7 @@
  *
  * @package ProjectSend
  */
-$tablesorter = 1;
+$footable = 1;
 $allowed_levels = array(9,8,7,0);
 require_once('sys.includes.php');
 
@@ -64,11 +64,6 @@ include('header.php');
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#select_all").click(function(){
-			var status = $(this).prop("checked");
-			$("td>input:checkbox").prop("checked",status);
-		});
-
 		$("#do_action").click(function() {
 			var checks = $("td>input:checkbox").serializeArray(); 
 			if (checks.length == 0) { 
@@ -125,17 +120,6 @@ include('header.php');
 		<?php
 			}
 		?>
-
-		$("#files_list")
-			.tablesorter( {
-				widthFixed: true,
-				sortList: [[1,1]],
-				widgets: ['zebra'], headers: {
-					0: { sorter: false }
-				},
-				textExtraction: dataExtraction
-		})
-		.tablesorterPager({container: $("#pager")})
 
 	    $('.public_link').popover({ 
 			html : true,
@@ -431,29 +415,29 @@ include('header.php');
 				}
 			?>
 
-			<table id="files_list" class="tablesorter">
+			<table id="files_list" class="footable" data-page-size="<?php echo FOOTABLE_PAGING_NUMBER; ?>">
 				<thead>
 					<tr>
 						<?php
 							/** Actions are not available for clients */
 							if($current_level != '0') {
 						?>
-								<th class="td_checkbox">
+								<th class="td_checkbox" data-sort-ignore="true">
 									<input type="checkbox" name="select_all" id="select_all" value="0" />
 								</th>
 						<?php
 							}
 						?>
-						<th><?php _e('Date','cftp_admin'); ?></th>
-						<th><?php _e('Ext.','cftp_admin'); ?></th>
+						<th data-sort-initial="descending" data-hide="phone"><?php _e('Date','cftp_admin'); ?></th>
+						<th data-hide="phone,tablet"><?php _e('Ext.','cftp_admin'); ?></th>
 						<th><?php _e('Title','cftp_admin'); ?></th>
-						<th><?php _e('Size','cftp_admin'); ?></th>
+						<th data-hide="phone,tablet"><?php _e('Size','cftp_admin'); ?></th>
 						<?php
 							if($current_level != '0') {
 						?>
-								<th><?php _e('Uploader','cftp_admin'); ?></th>
-								<th><?php _e('Public','cftp_admin'); ?></th>
-								<th><?php _e('Expiry','cftp_admin'); ?></th>
+								<th data-hide="phone,tablet"><?php _e('Uploader','cftp_admin'); ?></th>
+								<th data-hide="phone"><?php _e('Public','cftp_admin'); ?></th>
+								<th data-hide="phone"><?php _e('Expiry','cftp_admin'); ?></th>
 						<?php
 							}
 
@@ -462,14 +446,14 @@ include('header.php');
 							 */
 							if (isset($search_on)) {
 						?>
-								<th><?php _e('Status','cftp_admin'); ?></th>
-								<th><?php _e('Download count','cftp_admin'); ?></th>
+								<th data-hide="phone"><?php _e('Status','cftp_admin'); ?></th>
+								<th data-hide="phone"><?php _e('Download count','cftp_admin'); ?></th>
 						<?php
 							}
 							else {
 								if($current_level != '0') {
 						?>
-									<th><?php _e('Total downloads','cftp_admin'); ?></th>
+									<th data-hide="phone"><?php _e('Total downloads','cftp_admin'); ?></th>
 						<?php
 								}
 							}
@@ -536,8 +520,7 @@ include('header.php');
 									<?php
 										}
 									?>
-									<td>
-										<span class="hidden"><?php echo strtotime($row['timestamp']); ?></span>
+									<td data-value="<?php echo strtotime($row['timestamp']); ?>">
 										<?php echo $date; ?>
 									</td>
 									<td>
@@ -574,12 +557,12 @@ include('header.php');
 												<?php
 													if ($row['public_allow'] == '1') {
 												?>
-														<a href="#" class="btn-primary btn btn-small public_link" data-id="<?php echo $row['id']; ?>" data-token="<?php echo $row['public_token']; ?>" data-placement="top" data-toggle="popover" data-original-title="<?php _e('Public URL','cftp_admin'); ?>">
+														<a href="javascript:void(0);" class="btn-primary btn btn-small public_link" data-id="<?php echo $row['id']; ?>" data-token="<?php echo $row['public_token']; ?>" data-placement="top" data-toggle="popover" data-original-title="<?php _e('Public URL','cftp_admin'); ?>">
 												<?php
 													}
 													else {
 												?>
-														<a href="#" class="disabled btn btn-small" rel="" title="">
+														<a href="javascript:void(0);" class="disabled btn btn-small" rel="" title="">
 												<?php
 													}
 															$status_public	= __('Public','cftp_admin');
@@ -592,7 +575,7 @@ include('header.php');
 												<?php
 													if ($row['expires'] == '0') {
 												?>
-														<a href="#" class="btn btn-success disabled btn-small">
+														<a href="javascript:void(0);" class="btn btn-success disabled btn-small">
 															<?php _e('Does not expire','cftp_admin'); ?>
 														</a>
 												<?php
@@ -600,14 +583,14 @@ include('header.php');
 													else {
 														if (time() > strtotime($row['expiry_date'])) {
 												?>
-															<a href="#" class="btn btn-danger disabled btn-small" rel="" title="">
+															<a href="javascript:void(0);" class="btn btn-danger disabled btn-small" rel="" title="">
 																<?php _e('Expired on','cftp_admin'); ?> <?php echo date(TIMEFORMAT_USE,strtotime($row['expiry_date'])); ?>
 															</a>
 												<?php
 														}
 														else {
 												?>
-															<a href="#" class="btn btn-info disabled btn-small" rel="" title="">
+															<a href="javascript:void(0);" class="btn btn-info disabled btn-small" rel="" title="">
 																<?php _e('Expires on','cftp_admin'); ?> <?php echo date(TIMEFORMAT_USE,strtotime($row['expiry_date'])); ?>
 															</a>
 												<?php
@@ -639,7 +622,7 @@ include('header.php');
 				
 														case 'group':
 												?>
-															<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders btn-primary'; } else { echo 'disabled'; } ?> btn btn-small" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
+															<a href="javascript:void(0);" class="<?php if ($download_count > 0) { echo 'downloaders btn-primary'; } else { echo 'disabled'; } ?> btn btn-small" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
 																<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
 															</a>
 												<?php
@@ -653,7 +636,7 @@ include('header.php');
 											if($current_level != '0') {
 									?>
 												<td>
-													<a href="#" class="<?php if ($download_count > 0) { echo 'downloaders btn-primary'; } else { echo 'disabled'; } ?> btn btn-small" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
+													<a href="javascript:void(0);" class="<?php if ($download_count > 0) { echo 'downloaders btn-primary'; } else { echo 'disabled'; } ?> btn btn-small" rel="<?php echo $row["id"]; ?>" title="<?php echo htmlentities($row['filename']); ?>">
 														<?php echo $download_count; ?> <?php _e('downloads','cftp_admin'); ?>
 													</a>
 												</td>
@@ -673,33 +656,10 @@ include('header.php');
 					?>
 				</tbody>
 			</table>
-		</form>
 
-		<?php if ($count > 10) { ?>
-			<div id="pager" class="pager">
-				<form>
-					<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
-					<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
-					<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
-					<input type="text" class="pagedisplay" disabled="disabled" />
-					<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
-					<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
-					<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
-					<select class="pagesize">
-						<option selected="selected" value="10">10</option>
-						<option value="20">20</option>
-						<option value="30">30</option>
-						<option value="40">40</option>
-					</select>
-				</form>
-			</div>
-		<?php } else { ?>
-			<div id="pager">
-				<form>
-					<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
-				</form>
-			</div>
-		<?php } ?>
+			<div class="pagination pagination-centered hide-if-no-paging"></div>
+
+		</form>
 
 		<?php
 			if($current_level != '0') {

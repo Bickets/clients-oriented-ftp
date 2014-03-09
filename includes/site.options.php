@@ -186,4 +186,13 @@ if (defined('BASE_URI')) {
 	define('TIMTHUMB_URL',BASE_URI.'includes/timthumb/timthumb.php');
 	define('TIMTHUMB_ABS',ROOT_DIR.'/includes/timthumb/timthumb.php');
 }
+
+/**
+ * Footable
+ * Define the amount of items to show
+ * TODO: Get this value of a cookie if it exists.
+ */
+if (!defined('FOOTABLE_PAGING_NUMBER')) {
+	define('FOOTABLE_PAGING_NUMBER', '10');
+}
 ?>
