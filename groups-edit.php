@@ -23,7 +23,7 @@ $edit_group = new GroupActions();
 
 /** Check if the id parameter is on the URI. */
 if (isset($_GET['id'])) {
-	$group_id = $_GET['id'];
+	$group_id = mysql_real_escape_string($_GET['id']);
 	/**
 	 * Check if the id corresponds to a real group.
 	 * Return 1 if true, 2 if false.

@@ -18,7 +18,7 @@ $page_title = __('Groups administration','cftp_admin');;
  * Used when viewing groups a certain client belongs to.
  */
 if(!empty($_GET['member'])) {
-	$member = $_GET['member'];
+	$member = mysql_real_escape_string($_GET['member']);
 	/** Add the name of the client to the page's title. */
 	$sql_name = $database->query("SELECT name from tbl_users WHERE id='$member'");
 	if (mysql_num_rows($sql_name) > 0) {

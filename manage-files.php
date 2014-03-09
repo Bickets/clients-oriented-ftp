@@ -28,7 +28,7 @@ $results_type = 'global';
  * Then get_client_by_id() gets all the other account values.
  */
 if (isset($_GET['client_id'])) {
-	$this_id = $_GET['client_id'];
+	$this_id = mysql_real_escape_string($_GET['client_id']);
 	$this_client = get_client_by_id($this_id);
 	/** Add the name of the client to the page's title. */
 	if(!empty($this_client)) {
@@ -43,7 +43,7 @@ if (isset($_GET['client_id'])) {
  * The group's id is passed on the URI also.
  */
 if (isset($_GET['group_id'])) {
-	$this_id = $_GET['group_id'];
+	$this_id = mysql_real_escape_string($_GET['group_id']);
 	$sql_name = $database->query("SELECT name from tbl_groups WHERE id='$this_id'");
 	if (mysql_num_rows($sql_name) > 0) {
 		while($row_group = mysql_fetch_array($sql_name)) {

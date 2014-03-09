@@ -23,7 +23,7 @@ define('CAN_INCLUDE_FILES', true);
  * The file's id is passed on the URI.
  */
 if (!empty($_GET['file_id'])) {
-	$this_file_id = $_GET['file_id'];
+	$this_file_id = mysql_real_escape_string($_GET['file_id']);
 }
 
 /** Fill the users array that will be used on the notifications process */

@@ -53,7 +53,7 @@ include('header.php');
 		/** Continue only if 1 or more users were selected. */
 		if(!empty($_POST['users'])) {
 			$selected_users = $_POST['users'];
-			$users_to_get = implode(',',array_unique($selected_users));
+			$users_to_get = mysql_real_escape_string(implode(',',array_unique($selected_users)));
 
 			/**
 			 * Make a list of users to avoid individual queries.

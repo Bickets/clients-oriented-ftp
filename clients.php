@@ -62,7 +62,7 @@ $(document).ready(function() {
 		/** Continue only if 1 or more clients were selected. */
 		if(!empty($_POST['selected_clients'])) {
 			$selected_clients = $_POST['selected_clients'];
-			$clients_to_get = implode(',',array_unique($selected_clients));
+			$clients_to_get = mysql_real_escape_string(implode(',',array_unique($selected_clients)));
 
 			/**
 			 * Make a list of users to avoid individual queries.
