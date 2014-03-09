@@ -49,13 +49,23 @@ if ($page_status === 1) {
 /**
  * Compare the client editing this account to the on the db.
  */
-if ($global_level == 7) {
+if ($global_level != 9) {
 	if ($global_user != $add_user_data_user) {
 		$page_status = 3;
 	}
 }
 
 if ($_POST) {
+	/**
+	 * If the user is not an admin, check if the id of the user
+	 * that's being edited is the same as the current logged in one.
+	 */
+	if ($global_level != 9) {
+		if ($user_id != CURRENT_USER_ID) {
+			die();
+		}
+	}
+
 	/**
 	 * Clean the posted form values to be used on the user actions,
 	 * and again on the form if validation failed.
