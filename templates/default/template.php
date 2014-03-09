@@ -9,7 +9,7 @@ include_once(ROOT_DIR.'/templates/common.php'); // include the required function
 
 $window_title = __('File downloads','cftp_template');
 
-$tablesorter = 1;
+$footable = 1;
 include_once(ROOT_DIR.'/header.php'); // include the required functions for every template
 
 $count = count($my_files);
@@ -52,10 +52,6 @@ $count = count($my_files);
 
 				<div class="form_actions_count">
 					<p class="form_count_total"><?php _e('Showing','cftp_admin'); ?>: <span><?php echo $count; ?> <?php _e('files','cftp_admin'); ?></span></p>
-					<ul id="table_view_modes">
-						<li><a href="#" id="view_reduced"><?php _e('View reduced table','cftp_admin'); ?></a></li><li>
-							<a href="#" id="view_full" class="active_view_button"><?php _e('View full table','cftp_admin'); ?></a></li>
-					</ul>
 				</div>
 	
 				<div class="right_clear"></div>
@@ -76,19 +72,19 @@ $count = count($my_files);
 					}
 				?>
 		
-				<table id="files_list" class="tablesorter">
+				<table id="files_list" class="footable" data-page-size="<?php echo FOOTABLE_PAGING_NUMBER; ?>">
 					<thead>
 						<tr>
-							<th class="td_checkbox">
+							<th class="td_checkbox" data-sort-ignore="true">
 								<input type="checkbox" name="select_all" id="select_all" value="0" />
 							</th>
 							<th><?php _e('Title','cftp_template'); ?></th>
-							<th class="extra"><?php _e('Ext.','cftp_admin'); ?></th>
-							<th class="description"><?php _e('Description','cftp_template'); ?></th>
-							<th><?php _e('Size','cftp_template'); ?></th>
-							<th><?php _e('Date','cftp_template'); ?></th>
-							<th class="extra"><?php _e('Image preview','cftp_template'); ?></th>
-							<th><?php _e('Download','cftp_template'); ?></th>
+							<th data-hide="phone"><?php _e('Ext.','cftp_admin'); ?></th>
+							<th data-hide="phone" class="description"><?php _e('Description','cftp_template'); ?></th>
+							<th data-hide="phone"><?php _e('Size','cftp_template'); ?></th>
+							<th data-type="numeric" data-sort-initial="descending"><?php _e('Date','cftp_template'); ?></th>
+							<th data-hide="phone,tablet" data-sort-ignore="true"><?php _e('Image preview','cftp_template'); ?></th>
+							<th data-hide="phone" data-sort-ignore="true"><?php _e('Download','cftp_template'); ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -124,17 +120,18 @@ $count = count($my_files);
 												}
 											?>
 										</td>
-										<td class="extra">										
-											<?php		
-												$pathinfo = pathinfo($file['url']);	
-												$extension = strtolower($pathinfo['extension']);					
-												echo $extension;
-											?>
+										<td class="extra">
+											<span class="label label-important">
+												<?php		
+													$pathinfo = pathinfo($file['url']);	
+													$extension = strtolower($pathinfo['extension']);					
+													echo $extension;
+												?>
+											</span>
 										</td>
 										<td class="description"><?php echo htmlentities($file['description']); ?></td>
 										<td><?php $this_file_size = get_real_size(UPLOADED_FILES_FOLDER.$file['url']); echo format_file_size($this_file_size); ?></td>
-										<td>
-											<span class="hidden"><?php echo strtotime($file['timestamp']); ?></span>
+										<td data-value="<?php echo strtotime($file['timestamp']); ?>">
 											<?php echo $date; ?>
 										</td>
 										<?php
@@ -142,7 +139,7 @@ $count = count($my_files);
 										?>
 											<td class="extra"></td>
 											<td class="text-center">
-												<a href="#" class="btn btn-danger disabled btn-small">
+												<a href="javascript:void(0);" class="btn btn-danger disabled btn-small">
 													<?php _e('File expired','cftp_template'); ?>
 												</a>
 											</td>
@@ -182,34 +179,10 @@ $count = count($my_files);
 						?>
 					</tbody>
 				</table>
+
+				<div class="pagination pagination-centered hide-if-no-paging"></div>
 			</form>
 		
-			<?php if ($count > 10) { ?>
-				<div id="pager" class="pager">
-					<form>
-						<input type="button" class="first pag_btn" value="<?php _e('First','cftp_template'); ?>" />
-						<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_template'); ?>" />
-						<span><strong><?php _e('Page','cftp_template'); ?></strong>:</span>
-						<input type="text" class="pagedisplay" disabled="disabled" />
-						<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_template'); ?>" />
-						<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_template'); ?>" />
-						<span><strong><?php _e('Show','cftp_template'); ?></strong>:</span>
-						<select class="pagesize">
-							<option selected="selected" value="10">10</option>
-							<option value="20">20</option>
-							<option value="30">30</option>
-							<option value="40">40</option>
-						</select>
-					</form>
-				</div>
-			<?php } else {?>
-				<div id="pager">
-					<form>
-						<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
-					</form>
-				</div>
-			<?php } ?>
-	
 		</div> <!-- right_column -->
 	
 	
@@ -219,33 +192,6 @@ $count = count($my_files);
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$("#files_list").tablesorter( {
-				sortList: [[5,1]],
-				widgets: ['zebra'], headers: {
-					0: { sorter: false },
-					6: { sorter: false },
-					7: { sorter: false }
-				},
-				textExtraction: dataExtraction
-			})
-			.tablesorterPager({container: $("#pager")})
-
-			$("#select_all").click(function(){
-				var status = $(this).prop("checked");
-				$("td>input:checkbox").prop("checked",status);
-			});
-
-			$("#view_reduced").click(function(){
-				$(this).addClass('active_view_button');
-				$("#view_full").removeClass('active_view_button');
-				$(".extra").hide();
-			});
-			$("#view_full").click(function(){
-				$(this).addClass('active_view_button');
-				$("#view_reduced").removeClass('active_view_button');
-				$(".extra").show();
-			});
-
 			$("#do_action").click(function() {
 				var checks = $("td>input:checkbox").serializeArray(); 
 				if (checks.length == 0) { 
