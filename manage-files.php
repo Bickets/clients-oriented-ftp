@@ -265,19 +265,19 @@ include('header.php');
 		 */
 		$form_action_url = 'manage-files.php';
 
+		$database->MySQLDB();
+		$cq = 'SELECT * FROM tbl_files_relations';
+
 		if (isset($search_on)) {
 			$cq .= " WHERE $search_on = '$this_id'";
 			$form_action_url .= '?'.$search_on.'='.$this_id;
 		}
-
-		$database->MySQLDB();
-		$cq = 'SELECT * FROM tbl_files_relations';
 		
 		/** Add the status filter */	
 		if(isset($_POST['status']) && $_POST['status'] != 'all') {
 			$set_and = true;
 			$status_filter = $_POST['status'];
-			$cq .= " WHERE hidden='$status_filter'";
+			$cq .= " AND hidden='$status_filter'";
 			$no_results_error = 'filter';
 		}
 
