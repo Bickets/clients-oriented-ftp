@@ -35,8 +35,10 @@ $work_folder = UPLOADED_FILES_FOLDER;
 	<h2><?php echo $page_title; ?></h2>
 
 	<?php
-		$msg = __('This list only shows the files that are allowed according to your security settings. If the file type you need to add is not listed here, add the extension to the "Allowed file extensions" box on the options page.', 'cftp_admin');
-		echo system_message('warning',$msg);
+		if ( false === CAN_UPLOAD_ANY_FILE_TYPE ) {
+			$msg = __('This list only shows the files that are allowed according to your security settings. If the file type you need to add is not listed here, add the extension to the "Allowed file extensions" box on the options page.', 'cftp_admin');
+			echo system_message('warning',$msg);
+		}
 	?>
 	
 	<?php

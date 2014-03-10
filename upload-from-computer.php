@@ -90,24 +90,7 @@ $database->MySQLDB();
 						chunk_size : '1mb',
 						multipart : true,
 						<?php
-							$limit_files = true;
-							
-							if ( defined( 'FILE_TYPES_LIMIT_TO' ) ) {
-								switch ( FILE_TYPES_LIMIT_TO ) {
-									case 'noone':
-										$limit_files = false;
-										break;
-									case 'all':
-										break;
-									case 'clients':
-										if ( $current_level != 0 ) {
-											$limit_files = false;
-										}
-										break;
-								}
-							}
-							
-							if ( true === $limit_files ) {
+							if ( false === CAN_UPLOAD_ANY_FILE_TYPE ) {
 						?>
 								filters : [
 									{title : "Allowed files", extensions : "<?php echo $options_values['allowed_file_types']; ?>"}

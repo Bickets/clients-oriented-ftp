@@ -53,4 +53,29 @@ define('CURRENT_USER_LEVEL',$global_account['level']);
 
 $global_id = $global_account['id'];
 $global_name = $global_account['name'];
+
+/**
+ * Files types limitation
+ */
+$limit_files = true;
+if ( defined( 'FILE_TYPES_LIMIT_TO' ) ) {
+	switch ( FILE_TYPES_LIMIT_TO ) {
+		case 'noone':
+			$limit_files = false;
+			break;
+		case 'all':
+			break;
+		case 'clients':
+			if ( CURRENT_USER_LEVEL != 0 ) {
+				$limit_files = false;
+			}
+			break;
+	}
+}
+if ( $limit_files === true ) {
+	define('CAN_UPLOAD_ANY_FILE_TYPE', false);
+}
+else {
+	define('CAN_UPLOAD_ANY_FILE_TYPE', true);
+}
 ?>

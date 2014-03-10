@@ -266,65 +266,82 @@ include('header.php');
 		$form_action_url = 'manage-files.php';
 
 		$database->MySQLDB();
-		$cq = 'SELECT * FROM tbl_files_relations';
 
 		if (isset($search_on)) {
-			$cq .= " WHERE $search_on = '$this_id'";
+			$cq = "SELECT * FROM tbl_files_relations WHERE $search_on = '$this_id'";
 			$form_action_url .= '?'.$search_on.'='.$this_id;
+
+			/** Add the status filter */	
+			if(isset($_POST['status']) && $_POST['status'] != 'all') {
+				$set_and = true;
+				$status_filter = $_POST['status'];
+				$cq .= " AND hidden='$status_filter'";
+				$no_results_error = 'filter';
+			}
+
+			/**
+			 * Count the files assigned to this client. If there is none, show
+			 * an error message.
+			 */
+			$sql = $database->query($cq);
+	
+			if (mysql_num_rows($sql) > 0) {
+				/**
+				 * Get the IDs of files that match the previous query.
+				 */
+				while($row_files = mysql_fetch_array($sql)) {
+					$files_ids[] = $row_files['file_id'];
+					$gotten_files = implode(',',$files_ids);
+				}
+			}
+			else {
+				$count = 0;
+				$no_results_error = 'filter';
+			}
 		}
-		
-		/** Add the status filter */	
-		if(isset($_POST['status']) && $_POST['status'] != 'all') {
-			$set_and = true;
-			$status_filter = $_POST['status'];
-			$cq .= " AND hidden='$status_filter'";
-			$no_results_error = 'filter';
+			
+		/**
+		 * Get the files
+		 */
+		$fq = "SELECT * from tbl_files";
+
+		if ( isset($search_on) && !empty($gotten_files) ) {
+			$conditions[] = "id IN ($gotten_files)";
+		}
+
+		/** Add the search terms */	
+		if(isset($_POST['search']) && !empty($_POST['search'])) {
+			$search_terms = mysql_real_escape_string($_POST['search']);
+			$conditions[] = "(filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
+			$no_results_error = 'search';
 		}
 
 		/**
-		 * Count the files assigned to this client. If there is none, show
-		 * an error message.
+		 * If the user is an uploader, or a client is editing his files
+		 * only show files uploaded by that account.
+		*/
+		$current_level = get_current_user_level();
+		if ($current_level == '7' || $current_level == '0') {
+			$conditions[] = "uploader = '$global_user'";
+			$no_results_error = 'account_level';
+		}
+
+		/**
+		 * Build the final query
 		 */
-		$sql = $database->query($cq);
-
-		if (mysql_num_rows($sql) > 0) {
-			/**
-			 * Get the IDs of files that match the previous query.
-			 */
-			while($row_files = mysql_fetch_array($sql)) {
-				$files_ids[] = $row_files['file_id'];
-				$gotten_files = implode(',',$files_ids);
+		if ( !empty( $conditions ) ) {
+			foreach ( $conditions as $index => $condition ) {
+				$fq .= ( $index == 0 ) ? ' WHERE ' : ' AND ';
+				$fq .= $condition;
 			}
-			
-			/**
-			 * Get the files
-			 */
-			$fq = "SELECT * from tbl_files WHERE id IN ($gotten_files)";
-
-			/** Add the search terms */	
-			if(isset($_POST['search']) && !empty($_POST['search'])) {
-				$search_terms = mysql_real_escape_string($_POST['search']);
-				$fq .= " AND (filename LIKE '%$search_terms%' OR description LIKE '%$search_terms%')";
-				$no_results_error = 'search';
-			}
-
-			/**
-			 * If the user is an uploader, or a client is editing his files
-			 * only show files uploaded by that account.
-			*/
-			$current_level = get_current_user_level();
-			if($current_level == '7' || $current_level == '0') {
-				$fq .= " AND uploader = '$global_user'";
-				$no_results_error = 'account_level';
-			}
-
-			$sql_files = $database->query($fq);
-			$count = mysql_num_rows($sql_files);
 		}
-		else {
-			$count = 0;
-			$no_results_error = 'filter';
-		}
+
+		/** Debug query */
+		//echo $fq;
+		//print_r( $conditions );
+
+		$sql_files = $database->query($fq);
+		$count = mysql_num_rows($sql_files);
 	?>
 		<div class="form_actions_left">
 			<div class="form_actions_limit_results">

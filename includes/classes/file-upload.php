@@ -28,12 +28,17 @@ class PSend_Upload_File
 	 */
 	function is_filetype_allowed($filename)
 	{
-		global $options_values;
-		$this->safe_filename = $filename;
-		$allowed_file_types = str_replace(',','|',$options_values['allowed_file_types']);
-		$file_types = "/^\.(".$allowed_file_types."){1}$/i";
-		if (preg_match($file_types, strrchr($this->safe_filename, '.'))) {
+		if ( true === CAN_UPLOAD_ANY_FILE_TYPE ) {
 			return true;
+		}
+		else {
+			global $options_values;
+			$this->safe_filename = $filename;
+			$allowed_file_types = str_replace(',','|',$options_values['allowed_file_types']);
+			$file_types = "/^\.(".$allowed_file_types."){1}$/i";
+			if (preg_match($file_types, strrchr($this->safe_filename, '.'))) {
+				return true;
+			}
 		}
 	}
 	
