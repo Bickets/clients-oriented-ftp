@@ -105,8 +105,8 @@ Many thanks to the authors of the following scripts, which are used on ProjectSe
 - TextboxList.js
   http://www.devthought.com/projects/mootools/textboxlist/
 
-- tablesorter
-  http://tablesorter.com/docs/
+- footable
+  https://github.com/bradvin/FooTable
 
 - multiselect.js
   http://loudev.com/

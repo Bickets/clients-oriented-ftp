@@ -12,7 +12,7 @@
  * @package ProjectSend
  * @subpackage Upload
  */
-$tablesorter = 1;
+$footable = 1;
 $allowed_levels = array(9,8,7);
 require_once('sys.includes.php');
 
@@ -108,7 +108,7 @@ $work_folder = UPLOADED_FILES_FOLDER;
 			}
 			
 			if (!empty($_POST['search'])) {
-				$search = $_POST['search'];
+				$search = mysql_real_escape_string($_POST['search']);
 				
 				function search_text($item) {
 					global $search;
@@ -141,23 +141,23 @@ $work_folder = UPLOADED_FILES_FOLDER;
 
 				<div class="form_actions_limit_results">
 					<form action="" name="files_search" method="post" class="form-inline">
-						<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo $_POST['search']; } ?>" class="txtfield form_actions_search_box" />
+						<input type="text" name="search" id="search" value="<?php if(isset($_POST['search']) && !empty($_POST['search'])) { echo htmlspecialchars($_POST['search']); } ?>" class="txtfield form_actions_search_box" />
 						<button type="submit" id="btn_proceed_search" class="btn btn-small"><?php _e('Search','cftp_admin'); ?></button>
 					</form>
 				</div>
 				<div class="clear"></div>
 
 				<form action="upload-process-form.php" name="upload_by_ftp" id="upload_by_ftp" method="post" enctype="multipart/form-data">
-					<table id="add_files_from_ftp" class="tablesorter">
+					<table id="add_files_from_ftp" class="footable" data-page-size="<?php echo FOOTABLE_PAGING_NUMBER; ?>">
 						<thead>
 							<tr>
-								<th class="td_checkbox">
+								<th class="td_checkbox" data-sort-ignore="true">
 									<input type="checkbox" name="select_all" id="select_all" value="0" />
 								</th>
-								<th><?php _e('File name','cftp_admin'); ?></th>
-								<th><?php _e('File size','cftp_admin'); ?></th>
-								<th><?php _e('Last modified','cftp_admin'); ?></th>
-								<th><?php _e('Reason','cftp_admin'); ?></th>
+								<th data-sort-initial="true"><?php _e('File name','cftp_admin'); ?></th>
+								<th data-type="numeric" data-hide="phone"><?php _e('File size','cftp_admin'); ?></th>
+								<th data-type="numeric" data-hide="phone"><?php _e('Last modified','cftp_admin'); ?></th>
+								<th data-hide="phone"><?php _e('Reason','cftp_admin'); ?></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -167,9 +167,8 @@ $work_folder = UPLOADED_FILES_FOLDER;
 										<tr>
 											<td><input type="checkbox" name="add[]" value="<?php echo $add_file['name']; ?>" /></td>
 											<td><?php echo $add_file['name']; ?></td>
-											<td><?php echo format_file_size(filesize($add_file['path'])); ?></td>
-											<td>
-												<span class="hidden"><?php echo filemtime($add_file['path']); ?></span>
+											<td data-value="<?php echo filesize($add_file['path']); ?>"><?php echo format_file_size(filesize($add_file['path'])); ?></td>
+											<td data-value="<?php echo filemtime($add_file['path']); ?>">
 												<?php echo date(TIMEFORMAT_USE, filemtime($add_file['path'])); ?>
 											</td>
 											<td>
@@ -191,6 +190,8 @@ $work_folder = UPLOADED_FILES_FOLDER;
 						</tbody>
 					</table>
 
+					<div class="pagination pagination-centered hide-if-no-paging"></div>
+
 					<?php
 						$msg = __('Please note that the listed files will be renamed if they contain invalid characters.','cftp_admin');
 						echo system_message('info',$msg);
@@ -200,50 +201,9 @@ $work_folder = UPLOADED_FILES_FOLDER;
 						<button type="submit" name="submit" class="btn btn-wide btn-primary" id="upload-continue"><?php _e('Continue','cftp_admin'); ?></button>
 					</div>
 				</form>
-
-				<?php if (count($files_to_add) > 10) { ?>
-					<div id="pager" class="pager">
-						<form>
-							<input type="button" class="first pag_btn" value="<?php _e('First','cftp_admin'); ?>" />
-							<input type="button" class="prev pag_btn" value="<?php _e('Prev.','cftp_admin'); ?>" />
-							<span><strong><?php _e('Page','cftp_admin'); ?></strong>:</span>
-							<input type="text" class="pagedisplay" disabled="disabled" />
-							<input type="button" class="next pag_btn" value="<?php _e('Next','cftp_admin'); ?>" />
-							<input type="button" class="last pag_btn" value="<?php _e('Last','cftp_admin'); ?>" />
-							<span><strong><?php _e('Show','cftp_admin'); ?></strong>:</span>
-							<select class="pagesize">
-								<option selected="selected" value="10">10</option>
-								<option value="20">20</option>
-								<option value="30">30</option>
-								<option value="40">40</option>
-							</select>
-						</form>
-					</div>
-				<?php } else { ?>
-					<div id="pager">
-						<form>
-							<input type="hidden" value="<?php echo $count; ?>" class="pagesize" />
-						</form>
-					</div>
-				<?php } ?>
 	
 				<script type="text/javascript">
 					$(document).ready(function() {
-						$("#add_files_from_ftp").tablesorter( {
-							widthFixed: true,
-							sortList: [[1,1]],
-							widgets: ['zebra'], headers: {
-								0: { sorter: false }
-							},
-							textExtraction: dataExtraction
-						})
-						.tablesorterPager({container: $("#pager")})
-
-						$("#select_all").click(function(){
-							var status = $(this).prop("checked");
-							$("td>input:checkbox").prop("checked",status);
-						});
-						
 						$("#upload_by_ftp").submit(function() {
 							var checks = $("td>input:checkbox").serializeArray(); 
 							if (checks.length == 0) { 

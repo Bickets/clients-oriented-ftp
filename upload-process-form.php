@@ -16,7 +16,7 @@
  * @subpackage Upload
  */
 $multiselect	= 1;
-$tablesorter	= 1;
+$footable		= 1;
 $datepicker		= 1;
 
 $allowed_levels = array(9,8,7,0);
@@ -262,20 +262,20 @@ while($row = mysql_fetch_array($sql)) {
 	if(!empty($upload_finish)) {
 ?>
 		<h3><?php _e('Files uploaded correctly','cftp_admin'); ?></h3>
-		<table id="uploaded_files_tbl" class="tablesorter edit_files vertical_middle">
+		<table id="uploaded_files_tbl" class="footable" data-page-size="<?php echo FOOTABLE_PAGING_NUMBER; ?>">
 			<thead>
 				<tr>
-					<th><?php _e('File Name','cftp_admin'); ?></th>
-					<th><?php _e('Name','cftp_admin'); ?></th>
-					<th><?php _e('Description','cftp_admin'); ?></th>
+					<th data-sort-initial="true"><?php _e('Title','cftp_admin'); ?></th>
+					<th data-hide="phone"><?php _e('Description','cftp_admin'); ?></th>
+					<th data-hide="phone"><?php _e('File Name','cftp_admin'); ?></th>
 					<?php
 						if ($current_level != 0) {
 					?>
-							<th><?php _e("Status",'cftp_admin'); ?></th>
+							<th data-hide="phone"><?php _e("Status",'cftp_admin'); ?></th>
 					<?php
 						}
 					?>
-					<th><?php _e("Actions",'cftp_admin'); ?></th>
+					<th data-hide="phone" data-sort-ignore="true"><?php _e("Actions",'cftp_admin'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -283,9 +283,9 @@ while($row = mysql_fetch_array($sql)) {
 				foreach($upload_finish as $uploaded) {
 			?>
 					<tr>
-						<td><?php echo $uploaded['file']; ?></td>
 						<td><?php echo $uploaded['name']; ?></td>
 						<td><?php echo $uploaded['description']; ?></td>
+						<td><?php echo $uploaded['file']; ?></td>
 						<?php
 							if ($current_level != 0) {
 						?>
@@ -329,13 +329,13 @@ while($row = mysql_fetch_array($sql)) {
 	 */
 	if(!empty($upload_finish_orphans)) {
 ?>
-		<h3><?php _e('Orphan files','cftp_admin'); ?></h3>
+		<h3><?php _e('Unassigned files','cftp_admin'); ?></h3>
 		<p><?php _e('These files have not been assigned to any client or group.','cftp_admin'); ?></p>
-		<table id="orphan_files_tbl" class="tablesorter edit_files vertical_middle">
+		<table id="orphan_files_tbl" class="footable" data-page-size="<?php echo FOOTABLE_PAGING_NUMBER; ?>">
 			<thead>
 				<tr>
-					<th><?php _e('File Name','cftp_admin'); ?></th>
-					<th><?php _e("Actions",'cftp_admin'); ?></th>
+					<th data-sort-initial="true"><?php _e('File Name','cftp_admin'); ?></th>
+					<th data-hide="phone" data-sort-ignore="true"><?php _e("Actions",'cftp_admin'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -602,10 +602,10 @@ while($row = mysql_fetch_array($sql)) {
 	if(count($upload_failed) > 0) {
 ?>
 		<h3><?php _e('Files not uploaded','cftp_admin'); ?></h3>
-		<table id="failed_files_tbl" class="tablesorter edit_files">
+		<table id="failed_files_tbl" class="footable" data-page-size="<?php echo FOOTABLE_PAGING_NUMBER; ?>">
 			<thead>
 				<tr>
-					<th><?php _e('File Name','cftp_admin'); ?></th>
+					<th data-sort-initial="true"><?php _e('File Name','cftp_admin'); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -684,40 +684,6 @@ while($row = mysql_fetch_array($sql)) {
 		
 				// Autoclick the continue button
 				//$('#upload-continue').click();
-		<?php
-			}
-			if(!empty($upload_finish)) {
-		?>
-				$("#uploaded_files_tbl").tablesorter( {
-					widthFixed: true,
-					sortList: [[0,0]], widgets: ['zebra'], headers: {
-						<?php
-							/**
-							 * Different sortable columns if the upload is client or user.
-							 */
-							if ($current_level != 0) {
-						?>
-								5: { sorter: false }
-						<?php
-							}
-							else {
-						?>
-								3: { sorter: false }
-						<?php
-							}
-						?>
-					}
-				})
-				
-		<?php
-			}
-			if(!empty($upload_finish_orphans)) {
-		?>
-				$("#orphan_files_tbl").tablesorter({
-					widthFixed: true,
-					sortList: [[0,0]], widgets: ['zebra']
-				})
-				
 		<?php
 			}
 		?>
