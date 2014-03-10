@@ -9,7 +9,8 @@
 		$day = date("d");
 		$year = date("Y");
 		for($i=0; $i<=$max_stats_days-1; $i++){
-			$gen_30_days[] = date(TIMEFORMAT_USE,mktime(0,0,0,$month,($day-$i),$year));
+			//$gen_30_days[] = date(TIMEFORMAT_USE,mktime(0,0,0,$month,($day-$i),$year));
+			$gen_30_days[] = date('d/m/Y',mktime(0,0,0,$month,($day-$i),$year));
 		}
 		$last_30_days = array_reverse($gen_30_days);
 	
@@ -62,7 +63,8 @@
 						foreach ($actions_to_graph as $action_number => $when) {
 							if ($action_number == $gen_log) {
 								foreach ($when as $log_day => $total) {
-									if (date(TIMEFORMAT_USE,$log_day) == $day) {
+									//if (date(TIMEFORMAT_USE,$log_day) == $day) {
+									if (date('d/m/Y',$log_day) == $day) {
 										echo $total;
 										$wrote = true;
 									}
