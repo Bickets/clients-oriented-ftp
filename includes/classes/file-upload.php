@@ -139,13 +139,20 @@ class PSend_Upload_File
 			$new_record_action = $new_log_action->log_action_save($log_action_args);
 		}
 		else {
-			$id_sql = $database->query("SELECT id, public_token FROM tbl_files WHERE url = '$this->post_file'");
+			$id_sql = $database->query("SELECT id, public_allow, public_token FROM tbl_files WHERE url = '$this->post_file'");
 			while($row = mysql_fetch_array($id_sql)) {
 				$this->file_id = $row["id"];
 				$this->state['new_file_id'] = $this->file_id;
 				if (!empty($row["public_token"])) {
 					$this->public_token	= $row["public_token"];
-				}				
+				}
+				/**
+				 * If a client is editing a file, the public settings should
+				 * not be reset.
+				 */
+				if ( CURRENT_USER_LEVEL == 0 ) {
+					$this->is_public = $row["public_allow"];
+				}
 			}
 			$result = $database->query("UPDATE tbl_files SET
 											filename = '$this->name',
