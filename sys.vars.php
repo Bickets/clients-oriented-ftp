@@ -71,7 +71,7 @@ else {
 if (!defined('TABLES_PREFIX')) {
 	define('TABLES_PREFIX', 'tbl_');
 }
-define('TABLE_FILES', TABLES_PREFIX . 'tbl_files');
+define('TABLE_FILES', TABLES_PREFIX . 'files');
 define('TABLE_FILES_RELATIONS', TABLES_PREFIX . 'files_relations');
 define('TABLE_NOTIFICATIONS', TABLES_PREFIX . 'notifications');
 define('TABLE_OPTIONS', TABLES_PREFIX . 'options');
