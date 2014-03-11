@@ -55,7 +55,7 @@ $work_folder = UPLOADED_FILES_FOLDER;
 			 * When a file doesn't correspond to a record, it can
 			 * be safely renamed.
 			 */
-			$sql = $database->query("SELECT url, id FROM tbl_files");
+			$sql = $database->query("SELECT url, id, public_allow FROM tbl_files WHERE public_allow='0'");
 			$db_files = array();
 			while($row = mysql_fetch_array($sql)) {
 				$db_files[$row["url"]] = $row["id"];
@@ -180,7 +180,7 @@ $work_folder = UPLOADED_FILES_FOLDER;
 															_e('Never assigned to any user or group','cftp_admin');
 															break;
 														case 'not_assigned':
-															_e('All assignations were removed','cftp_admin');
+															_e('All assignations were removed','cftp_admin'); echo ' / '; _e('File is not public.','cftp_admin');
 															break;
 													}
 												?>

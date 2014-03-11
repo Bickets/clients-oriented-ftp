@@ -14,7 +14,7 @@
  * Current version.
  * Updated only when releasing a new downloadable complete version.
  */
-define('CURRENT_VERSION', 'r528');
+define('CURRENT_VERSION', 'r550');
 
 /**
  * Fix for including external files when on HTTPS.
@@ -68,15 +68,18 @@ else {
 /**
  * Define the tables names
  */
-define('TABLE_FILES','tbl_files');
-define('TABLE_FILES_RELATIONS','tbl_files_relations');
-define('TABLE_NOTIFICATIONS','tbl_notifications');
-define('TABLE_OPTIONS','tbl_options');
-define('TABLE_USERS','tbl_users');
-define('TABLE_GROUPS','tbl_groups');
-define('TABLE_MEMBERS','tbl_members');
-define('TABLE_FOLDERS','tbl_folders');
-define('TABLE_LOG','tbl_actions_log');
+if (!defined('TABLES_PREFIX')) {
+	define('TABLES_PREFIX', 'tbl_');
+}
+define('TABLE_FILES', TABLES_PREFIX . 'tbl_files');
+define('TABLE_FILES_RELATIONS', TABLES_PREFIX . 'files_relations');
+define('TABLE_NOTIFICATIONS', TABLES_PREFIX . 'notifications');
+define('TABLE_OPTIONS', TABLES_PREFIX . 'options');
+define('TABLE_USERS', TABLES_PREFIX . 'users');
+define('TABLE_GROUPS', TABLES_PREFIX . 'groups');
+define('TABLE_MEMBERS', TABLES_PREFIX . 'members');
+define('TABLE_FOLDERS', TABLES_PREFIX . 'folders');
+define('TABLE_LOG', TABLES_PREFIX . 'actions_log');
 $current_tables = array(TABLE_FILES,TABLE_OPTIONS,TABLE_USERS);
 //$current_tables = array(TABLE_FILES,TABLE_FILES_RELATIONS,TABLE_OPTIONS,TABLE_USERS,TABLE_GROUPS,TABLE_MEMBERS,TABLE_FOLDERS,TABLE_LOG);
 

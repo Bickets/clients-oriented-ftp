@@ -37,6 +37,12 @@ define('DB_USER', 'username');
 /** MySQL password */
 define('DB_PASSWORD', 'password');
 
+/**
+ * Prefix for the tables. Set to something other than tbl_ for increased
+ * security onr in case you want more than 1 installations on the same database.
+ */
+define('TABLES_PREFIX', 'tbl_');
+
 /*
  * Global site language definition
  *
