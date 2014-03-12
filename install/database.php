@@ -26,16 +26,16 @@ if (defined('TRY_INSTALL')) {
 	  `public_allow` INT(1) NOT NULL default \'0\',
 	  `public_token` varchar(32) NULL,
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 
 	'1' => '
 	CREATE TABLE IF NOT EXISTS `tbl_options` (
 	  `id` int(10) NOT NULL AUTO_INCREMENT,
-	  `name` varchar(50) COLLATE latin1_general_ci NOT NULL,
-	  `value` text COLLATE latin1_general_ci NOT NULL,
+	  `name` varchar(50) COLLATE utf8_general_ci NOT NULL,
+	  `value` text COLLATE utf8_general_ci NOT NULL,
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 	
 	'2' => '
@@ -47,14 +47,14 @@ if (defined('TRY_INSTALL')) {
 	  `email` varchar(60) NOT NULL,
 	  `level` tinyint(1) NOT NULL DEFAULT \'0\',
 	  `timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-	  `address` text COLLATE latin1_general_ci NULL,
-	  `phone` varchar(32) COLLATE latin1_general_ci NULL,
+	  `address` text COLLATE utf8_general_ci NULL,
+	  `phone` varchar(32) COLLATE utf8_general_ci NULL,
 	  `notify` tinyint(1) NOT NULL DEFAULT \'0\',
-	  `contact` text COLLATE latin1_general_ci NULL,
+	  `contact` text COLLATE utf8_general_ci NULL,
 	  `created_by` varchar('.MAX_USER_CHARS.') NULL,
 	  `active` tinyint(1) NOT NULL DEFAULT \'1\',
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 	
 	'3' => '
@@ -65,7 +65,7 @@ if (defined('TRY_INSTALL')) {
 	  `name` varchar(32) NOT NULL,
 	  `description` text NOT NULL,
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 	
 	'4' => '
@@ -78,7 +78,7 @@ if (defined('TRY_INSTALL')) {
 	  PRIMARY KEY (`id`),
 	  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 	
 	'5' => '
@@ -93,7 +93,7 @@ if (defined('TRY_INSTALL')) {
 	  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 	
 	'6' => '
@@ -111,7 +111,7 @@ if (defined('TRY_INSTALL')) {
 	  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  FOREIGN KEY (`folder_id`) REFERENCES tbl_folders(`id`) ON UPDATE CASCADE,
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 	
 	'7' => '
@@ -126,7 +126,7 @@ if (defined('TRY_INSTALL')) {
 	  `affected_file_name` text DEFAULT NULL,
 	  `affected_account_name` text DEFAULT NULL,
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 	
 	'8' => '
@@ -141,7 +141,7 @@ if (defined('TRY_INSTALL')) {
 	  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 	
 	'9' => '
@@ -220,7 +220,7 @@ if (defined('TRY_INSTALL')) {
 	  `used` int(1) DEFAULT \'0\',
 	  FOREIGN KEY (`user_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 
 	'11' => '
@@ -232,7 +232,7 @@ if (defined('TRY_INSTALL')) {
 	  FOREIGN KEY (`user_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 	  PRIMARY KEY (`id`)
-	) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 	',
 	
 	'12' => '

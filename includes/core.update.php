@@ -289,7 +289,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  `name` varchar(32) NOT NULL,
 				  `description` text NOT NULL,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 				';
 				$database->query($q1);
 				$updates_made++;
@@ -328,7 +328,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 				';
 				$database->query($q1);
 				$updates_made++;
@@ -358,7 +358,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  FOREIGN KEY (`folder_id`) REFERENCES tbl_folders(`id`) ON UPDATE CASCADE,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 				';
 				$database->query($q1);
 				$updates_made++;
@@ -384,7 +384,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  `affected_file_name` text DEFAULT NULL,
 				  `affected_account_name` text DEFAULT NULL,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 				';
 				$database->query($q1);
 				$updates_made++;
@@ -424,7 +424,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  `client_id` int(11) NOT NULL,
 				  `upload_type` int(11) NOT NULL,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 				';
 				$database->query($q1);
 				$updates_made++;
@@ -493,7 +493,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  PRIMARY KEY (`id`),
 				  FOREIGN KEY (`client_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  FOREIGN KEY (`group_id`) REFERENCES tbl_groups(`id`) ON DELETE CASCADE ON UPDATE CASCADE
-				) ENGINE=InnoDB  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 				';
 				$database->query($q2);
 				$updates_made++;
@@ -810,7 +810,7 @@ if (in_session_or_cookies($allowed_update)) {
 				  FOREIGN KEY (`user_id`) REFERENCES tbl_users(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  FOREIGN KEY (`file_id`) REFERENCES tbl_files(`id`) ON DELETE CASCADE ON UPDATE CASCADE,
 				  PRIMARY KEY (`id`)
-				) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+				) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 				';
 				$database->query($q1);
 				$updates_made++;
@@ -921,6 +921,24 @@ if (in_session_or_cookies($allowed_update)) {
 				}
 				unset($q);
 			}
+		}
+
+
+
+		/**
+		 * r557 updates
+		 * Change the database collations
+		 */
+		if ($last_update < 557) {
+			$sql = $database->query('SHOW TABLES');
+			$fk1 = $database->query('SET foreign_key_checks = 0');
+			while ($tables = mysql_fetch_array($sql) ) {
+				foreach ($tables as $key => $value) {
+					mysql_query("ALTER TABLE $value CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci");
+					$updates_made++;
+				}
+			}
+			$fk2 = $database->query('SET foreign_key_checks = 1');
 		}
 
 	}
