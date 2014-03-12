@@ -423,7 +423,7 @@ function mysql_real_escape_array($array)
  * characters when saving to the database.
  */
 function encode_html($str) {
-	$str = htmlentities($str, ENT_QUOTES);
+	$str = htmlentities($str, ENT_QUOTES, $encoding='utf-8');
 	$str = mysql_real_escape_string($str);
 	$str = nl2br($str);
 	return $str;

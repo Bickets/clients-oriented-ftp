@@ -20,6 +20,7 @@ class MySQLDB
 		/** Make connection to database */
 		$this->connection = mysql_connect(DB_HOST, DB_USER, DB_PASSWORD) or die(mysql_error());
 		mysql_select_db(DB_NAME, $this->connection) or die(mysql_error());
+		//mysql_query("SET NAMES utf8");
 	}
 	
 	/**
