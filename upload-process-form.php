@@ -543,9 +543,9 @@ while($row = mysql_fetch_array($sql)) {
 																</optgroup>
 															</select>
 															<div class="list_mass_members">
-																<a href="#" class="btn add-all"><?php _e('Add all','cftp_admin'); ?></a>
-																<a href="#" class="btn remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
-																<a href="#" class="btn copy-all"><?php _e('Copy selections to other files','cftp_admin'); ?></a>
+																<a href="#" class="btn btn-info add-all"><?php _e('Add all','cftp_admin'); ?></a>
+																<a href="#" class="btn btn-info remove-all"><?php _e('Remove all','cftp_admin'); ?></a>
+																<a href="#" class="btn btn-danger copy-all"><?php _e('Copy selections to other files','cftp_admin'); ?></a>
 															</div>
 
 															<div class="divider"></div>

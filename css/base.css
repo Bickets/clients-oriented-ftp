@@ -563,9 +563,20 @@ h4 {
 	margin:8px 0 0;
 	padding:8px 0 0;
 	border-top:1px dotted #ccc;
-	text-align:right;
 }
 
+	.list_mass_members a {
+		margin-right:5px;
+	}
+	
+	.list_mass_members a:kast-child {
+		margin-right:0;
+	}
+	
+	.list_mass_members  a.copy-all {
+		margin-left:15px;
+	}
+	
 /****************/
 
 .td_checkbox {
