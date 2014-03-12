@@ -198,7 +198,11 @@ body, html {
 }
 
 #login_error {
+<<<<<<< .mine
+	/*width:310px;*/
+=======
 /*	width:310px;*/
+>>>>>>> .r554
 	margin:0 auto 20px auto;
 }
 
